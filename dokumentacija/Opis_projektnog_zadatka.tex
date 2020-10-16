@@ -1,125 +1,46 @@
 \chapter{Opis projektnog zadatka}
 		
-		\textbf{\textit{dio 1. revizije}}\\
+		\textbf{\textit{\large 2.1 Uvod}}\\
 		
-		\textit{Na osnovi projektnog zadatka detaljno opisati korisničke zahtjeve. Što jasnije opisati cilj projektnog zadatka, razraditi problematiku zadatka, dodati nove aspekte problema i potencijalnih rješenja. Očekuje se minimalno 3, a poželjno 4-5 stranica opisa.	Teme koje treba dodatno razraditi u ovom poglavlju su:}
-		\begin{packed_item}
-			\item \textit{potencijalna korist ovog projekta}
-			\item \textit{postojeća slična rješenja (istražiti i ukratko opisati razlike u odnosu na zadani zadatak). Dodajte slike koja predočavaju slična rješenja.}
-			\item \textit{skup korisnika koji bi mogao biti zainteresiran za ostvareno rješenje.}
-			\item \textit{mogućnost prilagodbe rješenja }
-			\item \textit{opseg projektnog zadatka}
-			\item \textit{moguće nadogradnje projektnog zadatka}
-		\end{packed_item}
+		{Kroz ovaj je projekt potrebno razviti programsku potporu za igru  \emph{GeoFighter}. \emph{GeoFighter} je web-aplikacija kojom se u obliku karata određenih jačina evidentiraju stvarne lokacije koje su korisnici (č. igrači) posjetili. Skupljenim se kartama tada geografski bliski igrači mogu međusobno boriti. Pobjednik borbe dobiva određeni broj bodova koji se oduzimaju gubitniku te se promjenom bodova mijenja i globalni rang igrača. Cilj igrača je posjetiti što veći broj mjesta, skupiti što više karata i postići što bolji rang. } \\ \\
 		
-		\textit{Za pomoć pogledati reference navedene u poglavlju „Popis literature“, a po potrebi konzultirati sadržaj na internetu koji nudi dobre smjernice u tom pogledu.}
-		\eject
 		
-		\section{Primjeri u \LaTeX u}
+		\textbf{\textit{\large 2.2 Razrada }}\\ 
 		
-		\textit{Ovo potpoglavlje izbrisati.}\\
-
-		U nastavku se nalaze različiti primjeri kako koristiti osnovne funkcionalnosti \LaTeX a koje su potrebne za izradu dokumentacije. Za dodatnu pomoć obratiti se asistentu na projektu ili potražiti upute na sljedećim web sjedištima:
-		\begin{itemize}
-			\item Upute za izradu diplomskog rada u \LaTeX u - \url{https://www.fer.unizg.hr/_download/repository/LaTeX-upute.pdf}
-			\item \LaTeX\ projekt - \url{https://www.latex-project.org/help/}
-			\item StackExchange za Tex - \url{https://tex.stackexchange.com/}\\
+		\textbf{\textit{2.2.1 Registracija i prijava }}\\
 		
-		\end{itemize} 	
-
-
-		
-		\noindent \underbar{podcrtani tekst}, \textbf{podebljani tekst}, 	\textit{nagnuti tekst}\\
-		\noindent \normalsize primjer \large primjer \Large primjer \LARGE {primjer} \huge {primjer} \Huge primjer \normalsize
-				
-		\begin{packed_item}
-			
-			\item  primjer
-			\item  primjer
-			\item  primjer
-			\item[] \begin{packed_enum}
-				\item primjer
-				\item[] \begin{packed_enum}
-					\item[1.a] primjer
-					\item[b] primjer
-				\end{packed_enum}
-				\item primjer
-			\end{packed_enum}
-			
-		\end{packed_item}
-		
-		\noindent primjer url-a: \url{https://www.fer.unizg.hr/predmet/proinz/projekt}
-		
-		\noindent posebni znakovi: \# \$ \% \& \{ \} \_ 
-		$|$ $<$ $>$ 
-		\^{} 
-		\~{} 
-		$\backslash$ 
-		
-		\begin{longtabu} to \textwidth {|X[8, l]|X[8, l]|X[16, l]|} %definicija širine tablice, širine stupaca i poravnanje
-			
-			%definicija naslova tablice
-			\hline \multicolumn{3}{|c|}{\textbf{naslov unutar tablice}}	 \\[3pt] \hline
-			\endfirsthead
-			
-			%definicija naslova tablice prilikom prijeloma
-			\hline \multicolumn{3}{|c|}{\textbf{naslov unutar tablice}}	 \\[3pt] \hline
-			\endhead
-			
-			\hline 
-			\endlastfoot
-			
-			\rowcolor{LightGreen}IDKorisnik & INT	&  	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod  	\\ \hline
-			korisnickoIme	& VARCHAR &   	\\ \hline 
-			email & VARCHAR &   \\ \hline 
-			ime & VARCHAR	&  		\\ \hline 
-			\cellcolor{LightBlue} primjer	& VARCHAR &   	\\ \hline 
-			
-		\end{longtabu}
-		
-
-		\begin{table}[H]
-			
-			\begin{longtabu} to \textwidth {|X[8, l]|X[8, l]|X[16, l]|} 
-				
-				\hline 
-				\endfirsthead
-				
-				\hline 
-				\endhead
-				
-				\hline 
-				\endlastfoot
-				
-				\rowcolor{LightGreen}IDKorisnik & INT	&  	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod  	\\ \hline
-				korisnickoIme	& VARCHAR &   	\\ \hline 
-				email & VARCHAR &   \\ \hline 
-				ime & VARCHAR	&  		\\ \hline 
-				\cellcolor{LightBlue} primjer	& VARCHAR &   	\\ \hline 
-				
-				
-			\end{longtabu}
+		{Prije korištenja same aplikacije, ukoliko je korisnik novi igrač, dužan je najprije registrirati se. Za registraciju potrebni su:
+		}
 	
-			\caption{\label{tab:referencatablica} Naslov ispod tablice.}
-		\end{table}
+		\begin{packed_item}
+			\item {korisničko ime,}
+			\item {fotografija,}
+			\item {lozinka,}
+			\item {e-mail adresa.}
+		\end{packed_item}
+		
+		{Validacijom podataka utvrđuje se ispravnost unosa podataka te se provjerava postoji li već korisnik s istim korisničkim imenom ili e-mail adresom. Kada registracije bude gotova, korisniku se na navedenu adresu šalje poveznica putem koje potvrđuje svoj račun. Tek nakon što je račun potvrđen, omogućuje se ulazak u sâm igrački sustav.}
+		{Ako je igrač već prethodno registriran, on u sustav ulazi upisujući korisničko ime ili e-mail adresu, i lozinku.}\\ \\
+		
+		\textbf{\textit{2.2.2 Korištenje sustava}}\\
+		
+		\textbf{\textit{\small2.2.2.1 Početni zaslon i mogućnosti}}\\
 		
 		
-		%unos slike
-		\begin{figure}[H]
-			\includegraphics[scale=0.4]{slike/aktivnost.PNG} %veličina slike u odnosu na originalnu datoteku i pozicija slike
-			\centering
-			\caption{Primjer slike s potpisom}
-			\label{fig:promjene}
-		\end{figure}
+		{Pri ulasku u sustav korisniku se na karti prikazuje njegova lokacija zajedno s obližnjim lokacijama. Pritiskom na određenu lokaciju otvara se prozor s atributima poput naziva lokacije, opisa, fotografije, kategorije i jačina karte te lokacije. Kategorije lokacija uključuju naseljena mjesta, vrhove planina i gora, umjetničke instalacije... Na zaslonu je u lijevom gornjem kutu simbol za padajući izbornik. Pritiskom na taj simbol, izbornik se otvara na vrhu ili sa strane, ovisno o veličini ekrana, te prikazuje simbole koji označavaju:  }
 		
-		\begin{figure}[H]
-			\includegraphics[width=.9\linewidth]{slike/aktivnost.PNG} %veličina u odnosu na širinu linije
-			\caption{Primjer slike s potpisom 2}
-			\label{fig:promjene2} %label mora biti drugaciji za svaku sliku
-		\end{figure}
+			\begin{packed_item}
+			\item {Profil korisnika - otvara novi prozor u kojem se prikazuju podatci o korisniku(korisničko ime, fotografija, lozinka, e-mail adresa). Za fotografiju i korisničko ime sa strane nudi se mogućnost uređivanja.}\\
+			\item {Kolekciju korisnikovih karata - otvara novi prozor unutar kojega su prikazane karte koje je korisnik skupio. Karte je zatim moguće poredati prema kategorijama ili prema jačini.}\\
+			\item {Globalnu rang ljestvicu - otvara novi prozor koji prikazuje redne brojeve igrača, njihova korisnička imena i brojeve bodova poredane silazno.}\\
+			\item {Pomoć korisniku - otvara prozor putem kojega se prikazuju kratke upute o korištenju sustava. Osim toga, ovaj prozor nudi mogućnosti prijave da određena lokacija postane nova karta te kontaktiranja administratora ukoliko korisnik ima primjedbi ili prijedloga. }
+			\end{packed_item}
 		
-		Referenciranje slike \ref{fig:promjene2} u tekstu.
+		{Izbornik se zatvara ponovnim klikom na njegov simbol te se vraća početni zaslon. Igrač zatim svoje stvarno kretanje prati na karti te pokušava obići što više stvarnih lokacija. Kada igrač stigne na neku lokaciju koja je označena kao karta, pojavljuje se poruka koja javlja da korisnik ima novu lokaciju u kolekciji karata te prikazuje atribute te lokacije.}\\ \\ \\
+		
+		\textbf{\textit{\small2.2.2.2 Borba}}\\
+		{}
+		
 		
 		\eject
-		
 	
