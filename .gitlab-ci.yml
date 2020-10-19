@@ -1,0 +1,14 @@
+stages:
+  - compile-pdf
+
+compile-pdf:
+  stage: compile-pdf
+  image: aergus/latex
+  script:
+    - cd dokumentacija
+    - latexmk -pdf PROGI_2020_Ferllowship.tex
+  artifacts:
+    paths:
+      - dokumentacija/PROGI_2020_Ferllowship.pdf
+  only:
+    - devdoc
