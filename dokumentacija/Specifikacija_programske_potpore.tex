@@ -1,19 +1,13 @@
 \chapter{Specifikacija programske potpore}
 		
-	\section{Funkcionalni zahtjevi}
-			
-			\textbf{\textit{dio 1. revizije}}\\
-			
-			\textit{Navesti \textbf{dionike} koji imaju \textbf{interes u ovom sustavu} ili  \textbf{su nositelji odgovornosti}. To su prije svega korisnici, ali i administratori sustava, naručitelji, razvojni tim.}\\
-				
-			\textit{Navesti \textbf{aktore} koji izravno \textbf{koriste} ili \textbf{komuniciraju sa sustavom}. Oni mogu imati inicijatorsku ulogu, tj. započinju određene procese u sustavu ili samo sudioničku ulogu, tj. obavljaju određeni posao. Za svakog aktora navesti funkcionalne zahtjeve koji se na njega odnose.}\\
-			
+	\section{Funkcionalni zahtjevi}			
 			
 			\noindent \textbf{Dionici:}
 			
 			\begin{packed_enum}
 				
 				\item Igrači
+				\item Kartografi
 				\item Administrator			
 				\item Razvojni tim
 				
@@ -27,39 +21,69 @@
 				
 				\begin{packed_enum}
 					
-					\item Obaviti registraciju unosom korisničkog imena, fotografije, e-mail adrese i lozinke
-					\item Ukoliko je korisnik već registriran u sustavu, mora se prijaviti koristeći korisničko ime ili e-mail adresu i lozinku
+					\item obaviti registraciju:
+						\begin{packed_enum}
+							\item kao igrač  unosom korisničkog imena, fotografije, e-mail adrese i lozinke
+							\item kao kartograf unosom korisničkog imena, fotografije, e-mail adrese, lozinke, IBAN-a te fotografije osobne iskaznice
+						\end{packed_enum}
+					\item ukoliko je korisnik već registriran u sustavu, mora se prijaviti koristeći korisničko ime ili e-mail adresu i lozinku
 				\end{packed_enum}
 			
 				\item  \underbar{Igrač (inicijator) može:}
 					
 					\begin{packed_enum}
 					
-						\item Pregledavati i mijenjati svoje korisničke podatke
-						\item Izbrisati svoj korisnički račun
-						\item Vidjeti kartu na kojoj su označene lokacije na kojima se mogu skupiti karte te njegova lokacija
-						\item Informacije o lokacijama (naziv, opis, fotografiju, kategoriju, jačinu karte)
-						\item Kolekciju svojih karata
-						\item ....jos treba
+						\item pregledavati i mijenjati svoje korisničke podatke
+						\item izbrisati svoj korisnički račun
+						\item vidjeti kartu na kojoj su označene lokacije na kojima se mogu skupiti karte te njegova lokacija
+						\item vidjeti informacije o lokacijama (naziv, opis, fotografiju, kategoriju i jačinu karte te lokacije)
+						\item vidjeti kolekciju svojih karata
+						\item vidjeti popis ostalih aktivnih igrača koji se nalaze u krugu od 50km i s njima ući u borbu
+						\item prijaviti novu lokaciju
+						\item vidjeti globalnu statistiku odigranih borbi i sakupljenih lokacija
+						\item vidjeti poredak svih igrača
+						\item vidjeti profil drugog igrača (njegove karte, rang na globalnoj ljestvici i statistike vezane uz zadnjih 10 borbi s drugim igračima)
 					
 					\end{packed_enum}
+				
+				\item  \underbar{Kartograf (inicijator) može:}
+				
+				\begin{packed_enum}
+					
+					\item vidjeti kartu sa:
+					\begin{packed_enum}
+						
+						\item prijavljenim lokacijama za unos u bazu podataka
+						\item prikazanim najkraćim putem do lokacije koju treba provjeriti na terenu
+						\item već unesenim lokacijama u bazi podataka
+					
+					\end{packed_enum}
+					
+					\item odbiti, potvrditi, urediti ili označiti da je potrebna potvrda s terena za prijavljenu lokaciju
+					\item dodavati lokacije u bazu podataka
+					\item vidjeti i izmjeniti svoje osobne podatke
+					
+				\end{packed_enum}
 			
 				\item  \underbar{Administrator (inicijator) može:}
 				
 				\begin{packed_enum}
 					
-					\item Vidjeti popis svih registriranih korisnika i njihovih osobnih podataka
-					\item Brisati korisnike
-					\item  ...treba jos
+					\item vidjeti i uređivati popis svih korisnika i njihovih osobnih podataka
+					\item dodjeliti igračima privremeno isključenje iz igre
+					\item vidjeti i uređivati postojeće lokacije
+					\item vidjeti globalnu statistiku odigranih borbi i sakupljenih lokacija
+					\item vidjeti poredak svih igrača
 					
 				\end{packed_enum}
 			
-				\item  \underbar{Aktor 2 (sudionik) može:}
+				\item  \underbar{Baza podataka (sudionik):}
 				
 				\begin{packed_enum}
 					
-					\item funkcionalnost 1
-					\item funkcionalnost 2
+					\item pohranjuje sve podatke o korisnicima i njihovim ovlastima
+					\item  pohranjuje sve podatke o kartama i lokacijama
+					\item  pohranjuje sve podatke o borbama i rang listama igrača
 					
 				\end{packed_enum}
 			\end{packed_enum}
