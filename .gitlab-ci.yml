@@ -12,3 +12,4 @@ compile-pdf:
       - dokumentacija/PROGI_2020_Ferllowship.pdf
   only:
     - devdoc
+    - /^doc/.*$/
