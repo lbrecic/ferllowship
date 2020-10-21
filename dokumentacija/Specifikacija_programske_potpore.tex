@@ -96,61 +96,20 @@
 		
 				\subsubsection{Opis obrazaca uporabe}
 				
-						\noindent \underbar{\textbf{UC13 - Karta}}
-					\begin{packed_item}
-						
-						\item \textbf{Glavni sudionik: }Igrač
-						\item  \textbf{Cilj:} Igrač može vidjeti lokacije i ostale igrače u svojoj okolini
-						\item  \textbf{Sudionici:} Baza podataka
-						\item  \textbf{Preduvjet:} Igrač je prijavljen i ima uključenu lokaciju
-						\item  \textbf{Opis osnovnog tijeka:}
-						
-						\item[] \begin{packed_enum}
-							
-							\item Korisnik odabire opciju za prikaz karte
-							\item Otvara se karta s prikazom lokacija i igrača u blizini korisnika
-						\end{packed_enum}
-						
-						\item  \textbf{Opis mogućih odstupanja:}
-						
-						\item[] \begin{packed_item}
-							
-							\item[2.a] Igrač nema uključenu lokaciju
-							\item[] \begin{packed_enum}
-								
-								\item Sustav obavještava korisnika da uključi lokaciju
-							\end{packed_enum}
-						\end{packed_item}
-					\end{packed_item}
-					
-					
 					\noindent \underbar{\textbf{UC1 - Početni zaslon za neprijavljenog korisnika}}
 					\begin{packed_item}
 						
 						\item \textbf{Glavni sudionik: }Korisnik
-						\item  \textbf{Cilj:} ?
+						\item  \textbf{Cilj:} Prikaz početnog zaslona za neprijavljenog korisnika
 						\item  \textbf{Sudionici:} Baza podataka
 						\item  \textbf{Preduvjet:} -
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
 							
-							\item 
-							\item 
+							\item Korisnik pristupa aplikaciji
+							\item Otvara se poečtni zaslon za neprijavljenog korisnika
 						\end{packed_enum}
-						
-						\item  \textbf{Opis mogućih odstupanja:}
-						
-						\item[] \begin{packed_item}
-							
-							\item[2.a] 
-							\item[] \begin{packed_enum}
-								
-								\item 
-								\item 
-							\end{packed_enum}
-							
-						\end{packed_item}
 					\end{packed_item}
 					
 					
@@ -457,7 +416,7 @@
 						\end{packed_item}
 					\end{packed_item}
 				
-					\noindent \underbar{\textbf{UC -Pregled vlastite statistike igrača}}
+					\noindent \underbar{\textbf{UC13 -Pregled vlastite statistike igrača}}
 					\begin{packed_item}
 						
 						\item \textbf{Glavni sudionik: }Igrač
@@ -570,7 +529,62 @@
 							\item[2.a] Korisnik nije skupio niti jednu kartu
 							\item[] \begin{packed_enum}
 								
-								\item Sustav obavještava korisnika da igrač nije sakupio niti jednu kartu
+								\item Sustav obavještava korisnika da igrač nije sakupio niti jednu kartu			
+							\end{packed_enum}
+						\end{packed_item}
+					\end{packed_item}
+				
+					\noindent \underbar{\textbf{UC19 - Izazivanje na borbu igrača u blizini}}
+					\begin{packed_item}
+						
+						\item \textbf{Glavni sudionik: }Igrač
+						\item  \textbf{Cilj:} Izazvati ostale igrače na borbu
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Igrač je prijavljen i sakupio barem tri karte
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+							
+							\item Korisnik odabire opciju "Izazovi"
+							\item Otvara se stranica za borbu igrača
+						\end{packed_enum}
+						
+						\item  \textbf{Opis mogućih odstupanja:}
+						
+						\item[] \begin{packed_item}
+							
+							\item[2.a] Korisnik nije skupio barem tri karte
+							\item[] \begin{packed_enum}
+								
+								\item Sustav obavještava korisnika da mora skupiti barem tri kartu da moze sudjelovati u borbi
+								
+							\end{packed_enum}
+						\end{packed_item}
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC20 - Odluka o prihvaćanju izazova}}
+					\begin{packed_item}
+						
+						\item \textbf{Glavni sudionik: }Igrač
+						\item  \textbf{Cilj:} Igrač može prihvatiti ili odbiti borbu
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Igrač je prijavljen i sakupio barem tri karte
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+							
+							\item Korisnik odabire opciju za prihvaćanje izazova ili odbijanje
+						\end{packed_enum}
+						
+						\item  \textbf{Opis mogućih odstupanja:}
+						
+						\item[] \begin{packed_item}
+							
+							\item[2.a] Korisnik nije skupio barem tri karte
+							\item[] \begin{packed_enum}
+								
+								\item Sustav obavještava korisnika da mora skupiti barem tri kartu da može sudjelovati u borbi
+								\item Borba se odbija
 								
 							\end{packed_enum}
 						\end{packed_item}
@@ -580,7 +594,7 @@
 					\begin{packed_item}
 						
 						\item \textbf{Glavni sudionik: }Igrač
-						\item  \textbf{Cilj:} Borba igrača za najbolji rang
+						\item  \textbf{Cilj:} Borba igrača za najbolji globalni rang
 						\item  \textbf{Sudionici:} Baza podataka
 						\item  \textbf{Preduvjet:} Igrač je prijavljen
 						\item  \textbf{Opis osnovnog tijeka:}
@@ -593,7 +607,7 @@
 						\end{packed_enum}
 					\end{packed_item}
 				
-					\noindent \underbar{\textbf{UC10 - Pregled globalnog ranga igrača}}
+					\noindent \underbar{\textbf{UC22 - Pregled globalnog ranga igrača}}
 					\begin{packed_item}
 						
 						\item \textbf{Glavni sudionik: }Igrač
@@ -607,15 +621,44 @@
 							\item Korisnik odabire opciju za pregled globalnog ranga igrača
 							\item Otvara se stranica s globalnim rangom igrača
 						\end{packed_enum}
-						
 					\end{packed_item}
 				
-					
-					
-					\noindent \underbar{\textbf{UC13 - Dodavanje lokacije}}
+					\noindent \underbar{\textbf{UC23 - Globalna statistika odigranih borbi}}
 					\begin{packed_item}
 						
-						\item \textbf{Glavni sudionik: }Igrač, kartograf
+						\item \textbf{Glavni sudionik: }Igrač
+						\item  \textbf{Cilj:} Globalna statistika odigranih borbi
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Igrač je prijavljen
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+							
+							\item Korisnik odabire opciju za pregled globalne statistike odigranih borbi
+							\item Otvara se stranica globalnom statistikom odigranih borbi
+						\end{packed_enum}
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC24 - Globalna statistika sakupljenih lokacija}}
+					\begin{packed_item}
+						
+						\item \textbf{Glavni sudionik: }Igrač
+						\item  \textbf{Cilj:} Globalna statistika sakupljenih lokacija
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Igrač je prijavljen
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+							
+							\item Korisnik odabire opciju za pregled globalne statistike sakupljenih lokacija
+							\item Otvara se stranica globalnom statistikom sakupljenih lokacija
+						\end{packed_enum}
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC25 - Prijava nove lokacije}}
+					\begin{packed_item}
+						
+						\item \textbf{Glavni sudionik: }Igrač
 						\item  \textbf{Cilj:} Dodati novu lokaciju
 						\item  \textbf{Sudionici:} Baza podataka
 						\item  \textbf{Preduvjet:} Igrač je prijavljen
@@ -625,15 +668,30 @@
 							
 							\item Korisnik odabire lokaciju koju želi dodati
 							\item Korisnik dodaje karakteristike lokacije
+						\end{packed_enum}
+					\end{packed_item}
+				
+					\noindent \underbar{\textbf{UC26 - Verificiranje prijavljene lokacije}}
+					\begin{packed_item}
+						
+						\item \textbf{Glavni sudionik: }Kartograf
+						\item  \textbf{Cilj:} Verificirati prijavljenu lokaciju
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Kartograf je prijavljen
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+							
 							\item Kartograf potvrđuje ispravnost lokacije
 							\item Baza podataka se ažurira
 						\end{packed_enum}
 					\end{packed_item}
+					
 				
-					\noindent \underbar{\textbf{UC14 - Brisanje lokacije}}
+					\noindent \underbar{\textbf{UC27 - Brisanje lokacije}}
 					\begin{packed_item}
 						
-						\item \textbf{Glavni sudionik: }Kartograf
+						\item \textbf{Glavni sudionik: }Kartograf, administrator
 						\item  \textbf{Cilj:} Obrisati nepostojeću/neispravnu lokaciju
 						\item  \textbf{Sudionici:} Baza podataka
 						\item  \textbf{Preduvjet:} -
@@ -641,18 +699,51 @@
 						
 						\item[] \begin{packed_enum}
 							
-							\item Kartograf odabire lokaciju koju želi obrisati
+							\item Kartograf/administrator odabire lokaciju koju želi obrisati
 							\item Baza podataka se ažurira
 						\end{packed_enum}
 					\end{packed_item}
 				
-					\noindent \underbar{\textbf{UC15 - Promjena podataka lokacije}}
+					\noindent \underbar{\textbf{UC28 - Pregled svih prijavljenih(neobrađenih) lokacija}}
 					\begin{packed_item}
 						
 						\item \textbf{Glavni sudionik: }Kartograf
-						\item  \textbf{Cilj:} Promjeniti zastarijele podatke o lokaciji
+						\item  \textbf{Cilj:} Pregled prijavljenih lokacija koje nisu obrađene
 						\item  \textbf{Sudionici:} Baza podataka
-						\item  \textbf{Preduvjet:} -
+						\item  \textbf{Preduvjet:} Kartograf je prijavljen
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+							
+							\item Korisnik odabire opciju pregled svih prijavljenih lokacija
+							\item Otvara se popis svih prijavljenih lokacija koje nisu obrađene
+						\end{packed_enum}
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC29 - Karta s prikazanim najkraćim putem do lokacije za provjeru}}
+					\begin{packed_item}
+						
+						\item \textbf{Glavni sudionik: }Kartograf
+						\item  \textbf{Cilj:} Prikaz karte s s prikazanim najkraćim putem do lokacije za provjeru
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Kartograf je prijavljen
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+							
+							\item Korisnik odabire opciju karta s prikazanim najkraćim putem do lokacije za provjeru
+							\item Otvara se karta
+						\end{packed_enum}
+					\end{packed_item}
+					
+				
+					\noindent \underbar{\textbf{UC30 - Uređivanje postojeće lokacije}}
+					\begin{packed_item}
+						
+						\item \textbf{Glavni sudionik: }Kartograf, administrator
+						\item  \textbf{Cilj:} Promjeniti podatke o lokaciji
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Kartograf je prijavljen
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
@@ -671,11 +762,27 @@
 							\item[] \begin{packed_enum}
 								\item Sustav obavještava kartografa da nije spremio podatke prije izlaska iz prozora
 							\end{packed_enum}
-							
 						\end{packed_item}
 					\end{packed_item}
+				
+					\noindent \underbar{\textbf{UC31 - Pregled svih odigranih borbi}}
+					\begin{packed_item}
+						
+						\item \textbf{Glavni sudionik: }Administrator
+						\item  \textbf{Cilj:} Pregled svih odigranih borbi
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} -
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+							
+							\item Korisnik odabire opciju za pregled svih odigranih borbi
+							\item Otvara se stranica s prikazom svih odigranih borbi
+						\end{packed_enum}
+					\end{packed_item}
 					
-					\noindent \underbar{\textbf{UC16 - Pregled korisnika}}
+					
+					\noindent \underbar{\textbf{UC32 - Pregled korisnika}}
 					\begin{packed_item}
 						
 						\item \textbf{Glavni sudionik: }Administrator
@@ -691,7 +798,7 @@
 						\end{packed_enum}
 					\end{packed_item}
 				
-					\noindent \underbar{\textbf{UC17 - Brisanje korisnika}}
+					\noindent \underbar{\textbf{UC33 - Brisanje korisnika}}
 					\begin{packed_item}
 						
 						\item \textbf{Glavni sudionik: }Administrator
@@ -709,7 +816,7 @@
 						\end{packed_enum}
 					\end{packed_item}
 				
-					\noindent \underbar{\textbf{UC18 - Promjena prava pristupa}}
+					\noindent \underbar{\textbf{UC34 - Promjena prava pristupa}}
 					\begin{packed_item}
 						
 						\item \textbf{Glavni sudionik: }Administrator
@@ -725,6 +832,24 @@
 							\item Administrator mijenja razinu pristupa željenom korisniku
 						\end{packed_enum}
 					\end{packed_item}
+				
+					\noindent \underbar{\textbf{UC35 - Privremeno blokiranje korisnika}}
+					\begin{packed_item}
+						
+						\item \textbf{Glavni sudionik: }Administrator
+						\item  \textbf{Cilj:} Privremeno blokirati korisnika
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Korisnik je prijavljen i dodijeljena su mu prava administratora
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+							
+							\item Administrator odabire opciju privremenog blokiranja korisnika
+							\item Administrator pronalazi željenog korisnika
+							\item Administrator privremeno blokira željenog korisnika
+						\end{packed_enum}
+					\end{packed_item}
+					
 					
 					
 				\subsubsection{Dijagrami obrazaca uporabe}
