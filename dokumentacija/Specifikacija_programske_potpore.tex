@@ -582,7 +582,7 @@
 							\item[2.a] Korisnik nije skupio barem tri karte
 							\item[] \begin{packed_enum}
 								
-								\item Sustav obavještava korisnika da mora skupiti barem tri kartu da može sudjelovati u borbi
+								\item Sustav obavještava korisnika da mora skupiti barem tri karte da može sudjelovati u borbi
 								\item Borba se odbija
 								
 							\end{packed_enum}
@@ -602,8 +602,25 @@
 							
 							\item Korisnik odabire igrača s kojim se želi boriti
 							\item Izazvani igrač prihvaća ili odbija borbu
-							\item Ako je igrač prihvatio borbu, borba počinje
+							\item Ako je izazvani igrač prihvatio borbu, igrač odabire 3 karte iz svoje kolekcije s kojima želi ući u borbu te čeka da suparnik učini isto 
+							\item Igrač koji je pokrenuo borbu igra prvi tako što izvlači jednu od tri izabrane karte, na što suparnik odgovara izvlačenjem jedne od svojih karata
+							\item Sustav uspoređuje dvije karte te igraču sa jačom kartom upisuje bod
+							\item Koraci 3. - 5. ponavljaju se 3 puta
+							\item Igrač s više bodova pobjeđuje borbu
 						\end{packed_enum}
+					
+					\item  \textbf{Opis mogućih odstupanja:}
+					
+					\item[] \begin{packed_item}
+						
+						\item[2.a] Izazvani igrač odbija poziv na borbu
+						\item[] \begin{packed_enum}
+							
+							\item Sustav obavještava korisnika da je borba odbijena
+							\item Borba se odbija
+							
+						\end{packed_enum}
+					\end{packed_item}
 					\end{packed_item}
 				
 					\noindent \underbar{\textbf{UC22 - Pregled globalnog ranga igrača}}
