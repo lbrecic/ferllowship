@@ -108,7 +108,7 @@
 						\item[] \begin{packed_enum}
 							
 							\item Korisnik pristupa aplikaciji
-							\item Otvara se poečtni zaslon za neprijavljenog korisnika
+							\item Otvara se početni zaslon za neprijavljenog korisnika
 						\end{packed_enum}
 					\end{packed_item}
 					
@@ -849,25 +849,76 @@
 						\end{packed_enum}
 					\end{packed_item}
 					
-					
+				\eject
 					
 				\subsubsection{Dijagrami obrazaca uporabe}
 					
-					\textit{Prikazati odnos aktora i obrazaca uporabe odgovarajućim UML dijagramom. Nije nužno nacrtati sve na jednom dijagramu. Modelirati po razinama apstrakcije i skupovima srodnih funkcionalnosti.}
+						%unos slike
+					\begin{figure}[H]
+						\includegraphics[width=\textwidth, height=16cm]{dijagrami/OU_igrac} 
+						\centering
+						\caption{Dijagram obrasca uporabe, funkcionalnost korisnika i klijenta}
+						\label{}
+					\end{figure}
+					
+					\begin{figure}[H]
+						\includegraphics[width=\textwidth, height=14cm]{dijagrami/OU_kartograf}
+						\centering
+						\caption{Dijagram obrasca uporabe, funkcionalnost kartografa}
+						\label{fig:promjene2} %label mora biti drugaciji za svaku sliku
+					\end{figure}
+				
+					\begin{figure}[H]
+						\includegraphics[width=\textwidth, height=12cm]{dijagrami/OU_admin} 
+						\centering
+						\caption{Dijagram obrasca uporabe, funkcionalnost administratora}
+						\label{}
+					\end{figure}
+					
+					
 				\eject		
 				
 			\subsection{Sekvencijski dijagrami}
+			
+				\textbf{Obrazac uporabe UC5 - Pregled lokacija na karti}\\
+					
+					{Igrač šalje zahtjev za prikaz karte s lokacijama kako bi mogao odabrati lokaciju koju želi skupiti. Poslužitelj dohvaća lokacije i prikazuje ih. Odabirom lokacije, poslužitelj iz baze podataka dohvaća osnovne podatke o lokaciji i prikazuje ih klijentu. Ako igrač nije skupio karticu, prikazuje mu se opcija da je sakupi. Poslužitelj tu informaciju prosljeđuje bazi koja spremna promjenu.}\\
+					
+					\begin{figure}[H]
+						\includegraphics[width=\linewidth, height=14cm]{dijagrami/sd_UC5}
+						\centering
+						\caption{Sekvencijski dijagram UC5}
+						\label{}
+					\end{figure}
+				\newpage	
 				
-				\textbf{\textit{dio 1. revizije}}\\
+				\textbf{Obrazac uporabe UC30 - Uređivanje postojeće lokacije}\\
+					
+					{Kartograf odabire opciju "Prikaz karte". Poslužitelj dohvaća popis lokacija iz baze podataka te ih prikazuje kartografu na karti. Kartograf odabire lokaciju. Poslužitelj dohvaća podatke o lokaciji iz baze podataka te ih prikazuje kartografu.Kartograf šalje zahtjev za promjenu podataka o lokaciji. Poslužitelj mu daje pristup i kartograf unosi nove podatke o željenoj lokaciji. Poslužitelj izmijeni podatke u bazi podataka koja vraća potvrdu.}\\
+					
+					\begin{figure}[H]
+						\includegraphics[width=\linewidth, height=14cm]{dijagrami/sd_UC30}				
+						\centering
+						\caption{Sekvencijski dijagram UC30}
+						\label{}
+					\end{figure}
+					
 				
-				\textit{Nacrtati sekvencijske dijagrame koji modeliraju najvažnije dijelove sustava (max. 4 dijagrama). Ukoliko postoji nedoumica oko odabira, razjasniti s asistentom. Uz svaki dijagram napisati detaljni opis dijagrama.}
 				\eject
 	
 		\section{Ostali zahtjevi}
 		
-			\textbf{\textit{dio 1. revizije}}\\
-		 
-			 \textit{Nefunkcionalni zahtjevi i zahtjevi domene primjene dopunjuju funkcionalne zahtjeve. Oni opisuju \textbf{kako se sustav treba ponašati} i koja \textbf{ograničenja} treba poštivati (performanse, korisničko iskustvo, pouzdanost, standardi kvalitete, sigurnost...). Primjeri takvih zahtjeva u Vašem projektu mogu biti: podržani jezici korisničkog sučelja, vrijeme odziva, najveći mogući podržani broj korisnika, podržane web/mobilne platforme, razina zaštite (protokoli komunikacije, kriptiranje...)... Svaki takav zahtjev potrebno je navesti u jednoj ili dvije rečenice.}
+			\begin{packed_item}
+				\item Sustav treba omogućiti rad više korisnika u stvarnom vremenu 
+				\item Korisničko sučelje i sustav moraju podržavati hrvatsku abecedu (dijakritičke znakove) pri unosu tekstualnog sadržaja
+				\item Izvršavanje dijela programa u kojem se pristupa bazi podataka ne smije trajati duže od nekoliko sekundi
+				\item Sustav treba biti implementiran kao web aplikacija koristeći objektno-orijentirane jezike
+				\item Neispravno korištenje korisničkog sučelja ne smije narušiti funkcionalnost i rad sustava
+				\item Sustav treba biti jednostavan za korištenje, korisnici se moraju znati koristiti sučeljem bez opširnih uputa
+				\item Nadogradnja sustava ne smije narušavati postojeće funkcionalnosti sustava
+				\item Veza s bazom podataka mora biti kvalitetno zaštićena, brza i otporna na vanjske greške
+				\item Pristup sustavu mora biti omogućen iz javne mreže pomoću HTTPS.
+			\end{packed_item}
 			 
 			 
 			 
