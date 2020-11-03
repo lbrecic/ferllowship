@@ -1,0 +1,78 @@
+body, html, #root, .app, .container {
+  width: 100%;
+  height: 100%;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+
+.container {
+  font-size: 28px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #2E3F30;
+}
+
+.loginForm {
+ box-sizing: border-box;
+ width: 100%;
+ max-width: 400px;
+ padding-left: 20px;
+ padding-right: 20px;
+}
+
+.inputField {
+ padding-top: 16px;
+}
+
+.input {
+ box-sizing: border-box;
+ outline: none;
+ border: solid 3px #282c34;
+ border-radius: 4px;
+ color: #292929;
+ width: 100%;
+ padding: 12px;
+ font-size: 14px;
+ background: rgba(255, 255, 255, 1);
+ box-shadow: 0 0 1px #FF0000, 0 0 2px #0000FF;
+}
+
+.submitButton {
+ padding-top: 16px;
+ color: #565656;
+}
+
+
+.btn {
+ width: 100%;
+ min-width: 280px;
+ color: #565656;
+ padding: 12px;
+ font-size: 14px;
+ font-weight: bold;
+ border: solid 3px #292929;
+ border-radius: 4px;
+ background: #fff;
+ cursor: pointer;
+ box-shadow: 0 0 1px #FF0000, 0 0 2px #0000FF;
+}
+
+.title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 40px;
+  text-align: center;
+  text-shadow: 0 0 3px #FF0000, 0 0 5px #0000FF;
+}
+
+.register{
+  font-weight:600;
+  font-size: 30px;
+  padding-top: 50px;
+  text-align: center;
+  margin: auto;
+  font-size:14px;
+  text-shadow: 0 0 3px #FF0000, 0 0 5px #0000FF;
+}
