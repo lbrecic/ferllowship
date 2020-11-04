@@ -603,10 +603,13 @@
 							\item Korisnik odabire igrača s kojim se želi boriti
 							\item Izazvani igrač prihvaća ili odbija borbu
 							\item Ako je izazvani igrač prihvatio borbu, igrač odabire 3 karte iz svoje kolekcije s kojima želi ući u borbu te čeka da suparnik učini isto 
-							\item Igrač koji je pokrenuo borbu igra prvi tako što izvlači jednu od tri izabrane karte, na što suparnik odgovara izvlačenjem jedne od svojih karata
+							\item Igrač koji ima manji globalni rang igra prvi 
+							\item Igrač izvlači jednu od tri izabrane karte, na što suparnik odgovara izvlačenjem jedne od svojih karata
 							\item Sustav uspoređuje dvije karte te igraču sa jačom kartom upisuje bod
-							\item Koraci 3. - 5. ponavljaju se 3 puta
+							\item Igrač koji pobijedi u rundi prvi baca kartu u idućoj
+							\item Koraci 5. - 7. ponavljaju se 3 puta
 							\item Igrač s više bodova pobjeđuje borbu
+							
 						\end{packed_enum}
 					
 					\item  \textbf{Opis mogućih odstupanja:}
@@ -908,6 +911,18 @@
 						\label{}
 					\end{figure}
 				\newpage	
+				
+				\textbf{Obrazac uprabe UC21 - Borba igrača}
+					
+					{Igrač odabire opciju "Prikaz karte". Poslužitelj dohvaća igrače u blizini iz baze podataka te ih prikazuje igraču na karti. Igrač odabire igrača s kojim se želi boriti. Poslužitelj dohvaća podatke o odabranom igraču iz baze podataka te ih prikazuje igraču. Igrač pokreče borbu. Ako je igrač odbio borbu ispiše se poruka da je borba odbijena. Inače ispiše se poruka da je borba prihvaćena i započinje borba. Igrač odabire opciju "Prikaz karata". Poslužitelj dohvaća karte iz baze podataka te ih prikazuje igraču. Igrači biraju 3 karte s kojima će se boriti. Na početku borbe prikazuje se koji igrač igra prvi. Poslužitelj dohvaća globalni rang igrača iz baze podataka te prikazuje igrača koji ima manji globalni rang. Dok traje borba igrači bacaju naizmjenično kartu. Poslužitelj uspoređuje karte te vraća jaču kartu i dodaje bod igraču čija je to karta. Igrač koji ima više bodova je pobjednik.}\\
+					
+					\begin{figure}[H]
+						\includegraphics[width=13cm, height=22cm]{dijagrami/sd_UC21}				
+						\centering
+						\caption{Sekvencijski dijagram UC21}
+						\label{}
+					\end{figure}
+				\newpage
 				
 				\textbf{Obrazac uporabe UC30 - Uređivanje postojeće lokacije}\\
 					
