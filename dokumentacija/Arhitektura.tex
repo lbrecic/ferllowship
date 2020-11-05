@@ -24,31 +24,94 @@
 			\subsection{Opis tablica}
 			
 
-				\textit{Svaku tablicu je potrebno opisati po zadanom predlošku. Lijevo se nalazi točno ime varijable u bazi podataka, u sredini se nalazi tip podataka, a desno se nalazi opis varijable. Svjetlozelenom bojom označite primarni ključ. Svjetlo plavom označite strani ključ}
+				{\textbf{Location}	Ovaj entitet sadržava sve važne informacije o lokacijama na kojima igrač može sakupiti karte. Sadrži atribute: ID lokacije, naziv lokacije, fotografiju lokacije i ID kategorije. Ovaj entitet u vezi je \textit{Many-to-One} s Category preko ID kategorije.}
 				
 				\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
 					
-					\hline \multicolumn{3}{|c|}{\textbf{korisnik - ime tablice}}	 \\[3pt] \hline
+					\hline \multicolumn{3}{|c|}{\textbf{location}}	 \\[3pt] \hline
 					\endfirsthead
 					
-					\hline \multicolumn{3}{|c|}{\textbf{korisnik - ime tablice}}	 \\[3pt] \hline
+					\hline \multicolumn{3}{|c|}{\textbf{location}}	 \\[3pt] \hline
 					\endhead
 					
 					\hline 
 					\endlastfoot
 					
-					\cellcolor{LightGreen}IDKorisnik & INT	&  	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam 	\\ \hline
-					korisnickoIme	& VARCHAR &   	\\ \hline 
-					email & VARCHAR &   \\ \hline 
-					ime & VARCHAR	&  		\\ \hline 
-					\cellcolor{LightBlue} primjer	& VARCHAR &   	\\ \hline 
+					\cellcolor{LightGreen}location\_id & INT	&   jedinstveni brojčani identifikator lokacije	\\ \hline
+					location\_name	& VARCHAR &  naziv lokacije 	\\ \hline 
+					location\_photo & UUID &  fotografija lokacije \\ \hline 
+					\cellcolor{LightBlue} category\_id	& INT &   jedinstveni brojčani identifikator kategorije	\\ \hline 
+					
+					
+				\end{longtabu}
+			
+				{\textbf{Category}	Ovaj entitet sadržava sve važne informacije o kategorijama koje lokacije mogu biti. Sadrži atribute: ID kategorije, naziv kategorije i broj bodova koje kategorija nosi. Ovaj entitet u vezi je \textit{One-to-Many} s Location preko ID kategorije.}
+				
+				\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
+					
+					\hline \multicolumn{3}{|c|}{\textbf{category}}	 \\[3pt] \hline
+					\endfirsthead
+					
+					\hline \multicolumn{3}{|c|}{\textbf{category}}	 \\[3pt] \hline
+					\endhead
+					
+					\hline 
+					\endlastfoot
+					
+					\cellcolor{LightGreen}category\_id & INT	&   jedinstveni brojčani identifikator kategorije	\\ \hline
+					category\_name	& VARCHAR &  naziv kategorije 	\\ \hline 
+					category\_points & INT &  bodovna vrijednost kategorije \\ \hline  
+					
+					
+				\end{longtabu}
+			
+				{\textbf{Card}	Ovaj entitet sadržava sve važne informacije o kartama koje igrači mogu posjedovati. Sadrži atribute: ID karte, broj bodova koje karte i ID lokacije. Ovaj entitet u vezi je \textit{Many-to-One} s Location preko ID lokacije te \textit{Many-to-One} s Deck preko ID karte.}
+
+				\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
+					
+					\hline \multicolumn{3}{|c|}{\textbf{card}}	 \\[3pt] \hline
+					\endfirsthead
+					
+					\hline \multicolumn{3}{|c|}{\textbf{card}}	 \\[3pt] \hline
+					\endhead
+					
+					\hline 
+					\endlastfoot
+					
+					\cellcolor{LightGreen}card\_id & INT	&   jedinstveni brojčani identifikator karte	\\ \hline 
+					card\_points & INT &  bodovna vrijednost karte \\ \hline 
+					\cellcolor{LightBlue} location\_id	& INT &   jedinstveni brojčani identifikator lokacije	\\ \hline 
+					
+					
+				\end{longtabu}
+			
+				{\textbf{Deck}	Ovaj entitet sadržava sve važne informacije o špilu koje igrač posjeduje. Sadrži atribute: korisničko ime i ID karte. Ovaj entitet u vezi je \textit{One-to-One} s Player preko korisničkog imena te \textit{One-to-Many} s Deck preko ID karte.}
+				
+				\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
+					
+					\hline \multicolumn{3}{|c|}{\textbf{deck}}	 \\[3pt] \hline
+					\endfirsthead
+					
+					\hline \multicolumn{3}{|c|}{\textbf{deck}}	 \\[3pt] \hline
+					\endhead
+					
+					\hline 
+					\endlastfoot
+					
+					\cellcolor{LightBlue}username & VARCHAR	&   korisničko ime igrača	\\ \hline
+					\cellcolor{LightBlue} card\_id	& INT &   jedinstveni brojčani identifikator karte	\\ \hline 
 					
 					
 				\end{longtabu}
 			
 			
 			\subsection{Dijagram baze podataka}
-				\textit{ U ovom potpoglavlju potrebno je umetnuti dijagram baze podataka. Primarni i strani ključevi moraju biti označeni, a tablice povezane. Bazu podataka je potrebno normalizirati. Podsjetite se kolegija "Baze podataka".}
+				\begin{figure}[H]
+					\includegraphics[width=\linewidth, height=14cm]{dijagrami/geofighterdb_diagram}				
+					\centering
+					\caption{E-R dijagram baze podataka}
+					\label{}
+				\end{figure}
 			
 			\eject
 			
