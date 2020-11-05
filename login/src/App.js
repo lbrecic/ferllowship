@@ -3,9 +3,19 @@ import UserStore    from './stores/UserStore';
 import LoginForm    from './LoginForm';
 import SubmitButton from './SubmitButton';
 import {observer}   from 'mobx-react';
+import RegisterForm     from './RegisterForm';
+import { BrowserRouter, Link, Route, Switch } from 'react-router-dom';
+import RegularButton from './RegularButton';
+
 import './App.css';
 
+
+
 class App extends React.Component {
+
+  state = {
+    show: false
+  };
 
   async componentDidMount(){
     try{
@@ -58,6 +68,28 @@ class App extends React.Component {
     }
   }
 
+  showRegister = e => {
+    this.setState({
+      show: !this.state.show
+    })
+  }
+
+  onClose = e => {
+    this.setState({
+      show: false
+    })
+  };
+
+
+  Register = e => {
+    this.setState({
+      show: true
+    })
+  }
+
+
+
+
   render() {
     if(UserStore.loading){
       return (
@@ -85,11 +117,20 @@ class App extends React.Component {
 
       return ( 
         <div className="app" >
-          <div className="container">
-             
+          <div className="container">          
             <LoginForm />
+            <div className="register">               
+            Nemaš račun?  
+              
+            <button className="btn" onClick={e=> {this.showRegister();}}
+              text='Registriraj se'> Registriraj se </button>
             
-          </div>
+            <RegisterForm  show={this.state.show} onClose={() => this.onClose()} />             
+             
+          
+          </div>               
+          
+          </div>     
         </div>
         );
     }

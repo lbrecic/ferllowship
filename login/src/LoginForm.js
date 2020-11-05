@@ -106,18 +106,8 @@ class LoginForm extends React.Component {
           onClick={() => this.doLogin()}
         />
 
-        <div className="register">
-          
-          Nemaš račun?        
-        </div>
-        <SubmitButton 
-          text='Registriraj se'
-          disabled={this.state.buttonDisabled}
-          onClick={() => this.doLogin()}
-        />
         
-
-
+        
     </div>
     );
   }

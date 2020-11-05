@@ -73,6 +73,13 @@ body, html, #root, .app, .container {
   padding-top: 50px;
   text-align: center;
   margin: auto;
+  margin-top: 0;
+  margin-bottom: 0;
   font-size:14px;
   text-shadow: 0 0 3px #FF0000, 0 0 5px #0000FF;
+}
+
+.registerForm{
+  padding-top: 0%;
+  margin-top: 0%;
 }
