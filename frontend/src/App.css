@@ -18,9 +18,7 @@ body, html, #root, .app, .container {
 .loginForm {
  box-sizing: border-box;
  width: 100%;
- max-width: 400px;
- padding-left: 20px;
- padding-right: 20px;
+ max-width: 275px;
 }
 
 .inputField {
@@ -48,7 +46,6 @@ body, html, #root, .app, .container {
 
 .btn {
  width: 100%;
- min-width: 280px;
  color: #565656;
  padding: 12px;
  font-size: 14px;
@@ -67,12 +64,21 @@ body, html, #root, .app, .container {
   text-shadow: 0 0 3px #FF0000, 0 0 5px #0000FF;
 }
 
+.title-register {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 32px;
+  text-align: center;
+  text-shadow: 0 0 3px #FF0000, 0 0 5px #0000FF;
+}
+
 .register{
   font-weight:600;
   font-size: 30px;
   padding-top: 50px;
   text-align: center;
   margin: auto;
+  width: 100%;
+  max-width: 275px;
   margin-top: 0;
   margin-bottom: 0;
   font-size:14px;

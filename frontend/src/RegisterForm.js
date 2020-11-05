@@ -95,9 +95,10 @@ class RegisterForm extends React.Component {
         } 
 
         return ( 
+        <div className="overlay">
         <div className="modal"> 
         <div className="registerForm modal-content" >
-            <div className='title'>
+            <div className='title-register'>
             Registriraj se
             </div>
             
@@ -134,7 +135,7 @@ class RegisterForm extends React.Component {
             <SubmitButton 
               text='Registriraj se'
               disabled={this.state.buttonDisabled}
-              onClick={() => this.doRegister()}
+              onClick={() => this.doRegister(), e => this.onClose(e)}
             /> 
             </div>
 
@@ -145,6 +146,7 @@ class RegisterForm extends React.Component {
              </button>
             </div>
           </div>
+        </div>
         </div>
         );
       }
