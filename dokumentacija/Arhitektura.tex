@@ -17,12 +17,106 @@
 				
 		\section{Baza podataka}
 			
-			\textbf{\textit{dio 1. revizije}}\\
+			Podatci potrebni za funkcioniranje naše aplikacije pohranjuju se u relacijsku bazu podataka. Osnovni objekt relacijske baze podataka je relacija - imenovana dvodimenzionalna tablica čiji stupci predstavljaju atribute, a retci opisuju entitete baze podataka (retci u relaciji zovu se n-torke).
+			Sljedeći entiteti sačinjavaju bazu podataka naše aplikacije:
+			\begin{packed_item}
+				\item Igrač (\textit{player})
+				\item Kartograf (\textit{mapper})
+				\item Administrator (\textit{admin})
+				\item Borba (\textit{fight})
+				\item Lokacija (\textit{location})
+				\item Kategorija lokacije (\textit{category})
+				\item Karta (\textit{card})
+				\item Špil karata (\textit{deck})
+			\end{packed_item}
 			
-		\textit{Potrebno je opisati koju vrstu i implementaciju baze podataka ste odabrali, glavne komponente od kojih se sastoji i slično.}
-		
 			\subsection{Opis tablica}
 			
+				\noindent\textbf{player} $($Igrač$)$ - Ovaj entitet sadržava podatke o korisniku. Svaki korisnik je ujedno i igrač. Sadrži atribute: korisničko ime, lozinku, e-mail adresu, fotografiju i bodove igrača. Ovaj entitet je u \textit{One-to-Many} vezi s entitetom card preko atributa username i ima dvije \textit{One-to-Many} veze s entitetom fight, koje se odnose na borbe u kojima je igrač pobijedio i borbe u kojima je izgubio. 
+				
+				\begin{longtabu} to \textwidth {|X[7, l]|X[7, l]|X[20, l]|}
+					
+					\hline \multicolumn{3}{|c|}{\textbf{player}}	 \\[3pt] \hline
+					\endfirsthead
+					
+					\hline \multicolumn{3}{|c|}{\textbf{player}}	 \\[3pt] \hline
+					\endhead
+					
+					\hline 
+					\endlastfoot
+					
+					\cellcolor{LightGreen}username & VARCHAR(15$)$	&  	jedinstveni identifikator korisnika 	\\ \hline
+					password\_hash & VARCHAR(20$)$ &   hash lozinke \\ \hline 
+					email & VARCHAR(20$)$ &   e-mail adresa korisnika \\ \hline 
+					photo & UUID & fotografija (avatar$)$ korisnika \\ \hline 
+					points & INTEGER	&  	broj bodova igrača	\\ \hline 
+					
+				\end{longtabu}
+				
+				\noindent\textbf{mapper} $($Kartograf$)$ - Entitet mapper nasljeđuje entitet player. Ovaj entitet, uz atribute playera, ima i atribute IBAN i ID photo.
+				
+				\begin{longtabu} to \textwidth {|X[7, l]|X[7, l]|X[20, l]|}
+					
+					\hline \multicolumn{3}{|c|}{\textbf{mapper}}	 \\[3pt] \hline
+					\endfirsthead
+					
+					\hline \multicolumn{3}{|c|}{\textbf{mapper}}	 \\[3pt] \hline
+					\endhead
+					
+					\hline 
+					\endlastfoot
+					
+					\cellcolor{LightGreen}username & VARCHAR(15$)$	&  	jedinstveni identifikator korisnika 	\\ \hline
+					password\_hash & VARCHAR(20$)$ &   hash lozinke \\ \hline 
+					email & VARCHAR(20$)$ &   e-mail adresa korisnika \\ \hline 
+					photo & UUID & fotografija (avatar$)$ korisnika \\ \hline 
+					points & INTEGER	&  	broj bodova igrača	\\ \hline 
+					iban & VARCHAR(21$)$ & IBAN računa za uplatu plaće \\ \hline 
+					id\_photo & UUID & fotografija osobne iskaznice \\ \hline 
+					
+				\end{longtabu}
+			
+				\noindent\textbf{admin} $($Administrator$)$ - Entitet admin nasljeđuje entitet player. Ovaj entitet ima iste atribute kao i entitet player.
+				
+				\begin{longtabu} to \textwidth {|X[7, l]|X[7, l]|X[20, l]|}
+					
+					\hline \multicolumn{3}{|c|}{\textbf{admin}}	 \\[3pt] \hline
+					\endfirsthead
+					
+					\hline \multicolumn{3}{|c|}{\textbf{admin}}	 \\[3pt] \hline
+					\endhead
+					
+					\hline 
+					\endlastfoot
+					
+					\cellcolor{LightGreen}username & VARCHAR(15$)$	&  	jedinstveni identifikator korisnika 	\\ \hline
+					password\_hash & VARCHAR(20$)$ &   hash lozinke \\ \hline 
+					email & VARCHAR(20$)$ &   e-mail adresa korisnika \\ \hline 
+					photo & UUID & fotografija (avatar$)$ korisnika \\ \hline 
+					points & INTEGER	&  	broj bodova igrača	\\ \hline 
+					
+				\end{longtabu}
+			
+				\noindent\textbf{fight} $($Borba$)$ - Ovaj entitet sadržava podatke o održanim borbama između igrača. Sadrži atribute: ID borbe, trenutak početka borbe, vrijeme trajanja borbe, korisničko ime igrača koji je pobijedio i korisničko ime igrača koji je izgubio. Ovaj entitet ima dvije \textit{Many-to-One} veze s entitetom player preko korisničkih imena pobjednika i gubitnika.
+				
+				\begin{longtabu} to \textwidth {|X[6, l]|X[7, l]|X[20, l]|}
+					
+					\hline \multicolumn{3}{|c|}{\textbf{fight}}	 \\[3pt] \hline
+					\endfirsthead
+					
+					\hline \multicolumn{3}{|c|}{\textbf{fight}}	 \\[3pt] \hline
+					\endhead
+					
+					\hline 
+					\endlastfoot
+					
+					\cellcolor{LightGreen}fight\_id & INTEGER	&  	jedinstveni identifikator borbe 	\\ \hline
+					start & TIMESTAMP  &   trenutak početka borbe \\ \hline 
+					duration & INTERVAL	&  	trajanje borbe	\\ \hline 
+					\cellcolor{LightBlue}winner	& VARCHAR(15$)$ & korisničko ime pobjednika borbe  	\\ \hline 
+					\cellcolor{LightBlue}loser	& VARCHAR(15$)$ & korisničko ime gubitnika borbe  	\\ \hline 
+					
+				\end{longtabu}
 
 				{\textbf{Location}	Ovaj entitet sadržava sve važne informacije o lokacijama na kojima igrač može sakupiti karte. Sadrži atribute: ID lokacije, naziv lokacije, fotografiju lokacije i ID kategorije. Ovaj entitet u vezi je \textit{Many-to-One} s Category preko ID kategorije.}
 				
