@@ -31,7 +31,7 @@
 			
 				\noindent\textbf{player} $($Igrač$)$ - Ovaj entitet sadržava podatke o korisniku. Svaki korisnik je ujedno i igrač. Sadrži atribute: korisničko ime, lozinku, e-mail adresu, fotografiju i bodove igrača. Ovaj entitet je u \textit{One-to-Many} vezi s entitetom card preko atributa username i ima dvije \textit{One-to-Many} veze s entitetom fight, koje se odnose na borbe u kojima je igrač pobijedio i borbe u kojima je izgubio. 
 				
-				\begin{longtabu} to \textwidth {|X[7, l]|X[6, l]|X[20, l]|}
+				\begin{longtabu} to \textwidth {|X[7, l]|X[7, l]|X[20, l]|}
 					
 					\hline \multicolumn{3}{|c|}{\textbf{player}}	 \\[3pt] \hline
 					\endfirsthead
@@ -52,7 +52,7 @@
 				
 				\noindent\textbf{mapper} $($Kartograf$)$ - Entitet mapper nasljeđuje entitet player. Ovaj entitet, uz atribute playera, ima i atribute IBAN i ID photo.
 				
-				\begin{longtabu} to \textwidth {|X[7, l]|X[6, l]|X[20, l]|}
+				\begin{longtabu} to \textwidth {|X[7, l]|X[7, l]|X[20, l]|}
 					
 					\hline \multicolumn{3}{|c|}{\textbf{mapper}}	 \\[3pt] \hline
 					\endfirsthead
@@ -96,7 +96,7 @@
 			
 				\noindent\textbf{fight} $($Borba$)$ - Ovaj entitet sadržava podatke o održanim borbama između igrača. Sadrži atribute: ID borbe, trenutak početka borbe, vrijeme trajanja borbe, korisničko ime igrača koji je pobijedio i korisničko ime igrača koji je izgubio. Ovaj entitet ima dvije \textit{Many-to-One} veze s entitetom player preko korisničkih imena pobjednika i gubitnika.
 				
-				\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
+				\begin{longtabu} to \textwidth {|X[6, l]|X[7, l]|X[20, l]|}
 					
 					\hline \multicolumn{3}{|c|}{\textbf{fight}}	 \\[3pt] \hline
 					\endfirsthead
@@ -117,7 +117,7 @@
 
 				{\noindent\textbf{location} $($Lokacija$)$ - Ovaj entitet sadržava sve važne informacije o lokacijama na kojima igrač može sakupiti karte. Sadrži atribute: ID lokacije, naziv lokacije, fotografiju lokacije i ID kategorije. Ovaj entitet u vezi je \textit{Many-to-One} s Category preko ID kategorije.}
 				
-				\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
+				\begin{longtabu} to \textwidth {|X[6, l]|X[7, l]|X[20, l]|}
 					
 					\hline \multicolumn{3}{|c|}{\textbf{location}}	 \\[3pt] \hline
 					\endfirsthead
@@ -138,7 +138,7 @@
 			
 				{\noindent\textbf{category} $($Kategorija lokacije$)$ - Ovaj entitet sadržava sve važne informacije o kategorijama koje lokacije mogu biti. Sadrži atribute: ID kategorije, naziv kategorije i broj bodova koje kategorija nosi. Ovaj entitet u vezi je \textit{One-to-Many} s Location preko ID kategorije.}
 				
-				\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
+				\begin{longtabu} to \textwidth {|X[6, l]|X[7, l]|X[20, l]|}
 					
 					\hline \multicolumn{3}{|c|}{\textbf{category}}	 \\[3pt] \hline
 					\endfirsthead
@@ -178,7 +178,7 @@
 			
 				{\noindent\textbf{deck} $($Špil karata$)$ - Ovaj entitet sadržava sve važne informacije o špilu koje igrač posjeduje. Sadrži atribute: korisničko ime i ID karte. Ovaj entitet u vezi je \textit{One-to-One} s Player preko korisničkog imena te \textit{One-to-Many} s Deck preko ID karte.}
 				
-				\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
+				\begin{longtabu} to \textwidth {|X[6, l]|X[7, l]|X[20, l]|}
 					
 					\hline \multicolumn{3}{|c|}{\textbf{deck}}	 \\[3pt] \hline
 					\endfirsthead
