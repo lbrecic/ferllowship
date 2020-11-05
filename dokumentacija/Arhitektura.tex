@@ -45,9 +45,9 @@
 					\hline 
 					\endlastfoot
 					
-					\cellcolor{LightGreen}username & VARCHAR	&  	jedinstveni identifikator korisnika 	\\ \hline
-					password\_hash & VARCHAR &   hash lozinke \\ \hline 
-					email & VARCHAR &   e-mail adresa korisnika \\ \hline 
+					\cellcolor{LightGreen}username & VARCHAR(15) 	&  	jedinstveni identifikator korisnika 	\\ \hline
+					password\_hash & VARCHAR(20)  &   hash lozinke \\ \hline 
+					email & VARCHAR(20)  &   e-mail adresa korisnika \\ \hline 
 					photo & UUID & fotografija (avatar$)$ korisnika \\ \hline 
 					points & INT	&  	broj bodova igrača	\\ \hline 
 					
@@ -66,12 +66,12 @@
 					\hline 
 					\endlastfoot
 					
-					\cellcolor{LightGreen}username & VARCHAR	&  	jedinstveni identifikator korisnika 	\\ \hline
-					password\_hash & VARCHAR &   hash lozinke \\ \hline 
-					email & VARCHAR &   e-mail adresa korisnika \\ \hline 
+					\cellcolor{LightGreen}username & VARCHAR(15) 	&  	jedinstveni identifikator korisnika 	\\ \hline
+					password\_hash & VARCHAR(20)  &   hash lozinke \\ \hline 
+					email & VARCHAR(20)  &   e-mail adresa korisnika \\ \hline 
 					photo & UUID & fotografija (avatar$)$ korisnika \\ \hline 
 					points & INT	&  	broj bodova igrača	\\ \hline 
-					iban & VARCHAR & IBAN računa za uplatu plaće \\ \hline 
+					iban & VARCHAR(21)  & IBAN računa za uplatu plaće \\ \hline 
 					id\_photo & UUID & fotografija osobne iskaznice \\ \hline 
 					
 				\end{longtabu}
@@ -89,9 +89,9 @@
 					\hline 
 					\endlastfoot
 					
-					\cellcolor{LightGreen}username & VARCHAR	&  	jedinstveni identifikator korisnika 	\\ \hline
-					password\_hash & VARCHAR &   hash lozinke \\ \hline 
-					email & VARCHAR &   e-mail adresa korisnika \\ \hline 
+					\cellcolor{LightGreen}username & VARCHAR(15)	&  	jedinstveni identifikator korisnika 	\\ \hline
+					password\_hash & VARCHAR(20) &   hash lozinke \\ \hline 
+					email & VARCHAR(20) &   e-mail adresa korisnika \\ \hline 
 					photo & UUID & fotografija (avatar$)$ korisnika \\ \hline 
 					points & INT	&  	broj bodova igrača	\\ \hline 
 					
@@ -113,8 +113,8 @@
 					\cellcolor{LightGreen}fight\_id & INT	&  	jedinstveni brojčani identifikator borbe 	\\ \hline
 					start & TIMESTAMP  &   trenutak početka borbe \\ \hline 
 					duration & INTERVAL	&  	trajanje borbe	\\ \hline 
-					\cellcolor{LightBlue}winner	& VARCHAR & korisničko ime pobjednika borbe  	\\ \hline 
-					\cellcolor{LightBlue}loser	& VARCHAR & korisničko ime gubitnika borbe  	\\ \hline 
+					\cellcolor{LightBlue}winner	& VARCHAR(15) & korisničko ime pobjednika borbe  	\\ \hline 
+					\cellcolor{LightBlue}loser	& VARCHAR(15) & korisničko ime gubitnika borbe  	\\ \hline 
 					
 				\end{longtabu}
 
@@ -132,7 +132,7 @@
 					\endlastfoot
 					
 					\cellcolor{LightGreen}location\_id & INT	&   jedinstveni brojčani identifikator lokacije	\\ \hline
-					location\_name	& VARCHAR &  naziv lokacije 	\\ \hline 
+					location\_name	& VARCHAR(20) &  naziv lokacije 	\\ \hline 
 					location\_photo & UUID &  fotografija lokacije \\ \hline 
 					\cellcolor{LightBlue} category\_id	& INT &   jedinstveni brojčani identifikator kategorije	\\ \hline 
 					
@@ -153,7 +153,7 @@
 					\endlastfoot
 					
 					\cellcolor{LightGreen}category\_id & INT	&   jedinstveni brojčani identifikator kategorije	\\ \hline
-					category\_name	& VARCHAR &  naziv kategorije 	\\ \hline 
+					category\_name	& VARCHAR(20) &  naziv kategorije 	\\ \hline 
 					category\_points & INT &  bodovna vrijednost kategorije \\ \hline  
 					
 					
@@ -192,7 +192,7 @@
 					\hline 
 					\endlastfoot
 					
-					\cellcolor{LightBlue}username & VARCHAR	&   korisničko ime igrača	\\ \hline
+					\cellcolor{LightBlue}username & VARCHAR(15)	&   korisničko ime igrača	\\ \hline
 					\cellcolor{LightBlue} card\_id	& INT &   jedinstveni brojčani identifikator karte	\\ \hline 
 					
 					
