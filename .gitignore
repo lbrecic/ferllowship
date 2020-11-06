@@ -7,3 +7,4 @@
 /dokumentacija/*.synctex.gz
 /dokumentacija/*.toc
 /frontend/node_modules
+/.metadata/
