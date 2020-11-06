@@ -17,7 +17,7 @@ class LoginForm extends React.Component {
 
   setInputValueUsername(property, val){
     val = val.trim();
-    if(val.length > 15){
+    if(val.length > 128){
       return;
     }
 
@@ -28,7 +28,7 @@ class LoginForm extends React.Component {
 
   setInputValuePassword(property, val){
     val = val.trim();
-    if(val.length > 20){
+    if(val.length > 128){
       return;
     }
 

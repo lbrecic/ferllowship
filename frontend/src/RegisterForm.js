@@ -27,7 +27,7 @@ class RegisterForm extends React.Component {
     
       setInputValueUsername(property, val){
         val = val.trim();
-        if(val.length > 15){
+        if(val.length > 128){
           return;
         }
     
@@ -38,7 +38,7 @@ class RegisterForm extends React.Component {
 
       setInputValuePassword(property, val){
         val = val.trim();
-        if(val.length > 20){
+        if(val.length > 128){
           return;
         }
     
@@ -49,7 +49,7 @@ class RegisterForm extends React.Component {
 
       setInputValueEmail(property, val){
         val = val.trim();
-        if(val.length > 20){
+        if(val.length > 128){
           return;
         }
     
