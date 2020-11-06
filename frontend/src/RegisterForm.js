@@ -3,6 +3,7 @@ import InputField from './InputField';
 import SubmitButton from './SubmitButton';
 import UserStore from './stores/UserStore';
 import './RegisterForm.css'
+import ImageUploader from 'react-images-upload';
 
 class RegisterForm extends React.Component {
     constructor(props){
@@ -12,13 +13,43 @@ class RegisterForm extends React.Component {
           password: '',
           email: '',
           buttonDisabled: false, 
-          show: false
-        }
+          show: false,
+          pictures: []
+        };
+        this.onDrop = this.onDrop.bind(this);
+      }
+
+      onDrop(picture) {
+        this.setState({
+            pictures: this.state.pictures.concat(picture),
+        });
       }
     
-      setInputValue(property, val){
+      setInputValueUsername(property, val){
         val = val.trim();
-        if(val.length > 12){
+        if(val.length > 15){
+          return;
+        }
+    
+        this.setState({
+          [property]:val
+        })
+      }
+
+      setInputValuePassword(property, val){
+        val = val.trim();
+        if(val.length > 20){
+          return;
+        }
+    
+        this.setState({
+          [property]:val
+        })
+      }
+
+      setInputValueEmail(property, val){
+        val = val.trim();
+        if(val.length > 20){
           return;
         }
     
@@ -107,7 +138,7 @@ class RegisterForm extends React.Component {
               type='text'
               placeholder='Korisničko ime'
               value={this.state.username ? this.state.username : ''}
-              onChange={(val) => this.setInputValue('username', val)} />
+              onChange={(val) => this.setInputValueUsername('username', val)} />
             </div>
             
 
@@ -116,7 +147,7 @@ class RegisterForm extends React.Component {
               type='password'
               placeholder='Lozinka'
               value={this.state.password ? this.state.password : ''}
-              onChange={(val) => this.setInputValue('password', val)}
+              onChange={(val) => this.setInputValuePassword('password', val)}
     
             />
             </div>
@@ -126,11 +157,24 @@ class RegisterForm extends React.Component {
               type='email'
               placeholder='Email'
               value={this.state.email? this.state.email : ''}
-              onChange={(val) => this.setInputValue('email', val)}
-    
+              onChange={(val) => this.setInputValueEmail('email', val)}
             />
 
+            <div className="ImageUploader"> 
+
             </div>
+              <ImageUploader
+                  withIcon={true}
+                  withLabel={false}
+                  withPreview={true}
+                  buttonText='Izaberite sliku'
+                  onChange={this.onDrop}
+                  imgExtension={['.jpg', '.gif', '.png', '.gif', '.jpeg']}
+                  maxFileSize={5242880}
+              />
+            </div>
+
+
             <div className="registerButton">
             <SubmitButton 
               text='Registriraj se'
@@ -139,7 +183,7 @@ class RegisterForm extends React.Component {
             /> 
             </div>
 
-            <div className=" registerClose registerButton">
+            <div className="registerClose registerButton">
             <button className="btn"
               onClick = {e => this.onClose(e)}>
               Zatvori

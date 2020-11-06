@@ -15,9 +15,20 @@ class LoginForm extends React.Component {
     }
   }
 
-  setInputValue(property, val){
+  setInputValueUsername(property, val){
     val = val.trim();
-    if(val.length > 12){
+    if(val.length > 15){
+      return;
+    }
+
+    this.setState({
+      [property]:val
+    })
+  }
+
+  setInputValuePassword(property, val){
+    val = val.trim();
+    if(val.length > 20){
       return;
     }
 
@@ -48,7 +59,7 @@ class LoginForm extends React.Component {
     })
 
     try{
-      let res = await fetch('/login', {
+      let res = await fetch({
         method: 'post',
         headers: {
           'Accept' : 'application/json',
@@ -88,7 +99,7 @@ class LoginForm extends React.Component {
           type='text'
           placeholder='Korisničko ime'
           value={this.state.username ? this.state.username : ''}
-          onChange={(val) => this.setInputValue('username', val)}
+          onChange={(val) => this.setInputValueUsername('username', val)}
 
         />
 
@@ -96,7 +107,7 @@ class LoginForm extends React.Component {
           type='password'
           placeholder='Lozinka'
           value={this.state.password ? this.state.password : ''}
-          onChange={(val) => this.setInputValue('password', val)}
+          onChange={(val) => this.setInputValuePassword('password', val)}
 
         />
 
