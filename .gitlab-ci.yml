@@ -1,5 +1,6 @@
 stages:
   - compile-pdf
+  - deploy-testing
   - deploy
 
 compile-pdf:
@@ -38,3 +39,27 @@ deploy-backend:
     - dpl --provider=heroku --app=$HEROKU_BACKEND --api-key=$HEROKU_API_KEY
   only:
     - develop
+
+deploy-frontend-testing:
+  stage: deploy-testing
+  image: ruby:latest
+  script:
+    - apt-get update -qy
+    - apt-get install -y ruby-dev
+    - gem install dpl
+    - cd frontend
+    - dpl --provider=heroku --app=$HEROKU_FRONTEND_TESTING --api-key=$HEROKU_API_KEY
+  only:
+    - frontend
+
+deploy-backend-testing:
+  stage: deploy-testing
+  image: ruby:latest
+  script:
+    - apt-get update -qy
+    - apt-get install -y ruby-dev
+    - gem install dpl
+    - cd backend
+    - dpl --provider=heroku --app=$HEROKU_BACKEND_TESTING --api-key=$HEROKU_API_KEY
+  only:
+    - backend
