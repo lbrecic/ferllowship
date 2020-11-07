@@ -151,74 +151,67 @@
 						\end{packed_item}
 					\end{packed_item}
 				
-					\noindent \underbar{\textbf{UC3 - Registracija katografa}}
+					\noindent \underbar{\textbf{UC3 -Prijava u sustav}}
 					\begin{packed_item}
 						
-						\item \textbf{Glavni sudionik: }Kartograf
-						\item  \textbf{Cilj:} Stvoriti korisnički račun za kartografa
+						\item \textbf{Glavni sudionik: }Igrač
+						\item  \textbf{Cilj:} Dobiti pristup korisničkom sučelju
 						\item  \textbf{Sudionici:} Baza podataka
-						\item  \textbf{Preduvjet:} -
+						\item  \textbf{Preduvjet:} Registracija
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
 							
-							\item Korisnik odabire opciju za registraciju kartografa
-							\item Korisnik unosi potrebne korisničke podatke(korisničko ime, e-mail, lozinka)
-							\item Korisnik prima obavijest o uspješnoj registraciji
+							\item Unos korisničkog imena ili e-maila i lozinke
+							\item Potvrda o ispravnosti unesenih podataka
+							\item Pristup korisničkim funkcijama
 						\end{packed_enum}
 						
 						\item  \textbf{Opis mogućih odstupanja:}
 						
 						\item[] \begin{packed_item}
 							
-							\item[2.a] Odabir već zauzetog korisničkog imena i/ili e-maila ili pružanje neispravnog e-maila
+							\item[2.a] Unos neispravnog korisničkog imena, e-maila ili lozinke
 							\item[] \begin{packed_enum}
 								
-								\item Sustav obavještava korisnika o neuspjelom upisu i vraća ga na stranicu za registraciju kartografa
-								\item Korisnik mijenja potrebne podatke te završava unos ili odustaje od registracije
-								
-							\end{packed_enum}
-							\item[2.b] Odabir "slabe" lozinke(za "jaku" lozinku obavezno barem 8 znakova, 1 veliko slovo, 1 broj)
-							\item[] \begin{packed_enum}
-								\item Sustav obavještava korisnika da je lozinka "slaba" i vraća ga na stranicu za registraciju
-								\item Korisnik odabire "jaču" lozinku te završava unos ili odustaje od registracije 
+								\item Sustav obavještava korisnika o neispravnom upisu i vraća ga na stranicu za prijavu
 								
 							\end{packed_enum}
 							
 						\end{packed_item}
 					\end{packed_item}
 					
-				
-					\noindent \underbar{\textbf{UC4 -Prijava u sustav}}
+					\noindent \underbar{\textbf{UC4 - Prijava za kartografa}}
 					\begin{packed_item}
-					
-					\item \textbf{Glavni sudionik: }Igrač
-					\item  \textbf{Cilj:} Dobiti pristup korisničkom sučelju
-					\item  \textbf{Sudionici:} Baza podataka
-					\item  \textbf{Preduvjet:} Registracija
-					\item  \textbf{Opis osnovnog tijeka:}
-					
-					\item[] \begin{packed_enum}
 						
-						\item Unos korisničkog imena ili e-maila i lozinke
-						\item Potvrda o ispravnosti unesenih podataka
-						\item Pristup korisničkim funkcijama
-					\end{packed_enum}
-					
-					\item  \textbf{Opis mogućih odstupanja:}
-					
-					\item[] \begin{packed_item}
+						\item \textbf{Glavni sudionik: }Igrač
+						\item  \textbf{Cilj:} Proširenje ovlasti igrača
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} -
+						\item  \textbf{Opis osnovnog tijeka:}
 						
-						\item[2.a] Unos neispravnog korisničkog imena, e-maila ili lozinke
 						\item[] \begin{packed_enum}
 							
-							\item Sustav obavještava korisnika o neispravnom upisu i vraća ga na stranicu za prijavu
-							
+							\item Korisnik odabire opciju prijava za kartografa
+							\item Korisnik unosi potrebne korisničke podatke(IBAN računa za uplatu i fotografiju osobne iskaznice)
+							\item Korisnik prima obavijest o uspješnoj prijavi za kartografa te čeka odobrenje administratora
 						\end{packed_enum}
 						
+						\item  \textbf{Opis mogućih odstupanja:}
+						
+						\item[] \begin{packed_item}
+							
+							\item[2.a] Neispravan unos IBAN-a
+							\item[] \begin{packed_enum}
+								
+								\item Sustav obavještava korisnika o pogrešnom unosu
+								\item Korisnik mijenja potrebne podatke te završava unos ili odustaje od prijave
+								
+							\end{packed_enum}
+							
+						\end{packed_item}
 					\end{packed_item}
-					\end{packed_item}
-				
+					
 					\noindent \underbar{\textbf{UC5 - Pregled lokacija na karti}}
 					\begin{packed_item}
 						
@@ -544,18 +537,19 @@
 						
 						\item[] \begin{packed_enum}
 							
+							\item Korisnik odabire igrača s kojim se želi boriti
 							\item Korisnik odabire opciju "Izazovi"
-							\item Otvara se stranica za borbu igrača
+							\item Korisnik čeka odgovor izazvanog igrača
 						\end{packed_enum}
 						
 						\item  \textbf{Opis mogućih odstupanja:}
 						
 						\item[] \begin{packed_item}
 							
-							\item[2.a] Korisnik nije skupio barem tri karte
+							\item[2.a] Izazvani igrač nije skupio barem tri karte
 							\item[] \begin{packed_enum}
 								
-								\item Sustav obavještava korisnika da mora skupiti barem tri kartu da moze sudjelovati u borbi
+								\item Sustav obavještava korisnika da željeni igrač nije skupio barem tri karte te ne može sudjelovati u borbi
 								
 							\end{packed_enum}
 						\end{packed_item}
@@ -567,26 +561,15 @@
 						\item \textbf{Glavni sudionik: }Igrač
 						\item  \textbf{Cilj:} Igrač može prihvatiti ili odbiti borbu
 						\item  \textbf{Sudionici:} Baza podataka
-						\item  \textbf{Preduvjet:} Igrač je prijavljen i sakupio barem tri karte
+						\item  \textbf{Preduvjet:} Igrač je prijavljen
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
 							
-							\item Korisnik odabire opciju za prihvaćanje izazova ili odbijanje
+							\item Korisnik odabire opciju za prihvaćanje ili odbijanje izazova
+							\item Ako je prihvatio izazov započinje borba te se otvara stranica za borbu igrača
 						\end{packed_enum}
 						
-						\item  \textbf{Opis mogućih odstupanja:}
-						
-						\item[] \begin{packed_item}
-							
-							\item[2.a] Korisnik nije skupio barem tri karte
-							\item[] \begin{packed_enum}
-								
-								\item Sustav obavještava korisnika da mora skupiti barem tri karte da može sudjelovati u borbi
-								\item Borba se odbija
-								
-							\end{packed_enum}
-						\end{packed_item}
 					\end{packed_item}
 					
 					\noindent \underbar{\textbf{UC21 - Borba igrača}}
@@ -600,15 +583,13 @@
 						
 						\item[] \begin{packed_enum}
 							
-							\item Korisnik odabire igrača s kojim se želi boriti
-							\item Izazvani igrač prihvaća ili odbija borbu
-							\item Ako je izazvani igrač prihvatio borbu, igrač odabire 3 karte iz svoje kolekcije s kojima želi ući u borbu te čeka da suparnik učini isto 
+							\item Igrač odabire 3 karte iz svoje kolekcije s kojima želi ući u borbu te čeka da suparnik učini isto 
 							\item Igrač koji ima manji globalni rang igra prvi 
 							\item Igrač izvlači jednu od tri izabrane karte, na što suparnik odgovara izvlačenjem jedne od svojih karata
-							\item Sustav uspoređuje dvije karte te igraču sa jačom kartom upisuje bod
+							\item Sustav uspoređuje dvije karte te igraču s jačom kartom upisuje bod
 							\item Igrač koji pobijedi u rundi prvi baca kartu u idućoj
-							\item Koraci 5. - 7. ponavljaju se 3 puta
-							\item Igrač s više bodova pobjeđuje borbu
+							\item Borba traje dok igrači ne iskoriste sve izabrane karte
+							\item Igrač s više bodova pobjeđuje u borbi
 							
 						\end{packed_enum}
 					
@@ -616,11 +597,18 @@
 					
 					\item[] \begin{packed_item}
 						
-						\item[2.a] Izazvani igrač odbija poziv na borbu
+						\item[2.a] Karte koje se uspoređuju su jednake jačine
 						\item[] \begin{packed_enum}
 							
-							\item Sustav obavještava korisnika da je borba odbijena
-							\item Borba se odbija
+							\item Sustav obavještava korisnike da je runda poništena
+							\item Borba se nastavlja
+							
+						\end{packed_enum}
+					
+						\item Korisnici imaju jednak broj bodova
+						\item[] \begin{packed_enum}
+							
+							\item Sustav obavještava da je borba izjednačena
 							
 						\end{packed_enum}
 					\end{packed_item}
@@ -869,6 +857,22 @@
 						\end{packed_enum}
 					\end{packed_item}
 					
+					\noindent \underbar{\textbf{UC36 - Potvrda zahtjeva za kartografa}}
+					\begin{packed_item}
+						
+						\item \textbf{Glavni sudionik: }Administrator
+						\item  \textbf{Cilj:} Odobriti ili odbiti zahtjev igrača da postane kartograf
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Korisnik je prijavljen i dodijeljena su mu prava administratora
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+							
+							\item Administrator odobri ili odbije zahtjev igrača
+							\item Baza podataka se ažurira
+						\end{packed_enum}
+					\end{packed_item}
+					
 				\eject
 					
 				\subsubsection{Dijagrami obrazaca uporabe}
@@ -914,7 +918,7 @@
 				
 				\textbf{Obrazac uprabe UC21 - Borba igrača}
 					
-					{Igrač odabire opciju "Prikaz karte". Poslužitelj dohvaća igrače u blizini iz baze podataka te ih prikazuje igraču na karti. Igrač odabire igrača s kojim se želi boriti. Poslužitelj dohvaća podatke o odabranom igraču iz baze podataka te ih prikazuje igraču. Igrač pokreče borbu. Ako je igrač odbio borbu ispiše se poruka da je borba odbijena. Inače ispiše se poruka da je borba prihvaćena i započinje borba. Igrač odabire opciju "Prikaz karata". Poslužitelj dohvaća karte iz baze podataka te ih prikazuje igraču. Igrači biraju 3 karte s kojima će se boriti. Na početku borbe prikazuje se koji igrač igra prvi. Poslužitelj dohvaća globalni rang igrača iz baze podataka te prikazuje igrača koji ima manji globalni rang. Dok traje borba igrači bacaju naizmjenično kartu. Poslužitelj uspoređuje karte te vraća jaču kartu i dodaje bod igraču čija je to karta. Igrač koji ima više bodova je pobjednik.}\\
+					{Igrač odabire opciju "Prikaz karata". Poslužitelj dohvaća karte iz baze podataka te ih prikazuje igraču. Igrači biraju 3 karte s kojima će se boriti. Na početku borbe prikazuje se koji igrač igra prvi. Poslužitelj dohvaća globalni rang igrača iz baze podataka te prikazuje igrača koji ima manji globalni rang. Dok ne iskoriste sve 3 izabrane karte, igrači bacaju naizmjenično kartu. Poslužitelj uspoređuje karte te vraća jaču kartu i dodaje bod igraču čija je to karta. Ukoliko su jačine karata jednake, sustav ispiše poruku da je runda izjednačena i nastavlja se borba. Na kraju borbe prikazuje se konačan broj bodova igrača. Igrač koji ima više bodova je pobjednik. Ako igrači imaju jednak broj bodova sustav ispiše poruku da je borba izjednačena.}\\
 					
 					\begin{figure}[H]
 						\includegraphics[width=13cm, height=22cm]{dijagrami/sd_UC21}				
