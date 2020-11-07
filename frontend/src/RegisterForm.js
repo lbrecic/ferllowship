@@ -91,7 +91,7 @@ class RegisterForm extends React.Component {
         })
     
         try{
-          let res = await fetch('/login', {
+          let res = await fetch('https://ferllowship-backend-testing.herokuapp.com/people', {
             method: 'post',
             headers: {
               'Accept' : 'application/json',
@@ -104,14 +104,14 @@ class RegisterForm extends React.Component {
             })
           });
     
-          let result = await res.json();
-          if(result && result.success){
-            UserStore.isLoggedIn = true;
-            UserStore.username = result.username;
-          } else if(result  && result.success === false){
-            this.resetForm();
-            alert(result.msg);
-          }
+          // let result = await res.json();
+          // if(result && result.success){
+          //   UserStore.isLoggedIn = true;
+          //   UserStore.username = result.username;
+          // } else if(result  && result.success === false){
+          //   this.resetForm();
+          //   alert(result.msg);
+          // }
     
         }catch(e){
           console.log(e);
@@ -179,7 +179,7 @@ class RegisterForm extends React.Component {
             <SubmitButton 
               text='Registriraj se'
               disabled={this.state.buttonDisabled}
-              onClick={() => this.doRegister(), e => this.onClose(e)}
+              onClick={() => this.doRegister()}
             /> 
             </div>
 

@@ -59,7 +59,7 @@ class LoginForm extends React.Component {
     })
 
     try{
-      let res = await fetch({
+      let res = await fetch('', {
         method: 'post',
         headers: {
           'Accept' : 'application/json',
@@ -70,15 +70,14 @@ class LoginForm extends React.Component {
           password: this.state.password
         })
       });
-
-      let result = await res.json();
-      if(result && result.success){
-        UserStore.isLoggedIn = true;
-        UserStore.username = result.username;
-      } else if(result  && result.success === false){
-        this.resetForm();
-        alert(result.msg);
-      }
+      // let result = await res.json();
+      // if(result && result.success){
+      //   UserStore.isLoggedIn = true;
+      //   UserStore.username = result.username;
+      // } else if(result  && result.success === false){
+      //   this.resetForm();
+      //   alert(result.msg);
+      // }
 
     }catch(e){
       console.log(e);
