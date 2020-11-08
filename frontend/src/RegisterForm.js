@@ -1,7 +1,6 @@
 import React from 'react';
 import InputField from './InputField';
 import SubmitButton from './SubmitButton';
-import UserStore from './stores/UserStore';
 import './RegisterForm.css'
 import ImageUploader from 'react-images-upload';
 
@@ -72,8 +71,20 @@ class RegisterForm extends React.Component {
           buttonDisabled: false
         })
       }
+
+      componentDidMount(){
+        fetch('/').then(res => res.json()).
+        then(json => this.setState({ data: json }));;
+      }
     
       async doRegister(){
+        this.setState({
+          buttonDisabled:true,
+          show:false
+        })
+
+        console.log(this.state.show);
+
         if(!this.state.username){
           return;
         }
@@ -85,10 +96,6 @@ class RegisterForm extends React.Component {
         if(!this.state.email){
             return;
           }
-    
-        this.setState({
-          buttonDisabled:true
-        })
     
         try{
           let res = await fetch('/login', {
@@ -103,16 +110,7 @@ class RegisterForm extends React.Component {
               email: this.state.email
             })
           });
-    
-          let result = await res.json();
-          if(result && result.success){
-            UserStore.isLoggedIn = true;
-            UserStore.username = result.username;
-          } else if(result  && result.success === false){
-            this.resetForm();
-            alert(result.msg);
-          }
-    
+         
         }catch(e){
           console.log(e);
           this.resetForm();
@@ -164,6 +162,7 @@ class RegisterForm extends React.Component {
 
             </div>
               <ImageUploader
+                  singleImage = {true}
                   withIcon={true}
                   withLabel={false}
                   withPreview={true}
@@ -179,7 +178,7 @@ class RegisterForm extends React.Component {
             <SubmitButton 
               text='Registriraj se'
               disabled={this.state.buttonDisabled}
-              onClick={() => this.doRegister(), e => this.onClose(e)}
+              onClick={() => this.doRegister()}
             /> 
             </div>
 
