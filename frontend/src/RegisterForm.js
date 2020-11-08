@@ -1,7 +1,6 @@
 import React from 'react';
 import InputField from './InputField';
 import SubmitButton from './SubmitButton';
-import UserStore from './stores/UserStore';
 import './RegisterForm.css'
 import ImageUploader from 'react-images-upload';
 
@@ -72,8 +71,20 @@ class RegisterForm extends React.Component {
           buttonDisabled: false
         })
       }
+
+      componentDidMount(){
+        fetch('/').then(res => res.json()).
+        then(json => this.setState({ data: json }));;
+      }
     
       async doRegister(){
+        this.setState({
+          buttonDisabled:true,
+          show:false
+        })
+
+        console.log(this.state.show);
+
         if(!this.state.username){
           return;
         }
@@ -86,12 +97,8 @@ class RegisterForm extends React.Component {
             return;
           }
     
-        this.setState({
-          buttonDisabled:true
-        })
-    
         try{
-          let res = await fetch('https://ferllowship-backend-testing.herokuapp.com/people', {
+          let res = await fetch('/people', {
             method: 'post',
             headers: {
               'Accept' : 'application/json',
@@ -164,6 +171,7 @@ class RegisterForm extends React.Component {
 
             </div>
               <ImageUploader
+                  singleImage = {true}
                   withIcon={true}
                   withLabel={false}
                   withPreview={true}

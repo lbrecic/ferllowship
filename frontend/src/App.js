@@ -1,11 +1,7 @@
 import React        from 'react';
-import UserStore    from './stores/UserStore';
 import LoginForm    from './LoginForm';
-import SubmitButton from './SubmitButton';
 import {observer}   from 'mobx-react';
 import RegisterForm     from './RegisterForm';
-import { BrowserRouter, Link, Route, Switch } from 'react-router-dom';
-import RegularButton from './RegularButton';
 
 import './App.css';
 
@@ -81,14 +77,6 @@ class App extends React.Component {
   };
 
 
-  Register = e => {
-    this.setState({
-      show: true
-    })
-  }
-
-
-
 
   render() {
     // if(UserStore.loading){
@@ -133,10 +121,10 @@ class App extends React.Component {
           </div>     
         </div>
         );
-    }
+
 
     
-  
+      } 
 }
 
 export default observer(App);
