@@ -98,7 +98,7 @@ class RegisterForm extends React.Component {
           }
     
         try{
-          let res = await fetch('/people', {
+          let res = await fetch('/api/people', {
             method: 'post',
             headers: {
               'Accept' : 'application/json',
