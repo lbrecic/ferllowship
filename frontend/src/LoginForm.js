@@ -15,9 +15,20 @@ class LoginForm extends React.Component {
     }
   }
 
-  setInputValue(property, val){
+  setInputValueUsername(property, val){
     val = val.trim();
-    if(val.length > 12){
+    if(val.length > 128){
+      return;
+    }
+
+    this.setState({
+      [property]:val
+    })
+  }
+
+  setInputValuePassword(property, val){
+    val = val.trim();
+    if(val.length > 128){
       return;
     }
 
@@ -48,7 +59,7 @@ class LoginForm extends React.Component {
     })
 
     try{
-      let res = await fetch('/login', {
+      let res = await fetch('', {
         method: 'post',
         headers: {
           'Accept' : 'application/json',
@@ -59,15 +70,14 @@ class LoginForm extends React.Component {
           password: this.state.password
         })
       });
-
-      let result = await res.json();
-      if(result && result.success){
-        UserStore.isLoggedIn = true;
-        UserStore.username = result.username;
-      } else if(result  && result.success === false){
-        this.resetForm();
-        alert(result.msg);
-      }
+      // let result = await res.json();
+      // if(result && result.success){
+      //   UserStore.isLoggedIn = true;
+      //   UserStore.username = result.username;
+      // } else if(result  && result.success === false){
+      //   this.resetForm();
+      //   alert(result.msg);
+      // }
 
     }catch(e){
       console.log(e);
@@ -88,7 +98,7 @@ class LoginForm extends React.Component {
           type='text'
           placeholder='Korisničko ime'
           value={this.state.username ? this.state.username : ''}
-          onChange={(val) => this.setInputValue('username', val)}
+          onChange={(val) => this.setInputValueUsername('username', val)}
 
         />
 
@@ -96,7 +106,7 @@ class LoginForm extends React.Component {
           type='password'
           placeholder='Lozinka'
           value={this.state.password ? this.state.password : ''}
-          onChange={(val) => this.setInputValue('password', val)}
+          onChange={(val) => this.setInputValuePassword('password', val)}
 
         />
 

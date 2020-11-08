@@ -9,6 +9,7 @@ class InputField extends React.Component {
         type = {this.props.type}
         placeholder={this.props.placeholder}
         value={this.props.value}
+        formMethod="post"
         onChange = { (e) => this.props.onChange(e.target.value)}
         >
         </input>

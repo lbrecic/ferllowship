@@ -44,6 +44,7 @@
   float: right;
   font-size: 28px;
   font-weight: bold;
+  transition-duration: 0.4s;
 }
 
 .close:hover,
@@ -71,4 +72,10 @@
 
 .registerButton {
   padding: 10px;
+  transition-duration: 0.4s;
+}
+
+button:hover{
+  background-color: #EBD3EE;
+  color: #484048;
 }

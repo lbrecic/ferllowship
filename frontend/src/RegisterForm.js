@@ -1,8 +1,8 @@
 import React from 'react';
 import InputField from './InputField';
 import SubmitButton from './SubmitButton';
-import UserStore from './stores/UserStore';
 import './RegisterForm.css'
+import ImageUploader from 'react-images-upload';
 
 class RegisterForm extends React.Component {
     constructor(props){
@@ -12,13 +12,43 @@ class RegisterForm extends React.Component {
           password: '',
           email: '',
           buttonDisabled: false, 
-          show: false
-        }
+          show: false,
+          pictures: []
+        };
+        this.onDrop = this.onDrop.bind(this);
+      }
+
+      onDrop(picture) {
+        this.setState({
+            pictures: this.state.pictures.concat(picture),
+        });
       }
     
-      setInputValue(property, val){
+      setInputValueUsername(property, val){
         val = val.trim();
-        if(val.length > 12){
+        if(val.length > 128){
+          return;
+        }
+    
+        this.setState({
+          [property]:val
+        })
+      }
+
+      setInputValuePassword(property, val){
+        val = val.trim();
+        if(val.length > 128){
+          return;
+        }
+    
+        this.setState({
+          [property]:val
+        })
+      }
+
+      setInputValueEmail(property, val){
+        val = val.trim();
+        if(val.length > 128){
           return;
         }
     
@@ -41,8 +71,20 @@ class RegisterForm extends React.Component {
           buttonDisabled: false
         })
       }
+
+      componentDidMount(){
+        fetch('/').then(res => res.json()).
+        then(json => this.setState({ data: json }));;
+      }
     
       async doRegister(){
+        this.setState({
+          buttonDisabled:true,
+          show:false
+        })
+
+        console.log(this.state.show);
+
         if(!this.state.username){
           return;
         }
@@ -55,12 +97,8 @@ class RegisterForm extends React.Component {
             return;
           }
     
-        this.setState({
-          buttonDisabled:true
-        })
-    
         try{
-          let res = await fetch('/login', {
+          let res = await fetch('/api/people', {
             method: 'post',
             headers: {
               'Accept' : 'application/json',
@@ -73,14 +111,14 @@ class RegisterForm extends React.Component {
             })
           });
     
-          let result = await res.json();
-          if(result && result.success){
-            UserStore.isLoggedIn = true;
-            UserStore.username = result.username;
-          } else if(result  && result.success === false){
-            this.resetForm();
-            alert(result.msg);
-          }
+          // let result = await res.json();
+          // if(result && result.success){
+          //   UserStore.isLoggedIn = true;
+          //   UserStore.username = result.username;
+          // } else if(result  && result.success === false){
+          //   this.resetForm();
+          //   alert(result.msg);
+          // }
     
         }catch(e){
           console.log(e);
@@ -107,7 +145,7 @@ class RegisterForm extends React.Component {
               type='text'
               placeholder='Korisničko ime'
               value={this.state.username ? this.state.username : ''}
-              onChange={(val) => this.setInputValue('username', val)} />
+              onChange={(val) => this.setInputValueUsername('username', val)} />
             </div>
             
 
@@ -116,7 +154,7 @@ class RegisterForm extends React.Component {
               type='password'
               placeholder='Lozinka'
               value={this.state.password ? this.state.password : ''}
-              onChange={(val) => this.setInputValue('password', val)}
+              onChange={(val) => this.setInputValuePassword('password', val)}
     
             />
             </div>
@@ -126,20 +164,34 @@ class RegisterForm extends React.Component {
               type='email'
               placeholder='Email'
               value={this.state.email? this.state.email : ''}
-              onChange={(val) => this.setInputValue('email', val)}
-    
+              onChange={(val) => this.setInputValueEmail('email', val)}
             />
 
+            <div className="ImageUploader"> 
+
             </div>
+              <ImageUploader
+                  singleImage = {true}
+                  withIcon={true}
+                  withLabel={false}
+                  withPreview={true}
+                  buttonText='Izaberite sliku'
+                  onChange={this.onDrop}
+                  imgExtension={['.jpg', '.gif', '.png', '.gif', '.jpeg']}
+                  maxFileSize={5242880}
+              />
+            </div>
+
+
             <div className="registerButton">
             <SubmitButton 
               text='Registriraj se'
               disabled={this.state.buttonDisabled}
-              onClick={() => this.doRegister(), e => this.onClose(e)}
+              onClick={() => this.doRegister()}
             /> 
             </div>
 
-            <div className=" registerClose registerButton">
+            <div className="registerClose registerButton">
             <button className="btn"
               onClick = {e => this.onClose(e)}>
               Zatvori
