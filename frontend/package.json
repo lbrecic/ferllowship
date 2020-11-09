@@ -4,12 +4,17 @@
   "private": true,
   "homepage": "http://./",
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.32",
+    "@fortawesome/free-solid-svg-icons": "^5.15.1",
+    "@fortawesome/react-fontawesome": "^0.1.12",
     "@testing-library/jest-dom": "^5.11.5",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "http-proxy-middleware": "^1.0.6",
+    "autoprefixer": "^9.8.6",
     "mobx": "^6.0.1",
     "mobx-react": "^7.0.0",
+    "postcss-cli": "^8.2.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-images-upload": "^1.2.8",
@@ -19,6 +24,8 @@
     "web-vitals": "^0.2.4"
   },
   "scripts": {
+    "build:css": "postcss src/index.css -o src/tailwind.css",
+    "watch:css": "postcss src/index.css -o src/tailwind.css -w",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

@@ -2,7 +2,6 @@ import React        from 'react';
 import LoginForm    from './LoginForm';
 import {observer}   from 'mobx-react';
 import RegisterForm     from './RegisterForm';
-
 import './App.css';
 
 
@@ -104,6 +103,7 @@ class App extends React.Component {
     //   }
 
       return ( 
+        
         <div className="app" >
           <div className="container">          
             <LoginForm />
