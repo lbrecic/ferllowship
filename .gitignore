@@ -8,3 +8,4 @@
 /dokumentacija/*.toc
 /frontend/node_modules
 /.metadata/
+/frontend/build
