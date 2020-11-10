@@ -103,18 +103,16 @@ class RegisterForm extends React.Component {
       return;
     }
 
-    try {
-      let res = await fetch("/api/people", {
-        method: "post",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: this.state.username,
-          password: this.state.password,
-          email: this.state.email,
-        }),
+    const formData = new FormData();
+    formData.append("username", this.state.username);
+    formData.append("password", this.state.password);
+    formData.append("email", this.state.email);
+    formData.append("picture", this.state.pictures[0]);
+
+    try{
+      let res = await fetch('/api/register', {
+        method: 'post',
+        body : formData
       });
 
       // let result = await res.json();
@@ -197,14 +195,14 @@ class RegisterForm extends React.Component {
 
             <div className="imageUploader">
               <ImageUploader
-                singleImage={true}
-                withIcon={true}
-                withLabel={false}
-                withPreview={true}
-                buttonText="Izaberite sliku"
-                onChange={this.onDrop}
-                imgExtension={[".jpg", ".gif", ".png", ".gif", ".jpeg"]}
-                maxFileSize={5242880}
+                  singleImage = {true}
+                  withIcon={true}
+                  withLabel={false}
+                  withPreview={true}
+                  buttonText='Izaberi sliku profila'
+                  onChange={this.onDrop}
+                  imgExtension={['.jpg', '.png', '.jpeg']}
+                  maxFileSize={5242880}
               />
             </div>
             </div>
