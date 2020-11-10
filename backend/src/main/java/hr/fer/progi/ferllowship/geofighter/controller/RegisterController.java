@@ -1,6 +1,7 @@
 package hr.fer.progi.ferllowship.geofighter.controller;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,7 +16,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.google.common.hash.Hashing;
 
+import hr.fer.progi.ferllowship.geofighter.dao.ConfirmationTokenRepository;
 import hr.fer.progi.ferllowship.geofighter.dao.PlayerRepository;
 import hr.fer.progi.ferllowship.geofighter.model.ConfirmationToken;
 import hr.fer.progi.ferllowship.geofighter.model.Player;
@@ -62,7 +65,10 @@ public class RegisterController {
 		Map result = cloudinary.uploader().upload(picture.getBytes(), ObjectUtils.emptyMap());
 		String pictureLink = (String) result.get("url");
 		
-		Player player = new Player(username, password, email, pictureLink);
+		String passwordHash = 
+			Hashing.sha256().hashString(password, StandardCharsets.UTF_8).toString();
+		
+		Player player = new Player(username, password, passwordHash, pictureLink);
 		playerRepository.save(player);
 		
 		ConfirmationToken confirmationToken = new ConfirmationToken(player);

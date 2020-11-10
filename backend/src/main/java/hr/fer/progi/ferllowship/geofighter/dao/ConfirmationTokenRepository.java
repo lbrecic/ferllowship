@@ -1,4 +1,4 @@
-package hr.fer.progi.ferllowship.geofighter.controller;
+package hr.fer.progi.ferllowship.geofighter.dao;
 
 import java.util.UUID;
 
