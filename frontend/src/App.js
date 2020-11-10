@@ -98,7 +98,7 @@ class App extends React.Component {
   render() {
     if(this.state.goHome){
       return(
-        <div className="app" >
+        <div className="app">
           <Router>
             <Switch>
                 <Route exact path="/"><HomePage /></Route>

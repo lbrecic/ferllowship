@@ -11,7 +11,7 @@ function HomePage() {
         <Header />
         <div className="App-header App-header-background">
           <img src={logo} className="App-logo animate-pulse" alt="logo" />
-          <p className='title' >
+          <p className='title white' >
              <div className='logo-title'> 
                 GeoFighter
              </div>       

@@ -5,7 +5,6 @@ import stats from '../utils/statistics.png';
 import { Link } from "react-router-dom";
 
 function Profile(props) {
-
     return (
         <div className="w-full h-screen geo-color">
             <div className="flex justify-center align-center h-screen">
@@ -50,7 +49,7 @@ function Profile(props) {
                     </div>
                 </div>
                 <div className="w-1/4">
-                    <div>{props.component}</div>
+                    {props.component}
                 </div>
             </div>
         </div>

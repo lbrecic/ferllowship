@@ -13,7 +13,7 @@ function ProfilePage() {
         return (
             <>
                 <Header />
-                <Profile component={CartographForm} />
+                <Profile component={<CartographForm />} />
                 <Footer />
             </>
         );
@@ -22,7 +22,7 @@ function ProfilePage() {
         return (
             <>
                 <Header />
-                <Profile component={CartographRequests} />
+                <Profile component={<CartographRequests />} />
                 <Footer />
             </>
         );
@@ -31,7 +31,7 @@ function ProfilePage() {
         return (
             <>
                 <Header />
-                <Profile component={LocationRequests} />
+                <Profile component={<LocationRequests />} />
                 <Footer />
             </>
         );

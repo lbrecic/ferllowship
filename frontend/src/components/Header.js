@@ -5,12 +5,14 @@ import '../tailwind.css';
 
 function Header() {
     return (
-        <header className="flex justify-between items-center border-b p-3 h-14">
-            <span className="logo-title-light">
-                GeoFighter
-            </span>
+        <header className="absolute w-full bg-white">
+            <div className="flex justify-between items-center border-b p-3 h-14">
+                <span className="logo-title-light">
+                    GeoFighter
+                </span>
 
-            <Navigation />
+                <Navigation />
+            </div>
         </header>
     )
 }
