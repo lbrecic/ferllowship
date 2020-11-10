@@ -74,7 +74,7 @@ public class RegisterController {
 		mailMessage.setFrom("ferllowship@gmail.com");
 		mailMessage.setText(
 			"Klikom na link potvrdi svoju registraciju: " + 
-			"http://localhost:8080/confirm?token=" + confirmationToken.getConfirmationToken()
+			"https://ferllowship-backend-testing.herokuapp.com/confirm?token=" + confirmationToken.getConfirmationToken()
 		);
 		
 		emailService.sendEmail(mailMessage);
