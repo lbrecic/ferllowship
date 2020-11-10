@@ -1,4 +1,5 @@
 import React from 'react';
+import '../App.css';
 import logo from '../logo.svg';
 import cards from '../utils/cards.png';
 import stats from '../utils/statistics.png';
@@ -9,12 +10,14 @@ function Profile(props) {
         <div className="w-full h-screen geo-color">
             <div className="flex justify-center align-center h-screen">
                 <div className="w-1/4">
+                    <div className="h-12"></div>
                     <div className="w-full h-32"></div>
                     <div className="flex justify-center">
-                        <img src={logo} className="App-logo border-solid border border-black" alt="logo" />
+                        <img src={logo} className="App-logo border border-black border-4 box-shadow" alt="logo" />
                     </div>
                 </div>
                 <div className="w-1/2">
+                    <div className="h-12"></div>
                     <div className="w-full h-64 p-12">
                         <p className='title white' >
                             <div className='logo-title'> 
@@ -49,6 +52,7 @@ function Profile(props) {
                     </div>
                 </div>
                 <div className="w-1/4">
+                    <div className="h-12"></div>
                     {props.component}
                 </div>
             </div>

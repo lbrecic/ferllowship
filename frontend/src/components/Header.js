@@ -6,7 +6,7 @@ import '../tailwind.css';
 function Header() {
     return (
         <header className="absolute w-full bg-white">
-            <div className="flex justify-between items-center border-b p-3 h-14">
+            <div className="flex justify-between items-center border-b p-3">
                 <span className="logo-title-light">
                     GeoFighter
                 </span>

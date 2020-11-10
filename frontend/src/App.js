@@ -89,17 +89,11 @@ class App extends React.Component {
     })
   };
 
-<<<<<<< HEAD
-  
-
-
-=======
   setOnLogin() {
     this.setState({
       goHome: true
     })
   };
->>>>>>> f5598e5b4961145c0e7d0b3e47ab516bbe55d9fd
 
   render() {
     if(this.state.goHome){
