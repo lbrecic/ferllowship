@@ -79,3 +79,7 @@ button:hover{
   background-color: #EBD3EE;
   color: #484048;
 }
+
+.imageUploader {
+  padding-bottom: 24px;
+}

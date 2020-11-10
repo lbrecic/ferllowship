@@ -97,18 +97,16 @@ class RegisterForm extends React.Component {
             return;
           }
     
+        const formData = new FormData();
+        formData.append("username", this.state.username);
+        formData.append("password", this.state.password);
+        formData.append("email", this.state.email);
+        formData.append("picture", this.state.pictures[0]);
+
         try{
-          let res = await fetch('/api/people', {
+          let res = await fetch('/api/register', {
             method: 'post',
-            headers: {
-              'Accept' : 'application/json',
-              'Content-Type': 'application/json'
-            },
-            body : JSON.stringify({
-              username: this.state.username,
-              password: this.state.password,
-              email: this.state.email
-            })
+            body : formData
           });
     
           // let result = await res.json();
@@ -167,7 +165,7 @@ class RegisterForm extends React.Component {
               onChange={(val) => this.setInputValueEmail('email', val)}
             />
 
-            <div className="ImageUploader"> 
+            <div className="imageUploader"> 
 
             </div>
               <ImageUploader
@@ -175,9 +173,9 @@ class RegisterForm extends React.Component {
                   withIcon={true}
                   withLabel={false}
                   withPreview={true}
-                  buttonText='Izaberite sliku'
+                  buttonText='Izaberi sliku profila'
                   onChange={this.onDrop}
-                  imgExtension={['.jpg', '.gif', '.png', '.gif', '.jpeg']}
+                  imgExtension={['.jpg', '.png', '.jpeg']}
                   maxFileSize={5242880}
               />
             </div>
