@@ -192,8 +192,10 @@ class RegisterForm extends React.Component {
                 value={this.state.email ? this.state.email : ""}
                 onChange={(val) => this.setInputValueEmail("email", val)}
               />
+            </div>
 
             <div className="imageUploader">
+            <div className="lijepi-obrub">
               <ImageUploader
                   singleImage = {true}
                   withIcon={true}
@@ -206,6 +208,7 @@ class RegisterForm extends React.Component {
               />
             </div>
             </div>
+            
 
             <div className="registerButton">
               <SubmitButton

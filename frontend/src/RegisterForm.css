@@ -91,6 +91,13 @@ button:hover{
   background-color: transparent;
 
 }
-.imageUploader {
-  padding-bottom: 24px;
+
+.imageUploader{
+  padding: 12px;
+  padding-top: 36px;
+}
+
+.lijepi-obrub {
+  border-radius: 10px;
+  box-shadow: 0 0 3px #FF0000, 0 0 5px #0000FF;
 }
