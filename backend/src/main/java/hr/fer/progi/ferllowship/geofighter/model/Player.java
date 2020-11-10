@@ -10,8 +10,8 @@ public class Player {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "user_id", updatable = false, nullable = false)
-	private UUID userId;
+	@Column(name = "player_id", updatable = false, nullable = false)
+	private UUID playerId;
 	
 	@Column(unique = true, length = 32)
 	private String username;
@@ -30,13 +30,28 @@ public class Player {
 	
 	@Column(name = "ban_status")
 	private Integer banStatus;
-
-	public UUID getUserId() {
-		return userId;
+	
+	@Column 
+	private Boolean enabled;
+	
+	public Player() {
+		
 	}
 
-	public void setUserId(UUID userId) {
-		this.userId = userId;
+	public Player(String username, String passwordHash, String email, String photoLink) {
+		this.username = username;
+		this.passwordHash = passwordHash;
+		this.email = email;
+		this.photoLink = photoLink;
+		enabled = false;
+	}
+
+	public UUID getUserId() {
+		return playerId;
+	}
+
+	public void setUserId(UUID playerId) {
+		this.playerId = playerId;
 	}
 
 	public String getUsername() {
@@ -85,6 +100,14 @@ public class Player {
 
 	public void setBanStatus(Integer banStatus) {
 		this.banStatus = banStatus;
+	}
+
+	public Boolean getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
 	}
 	
 }
