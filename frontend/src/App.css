@@ -4,6 +4,10 @@ body, html, #root {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+p{
+  align-self: center;
+}
+
 
 .container {
   font-size: 28px;
