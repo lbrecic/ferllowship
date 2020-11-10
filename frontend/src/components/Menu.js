@@ -6,9 +6,11 @@ function Menu(props) {
     return (
         <div>
             <div className="text-center w-full">
-                <span>
-                    This is the menu
-                </span>
+                <p className='title white' >
+                    <div className='logo-title'> 
+                        GeoFighter
+                    </div>       
+                </p>
             </div>
             <div className="w-full">
                 <div className="h-20"></div>
@@ -34,7 +36,7 @@ function Menu(props) {
                     <div class="w-1/5 bg-white h-32"></div>
                 </div>
                 <div className="flex text-center justify-center align-center mb-4">
-                <div class="w-1/5 bg-white h-32"></div>
+                    <div class="w-1/5 bg-white h-32"></div>
                     <div class="w-1/4 bg-gray-400 h-32">
                         <Link 
                             to="/profile"

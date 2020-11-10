@@ -13,7 +13,7 @@ function HomePage() {
           <img src={logo} className="App-logo animate-pulse" alt="logo" />
           <p className='title' >
              <div className='logo-title'> 
-             GeoFighter
+                GeoFighter
              </div>       
           </p>
         </div>
