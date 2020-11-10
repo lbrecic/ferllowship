@@ -1,8 +1,7 @@
 import React from 'react';
 import InputField from './InputField';
 import SubmitButton from './SubmitButton';
-import 'react-toastify/dist/ReactToastify.css';
-
+import UserStore from '../stores/UserStore';
 
 class LoginForm extends React.Component {
 
@@ -15,20 +14,9 @@ class LoginForm extends React.Component {
     }
   }
 
-  setInputValueUsername(property, val){
+  setInputValue(property, val){
     val = val.trim();
-    if(val.length > 128){
-      return;
-    }
-
-    this.setState({
-      [property]:val
-    })
-  }
-
-  setInputValuePassword(property, val){
-    val = val.trim();
-    if(val.length > 128){
+    if(val.length > 12){
       return;
     }
 
@@ -46,7 +34,9 @@ class LoginForm extends React.Component {
   }
 
   async doLogin(){
+    console.log("...");
     if(!this.state.username){
+      alert(".a..");
       return;
     }
 
@@ -59,7 +49,7 @@ class LoginForm extends React.Component {
     })
 
     try{
-      let res = await fetch('', {
+      let res = await fetch('/login', {
         method: 'post',
         headers: {
           'Accept' : 'application/json',
@@ -70,14 +60,17 @@ class LoginForm extends React.Component {
           password: this.state.password
         })
       });
-      // let result = await res.json();
-      // if(result && result.success){
-      //   UserStore.isLoggedIn = true;
-      //   UserStore.username = result.username;
-      // } else if(result  && result.success === false){
-      //   this.resetForm();
-      //   alert(result.msg);
-      // }
+      alert("..");
+      let result = await res.json();
+      if(result && result.success){
+        UserStore.isLoggedIn = true;
+        UserStore.username = result.username;
+
+        this.props.setOnLogin();
+      } else if(result  && result.success === false){
+        this.resetForm();
+        alert(result.msg);
+      }
 
     }catch(e){
       console.log(e);
@@ -98,7 +91,7 @@ class LoginForm extends React.Component {
           type='text'
           placeholder='Korisničko ime'
           value={this.state.username ? this.state.username : ''}
-          onChange={(val) => this.setInputValueUsername('username', val)}
+          onChange={(val) => this.setInputValue('username', val)}
 
         />
 
@@ -106,7 +99,7 @@ class LoginForm extends React.Component {
           type='password'
           placeholder='Lozinka'
           value={this.state.password ? this.state.password : ''}
-          onChange={(val) => this.setInputValuePassword('password', val)}
+          onChange={(val) => this.setInputValue('password', val)}
 
         />
 
@@ -115,6 +108,8 @@ class LoginForm extends React.Component {
           disabled={this.state.buttonDisabled}
           onClick={() => this.doLogin()}
         />
+
+        
         
     </div>
     );

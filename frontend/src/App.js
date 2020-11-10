@@ -2,15 +2,28 @@ import React        from 'react';
 import LoginForm    from './LoginForm';
 import {observer}   from 'mobx-react';
 import RegisterForm     from './RegisterForm';
-
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  //Redirect
+} from "react-router-dom";
+import HomePage from './pages/HomePage';
+import ProfilePage from './pages/ProfilePage';
+import DeckPage from './pages/DeckPage';
+import MapPage from './pages/MapPage';
+import HelpPage from './pages/HelpPage';
+import ContactPage from './pages/ContactPage';
+import StatsPage from './pages/StatsPage';
+import './tailwind.css';
 import './App.css';
-
 
 
 class App extends React.Component {
 
   state = {
-    show: false
+    show: false,
+    goHome: false
   };
 
   // async componentDidMount(){
@@ -76,37 +89,35 @@ class App extends React.Component {
     })
   };
 
-
+  setOnLogin() {
+    this.setState({
+      goHome: true
+    })
+  };
 
   render() {
-    // if(UserStore.loading){
-    //   return (
-    //     <div className="app" >
-    //        <div className="container"> 
-    //        Ucitavanje...
-    //        </div>
-    //     </div>
-    //   )
-    // }else{
+    if(this.state.goHome){
+      return(
+        <div className="app">
+          <Router>
+            <Switch>
+                <Route exact path="/"><HomePage /></Route>
+                <Route path="/profile"><ProfilePage /></Route>
+                <Route path="/deck"><DeckPage /></Route>
+                <Route path="/map"><MapPage /></Route>
+                <Route path="/help"><HelpPage /></Route>
+                <Route path="/contact"><ContactPage /></Route>
+                <Route path="/stats"><StatsPage /></Route>
+            </Switch>
+          </Router>
+        </div>
+      );
+    }
 
-    //   if(UserStore.isLoggedIn){
-    //     return (
-    //       <div className="app" >
-    //          <div className="container"> 
-    //           Pozdrav, {UserStore.username}!
-    //           <SubmitButton text={'Log out'} 
-    //           disabled={false} 
-    //           onClick={() => this.doLogout()}>
-    //           </SubmitButton>
-    //          </div>
-    //       </div>
-    //     )
-    //   }
-
-      return ( 
-        <div className="app" >
-          <div className="container">          
-            <LoginForm />
+      return (    
+        <div className="app-login" >
+          <div className="container-Login">          
+            <LoginForm setOnLogin={() => alert(".")} />
             <div className="register">               
             Nemaš račun?  
               
@@ -114,8 +125,6 @@ class App extends React.Component {
               text='Registriraj se'> Registriraj se </button>
             
             <RegisterForm  show={this.state.show} onClose={() => this.onClose()} />             
-             
-          
           </div>               
           
           </div>     

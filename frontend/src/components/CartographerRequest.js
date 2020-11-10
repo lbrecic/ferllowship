@@ -1,7 +1,6 @@
 import React from 'react';
 import InputField from './InputField';
 import SubmitButton from './SubmitButton';
-import 'react-toastify/dist/ReactToastify.css';
 
 
 class LoginForm extends React.Component {
@@ -115,6 +114,8 @@ class LoginForm extends React.Component {
           disabled={this.state.buttonDisabled}
           onClick={() => this.doLogin()}
         />
+
+        
         
     </div>
     );
