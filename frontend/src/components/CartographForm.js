@@ -1,6 +1,6 @@
 import React from "react";
-import InputField from "./InputField";
-import SubmitButton from "./SubmitButton";
+import InputField from "../InputField";
+import SubmitButton from "../SubmitButton";
 import "../styles/CartographForm.css";
 import ImageUploader from "react-images-upload";
 
