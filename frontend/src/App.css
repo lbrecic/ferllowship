@@ -4,6 +4,7 @@ body, html, #root {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+<<<<<<< HEAD
 .box-shadow {
   box-shadow: 0 0 3px #FF0000, 0 0 5px #0000FF;
 }
@@ -12,6 +13,12 @@ body, html, #root {
   font-family: 'Orbitron', sans-serif;
   text-shadow: 0 0 3px #FF0000, 0 0 5px #0000FF;
 }
+=======
+p{
+  align-self: center;
+}
+
+>>>>>>> b8a10ce... Dodane toast poruke za registraciju
 
 .container {
   font-size: 28px;

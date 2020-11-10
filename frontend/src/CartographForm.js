@@ -1,19 +1,14 @@
 import React from "react";
 import InputField from "./InputField";
 import SubmitButton from "./SubmitButton";
-import "./RegisterForm.css";
+import "./styles/CartographForm.css";
 import ImageUploader from "react-images-upload";
-
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 class RegisterForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: "",
-      password: "",
-      email: "",
+      IBAN: "",
       buttonDisabled: false,
       show: false,
       pictures: [],
@@ -27,7 +22,7 @@ class RegisterForm extends React.Component {
     });
   }
 
-  setInputValueUsername(property, val) {
+  setInputValueIBAN(property, val) {
     val = val.trim();
     if (val.length > 128) {
       return;
@@ -38,27 +33,6 @@ class RegisterForm extends React.Component {
     });
   }
 
-  setInputValuePassword(property, val) {
-    val = val.trim();
-    if (val.length > 128) {
-      return;
-    }
-
-    this.setState({
-      [property]: val,
-    });
-  }
-
-  setInputValueEmail(property, val) {
-    val = val.trim();
-    if (val.length > 128) {
-      return;
-    }
-
-    this.setState({
-      [property]: val,
-    });
-  }
 
   onClose = (e) => {
     this.props.onClose && this.props.onClose(e);
@@ -66,9 +40,7 @@ class RegisterForm extends React.Component {
 
   resetForm() {
     this.setState({
-      username: "",
-      password: "",
-      email: "",
+      IBAN: "",
       buttonDisabled: false,
     });
   }
@@ -87,18 +59,6 @@ class RegisterForm extends React.Component {
 
     console.log(this.state.show);
 
-    // if (!this.state.username) {
-    //   return;
-    // }
-
-    // if (!this.state.password) {
-    //   return;
-    // }
-
-    // if (!this.state.email) {
-    //   return;
-    // }
-
     if(!this.validate()){
       return;
     }
@@ -111,9 +71,7 @@ class RegisterForm extends React.Component {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          username: this.state.username,
-          password: this.state.password,
-          email: this.state.email,
+          IBAN: this.state.IBAN
         }),
       });
 
@@ -137,24 +95,17 @@ class RegisterForm extends React.Component {
 
     if (!this.state.username) {
       isValid = false;
-      toast("Unesi korisničko ime!");
-    }
-
-    if (!this.state.email) {
-      isValid = false;
-      toast("Unesi email!");
-        }
-
-    if (!this.state.password) {
-      isValid = false;
-      toast("Unesi lozinku!");
+      alertMessage = alertMessage + "Unesi IBAN!" + "\n";
     }
 
     if (!this.state.pictures[0]) {
       isValid = false;
-      toast("Priloži sliku profila!");
+      alertMessage = alertMessage + "Izaberi sliku!" + "\n";
     }
 
+    if(alertMessage !== ""){
+      alert(alertMessage);
+    }
     return isValid;
   }
 
@@ -167,65 +118,43 @@ class RegisterForm extends React.Component {
       <div className="overlay">
         <div className="modal">
           <div className="registerForm modal-content">
-            <div className="title-register">Registriraj se</div>
+            <div className="title-register">Postani kartograf</div>
 
             <div className="registerDiv">
+            <p className="iban">Unesi IBAN:</p>
               <InputField
                 type="text"
-                placeholder="Korisničko ime"
-                value={this.state.username ? this.state.username : ""}
-                onChange={(val) => this.setInputValueUsername("username", val)}
+                placeholder="IBAN"
+                value={this.state.IBAN ? this.state.IBAN : ""}
+                onChange={(val) => this.setInputValueIBAN("IBAN", val)}
               />
             </div>
 
-            <div className="registerDiv">
-              <InputField
-                type="password"
-                placeholder="Lozinka"
-                value={this.state.password ? this.state.password : ""}
-                onChange={(val) => this.setInputValuePassword("password", val)}
-              />
-            </div>
-
-            <div className="registerDiv">
-              <InputField
-                type="email"
-                placeholder="Email"
-                value={this.state.email ? this.state.email : ""}
-                onChange={(val) => this.setInputValueEmail("email", val)}
-              />
-
+            <p className="cartographPicture">Priloži sliku osobne iskaznice:</p>
             <div className="imageUploader">
               <ImageUploader
                 singleImage={true}
-                withIcon={true}
+                withIcon={false}
                 withLabel={false}
                 withPreview={true}
-                buttonText="Izaberite sliku"
+                buttonText="Izaberi sliku"
                 onChange={this.onDrop}
                 imgExtension={[".jpg", ".gif", ".png", ".gif", ".jpeg"]}
                 maxFileSize={5242880}
               />
             </div>
-            </div>
+
 
             <div className="registerButton">
               <SubmitButton
-                text="Registriraj se"
+                text="Pošalji zahtjev"
                 disabled={this.state.buttonDisabled}
                 onClick={() => this.doRegister()}
               />
             </div>
 
-            <div className="registerClose registerButton">
-              <button className="btn" onClick={(e) => this.onClose(e)}>
-                Zatvori
-              </button>
-            </div>
-
-          </div>          
+          </div>
         </div>
-        <ToastContainer className="toast" bodyClassName="toastBody" toastClassName="toast" pauseOnFocusLoss={false} hideProgressBar={true}/>
       </div>
     );
   }
