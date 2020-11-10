@@ -34,7 +34,9 @@ class LoginForm extends React.Component {
   }
 
   async doLogin(){
+    console.log("...");
     if(!this.state.username){
+      alert(".a..");
       return;
     }
 
@@ -58,11 +60,13 @@ class LoginForm extends React.Component {
           password: this.state.password
         })
       });
-
+      alert("..");
       let result = await res.json();
       if(result && result.success){
         UserStore.isLoggedIn = true;
         UserStore.username = result.username;
+
+        this.props.setOnLogin();
       } else if(result  && result.success === false){
         this.resetForm();
         alert(result.msg);

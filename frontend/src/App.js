@@ -14,6 +14,7 @@ import DeckPage from './pages/DeckPage';
 import MapPage from './pages/MapPage';
 import HelpPage from './pages/HelpPage';
 import ContactPage from './pages/ContactPage';
+import StatsPage from './pages/StatsPage';
 import './tailwind.css';
 import './App.css';
 
@@ -22,7 +23,7 @@ class App extends React.Component {
 
   state = {
     show: false,
-    goHome: false
+    goHome: true
   };
 
   // async componentDidMount(){
@@ -88,24 +89,33 @@ class App extends React.Component {
     })
   };
 
+<<<<<<< HEAD
   
 
 
+=======
+  setOnLogin() {
+    this.setState({
+      goHome: true
+    })
+  };
+>>>>>>> f5598e5b4961145c0e7d0b3e47ab516bbe55d9fd
 
   render() {
     if(this.state.goHome){
       return(
-        <div className="app" >
+        <div className="app">
           <Router>
-          <Switch>
-              <Route exact path="/"><HomePage /></Route>
-              <Route path="/profile"><ProfilePage /></Route>
-              <Route path="/deck"><DeckPage /></Route>
-              <Route path="/map"><MapPage /></Route>
-              <Route path="/help"><HelpPage /></Route>
-              <Route path="/contact"><ContactPage /></Route>
-          </Switch>
-        </Router>
+            <Switch>
+                <Route exact path="/"><HomePage /></Route>
+                <Route path="/profile"><ProfilePage /></Route>
+                <Route path="/deck"><DeckPage /></Route>
+                <Route path="/map"><MapPage /></Route>
+                <Route path="/help"><HelpPage /></Route>
+                <Route path="/contact"><ContactPage /></Route>
+                <Route path="/stats"><StatsPage /></Route>
+            </Switch>
+          </Router>
         </div>
       );
     }
@@ -113,7 +123,7 @@ class App extends React.Component {
       return (    
         <div className="app-login" >
           <div className="container-Login">          
-            <LoginForm />
+            <LoginForm setOnLogin={() => alert(".")} />
             <div className="register">               
             Nemaš račun?  
               
