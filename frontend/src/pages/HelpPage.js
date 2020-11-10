@@ -6,7 +6,8 @@ function HelpPage() {
     return (
         <>
             <Header />
-            <div className="text-center text-xs p-3">
+            <div className="h-16"></div>
+            <div className="text-center p-3">
                 this is help page
             </div>
             <Footer />

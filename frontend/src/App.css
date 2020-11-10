@@ -4,10 +4,14 @@ body, html, #root {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-p{
-  align-self: center;
+.box-shadow {
+  box-shadow: 0 0 3px #FF0000, 0 0 5px #0000FF;
 }
 
+.geo-text {
+  font-family: 'Orbitron', sans-serif;
+  text-shadow: 0 0 3px #FF0000, 0 0 5px #0000FF;
+}
 
 .container {
   font-size: 28px;

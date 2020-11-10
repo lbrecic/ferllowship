@@ -6,9 +6,8 @@ import Footer from '../components/Footer';
 import CartographForm from '../components/CartographForm';
 import CartographRequests from '../components/CartographRequests';
 
-
 function ProfilePage() {
-    const [user, setUser] = useState("igrac");
+    const user = "admin";
     
     if(user === "igrac")
         return (
