@@ -68,7 +68,7 @@ public class RegisterController {
 		String passwordHash = 
 			Hashing.sha256().hashString(password, StandardCharsets.UTF_8).toString();
 		
-		Player player = new Player(username, password, passwordHash, pictureLink);
+		Player player = new Player(username, passwordHash, email, pictureLink);
 		playerRepository.save(player);
 		
 		ConfirmationToken confirmationToken = new ConfirmationToken(player);
