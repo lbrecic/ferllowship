@@ -7,7 +7,7 @@ import CartographForm from '../components/CartographForm';
 import CartographRequests from '../components/CartographRequests';
 
 function ProfilePage() {
-    const user = "admin";
+    const user = "igrac";
     
     if(user === "igrac")
         return (

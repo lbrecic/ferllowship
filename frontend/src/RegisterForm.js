@@ -127,11 +127,12 @@ class RegisterForm extends React.Component {
       console.log(e);
       this.resetForm();
     }
+
+    this.onClose();
   }
 
   validate() {
     let isValid = true;
-    let alertMessage = "";
 
     if (!this.state.username) {
       isValid = false;
