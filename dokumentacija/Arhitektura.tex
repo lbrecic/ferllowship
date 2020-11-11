@@ -1,7 +1,7 @@
 \chapter{Arhitektura i dizajn sustava}
-%		
+		
 %		\textbf{\textit{dio 1. revizije}}\\
-%
+
 %		\textit{ Potrebno je opisati stil arhitekture te identificirati: podsustave, preslikavanje na radnu platformu, spremišta podataka, mrežne protokole, globalni upravljački tok i sklopovsko-programske zahtjeve. Po točkama razraditi i popratiti odgovarajućim skicama:}
 %	\begin{itemize}
 %		\item 	\textit{izbor arhitekture temeljem principa oblikovanja pokazanih na predavanjima (objasniti zašto ste baš odabrali takvu arhitekturu)}
@@ -9,7 +9,10 @@
 %		\item 	\textit{organizaciju aplikacije (npr. slojevi frontend i backend, MVC arhitektura) }		
 %	\end{itemize}
 
-		
+		{Prilikom projektiranja samog sustava jedna od važnijih odluka bila je odabir programskog jezika i razvojnog okruženja u kojem ćemo razviti našu aplikaciju. Programski jezik kojeg smo odabrali je Java sa Spring Boot razvojim okvirom. Odabrano razvojno okruženje je Visual Studio Code.}	\\
+		{Također izbor odgovarajuće arhitekture programske potpore jedan je od najbitnijih koraka u oblikovanju sustava jer ona predstavlja poveznicu između zahtjeva u sustav i same implementacije sustava. Dobra arhitektura znači dobru fleksibilnost sustava, jednostavnu mogućnost nadogradnje i jeftino održavanje.}\\
+		{Sama arhitektura sustava je vrlo jednostavna, a sastoji se od dvije manje aplikacije: klijenta i poslužitelja. Osnovna prednost modela klijent-poslužitelj je u tome što nije potreban sustav za upravljanje bazom podataka na svakom klijentskom računalu, već se klijent s bazom podataka povezuje preko aplikacije. Time se postiže veća sigurnost i zaštita podataka. Poslužiteljska aplikacija ima pristup bazi podataka u kojoj će se pohranjivati podaci o lokacijama, kartama, borbama, igračima i kartografima. Poslužiteljska aplikacija neće dohvaćati slike iz baze podataka već preko Cloudinary. Klijentska aplikacija osnovna je implementacija klijenta za REST web servise na poslužitelju, a ista dohvaća podatke te ih prezentira na korisniku razumljiv način. Obje aplikacije kreirane su pomoću Spring Boot razvojnog okvira, a inicijalizirane putem online servisa za inicijalizaciju SpringInitializr.}\\
+		{Za izradu aplikacije odabrali smo MVC arhitekturu jer omogućava dodatno strukturiranje aplikacije s obzirom na objektno orijentiranu paradigmu što znatno olakšava nezavisni razvoj, ispitivanje i održavanje aplikacije.}		
 
 				
 		\section{Baza podataka}
