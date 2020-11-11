@@ -74,15 +74,19 @@ public class RegisterController {
 		ConfirmationToken confirmationToken = new ConfirmationToken(player);
 		confirmationTokenRepository.save(confirmationToken);
 		
+		// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		// !!!!!! EDUROAM NE RADI, KORISTI DRUGO !!!!!!!!!
+		// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		
 		SimpleMailMessage mailMessage = new SimpleMailMessage();
 		mailMessage.setTo(email);
 		mailMessage.setSubject("Potvrdi svoju GeoFighter registraciju.");
 		mailMessage.setFrom("ferllowship@gmail.com");
 		mailMessage.setText(
 			"Klikom na link potvrdi svoju registraciju: " + 
-			"https://ferllowship-backend-testing.herokuapp.com/confirm?token=" + confirmationToken.getConfirmationToken()
+			"https://ferllowship-backend-testing.herokuapp.com/confirm?token=" + 
+			confirmationToken.getConfirmationToken()
 		);
-		
 		emailService.sendEmail(mailMessage);
 		
         response.put("success", "true");
@@ -92,10 +96,11 @@ public class RegisterController {
 	@GetMapping(path = "/confirm")
 	public Map<String, String> confirm(@RequestParam("token") String token) {
 		ConfirmationToken confirmationToken = confirmationTokenRepository.findByConfirmationToken(token);
+		boolean alreadyConfirmed = confirmationToken.getPlayer().getEnabled();
 		
 		Map<String, String> response = new HashMap<>();
 		
-		if (confirmationToken == null) {
+		if (confirmationToken == null || alreadyConfirmed) {
 			response.put("error", "Link za potvrdu je istekao ili nije valjan.");
 			return response;
 		}
