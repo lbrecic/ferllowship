@@ -1,6 +1,7 @@
 package hr.fer.progi.ferllowship.geofighter.controller;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,7 +16,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.google.common.hash.Hashing;
 
+import hr.fer.progi.ferllowship.geofighter.dao.ConfirmationTokenRepository;
 import hr.fer.progi.ferllowship.geofighter.dao.PlayerRepository;
 import hr.fer.progi.ferllowship.geofighter.model.ConfirmationToken;
 import hr.fer.progi.ferllowship.geofighter.model.Player;
@@ -62,11 +65,18 @@ public class RegisterController {
 		Map result = cloudinary.uploader().upload(picture.getBytes(), ObjectUtils.emptyMap());
 		String pictureLink = (String) result.get("url");
 		
-		Player player = new Player(username, password, email, pictureLink);
+		String passwordHash = 
+			Hashing.sha256().hashString(password, StandardCharsets.UTF_8).toString();
+		
+		Player player = new Player(username, passwordHash, email, pictureLink);
 		playerRepository.save(player);
 		
 		ConfirmationToken confirmationToken = new ConfirmationToken(player);
 		confirmationTokenRepository.save(confirmationToken);
+		
+		// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		// !!!!!! EDUROAM NE RADI, KORISTI DRUGO !!!!!!!!!
+		// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		
 		SimpleMailMessage mailMessage = new SimpleMailMessage();
 		mailMessage.setTo(email);
@@ -74,9 +84,9 @@ public class RegisterController {
 		mailMessage.setFrom("ferllowship@gmail.com");
 		mailMessage.setText(
 			"Klikom na link potvrdi svoju registraciju: " + 
-			"http://localhost:8080/confirm?token=" + confirmationToken.getConfirmationToken()
+			"https://ferllowship-backend-testing.herokuapp.com/confirm?token=" + 
+			confirmationToken.getConfirmationToken()
 		);
-		
 		emailService.sendEmail(mailMessage);
 		
         response.put("success", "true");
@@ -86,10 +96,11 @@ public class RegisterController {
 	@GetMapping(path = "/confirm")
 	public Map<String, String> confirm(@RequestParam("token") String token) {
 		ConfirmationToken confirmationToken = confirmationTokenRepository.findByConfirmationToken(token);
+		boolean alreadyConfirmed = confirmationToken.getPlayer().getEnabled();
 		
 		Map<String, String> response = new HashMap<>();
 		
-		if (confirmationToken == null) {
+		if (confirmationToken == null || alreadyConfirmed) {
 			response.put("error", "Link za potvrdu je istekao ili nije valjan.");
 			return response;
 		}
