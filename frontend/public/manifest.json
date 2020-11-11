@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "GeoFighter",
+  "description": "Projekt grupe Ferllowship na predmetu Programsko inženjerstvo.",
   "icons": [
     {
       "src": "favicon.ico",

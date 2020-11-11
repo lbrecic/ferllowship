@@ -1,8 +1,12 @@
 {
-  "name": "login",
-  "version": "0.1.0",
+  "name": "geofighter",
+  "description": "Projekt grupe Ferllowship na predmetu Programsko inženjerstvo.",
+  "version": "1.0.0",
+  "author": "Ferllowship",
+  "main": "index.js",
+  "homepage": ".",
+  "license": "ISC",
   "private": true,
-  "homepage": "http://./",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
@@ -51,12 +55,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "gh-pages": "^3.1.0"
-  },
-  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
-  "main": "index.js",
-  "author": "",
-  "license": "ISC"
+  }
 }
