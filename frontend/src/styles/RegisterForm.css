@@ -22,6 +22,7 @@
 
 /* Modal Content */
 .modal-content {
+  overflow: auto;
   position: relative;
   top: 50%;
   transform: translate(0, -50%);
@@ -90,4 +91,11 @@
 
 .App-header-background{
   background-color: #2E3F30;
+}
+
+@media only screen and (max-width: 600px) {
+  .registerForm {
+    height: 80vh;
+    overflow-y: scroll !important;
+  }
 }
