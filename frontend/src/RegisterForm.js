@@ -123,10 +123,8 @@ class RegisterForm extends React.Component {
       }
     } catch (e) {
       console.log(e);
-      this.resetForm();
     }
 
-    this.onClose();
   }
 
   validate() {
