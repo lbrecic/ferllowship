@@ -115,14 +115,13 @@ class RegisterForm extends React.Component {
         body : formData
       });
 
-      // let result = await res.json();
-      // if(result && result.success){
-      //   UserStore.isLoggedIn = true;
-      //   UserStore.username = result.username;
-      // } else if(result  && result.success === false){
-      //   this.resetForm();
-      //   alert(result.msg);
-      // }
+      let result = await res.json();
+      if(result && result.success){
+        toast("Potvrdi registraciju na mailu!");
+      } else if(result  && result.success === false){
+        //this.resetForm();
+        toast(result.error);
+      }
     } catch (e) {
       console.log(e);
       this.resetForm();
