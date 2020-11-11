@@ -15,6 +15,7 @@ import MapPage from './pages/MapPage';
 import HelpPage from './pages/HelpPage';
 import ContactPage from './pages/ContactPage';
 import StatsPage from './pages/StatsPage';
+import LoginPage from './pages/LoginPage';
 import './tailwind.css';
 import './App.css';
 import ConfirmedRegistration from './pages/ConfirmedRegistration';
@@ -24,7 +25,7 @@ class App extends React.Component {
 
   state = {
     show: false,
-    goHome: false
+    goHome: true
   };
 
   // async componentDidMount(){
@@ -97,12 +98,12 @@ class App extends React.Component {
   };
 
   render() {
-    if(this.state.goHome){
       return(
         <div className="app">
           <Router>
             <Switch>
-                <Route exact path="/"><HomePage /></Route>
+                <Route exact path="/"><LoginPage /></Route>
+                <Route path="/home"><HomePage /></Route>
                 <Route path="/profile"><ProfilePage /></Route>
                 <Route path="/deck"><DeckPage /></Route>
                 <Route path="/map"><MapPage /></Route>
@@ -115,28 +116,7 @@ class App extends React.Component {
           </Router>
         </div>
       );
-    }
-
-      return (    
-        <div className="app-login" >
-          <div className="container-Login">          
-            <LoginForm setOnLogin={() => alert(".")} />
-            <div className="register">               
-            Nemaš račun?  
-              
-            <button className="btn" onClick={e=> {this.showRegister();}}
-              text='Registriraj se'> Registriraj se </button>
-            
-            <RegisterForm  show={this.state.show} onClose={() => this.onClose()} />             
-          </div>               
-          
-          </div>     
-        </div>
-        );
-
-
-    
-      } 
+  }
 }
 
 export default observer(App);

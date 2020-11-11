@@ -81,6 +81,13 @@
   text-shadow: 0 0 3px #FF0000, 0 0 5px #0000FF;
 }
 
+.confirm-message {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 26px;
+  text-align: center;
+  text-shadow: 0 0 3px #FF0000, 0 0 5px #0000FF;
+}
+
 .logo-title-light {
   font-family: 'Orbitron', sans-serif;
   font-size: 20px;

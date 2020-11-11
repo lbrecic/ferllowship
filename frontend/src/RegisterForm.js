@@ -118,8 +118,7 @@ class RegisterForm extends React.Component {
       let result = await res.json();
       if(result && result.success){
         toast("Potvrdi registraciju na mailu!");
-      } else if(result  && result.success === false){
-        //this.resetForm();
+      } else if(result){
         toast(result.error);
       }
     } catch (e) {

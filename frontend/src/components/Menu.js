@@ -18,7 +18,7 @@ function Menu(props) {
                     <div class="w-1/5 bg-white h-32"></div>
                     <div class="w-1/4 bg-gray-400 h-32">
                         <Link 
-                            to="/" 
+                            to="/home" 
                             onClick={() => props.show(false)}
                         >
                             <div className="static top-0 left-0 z-1 w-full h-full">Home</div>
