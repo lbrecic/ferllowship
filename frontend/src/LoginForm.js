@@ -3,10 +3,9 @@ import InputField from './InputField';
 import SubmitButton from './SubmitButton';
 import 'react-toastify/dist/ReactToastify.css';
 
-
 class LoginForm extends React.Component {
 
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       username: '',
@@ -15,29 +14,29 @@ class LoginForm extends React.Component {
     }
   }
 
-  setInputValueUsername(property, val){
+  setInputValueUsername(property, val) {
     val = val.trim();
-    if(val.length > 128){
+    if (val.length > 128) {
       return;
     }
 
     this.setState({
-      [property]:val
+      [property]: val
     })
   }
 
-  setInputValuePassword(property, val){
+  setInputValuePassword(property, val) {
     val = val.trim();
-    if(val.length > 128){
+    if (val.length > 128) {
       return;
     }
 
     this.setState({
-      [property]:val
+      [property]: val
     })
   }
 
-  resetForm(){
+  resetForm() {
     this.setState({
       username: '',
       password: '',
@@ -45,27 +44,27 @@ class LoginForm extends React.Component {
     })
   }
 
-  async doLogin(){
-    if(!this.state.username){
+  async doLogin() {
+    if (!this.state.username) {
       return;
     }
 
-    if(!this.state.password){
+    if (!this.state.password) {
       return;
     }
 
     this.setState({
-      buttonDisabled:true
+      buttonDisabled: true
     })
 
-    try{
+    try {
       let res = await fetch('', {
         method: 'post',
         headers: {
-          'Accept' : 'application/json',
+          'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
-        body : JSON.stringify({
+        body: JSON.stringify({
           username: this.state.username,
           password: this.state.password
         })
@@ -79,7 +78,7 @@ class LoginForm extends React.Component {
       //   alert(result.msg);
       // }
 
-    }catch(e){
+    } catch (e) {
       console.log(e);
       this.resetForm();
     }
@@ -87,38 +86,33 @@ class LoginForm extends React.Component {
   }
 
   render() {
-    return ( 
-    <div className="loginForm" >
-        <div className='title'>
-        GeoFighter
-        </div>
-        
-        
-        <InputField  
+    return (
+      <div className="loginForm">
+        <div className='title'> GeoFighter </div>
+
+        <InputField
           type='text'
           placeholder='Korisničko ime'
           value={this.state.username ? this.state.username : ''}
           onChange={(val) => this.setInputValueUsername('username', val)}
-
         />
 
-        <InputField  
+        <InputField
           type='password'
           placeholder='Lozinka'
           value={this.state.password ? this.state.password : ''}
           onChange={(val) => this.setInputValuePassword('password', val)}
-
         />
 
-        <SubmitButton 
+        <SubmitButton
           text='Prijavi se'
           disabled={this.state.buttonDisabled}
           onClick={() => this.doLogin()}
         />
-        
-    </div>
+      </div>
     );
   }
+
 }
 
 export default LoginForm;

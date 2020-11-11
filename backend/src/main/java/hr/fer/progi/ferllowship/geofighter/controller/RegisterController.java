@@ -46,12 +46,12 @@ public class RegisterController {
 		Map<String, String> response = new HashMap<>();
 		
 		if (playerRepository.findByUsername(username) != null) {
-			response.put("error", "Igrač s unesenim imenom već postoji.");
+			response.put("message", "Igrač s unesenim imenom već postoji.");
 			return response;
 		}
 		
 		if (playerRepository.findByEmail(email) != null) {
-			response.put("error", "Igrač s unesenim e-mailom već postoji.");
+			response.put("message", "Igrač s unesenim e-mailom već postoji.");
 			return response;
 		}
 		
@@ -74,34 +74,29 @@ public class RegisterController {
 		ConfirmationToken confirmationToken = new ConfirmationToken(player);
 		confirmationTokenRepository.save(confirmationToken);
 		
-		// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-		// !!!!!! EDUROAM NE RADI, KORISTI DRUGO !!!!!!!!!
-		// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-		
 		SimpleMailMessage mailMessage = new SimpleMailMessage();
 		mailMessage.setTo(email);
-		mailMessage.setSubject("Potvrdi svoju GeoFighter registraciju.");
+		mailMessage.setSubject("Potvrdi svoju GeoFighter registraciju!");
 		mailMessage.setFrom("ferllowship@gmail.com");
+		String frontendURL = System.getenv("FRONTEND_URL");
 		mailMessage.setText(
-			"Klikom na link potvrdi svoju registraciju: " + 
-			"https://ferllowship-testing.herokuapp.com/confirm?token=" + 
-			confirmationToken.getConfirmationToken()
+			"Bok " + username + "!\n\n" +
+			"Klikom na sljedeći link potvrdi svoju GeoFighter registraciju: " + 
+			frontendURL + "/confirm?token=" + confirmationToken.getConfirmationToken()
 		);
 		emailService.sendEmail(mailMessage);
 		
-        response.put("success", "true");
+		response.put("message", "Potvrdi registraciju na emailu.");
         return response;
 	}
 	
 	@GetMapping(path = "/confirm")
 	public Map<String, String> confirm(@RequestParam("token") String token) {
-		ConfirmationToken confirmationToken = confirmationTokenRepository.findByConfirmationToken(token);
-		boolean alreadyConfirmed = confirmationToken.getPlayer().getEnabled();
-		
 		Map<String, String> response = new HashMap<>();
 		
-		if (confirmationToken == null || alreadyConfirmed) {
-			response.put("error", "Link za potvrdu je istekao ili nije valjan.");
+		ConfirmationToken confirmationToken = confirmationTokenRepository.findByConfirmationToken(token);
+		if (confirmationToken == null) {
+			response.put("message", "Link za potvrdu nije valjan.");
 			return response;
 		}
 		
@@ -109,7 +104,7 @@ public class RegisterController {
 		player.setEnabled(true);
 		playerRepository.save(player);
 		
-        response.put("success", "true");
+		response.put("message", "Registracija uspješna!");
         return response;
 	}
 	

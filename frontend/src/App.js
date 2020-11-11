@@ -17,21 +17,19 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="app">
-        <Router>
-          <Switch>
-            <Route exact path="/"><LoginPage /></Route>
-            <Route path="/home"><HomePage /></Route>
-            <Route path="/profile"><ProfilePage /></Route>
-            <Route path="/deck"><DeckPage /></Route>
-            <Route path="/map"><MapPage /></Route>
-            <Route path="/help"><HelpPage /></Route>
-            <Route path="/contact"><ContactPage /></Route>
-            <Route path="/stats"><StatsPage /></Route>
-            <Route path="/confirm"><ConfirmedRegistration /></Route>
-          </Switch>
-        </Router>
-      </div>
+      <Router>
+        <Switch>
+          <Route exact path="/"><LoginPage /></Route>
+          <Route path="/home"><HomePage /></Route>
+          <Route path="/profile"><ProfilePage /></Route>
+          <Route path="/deck"><DeckPage /></Route>
+          <Route path="/map"><MapPage /></Route>
+          <Route path="/help"><HelpPage /></Route>
+          <Route path="/contact"><ContactPage /></Route>
+          <Route path="/stats"><StatsPage /></Route>
+          <Route path="/confirm"><ConfirmedRegistration /></Route>
+        </Switch>
+      </Router>
     );
   }
 
