@@ -45,11 +45,50 @@
 					\hline 
 					\endlastfoot
 					
-					\cellcolor{LightGreen}username & VARCHAR(15) 	&  	jedinstveni identifikator korisnika 	\\ \hline
-					password\_hash & VARCHAR(20)  &   hash lozinke \\ \hline 
-					email & VARCHAR(20)  &   e-mail adresa korisnika \\ \hline 
-					photo & UUID & fotografija (avatar$)$ korisnika \\ \hline 
-					points & INT	&  	broj bodova igrača	\\ \hline 
+					\cellcolor{LightGreen}player\_id & UUID 	&  	jedinstveni brojčani identifikator korisnika 	\\ \hline
+					username & VARCHAR(32) 	&  	jedinstveno korisničko ime 	\\ \hline
+					pass\_hash & VARCHAR(64)  &   hash lozinke \\ \hline 
+					email & VARCHAR(128)  &   jedinstvena e-mail adresa korisnika \\ \hline 
+					photo\_link & VARCHAR(200) & fotografija (avatar$)$ korisnika \\ \hline 
+					points & INT	&  	broj bodova igrača	\\ \hline
+					ban\_status & INT	&  	status o zabranama igrača	\\ \hline 
+					
+				\end{longtabu}
+			
+				\noindent\textbf{confirmation} $($Potvrda registracije$)$ - Ovaj entitet sadržava podatke o potvrdi registracije. Sadrži atribute . Ovaj entitet u vezi je \textit{One-to-One} s Player preko jedinstvenog brojčanog identifikatora korisnika.
+				
+				\begin{longtabu} to \textwidth {|X[7, l]|X[7, l]|X[20, l]|}
+					
+					\hline \multicolumn{3}{|c|}{\textbf{ban}}	 \\[3pt] \hline
+					\endfirsthead
+					
+					\hline \multicolumn{3}{|c|}{\textbf{ban}}	 \\[3pt] \hline
+					\endhead
+					
+					\hline 
+					\endlastfoot
+					
+					\cellcolor{LightGreen}token\_id & UUID 	&   jedinstveni brojčani identifikator registracije 	\\ \hline
+					token & VARCHAR(255) & token potvrde o registraciji\\ \hline
+					\cellcolor{LightBlue}player\_id & UUID 	&   jedinstveni brojčani identifikator korisnika 	\\ \hline  
+					
+				\end{longtabu}
+			
+				\noindent\textbf{ban} $($Zabrana pristupa$)$ - Ovaj entitet sadržava podatke o igračima kojima je zabranjen pristup aplikaciji. Sadrži atribute kraj zabrane i korisničko ime igrača. Ovaj entitet u vezi je \textit{One-to-One} s Player preko korisničkog imena.
+				
+				\begin{longtabu} to \textwidth {|X[7, l]|X[7, l]|X[20, l]|}
+					
+					\hline \multicolumn{3}{|c|}{\textbf{ban}}	 \\[3pt] \hline
+					\endfirsthead
+					
+					\hline \multicolumn{3}{|c|}{\textbf{ban}}	 \\[3pt] \hline
+					\endhead
+					
+					\hline 
+					\endlastfoot
+					
+					\cellcolor{LightBlue}username & VARCHAR(32) 	&   korisničko ime igrača 	\\ \hline 
+					ban\_end & DATE & datum isteka zabrane \\ \hline 
 					
 				\end{longtabu}
 				
@@ -66,13 +105,9 @@
 					\hline 
 					\endlastfoot
 					
-					\cellcolor{LightGreen}username & VARCHAR(15) 	&  	jedinstveni identifikator korisnika 	\\ \hline
-					password\_hash & VARCHAR(20)  &   hash lozinke \\ \hline 
-					email & VARCHAR(20)  &   e-mail adresa korisnika \\ \hline 
-					photo & UUID & fotografija (avatar$)$ korisnika \\ \hline 
-					points & INT	&  	broj bodova igrača	\\ \hline 
-					iban & VARCHAR(21)  & IBAN računa za uplatu plaće \\ \hline 
-					id\_photo & UUID & fotografija osobne iskaznice \\ \hline 
+					\cellcolor{LightGreen}player\_id & UUID 	&  	jedinstveni brojčani identifikator kartografa 	\\ \hline
+					iban & VARCHAR(34)  & IBAN računa za uplatu plaće \\ \hline 
+					id\_photo & VARCHAR(200) & fotografija osobne iskaznice \\ \hline 
 					
 				\end{longtabu}
 			
@@ -89,11 +124,9 @@
 					\hline 
 					\endlastfoot
 					
-					\cellcolor{LightGreen}username & VARCHAR(15)	&  	jedinstveni identifikator korisnika 	\\ \hline
-					password\_hash & VARCHAR(20) &   hash lozinke \\ \hline 
-					email & VARCHAR(20) &   e-mail adresa korisnika \\ \hline 
-					photo & UUID & fotografija (avatar$)$ korisnika \\ \hline 
-					points & INT	&  	broj bodova igrača	\\ \hline 
+					\cellcolor{LightGreen}player\_id & UUID 	&  	jedinstveni brojčani identifikator administratora 	\\ \hline
+					iban & VARCHAR(34)  & IBAN računa za uplatu plaće \\ \hline 
+					id\_photo & VARCHAR(200) & fotografija osobne iskaznice \\ \hline  
 					
 				\end{longtabu}
 			
@@ -110,15 +143,15 @@
 					\hline 
 					\endlastfoot
 					
-					\cellcolor{LightGreen}fight\_id & INT	&  	jedinstveni brojčani identifikator borbe 	\\ \hline
+					\cellcolor{LightGreen}fight\_id & UUID	&  	jedinstveni brojčani identifikator borbe 	\\ \hline
 					start & TIMESTAMP  &   trenutak početka borbe \\ \hline 
 					duration & INTERVAL	&  	trajanje borbe	\\ \hline 
-					\cellcolor{LightBlue}winner	& VARCHAR(15) & korisničko ime pobjednika borbe  	\\ \hline 
-					\cellcolor{LightBlue}loser	& VARCHAR(15) & korisničko ime gubitnika borbe  	\\ \hline 
+					\cellcolor{LightBlue}winner	& VARCHAR(32) & korisničko ime pobjednika borbe  	\\ \hline 
+					\cellcolor{LightBlue}loser	& VARCHAR(32) & korisničko ime gubitnika borbe  	\\ \hline 
 					
 				\end{longtabu}
 
-				{\noindent\textbf{location} $($Lokacija$)$ - Ovaj entitet sadržava sve važne informacije o lokacijama na kojima igrač može sakupiti karte. Sadrži atribute: ID lokacije, naziv lokacije, fotografiju lokacije i ID kategorije. Ovaj entitet u vezi je \textit{Many-to-One} s Category preko ID kategorije.}
+				{\noindent\textbf{location} $($Lokacija$)$ - Ovaj entitet sadržava sve važne informacije o lokacijama na kojima igrač može sakupiti karte. Sadrži atribute: ID lokacije, naziv lokacije, fotografiju lokacije i ID kategorije. Ovaj entitet u vezi je \textit{Many-to-One} s Category preko ID kategorije te je u vezi \textit{One-to-One} s Path preko ID lokacije. }
 				
 				\begin{longtabu} to \textwidth {|X[6, l]|X[7, l]|X[20, l]|}
 					
@@ -131,10 +164,32 @@
 					\hline 
 					\endlastfoot
 					
-					\cellcolor{LightGreen}location\_id & INT	&   jedinstveni brojčani identifikator lokacije	\\ \hline
-					location\_name	& VARCHAR(20) &  naziv lokacije 	\\ \hline 
-					location\_photo & UUID &  fotografija lokacije \\ \hline 
-					\cellcolor{LightBlue} category\_id	& INT &   jedinstveni brojčani identifikator kategorije	\\ \hline 
+					\cellcolor{LightGreen}location\_id & UUID	&   jedinstveni brojčani identifikator lokacije	\\ \hline
+					location\_name	& VARCHAR(32) &  naziv lokacije 	\\ \hline 
+					location\_desc	& TEXT &  opis lokacije 	\\ \hline 
+					location\_photo & VARCHAR(200) &  fotografija lokacije \\ \hline 
+					location\_status	& INT &  status prihvatljivosti lokacije 	\\ \hline 
+					coordinates	& VARCHAR(32) &  koordinate lokacije 	\\ \hline 
+					\cellcolor{LightBlue} category\_id	& UUID &   jedinstveni brojčani identifikator kategorije	\\ \hline 
+					
+					
+				\end{longtabu}
+			
+				{\noindent\textbf{path} $($Najkraći put$)$ - Ovaj entitet sadržava sve važne informacije o najkraćem putu do lokacija koje je potrebno provjeriti. Sadrži atribute. Ovaj entitet u vezi je \textit{One-to-One} s Location preko ID lokacije.}
+				
+				\begin{longtabu} to \textwidth {|X[6, l]|X[7, l]|X[20, l]|}
+					
+					\hline \multicolumn{3}{|c|}{\textbf{path}}	 \\[3pt] \hline
+					\endfirsthead
+					
+					\hline \multicolumn{3}{|c|}{\textbf{path}}	 \\[3pt] \hline
+					\endhead
+					
+					\hline 
+					\endlastfoot
+					
+					distance & INT &  najkraći put do lokacije \\ \hline
+					\cellcolor{LightBlue} location\_id	& UUID &   jedinstveni brojčani identifikator lokacije	\\ \hline 
 					
 					
 				\end{longtabu}
@@ -152,8 +207,8 @@
 					\hline 
 					\endlastfoot
 					
-					\cellcolor{LightGreen}category\_id & INT	&   jedinstveni brojčani identifikator kategorije	\\ \hline
-					category\_name	& VARCHAR(20) &  naziv kategorije 	\\ \hline 
+					\cellcolor{LightGreen}category\_id & UUID	&   jedinstveni brojčani identifikator kategorije	\\ \hline
+					category\_name	& VARCHAR(32) &  naziv kategorije 	\\ \hline 
 					category\_points & INT &  bodovna vrijednost kategorije \\ \hline  
 					
 					
@@ -172,28 +227,11 @@
 					\hline 
 					\endlastfoot
 					
-					\cellcolor{LightGreen}card\_id & INT	&   jedinstveni brojčani identifikator karte	\\ \hline 
+					\cellcolor{LightGreen}card\_id & UUID	&   jedinstveni brojčani identifikator karte	\\ \hline 
 					card\_points & INT &  bodovna vrijednost karte \\ \hline 
-					\cellcolor{LightBlue} location\_id	& INT &   jedinstveni brojčani identifikator lokacije	\\ \hline 
-					
-					
-				\end{longtabu}
-			
-				{\noindent\textbf{deck} $($Špil karata$)$ - Ovaj entitet sadržava sve važne informacije o špilu koje igrač posjeduje. Sadrži atribute: korisničko ime i ID karte. Ovaj entitet u vezi je \textit{One-to-One} s Player preko korisničkog imena te \textit{One-to-Many} s Deck preko ID karte.}
-				
-				\begin{longtabu} to \textwidth {|X[6, l]|X[7, l]|X[20, l]|}
-					
-					\hline \multicolumn{3}{|c|}{\textbf{deck}}	 \\[3pt] \hline
-					\endfirsthead
-					
-					\hline \multicolumn{3}{|c|}{\textbf{deck}}	 \\[3pt] \hline
-					\endhead
-					
-					\hline 
-					\endlastfoot
-					
-					\cellcolor{LightBlue}username & VARCHAR(15)	&   korisničko ime igrača	\\ \hline
-					\cellcolor{LightBlue} card\_id	& INT &   jedinstveni brojčani identifikator karte	\\ \hline 
+					scale\_factor & INT &  faktor skaliranja bodova karte \\ \hline 
+					\cellcolor{LightBlue} location\_id	& UUID &   jedinstveni brojčani identifikator lokacije	\\ \hline 
+					\cellcolor{LightBlue}username & VARCHAR(32)	&   korisničko ime igrača	\\ \hline
 					
 					
 				\end{longtabu}
