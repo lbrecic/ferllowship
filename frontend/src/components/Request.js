@@ -1,5 +1,5 @@
 import React from "react";
-import SubmitButton from "../SubmitButton";
+import SubmitButton from "./SubmitButton";
 import "../styles/Request.css";
 
 class Request extends React.Component {

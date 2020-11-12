@@ -1,5 +1,5 @@
 import React from 'react';
-import '../App.css';
+import '../styles/App.css';
 import logo from '../logo.svg';
 import cards from '../utils/cards.png';
 import stats from '../utils/statistics.png';

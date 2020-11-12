@@ -1,12 +1,14 @@
 import React from 'react';
-import RegisterForm from '../RegisterForm';
-import LoginForm from '../LoginForm';
-import '../App.css';
+import RegisterForm from '../components/RegisterForm';
+import LoginForm from '../components/LoginForm';
+import '../styles/App.css';
 
 class LoginPage extends React.Component {
 
   state = {
-    show: false
+    show: false,
+    username: '',
+    password: ''
   };
 
   showRegister = e => {
@@ -22,13 +24,13 @@ class LoginPage extends React.Component {
   };
 
   setOnLogin() {
-    // todo
+    //to do 
   };
 
   render() {
     return (
       <div className="container-Login">
-        <LoginForm setOnLogin={() => alert(".")} />
+        <LoginForm setOnLogin={() => this.setOnLogin()} />
         <div className="register"> 
           Nemaš račun? 
           <button className="btn" onClick={e => { this.showRegister(); }}
