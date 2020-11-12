@@ -72,7 +72,7 @@ function Menu(props) {
                             to="/contact"
                             onClick={() => props.show(false)}
                         >
-                            <div className="static top-0 left-0 z-1 w-full h-full">Contact</div>
+                            <div className="static top-0 left-0 z-1 w-full h-full">Global statistics</div>
                         </Link>
                     </div>
                     <div class="w-1/5 bg-white h-32"></div>
