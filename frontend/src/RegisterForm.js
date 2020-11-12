@@ -4,10 +4,15 @@ import SubmitButton from "./SubmitButton";
 import "./RegisterForm.css";
 import ImageUploader from "react-images-upload";
 
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
+
+const USERNAME_MAX_LENGTH = 128;
+const PASSWORD_MIN_LENGTH = 8;
+const PASSWORD_MAX_LENGTH = 128;
+const EMAIL_MAX_LENGTH = 128;
 
 class RegisterForm extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -29,7 +34,7 @@ class RegisterForm extends React.Component {
 
   setInputValueUsername(property, val) {
     val = val.trim();
-    if (val.length > 128) {
+    if (val.length > USERNAME_MAX_LENGTH) {
       return;
     }
 
@@ -40,7 +45,7 @@ class RegisterForm extends React.Component {
 
   setInputValuePassword(property, val) {
     val = val.trim();
-    if (val.length > 128) {
+    if (val.length > PASSWORD_MAX_LENGTH) {
       return;
     }
 
@@ -51,7 +56,7 @@ class RegisterForm extends React.Component {
 
   setInputValueEmail(property, val) {
     val = val.trim();
-    if (val.length > 128) {
+    if (val.length > EMAIL_MAX_LENGTH) {
       return;
     }
 
@@ -73,33 +78,15 @@ class RegisterForm extends React.Component {
     });
   }
 
-  componentDidMount() {
-    fetch("/")
-      .then((res) => res.json())
-      .then((json) => this.setState({ data: json }));
-  }
-
   async doRegister() {
     this.setState({
-      //buttonDisabled: true,
-      show: false,
+      buttonDisabled: true
     });
 
-    console.log(this.state.show);
-
-    // if (!this.state.username) {
-    //   return;
-    // }
-
-    // if (!this.state.password) {
-    //   return;
-    // }
-
-    // if (!this.state.email) {
-    //   return;
-    // }
-
-    if(!this.validate()){
+    if (!this.validate()) {
+      this.setState({
+        buttonDisabled: false
+      });
       return;
     }
 
@@ -109,26 +96,23 @@ class RegisterForm extends React.Component {
     formData.append("email", this.state.email);
     formData.append("picture", this.state.pictures[0]);
 
-    try{
+    try {
       let res = await fetch('/api/register', {
         method: 'post',
-        body : formData
+        body: formData
       });
 
-      // let result = await res.json();
-      // if(result && result.success){
-      //   UserStore.isLoggedIn = true;
-      //   UserStore.username = result.username;
-      // } else if(result  && result.success === false){
-      //   this.resetForm();
-      //   alert(result.msg);
-      // }
+      let result = await res.json();
+      if (result && result.message) {
+        toast(result.message);
+      }
     } catch (e) {
-      console.log(e);
-      this.resetForm();
+      toast("Dogodila se pogreška.");
     }
 
-    this.onClose();
+    this.setState({
+      buttonDisabled: false
+    });
   }
 
   validate() {
@@ -136,22 +120,37 @@ class RegisterForm extends React.Component {
 
     if (!this.state.username) {
       isValid = false;
-      toast("Unesi korisničko ime!");
+      toast("Korisničko ime mora biti uneseno.");
+    } else if (this.state.username.length > USERNAME_MAX_LENGTH) {
+      isValid = false;
+      toast("Korisničko ime je predugačko.");
+    }
+
+    if (!this.state.password) {
+      isValid = false;
+      toast("Lozinka mora biti unesena.");
+    } else if (this.state.password.length < PASSWORD_MIN_LENGTH) {
+      isValid = false;
+      toast("Lozinka mora imati barem 8 znakova.");
+    } else if (this.state.password.length > PASSWORD_MAX_LENGTH) {
+      isValid = false;
+      toast("Lozinka je predugačka.");
     }
 
     if (!this.state.email) {
       isValid = false;
-      toast("Unesi email!");
-        }
-
-    if (!this.state.password) {
+      toast("Email mora biti unesen.");
+    } else if (this.state.email.length > EMAIL_MAX_LENGTH) {
       isValid = false;
-      toast("Unesi lozinku!");
+      toast("Email je predugačak.");
+    } else if (!/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/.test(this.state.email)) {
+      isValid = false;
+      toast("Email nije u valjanom formatu.");
     }
 
     if (!this.state.pictures[0]) {
       isValid = false;
-      toast("Priloži sliku profila!");
+      toast("Slika profila mora biti priložena.");
     }
 
     return isValid;
@@ -166,50 +165,54 @@ class RegisterForm extends React.Component {
       <div className="overlay">
         <div className="modal">
           <div className="registerForm modal-content">
-            <div className="title-register">Registriraj se</div>
+            <div className="registerTitle">Registriraj se</div>
+            <form>
+              <div className="registerDiv">
+                <InputField
+                  type="text"
+                  placeholder="Korisničko ime"
+                  value={this.state.username ? this.state.username : ""}
+                  onChange={(val) =>
+                    this.setInputValueUsername("username", val)
+                  }
+                />
+              </div>
 
-            <div className="registerDiv">
-              <InputField
-                type="text"
-                placeholder="Korisničko ime"
-                value={this.state.username ? this.state.username : ""}
-                onChange={(val) => this.setInputValueUsername("username", val)}
-              />
-            </div>
+              <div className="registerDiv">
+                <InputField
+                  type="password"
+                  placeholder="Lozinka"
+                  value={this.state.password ? this.state.password : ""}
+                  onChange={(val) =>
+                    this.setInputValuePassword("password", val)
+                  }
+                />
+              </div>
 
-            <div className="registerDiv">
-              <InputField
-                type="password"
-                placeholder="Lozinka"
-                value={this.state.password ? this.state.password : ""}
-                onChange={(val) => this.setInputValuePassword("password", val)}
-              />
-            </div>
+              <div className="registerDiv">
+                <InputField
+                  type="email"
+                  placeholder="Email"
+                  value={this.state.email ? this.state.email : ""}
+                  onChange={(val) => this.setInputValueEmail("email", val)}
+                />
+              </div>
 
-            <div className="registerDiv">
-              <InputField
-                type="email"
-                placeholder="Email"
-                value={this.state.email ? this.state.email : ""}
-                onChange={(val) => this.setInputValueEmail("email", val)}
-              />
-            </div>
-
-            <div className="imageUploader">
-            <div className="lijepi-obrub">
-              <ImageUploader
-                  singleImage = {true}
-                  withIcon={true}
-                  withLabel={false}
-                  withPreview={true}
-                  buttonText='Izaberi sliku profila'
-                  onChange={this.onDrop}
-                  imgExtension={['.jpg', '.png', '.jpeg']}
-                  maxFileSize={5242880}
-              />
-            </div>
-            </div>
-            
+              <div className="imageUploader">
+                <div className="lijepi-obrub">
+                  <ImageUploader
+                    singleImage={true}
+                    withIcon={true}
+                    withLabel={false}
+                    withPreview={true}
+                    buttonText="Izaberi sliku profila"
+                    onChange={this.onDrop}
+                    imgExtension={[".jpg", ".png", ".jpeg"]}
+                    maxFileSize={5242880}
+                  />
+                </div>
+              </div>
+            </form>
 
             <div className="registerButton">
               <SubmitButton
@@ -225,12 +228,12 @@ class RegisterForm extends React.Component {
               </button>
             </div>
 
-          </div>          
+          </div>
         </div>
-        <ToastContainer className="toast" bodyClassName="toastBody" toastClassName="toast" pauseOnFocusLoss={false} hideProgressBar={true}/>
       </div>
     );
   }
+
 }
 
 export default RegisterForm;

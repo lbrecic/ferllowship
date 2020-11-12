@@ -37,6 +37,7 @@
   animation-name: animatetop;
   animation-duration: 0.5s;
   box-shadow: 0 0 3px #FF0000, 0 0 5px #0000FF;
+  color: white;
 }
 
 /* The Close Button */
@@ -77,6 +78,13 @@
 .logo-title {
   font-family: 'Orbitron', sans-serif;
   font-size: 40px;
+  text-align: center;
+  text-shadow: 0 0 3px #FF0000, 0 0 5px #0000FF;
+}
+
+.confirm-message {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 26px;
   text-align: center;
   text-shadow: 0 0 3px #FF0000, 0 0 5px #0000FF;
 }

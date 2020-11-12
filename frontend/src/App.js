@@ -1,13 +1,6 @@
-import React        from 'react';
-import LoginForm    from './LoginForm';
-import {observer}   from 'mobx-react';
-import RegisterForm     from './RegisterForm';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  //Redirect
-} from "react-router-dom";
+import React from 'react';
+import { observer } from 'mobx-react';
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import HomePage from './pages/HomePage';
 import ProfilePage from './pages/ProfilePage';
 import DeckPage from './pages/DeckPage';
@@ -15,125 +8,45 @@ import MapPage from './pages/MapPage';
 import HelpPage from './pages/HelpPage';
 import ContactPage from './pages/ContactPage';
 import StatsPage from './pages/StatsPage';
+import LoginPage from './pages/LoginPage';
+import ConfirmedRegistration from './pages/ConfirmedRegistration';
 import './tailwind.css';
 import './App.css';
-
+import Request from './components/Request';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 class App extends React.Component {
 
-  state = {
-    show: false,
-    goHome: true
-  };
+  render() {
+    return (
+      <div className="app">
+        <Router>
+          <Switch>
+            <Route exact path="/"><LoginPage /></Route>
+            <Route path="/home"><HomePage /></Route>
+            <Route path="/profile"><ProfilePage /></Route>
+            <Route path="/deck"><DeckPage /></Route>
+            <Route path="/map"><MapPage /></Route>
+            <Route path="/help"><HelpPage /></Route>
+            <Route path="/contact"><ContactPage /></Route>
+            <Route path="/stats"><StatsPage /></Route>
+            <Route path="/confirm"><ConfirmedRegistration /></Route>
+            <Route path="/test"><Request /></Route>
+          </Switch>
+        </Router>
+        <ToastContainer
+          className="toast"
+          bodyClassName="toastBody"
+          toastClassName="toast"
+          pauseOnFocusLoss={false}
+          hideProgressBar={true}
+        />
+      </div>
+    );
 
-  // async componentDidMount(){
-  //   try{
-
-  //     let res = await fetch('/isLoggedIn',{
-  //       method: 'post',
-  //       headers : {
-  //         'Accept' : 'application/json',
-  //         'Content-Type' : 'application/json'
-  //       }
-  //     });
-
-  //     let result = await res.json();
-
-  //     if(result && result.success){
-  //       UserStore.loading = false;
-  //       UserStore.isLoggedIn = true;
-  //       UserStore.username = result.username;
-  //     }else{
-  //       UserStore.loading = false;
-  //       UserStore.isLoggedIn = false;
-  //     }
-
-  //   }catch(e){
-  //     UserStore.loading = false;
-  //     UserStore.isLoggedIn = false;
-  //   }
-  // }
-
-  // async doLogout(){
-  //   try{
-
-  //     let res = await fetch('/logout',{
-  //       method: 'post',
-  //       headers : {
-  //         'Accept' : 'application/json',
-  //         'Content-Type' : 'application/json'
-  //       }
-  //     });
-
-  //     let result = await res.json();
-
-  //     if(result && result.success){
-  //       UserStore.isLoggedIn = false;
-  //       UserStore.username = '';
-  //     }
-
-  //   }catch(e){
-  //     console.log(e);
-  //   }
-  // }
-
-  showRegister = e => {
-    this.setState({
-      show: !this.state.show
-    })
   }
 
-  onClose = e => {
-    this.setState({
-      show: false
-    })
-  };
-
-  setOnLogin() {
-    this.setState({
-      goHome: true
-    })
-  };
-
-  render() {
-    if(this.state.goHome){
-      return(
-        <div className="app">
-          <Router>
-            <Switch>
-                <Route exact path="/"><HomePage /></Route>
-                <Route path="/profile"><ProfilePage /></Route>
-                <Route path="/deck"><DeckPage /></Route>
-                <Route path="/map"><MapPage /></Route>
-                <Route path="/help"><HelpPage /></Route>
-                <Route path="/contact"><ContactPage /></Route>
-                <Route path="/stats"><StatsPage /></Route>
-            </Switch>
-          </Router>
-        </div>
-      );
-    }
-
-      return (    
-        <div className="app-login" >
-          <div className="container-Login">          
-            <LoginForm setOnLogin={() => alert(".")} />
-            <div className="register">               
-            Nemaš račun?  
-              
-            <button className="btn" onClick={e=> {this.showRegister();}}
-              text='Registriraj se'> Registriraj se </button>
-            
-            <RegisterForm  show={this.state.show} onClose={() => this.onClose()} />             
-          </div>               
-          
-          </div>     
-        </div>
-        );
-
-
-    
-      } 
 }
 
 export default observer(App);

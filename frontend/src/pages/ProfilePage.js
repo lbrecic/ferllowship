@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import LocationRequests from '../components/LocationRequests';
 import Profile from '../components/Profile';
 import Header from '../components/Header';
