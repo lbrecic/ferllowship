@@ -1,12 +1,15 @@
 import React from 'react';
 import InputField from './InputField';
 import SubmitButton from './SubmitButton';
-import 'react-toastify/dist/ReactToastify.css';
 
+import { toast } from 'react-toastify';
+
+const USERNAME_MAX_LENGTH = 128;
+const PASSWORD_MAX_LENGTH = 128;
 
 class LoginForm extends React.Component {
 
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       username: '',
@@ -15,29 +18,29 @@ class LoginForm extends React.Component {
     }
   }
 
-  setInputValueUsername(property, val){
+  setInputValueUsername(property, val) {
     val = val.trim();
-    if(val.length > 128){
+    if (val.length > USERNAME_MAX_LENGTH) {
       return;
     }
 
     this.setState({
-      [property]:val
+      [property]: val
     })
   }
 
-  setInputValuePassword(property, val){
+  setInputValuePassword(property, val) {
     val = val.trim();
-    if(val.length > 128){
+    if (val.length > PASSWORD_MAX_LENGTH) {
       return;
     }
 
     this.setState({
-      [property]:val
+      [property]: val
     })
   }
 
-  resetForm(){
+  resetForm() {
     this.setState({
       username: '',
       password: '',
@@ -45,80 +48,78 @@ class LoginForm extends React.Component {
     })
   }
 
-  async doLogin(){
-    if(!this.state.username){
+  async doLogin() {
+    this.setState({
+      buttonDisabled: true
+    });
+
+    if (!this.state.username || !this.state.password) {
+      if (!this.state.username) {
+        toast("Korisničko ime mora biti uneseno.");
+      }
+
+      if (!this.state.password) {
+        toast("Lozinka mora biti unesena.");
+      }
+
+      this.setState({
+        buttonDisabled: false
+      });
+
       return;
     }
 
-    if(!this.state.password){
-      return;
+    const formData = new FormData();
+    formData.append("username", this.state.username);
+    formData.append("password", this.state.password);
+
+    try {
+      let res = await fetch('/api/login', {
+        method: 'post',
+        body: formData
+      });
+
+      let result = await res.json();
+      if (result && result.message) {
+        toast(result.message);
+      }
+    } catch (e) {
+      toast("Dogodila se pogreška.");
     }
 
     this.setState({
-      buttonDisabled:true
-    })
-
-    try{
-      let res = await fetch('', {
-        method: 'post',
-        headers: {
-          'Accept' : 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body : JSON.stringify({
-          username: this.state.username,
-          password: this.state.password
-        })
-      });
-      // let result = await res.json();
-      // if(result && result.success){
-      //   UserStore.isLoggedIn = true;
-      //   UserStore.username = result.username;
-      // } else if(result  && result.success === false){
-      //   this.resetForm();
-      //   alert(result.msg);
-      // }
-
-    }catch(e){
-      console.log(e);
-      this.resetForm();
-    }
-
+      buttonDisabled: false
+    });
   }
 
   render() {
-    return ( 
-    <div className="loginForm" >
-        <div className='title'>
-        GeoFighter
-        </div>
-        
-        
-        <InputField  
+    return (
+      <div className="loginForm">
+        <div className='title'> GeoFighter </div>
+
+        <InputField
           type='text'
           placeholder='Korisničko ime'
           value={this.state.username ? this.state.username : ''}
           onChange={(val) => this.setInputValueUsername('username', val)}
-
         />
 
-        <InputField  
+        <InputField
           type='password'
           placeholder='Lozinka'
           value={this.state.password ? this.state.password : ''}
           onChange={(val) => this.setInputValuePassword('password', val)}
-
         />
 
-        <SubmitButton 
+        <SubmitButton
           text='Prijavi se'
           disabled={this.state.buttonDisabled}
           onClick={() => this.doLogin()}
         />
-        
-    </div>
+      </div>
     );
   }
+
 }
 
 export default LoginForm;

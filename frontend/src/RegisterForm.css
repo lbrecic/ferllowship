@@ -6,6 +6,7 @@
   width: 100%; /* Full width */
   height: 100%; /* Full height */
   overflow: auto;
+  overflow-x: hidden;
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 
@@ -18,12 +19,14 @@
   height: 100%; /* Full height */
   left: 50%;
   overflow: auto;
+  overflow-x: hidden;
   transform: translate(-50%, 0);
 }
 
 /* Modal Content */
 .modal-content {
   overflow: auto;
+  overflow-x: hidden;
   position: relative;
   top: 50%;
   transform: translate(0, -50%);
@@ -89,15 +92,9 @@ button:hover{
   color: #484048;
 }
 
-.toastBody{
-  background-color: transparent;
-    color: #484048;
-     text-shadow: none;
-}
-
-.toastClass{
-  background-color: transparent;
-
+button:disabled{
+  background-color: #908490;
+  color: #484048;
 }
 
 .imageUploader{

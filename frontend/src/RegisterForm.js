@@ -3,10 +3,16 @@ import InputField from "./InputField";
 import SubmitButton from "./SubmitButton";
 import "./RegisterForm.css";
 import ImageUploader from "react-images-upload";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+
+import { toast } from 'react-toastify';
+
+const USERNAME_MAX_LENGTH = 128;
+const PASSWORD_MIN_LENGTH = 8;
+const PASSWORD_MAX_LENGTH = 128;
+const EMAIL_MAX_LENGTH = 128;
 
 class RegisterForm extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -28,7 +34,7 @@ class RegisterForm extends React.Component {
 
   setInputValueUsername(property, val) {
     val = val.trim();
-    if (val.length > 128) {
+    if (val.length > USERNAME_MAX_LENGTH) {
       return;
     }
 
@@ -39,7 +45,7 @@ class RegisterForm extends React.Component {
 
   setInputValuePassword(property, val) {
     val = val.trim();
-    if (val.length > 128) {
+    if (val.length > PASSWORD_MAX_LENGTH) {
       return;
     }
 
@@ -50,7 +56,7 @@ class RegisterForm extends React.Component {
 
   setInputValueEmail(property, val) {
     val = val.trim();
-    if (val.length > 128) {
+    if (val.length > EMAIL_MAX_LENGTH) {
       return;
     }
 
@@ -72,33 +78,15 @@ class RegisterForm extends React.Component {
     });
   }
 
-  componentDidMount() {
-    fetch("/")
-      .then((res) => res.json())
-      .then((json) => this.setState({ data: json }));
-  }
-
   async doRegister() {
     this.setState({
-      //buttonDisabled: true,
-      show: false,
+      buttonDisabled: true
     });
 
-    console.log(this.state.show);
-
-    // if (!this.state.username) {
-    //   return;
-    // }
-
-    // if (!this.state.password) {
-    //   return;
-    // }
-
-    // if (!this.state.email) {
-    //   return;
-    // }
-
     if (!this.validate()) {
+      this.setState({
+        buttonDisabled: false
+      });
       return;
     }
 
@@ -109,20 +97,22 @@ class RegisterForm extends React.Component {
     formData.append("picture", this.state.pictures[0]);
 
     try {
-      let res = await fetch("/api/register", {
-        method: "post",
-        body: formData,
+      let res = await fetch('/api/register', {
+        method: 'post',
+        body: formData
       });
 
       let result = await res.json();
-      if (result && result.success) {
-        toast("Potvrdi registraciju na mailu!");
-      } else if (result) {
-        toast(result.error);
+      if (result && result.message) {
+        toast(result.message);
       }
     } catch (e) {
-      console.log(e);
+      toast("Dogodila se pogreška.");
     }
+
+    this.setState({
+      buttonDisabled: false
+    });
   }
 
   validate() {
@@ -130,22 +120,37 @@ class RegisterForm extends React.Component {
 
     if (!this.state.username) {
       isValid = false;
-      toast("Unesi korisničko ime!");
-    }
-
-    if (!this.state.email) {
+      toast("Korisničko ime mora biti uneseno.");
+    } else if (this.state.username.length > USERNAME_MAX_LENGTH) {
       isValid = false;
-      toast("Unesi email!");
+      toast("Korisničko ime je predugačko.");
     }
 
     if (!this.state.password) {
       isValid = false;
-      toast("Unesi lozinku!");
+      toast("Lozinka mora biti unesena.");
+    } else if (this.state.password.length < PASSWORD_MIN_LENGTH) {
+      isValid = false;
+      toast("Lozinka mora imati barem 8 znakova.");
+    } else if (this.state.password.length > PASSWORD_MAX_LENGTH) {
+      isValid = false;
+      toast("Lozinka je predugačka.");
+    }
+
+    if (!this.state.email) {
+      isValid = false;
+      toast("Email mora biti unesen.");
+    } else if (this.state.email.length > EMAIL_MAX_LENGTH) {
+      isValid = false;
+      toast("Email je predugačak.");
+    } else if (!/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/.test(this.state.email)) {
+      isValid = false;
+      toast("Email nije u valjanom formatu.");
     }
 
     if (!this.state.pictures[0]) {
       isValid = false;
-      toast("Priloži sliku profila!");
+      toast("Slika profila mora biti priložena.");
     }
 
     return isValid;
@@ -222,18 +227,13 @@ class RegisterForm extends React.Component {
                 Zatvori
               </button>
             </div>
+
           </div>
         </div>
-        <ToastContainer
-          className="toast"
-          bodyClassName="toastBody"
-          toastClassName="toast"
-          pauseOnFocusLoss={false}
-          hideProgressBar={true}
-        />
       </div>
     );
   }
+
 }
 
 export default RegisterForm;

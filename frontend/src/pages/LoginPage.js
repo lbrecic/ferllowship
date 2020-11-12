@@ -1,54 +1,39 @@
-import React from "react";
-import RegisterForm from "../RegisterForm";
-import LoginForm from "../LoginForm";
-import "../App.css";
+import React from 'react';
+import RegisterForm from '../RegisterForm';
+import LoginForm from '../LoginForm';
+import '../App.css';
 
 class LoginPage extends React.Component {
+
   state = {
-    show: false,
-    goHome: true,
+    show: false
   };
 
-  showRegister = (e) => {
+  showRegister = e => {
     this.setState({
-      show: !this.state.show,
-    });
-  };
+      show: !this.state.show
+    })
+  }
 
-  onClose = (e) => {
+  onClose = e => {
     this.setState({
-      show: false,
-    });
+      show: false
+    })
   };
 
   setOnLogin() {
-    this.setState({
-      goHome: true,
-    });
-  }
+    // todo
+  };
 
   render() {
     return (
-      <div className="app-login">
-        <div className="container-Login">
-          <LoginForm setOnLogin={() => alert(".")} />
-          <div className="register">
-            Nemaš račun?
-            <button
-              className="btn"
-              onClick={(e) => {
-                this.showRegister();
-              }}
-              text="Registriraj se"
-            >
-              
-              Registriraj se
-            </button>
-            <RegisterForm
-              show={this.state.show}
-              onClose={() => this.onClose()}
-            />
-          </div>
+      <div className="container-Login">
+        <LoginForm setOnLogin={() => alert(".")} />
+        <div className="register"> 
+          Nemaš račun? 
+          <button className="btn" onClick={e => { this.showRegister(); }}
+            text='Registriraj se'> Registriraj se </button>
+          <RegisterForm show={this.state.show} onClose={() => this.onClose()} />
         </div>
       </div>
     );
