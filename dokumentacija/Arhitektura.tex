@@ -11,7 +11,7 @@
 
 		{Prilikom projektiranja samog sustava jedna od važnijih odluka bila je odabir programskog jezika i razvojnog okruženja u kojem ćemo razviti našu aplikaciju. Programski jezik kojeg smo odabrali je Java sa Spring Boot razvojim okvirom. Odabrano razvojno okruženje je Visual Studio Code.}	\\
 		{Također izbor odgovarajuće arhitekture programske potpore jedan je od najbitnijih koraka u oblikovanju sustava jer ona predstavlja poveznicu između zahtjeva u sustav i same implementacije sustava. Dobra arhitektura znači dobru fleksibilnost sustava, jednostavnu mogućnost nadogradnje i jeftino održavanje.}\\
-		{Sama arhitektura sustava je vrlo jednostavna, a sastoji se od dvije manje aplikacije: klijenta i poslužitelja. Osnovna prednost modela klijent-poslužitelj je u tome što nije potreban sustav za upravljanje bazom podataka na svakom klijentskom računalu, već se klijent s bazom podataka povezuje preko aplikacije. Time se postiže veća sigurnost i zaštita podataka. Poslužiteljska aplikacija ima pristup bazi podataka u kojoj će se pohranjivati podaci o lokacijama, kartama, borbama, igračima i kartografima. Poslužiteljska aplikacija neće dohvaćati slike iz baze podataka već preko Cloudinary. Klijentska aplikacija osnovna je implementacija klijenta za REST web servise na poslužitelju, a ista dohvaća podatke te ih prezentira na korisniku razumljiv način. Obje aplikacije kreirane su pomoću Spring Boot razvojnog okvira, a inicijalizirane putem online servisa za inicijalizaciju SpringInitializr.}\\
+		{Sama arhitektura sustava je vrlo jednostavna, a sastoji se od dvije manje aplikacije: klijenta i poslužitelja. Osnovna prednost modela klijent-poslužitelj je u tome što nije potreban sustav za upravljanje bazom podataka na svakom klijentskom računalu, već se klijent s bazom podataka povezuje preko aplikacije. Time se postiže veća sigurnost i zaštita podataka. Poslužiteljska aplikacija ima pristup bazi podataka u kojoj će se pohranjivati podaci o lokacijama, kartama, borbama, igračima i kartografima. Poslužiteljska aplikacija neće dohvaćati slike iz baze podataka već preko servisa Cloudinary. Klijentska aplikacija osnovna je implementacija klijenta za REST web servise na poslužitelju, a ista dohvaća podatke te ih prezentira na korisniku razumljiv način. Obje aplikacije kreirane su pomoću Spring Boot razvojnog okvira, a inicijalizirane putem online servisa za inicijalizaciju SpringInitializr.}\\
 		{Za izradu aplikacije odabrali smo MVC arhitekturu jer omogućava dodatno strukturiranje aplikacije s obzirom na objektno orijentiranu paradigmu što znatno olakšava nezavisni razvoj, ispitivanje i održavanje aplikacije.}		
 
 				
@@ -34,9 +34,10 @@
 			
 			\subsection{Opis tablica}
 			
-				\noindent\textbf{player} $($Igrač$)$ - Ovaj entitet sadržava podatke o korisniku. Svaki korisnik je ujedno i igrač. Sadrži atribute: korisničko ime, lozinku, e-mail adresu, fotografiju i bodove igrača. Ovaj entitet je u \textit{One-to-Many} vezi s entitetom card preko atributa player\_id. Ima dvije \textit{One-to-Many} veze s entitetom fight, koje se odnose na borbe u kojima je igrač pobijedio i borbe u kojima je izgubio. Player je u \textit{One-to-One} vezi s entitetom ban i s entitetom confirmation. Atribut username je alternativni ključ entiteta.
+				\noindent\textbf{player} $($Igrač$)$ - Ovaj entitet sadržava podatke o korisniku. Svaki korisnik je ujedno i igrač. Sadrži atribute: ID korisnika, korisničko ime, hash lozinke, e-mail adresu, fotografiju, bodove igrača, status bana, aktivnost igrača, osposobljenost računa i "experience points". Ovaj entitet je u \textit{One-to-Many} vezi s entitetom card preko atributa player\_id. Ima dvije \textit{One-to-Many} veze s entitetom fight, koje se odnose na borbe u kojima je igrač pobijedio i borbe u kojima je izgubio. Player je u \textit{One-to-One} vezi s entitetom ban i s entitetom confirmation. \\
+				Atribut username je alternativni ključ entiteta. Atribut ban\_status može poprimiti jednu od sljedećih vrijednosti: 0 - korisnik nije pod banom (nije isključen iz igre$)$, 1 - korisnik je privremeno isključen iz igre, 2 - korisnik je trajno isključen iz igre.
 				
-				\begin{longtabu} to \textwidth {|X[7, l]|X[7, l]|X[20, l]|}
+				\begin{longtabu} to \textwidth {|X[6, l]|X[7, l]|X[20, l]|}
 					
 					\hline \multicolumn{3}{|c|}{\textbf{player}}	 \\[3pt] \hline
 					\endfirsthead
@@ -54,12 +55,15 @@
 					photo\_link & VARCHAR(200) & fotografija (avatar$)$ korisnika \\ \hline 
 					points & INT	&  	broj bodova igrača	\\ \hline
 					ban\_status & INT	&  	status o zabranama igrača	\\ \hline 
+					activity & BOOLEAN	&  	oznaka je li igrač online	\\ \hline 
+					enabled & BOOLEAN	&  	oznaka je li igraču omogućeno korištenje računa nakon registracije	\\ \hline
+					experience	& INT	&	 mjera "iskustva" u igri iskazana brojčanom vrijednošću \\ \hline
 					
 				\end{longtabu}
 			
 				\noindent\textbf{confirmation} $($Potvrda registracije$)$ - Ovaj entitet sadržava podatke o potvrdi registracije. Sadrži atribute: ID tokena, token i ID korisnika. Ovaj entitet u vezi je \textit{One-to-One} s Player preko jedinstvenog brojčanog identifikatora korisnika.
 				
-				\begin{longtabu} to \textwidth {|X[7, l]|X[7, l]|X[20, l]|}
+				\begin{longtabu} to \textwidth {|X[6, l]|X[7, l]|X[20, l]|}
 					
 					\hline \multicolumn{3}{|c|}{\textbf{confirmation}}	 \\[3pt] \hline
 					\endfirsthead
@@ -76,9 +80,9 @@
 					
 				\end{longtabu}
 			
-				\noindent\textbf{ban} $($Zabrana pristupa$)$ - Ovaj entitet sadržava podatke o igračima kojima je zabranjen pristup aplikaciji. Sadrži atribute kraj zabrane i korisničko ime igrača. Ovaj entitet u vezi je \textit{One-to-One} s korisnikom (player$)$ preko ID-a korisnika.
+				\noindent\textbf{ban} $($Zabrana pristupa$)$ - Ovaj entitet sadržava podatke o igračima kojima je zabranjen pristup aplikaciji. Sadrži atribute kraj zabrane i ID igrača. Ovaj entitet u vezi je \textit{One-to-One} s korisnikom (player$)$ preko ID-a korisnika.
 				
-				\begin{longtabu} to \textwidth {|X[7, l]|X[6, l]|X[20, l]|}
+				\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
 					
 					\hline \multicolumn{3}{|c|}{\textbf{ban}}	 \\[3pt] \hline
 					\endfirsthead
@@ -89,14 +93,14 @@
 					\hline 
 					\endlastfoot
 					
-					\cellcolor{LightBlue}\textit{player\_id} & UUID 	&   korisničko ime igrača 	\\ \hline 
+					\cellcolor{LightBlue}\textit{player\_id} & UUID 	&   jedinstveni brojčani identifikator igrača 	\\ \hline 
 					ban\_end & DATE & datum isteka zabrane \\ \hline 
 					
 				\end{longtabu}
 				
 				\noindent\textbf{mapper} $($Kartograf$)$ - Entitet mapper nasljeđuje entitet player. Ovaj entitet, uz atribute playera, ima i atribute IBAN i ID photo.
 				
-				\begin{longtabu} to \textwidth {|X[7, l]|X[7, l]|X[20, l]|}
+				\begin{longtabu} to \textwidth {|X[6, l]|X[7, l]|X[20, l]|}
 					
 					\hline \multicolumn{3}{|c|}{\textbf{mapper}}	 \\[3pt] \hline
 					\endfirsthead
@@ -115,7 +119,7 @@
 			
 				\noindent\textbf{admin} $($Administrator$)$ - Entitet admin nasljeđuje entitet player. Ovaj entitet ima iste atribute kao i entitet player.
 				
-				\begin{longtabu} to \textwidth {|X[7, l]|X[7, l]|X[20, l]|}
+				\begin{longtabu} to \textwidth {|X[5, l]|X[7, l]|X[20, l]|}
 					
 					\hline \multicolumn{3}{|c|}{\textbf{admin}}	 \\[3pt] \hline
 					\endfirsthead
@@ -153,7 +157,8 @@
 					
 				\end{longtabu}
 
-				{\noindent\textbf{location} $($Lokacija$)$ - Ovaj entitet sadržava sve važne informacije o lokacijama na kojima igrač može sakupiti karte. Sadrži atribute: ID lokacije, naziv lokacije, fotografiju lokacije i ID kategorije. Ovaj entitet u vezi je \textit{Many-to-One} s Category preko ID kategorije te je u vezi \textit{One-to-One} s Path preko ID lokacije. }
+				{\noindent\textbf{location} $($Lokacija$)$ - Ovaj entitet sadržava sve važne informacije o lokacijama na kojima igrač može sakupiti karte. Sadrži atribute: ID lokacije, naziv lokacije, fotografiju lokacije i ID kategorije. Ovaj entitet u vezi je \textit{Many-to-One} s Category preko ID kategorije te je u vezi \textit{One-to-One} s Path preko ID lokacije. \\
+				Atribut location\_status može poprimiti jednu od sljedećih vrijednosti: 0 - odobrena, 1 - odbijena, 2 - čeka odobrenje kartografa, 3 - potreban izlazak na teren i pomniji pregled}
 				
 				\begin{longtabu} to \textwidth {|X[6, l]|X[7, l]|X[20, l]|}
 					
