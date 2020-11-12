@@ -2,8 +2,6 @@ import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import logo from '../logo.svg';
-import '../tailwind.css';
-import '../styles/RegisterForm.css';
 
 function HomePage() {
     return (

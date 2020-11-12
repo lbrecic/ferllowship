@@ -19,26 +19,32 @@ import 'react-toastify/dist/ReactToastify.css';
 class App extends React.Component {
 
   render() {
-      return(
-        <div className="app">
-          <Router>
-            <Switch>
-                <Route exact path="/"><LoginPage /></Route>
-                <Route path="/home"><HomePage /></Route>
-                <Route path="/profile"><ProfilePage /></Route>
-                <Route path="/deck"><DeckPage /></Route>
-                <Route path="/map"><MapPage /></Route>
-                <Route path="/help"><HelpPage /></Route>
-                <Route path="/contact"><ContactPage /></Route>
-                <Route path="/stats"><StatsPage /></Route>
-                <Route path="/confirm"><ConfirmedRegistration /></Route>
-                <Route path="/test"><Request /></Route>
+    return (
+      <div className="app">
+        <Router>
+          <Switch>
+            <Route exact path="/"><LoginPage /></Route>
+            <Route path="/home"><HomePage /></Route>
+            <Route path="/profile"><ProfilePage /></Route>
+            <Route path="/deck"><DeckPage /></Route>
+            <Route path="/map"><MapPage /></Route>
+            <Route path="/help"><HelpPage /></Route>
+            <Route path="/contact"><ContactPage /></Route>
+            <Route path="/stats"><StatsPage /></Route>
+            <Route path="/confirm"><ConfirmedRegistration /></Route>
+            <Route path="/test"><Request /></Route>
+          </Switch>
+        </Router>
+        <ToastContainer
+          className="toast"
+          bodyClassName="toastBody"
+          toastClassName="toast"
+          pauseOnFocusLoss={false}
+          hideProgressBar={true}
+        />
+      </div>
+    );
 
-            </Switch>
-          </Router>
-        </div>
-      );
-   
   }
 
 }
