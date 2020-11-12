@@ -18,7 +18,7 @@ class ConfirmedRegistration extends React.Component {
       let res = await fetch('/api/confirm?token=' + token);
       let result = await res.json();
 
-      if (result) {
+      if (result && result.message) {
         this.setState({
           message: result.message
         });

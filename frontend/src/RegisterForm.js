@@ -103,7 +103,7 @@ class RegisterForm extends React.Component {
       });
 
       let result = await res.json();
-      if (result) {
+      if (result && result.message) {
         toast(result.message);
       }
     } catch (e) {
