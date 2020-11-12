@@ -11,13 +11,13 @@ function CartographRequests(props) {
             <div className="h-8"></div>
             <div 
                 className="text-center text-sm geo-text black p-3 border border-black box-shadow cursor-pointer"
-                onClick={() => props.setShow(true)}  
+                onClick={() => {props.setShow(1); props.setRequest(1)}}  
             >
                 zahtjev 1
             </div>
             <div 
                 className="text-center text-sm geo-text black p-3 border border-black box-shadow cursor-pointer"
-                onClick={() => props.setShow(true)}  
+                onClick={() => {props.setShow(2); props.setRequest(2)}}  
             >
                 zahtjev 2
             </div>
