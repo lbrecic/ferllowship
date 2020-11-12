@@ -9,7 +9,7 @@ import HelpPage from './pages/HelpPage';
 import ContactPage from './pages/ContactPage';
 import StatsPage from './pages/StatsPage';
 import LoginPage from './pages/LoginPage';
-import ConfirmedRegistration from './pages/ConfirmedRegistration';
+import ConfirmedRegistration from './pages/ConfirmPage';
 import './tailwind.css';
 import './App.css';
 import Request from './components/Request';

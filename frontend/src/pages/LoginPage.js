@@ -6,7 +6,9 @@ import '../App.css';
 class LoginPage extends React.Component {
 
   state = {
-    show: false
+    show: false,
+    username: '',
+    password: ''
   };
 
   showRegister = e => {
@@ -22,13 +24,13 @@ class LoginPage extends React.Component {
   };
 
   setOnLogin() {
-    // todo
+    //to do 
   };
 
   render() {
     return (
       <div className="container-Login">
-        <LoginForm setOnLogin={() => alert(".")} />
+        <LoginForm setOnLogin={() => this.setOnLogin()} />
         <div className="register"> 
           Nemaš račun? 
           <button className="btn" onClick={e => { this.showRegister(); }}
