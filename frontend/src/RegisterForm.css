@@ -90,17 +90,6 @@ button:disabled{
   color: #484048;
 }
 
-.toastBody{
-  background-color: transparent;
-    color: #484048;
-     text-shadow: none;
-}
-
-.toastClass{
-  background-color: transparent;
-
-}
-
 .imageUploader{
   padding: 12px;
   padding-top: 36px;

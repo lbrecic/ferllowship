@@ -13,23 +13,35 @@ import ConfirmedRegistration from './pages/ConfirmedRegistration';
 import './tailwind.css';
 import './App.css';
 
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 class App extends React.Component {
 
   render() {
     return (
-      <Router>
-        <Switch>
-          <Route exact path="/"><LoginPage /></Route>
-          <Route path="/home"><HomePage /></Route>
-          <Route path="/profile"><ProfilePage /></Route>
-          <Route path="/deck"><DeckPage /></Route>
-          <Route path="/map"><MapPage /></Route>
-          <Route path="/help"><HelpPage /></Route>
-          <Route path="/contact"><ContactPage /></Route>
-          <Route path="/stats"><StatsPage /></Route>
-          <Route path="/confirm"><ConfirmedRegistration /></Route>
-        </Switch>
-      </Router>
+      <>
+        <Router>
+          <Switch>
+            <Route exact path="/"><LoginPage /></Route>
+            <Route path="/home"><HomePage /></Route>
+            <Route path="/profile"><ProfilePage /></Route>
+            <Route path="/deck"><DeckPage /></Route>
+            <Route path="/map"><MapPage /></Route>
+            <Route path="/help"><HelpPage /></Route>
+            <Route path="/contact"><ContactPage /></Route>
+            <Route path="/stats"><StatsPage /></Route>
+            <Route path="/confirm"><ConfirmedRegistration /></Route>
+          </Switch>
+        </Router>
+        <ToastContainer
+          className="toast"
+          bodyClassName="toastBody"
+          toastClassName="toast"
+          pauseOnFocusLoss={false}
+          hideProgressBar={true}
+        />
+      </>
     );
   }
 

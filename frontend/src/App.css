@@ -132,3 +132,10 @@ p{
 .geo-color {
   background-color: #2E3F30;
 }
+
+.toastBody{
+  text-align: center;
+  color: #565656;
+  font-weight: bold;
+  font-size: 14px;
+}

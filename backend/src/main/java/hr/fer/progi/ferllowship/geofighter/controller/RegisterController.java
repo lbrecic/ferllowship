@@ -104,7 +104,7 @@ public class RegisterController {
 		player.setEnabled(true);
 		playerRepository.save(player);
 		
-		response.put("message", "Registracija uspješna!");
+		response.put("message", "Uspješna registracija!");
         return response;
 	}
 	

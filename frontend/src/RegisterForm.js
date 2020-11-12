@@ -4,8 +4,7 @@ import SubmitButton from "./SubmitButton";
 import "./RegisterForm.css";
 import ImageUploader from "react-images-upload";
 
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 
 const USERNAME_MAX_LENGTH = 128;
 const PASSWORD_MIN_LENGTH = 8;
@@ -77,12 +76,6 @@ class RegisterForm extends React.Component {
       email: "",
       buttonDisabled: false,
     });
-  }
-
-  componentDidMount() {
-    fetch("/")
-      .then((res) => res.json())
-      .then((json) => this.setState({ data: json }));
   }
 
   async doRegister() {
@@ -232,14 +225,6 @@ class RegisterForm extends React.Component {
 
           </div>
         </div>
-
-        <ToastContainer 
-          className="toast" 
-          bodyClassName="toastBody" 
-          toastClassName="toast" 
-          pauseOnFocusLoss={false} 
-          hideProgressBar={true} 
-        />
       </div>
     );
   }
