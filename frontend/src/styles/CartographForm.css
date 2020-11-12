@@ -95,6 +95,14 @@
     margin-bottom: 20px;
  }
 
-.imageUploader{
+.imageUploaderForm{
   padding-top: 0px;
+  width: 70%;
+  margin : auto;
+  }
+
+
+.lijepi-obrubForm {
+  border-radius: 10px;
+  box-shadow: 0 0 3px #FF0000, 0 0 5px #0000FF;
 }

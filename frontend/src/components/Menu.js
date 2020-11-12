@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-import '../tailwind.css';
+import '../styles/tailwind.css';
 
 function Menu(props) {
     return (

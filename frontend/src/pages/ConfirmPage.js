@@ -3,7 +3,7 @@ import logo from '../logo.svg';
 
 const queryString = require('query-string');
 
-class ConfirmedRegistration extends React.Component {
+class ConfirmPage extends React.Component {
 
   state = {
     message: ""
@@ -46,4 +46,4 @@ class ConfirmedRegistration extends React.Component {
 
 }
 
-export default ConfirmedRegistration;
+export default ConfirmPage;

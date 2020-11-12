@@ -1,6 +1,6 @@
 import React from "react";
-import InputField from "../InputField";
-import SubmitButton from "../SubmitButton";
+import InputField from "./InputField";
+import SubmitButton from "./SubmitButton";
 import "../styles/CartographForm.css";
 import ImageUploader from "react-images-upload";
 
@@ -45,13 +45,9 @@ class CartographForm extends React.Component {
     });
   }
 
-  componentDidMount() {
-    fetch("/")
-      .then((res) => res.json())
-      .then((json) => this.setState({ data: json }));
-  }
 
-  async doRegister() {
+
+  async doApply() {
     this.setState({
       //buttonDisabled: true,
       show: false,
@@ -125,8 +121,9 @@ class CartographForm extends React.Component {
             </div>
 
             <p className="cartographPicture">Priloži sliku osobne iskaznice:</p>
-            <div className="imageUploader">
-              <ImageUploader
+            <div className="imageUploaderForm">
+            <div className="lijepi-obrubForm">
+              <ImageUploader className="uploadWindow"
                 singleImage={true}
                 withIcon={false}
                 withLabel={false}
@@ -136,6 +133,7 @@ class CartographForm extends React.Component {
                 imgExtension={[".jpg", ".gif", ".png", ".gif", ".jpeg"]}
                 maxFileSize={5242880}
               />
+              </div>
             </div>
 
 
@@ -143,7 +141,7 @@ class CartographForm extends React.Component {
               <SubmitButton
                 text="Pošalji zahtjev"
                 disabled={this.state.buttonDisabled}
-                onClick={() => this.doRegister()}
+                onClick={() => this.doApply()}
               />
             </div>
 

@@ -1,7 +1,7 @@
 import React from "react";
 import InputField from "./InputField";
 import SubmitButton from "./SubmitButton";
-import "./RegisterForm.css";
+import "../styles/RegisterForm.css";
 import ImageUploader from "react-images-upload";
 
 import { toast } from 'react-toastify';
