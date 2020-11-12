@@ -47,7 +47,7 @@
 					\hline 
 					\endlastfoot
 					
-					\cellcolor{LightGreen}player\_id & UUID 	&  	jedinstveni brojčani identifikator korisnika 	\\ \hline
+					\cellcolor{LightGreen}\textbf{player\_id} & UUID 	&  	jedinstveni brojčani identifikator korisnika 	\\ \hline
 					username & VARCHAR(32) 	&  	jedinstveno korisničko ime 	\\ \hline
 					pass\_hash & VARCHAR(64)  &   hash lozinke \\ \hline 
 					email & VARCHAR(128)  &   jedinstvena e-mail adresa korisnika \\ \hline 
@@ -70,9 +70,9 @@
 					\hline 
 					\endlastfoot
 					
-					\cellcolor{LightGreen}token\_id & UUID 	&   jedinstveni brojčani identifikator registracije 	\\ \hline
+					\cellcolor{LightGreen}\textbf{token\_id} & UUID 	&   jedinstveni brojčani identifikator registracije 	\\ \hline
 					token & VARCHAR(255) & token potvrde o registraciji\\ \hline
-					\cellcolor{LightBlue}player\_id & UUID 	&   jedinstveni brojčani identifikator korisnika 	\\ \hline  
+					\cellcolor{LightBlue}\textit{player\_id} & UUID 	&   jedinstveni brojčani identifikator korisnika 	\\ \hline  
 					
 				\end{longtabu}
 			
@@ -89,7 +89,7 @@
 					\hline 
 					\endlastfoot
 					
-					\cellcolor{LightBlue}username & VARCHAR(32) 	&   korisničko ime igrača 	\\ \hline 
+					\cellcolor{LightBlue}\textit{username} & VARCHAR(32) 	&   korisničko ime igrača 	\\ \hline 
 					ban\_end & DATE & datum isteka zabrane \\ \hline 
 					
 				\end{longtabu}
@@ -107,7 +107,7 @@
 					\hline 
 					\endlastfoot
 					
-					\cellcolor{LightGreen}player\_id & UUID 	&  	jedinstveni brojčani identifikator kartografa 	\\ \hline
+					\cellcolor{LightGreen}\textit{player\_id} & UUID 	&  	jedinstveni brojčani identifikator kartografa 	\\ \hline
 					iban & VARCHAR(34)  & IBAN računa za uplatu plaće \\ \hline 
 					id\_photo & VARCHAR(200) & fotografija osobne iskaznice \\ \hline 
 					
@@ -126,7 +126,7 @@
 					\hline 
 					\endlastfoot
 					
-					\cellcolor{LightGreen}player\_id & UUID 	&  	jedinstveni brojčani identifikator administratora 	\\ \hline
+					\cellcolor{LightGreen}\textit{player\_id} & UUID 	&  	jedinstveni brojčani identifikator administratora 	\\ \hline
 					iban & VARCHAR(34)  & IBAN računa za uplatu plaće \\ \hline 
 					id\_photo & VARCHAR(200) & fotografija osobne iskaznice \\ \hline  
 					
@@ -145,11 +145,11 @@
 					\hline 
 					\endlastfoot
 					
-					\cellcolor{LightGreen}fight\_id & UUID	&  	jedinstveni brojčani identifikator borbe 	\\ \hline
+					\cellcolor{LightGreen}\textbf{fight\_id} & UUID	&  	jedinstveni brojčani identifikator borbe 	\\ \hline
 					start & TIMESTAMP  &   trenutak početka borbe \\ \hline 
 					duration & INTERVAL	&  	trajanje borbe	\\ \hline 
-					\cellcolor{LightBlue}winner	& VARCHAR(32) & korisničko ime pobjednika borbe  	\\ \hline 
-					\cellcolor{LightBlue}loser	& VARCHAR(32) & korisničko ime gubitnika borbe  	\\ \hline 
+					\cellcolor{LightBlue}\textit{winner}	& VARCHAR(32) & korisničko ime pobjednika borbe  	\\ \hline 
+					\cellcolor{LightBlue}\textit{loser}	& VARCHAR(32) & korisničko ime gubitnika borbe  	\\ \hline 
 					
 				\end{longtabu}
 
@@ -166,13 +166,13 @@
 					\hline 
 					\endlastfoot
 					
-					\cellcolor{LightGreen}location\_id & UUID	&   jedinstveni brojčani identifikator lokacije	\\ \hline
+					\cellcolor{LightGreen}\textbf{location\_id} & UUID	&   jedinstveni brojčani identifikator lokacije	\\ \hline
 					location\_name	& VARCHAR(32) &  naziv lokacije 	\\ \hline 
 					location\_desc	& TEXT &  opis lokacije 	\\ \hline 
 					location\_photo & VARCHAR(200) &  fotografija lokacije \\ \hline 
 					location\_status	& INT &  status prihvatljivosti lokacije 	\\ \hline 
 					coordinates	& VARCHAR(32) &  koordinate lokacije 	\\ \hline 
-					\cellcolor{LightBlue} category\_id	& UUID &   jedinstveni brojčani identifikator kategorije	\\ \hline 
+					\cellcolor{LightBlue} \textit{category\_id}	& UUID &   jedinstveni brojčani identifikator kategorije	\\ \hline 
 					
 					
 				\end{longtabu}
@@ -191,7 +191,7 @@
 					\endlastfoot
 					
 					distance & INT &  najkraći put do lokacije \\ \hline
-					\cellcolor{LightBlue} location\_id	& UUID &   jedinstveni brojčani identifikator lokacije	\\ \hline 
+					\cellcolor{LightBlue} \textit{location\_id}	& UUID &   jedinstveni brojčani identifikator lokacije	\\ \hline 
 					
 					
 				\end{longtabu}
@@ -209,7 +209,7 @@
 					\hline 
 					\endlastfoot
 					
-					\cellcolor{LightGreen}category\_id & UUID	&   jedinstveni brojčani identifikator kategorije	\\ \hline
+					\cellcolor{LightGreen}\textbf{category\_id} & UUID	&   jedinstveni brojčani identifikator kategorije	\\ \hline
 					category\_name	& VARCHAR(32) &  naziv kategorije 	\\ \hline 
 					category\_points & INT &  bodovna vrijednost kategorije \\ \hline  
 					
@@ -229,11 +229,11 @@
 					\hline 
 					\endlastfoot
 					
-					\cellcolor{LightGreen}card\_id & UUID	&   jedinstveni brojčani identifikator karte	\\ \hline 
+					\cellcolor{LightGreen}\textbf{card\_id} & UUID	&   jedinstveni brojčani identifikator karte	\\ \hline 
 					card\_points & INT &  bodovna vrijednost karte \\ \hline 
 					scale\_factor & INT &  faktor skaliranja bodova karte \\ \hline 
-					\cellcolor{LightBlue} location\_id	& UUID &   jedinstveni brojčani identifikator lokacije	\\ \hline 
-					\cellcolor{LightBlue}username & VARCHAR(32)	&   korisničko ime igrača	\\ \hline
+					\cellcolor{LightBlue} \textit{location\_id}	& UUID &   jedinstveni brojčani identifikator lokacije	\\ \hline 
+					\cellcolor{LightBlue}\textit{username} & VARCHAR(32)	&   korisničko ime igrača	\\ \hline
 					
 					
 				\end{longtabu}
