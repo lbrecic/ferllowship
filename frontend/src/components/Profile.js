@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 function Profile(props) {
     return (
-        <div className="w-full h-screen geo-color">
+        <div className="w-full h-screen geo-color mobile-block">
             <div className="flex justify-center align-center h-screen">
                 <div className="w-1/4">
                     <div className="h-12"></div>

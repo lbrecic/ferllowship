@@ -134,3 +134,9 @@ p{
 .geo-color {
   background-color: #2E3F30;
 }
+
+@media only screen and (max-width: 600px) {
+  .mobile-block {
+    display: block !important;
+  }
+}

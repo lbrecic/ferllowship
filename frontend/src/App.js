@@ -23,7 +23,7 @@ class App extends React.Component {
 
   state = {
     show: false,
-    goHome: false
+    goHome: true
   };
 
   // async componentDidMount(){
