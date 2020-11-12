@@ -19,6 +19,7 @@ import LoginPage from './pages/LoginPage';
 import './tailwind.css';
 import './App.css';
 import ConfirmedRegistration from './pages/ConfirmedRegistration';
+import Request from './components/Request';
 
 
 class App extends React.Component {
@@ -111,6 +112,7 @@ class App extends React.Component {
                 <Route path="/contact"><ContactPage /></Route>
                 <Route path="/stats"><StatsPage /></Route>
                 <Route path="/confirm"><ConfirmedRegistration /></Route>
+                <Route path="/test"><Request /></Route>
 
             </Switch>
           </Router>

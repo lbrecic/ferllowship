@@ -67,6 +67,13 @@
   margin-right: 10px;
 
 }
+.registerTitle{
+  font-family: 'Orbitron', sans-serif;
+  font-size: 35px;
+  text-align: center;
+  text-shadow: 0 0 3px #FF0000, 0 0 5px #0000FF;
+  color: white;
+}
 
 .registerClose {
   margin-bottom: 10px;

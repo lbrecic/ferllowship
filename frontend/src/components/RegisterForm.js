@@ -135,7 +135,7 @@ class RegisterForm extends React.Component {
             <SubmitButton 
               text='Registriraj se'
               disabled={this.state.buttonDisabled}
-              onClick={() => this.doRegister(), e => this.onClose(e)}
+              onClick={() => this.doRegister()}
             /> 
             </div>
 

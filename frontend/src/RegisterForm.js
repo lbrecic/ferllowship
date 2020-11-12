@@ -3,9 +3,8 @@ import InputField from "./InputField";
 import SubmitButton from "./SubmitButton";
 import "./RegisterForm.css";
 import ImageUploader from "react-images-upload";
-
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 class RegisterForm extends React.Component {
   constructor(props) {
@@ -99,7 +98,7 @@ class RegisterForm extends React.Component {
     //   return;
     // }
 
-    if(!this.validate()){
+    if (!this.validate()) {
       return;
     }
 
@@ -109,22 +108,21 @@ class RegisterForm extends React.Component {
     formData.append("email", this.state.email);
     formData.append("picture", this.state.pictures[0]);
 
-    try{
-      let res = await fetch('/api/register', {
-        method: 'post',
-        body : formData
+    try {
+      let res = await fetch("/api/register", {
+        method: "post",
+        body: formData,
       });
 
       let result = await res.json();
-      if(result && result.success){
+      if (result && result.success) {
         toast("Potvrdi registraciju na mailu!");
-      } else if(result){
+      } else if (result) {
         toast(result.error);
       }
     } catch (e) {
       console.log(e);
     }
-
   }
 
   validate() {
@@ -138,7 +136,7 @@ class RegisterForm extends React.Component {
     if (!this.state.email) {
       isValid = false;
       toast("Unesi email!");
-        }
+    }
 
     if (!this.state.password) {
       isValid = false;
@@ -162,50 +160,54 @@ class RegisterForm extends React.Component {
       <div className="overlay">
         <div className="modal">
           <div className="registerForm modal-content">
-            <div className="title-register">Registriraj se</div>
+            <div className="registerTitle">Registriraj se</div>
+            <form>
+              <div className="registerDiv">
+                <InputField
+                  type="text"
+                  placeholder="Korisničko ime"
+                  value={this.state.username ? this.state.username : ""}
+                  onChange={(val) =>
+                    this.setInputValueUsername("username", val)
+                  }
+                />
+              </div>
 
-            <div className="registerDiv">
-              <InputField
-                type="text"
-                placeholder="Korisničko ime"
-                value={this.state.username ? this.state.username : ""}
-                onChange={(val) => this.setInputValueUsername("username", val)}
-              />
-            </div>
+              <div className="registerDiv">
+                <InputField
+                  type="password"
+                  placeholder="Lozinka"
+                  value={this.state.password ? this.state.password : ""}
+                  onChange={(val) =>
+                    this.setInputValuePassword("password", val)
+                  }
+                />
+              </div>
 
-            <div className="registerDiv">
-              <InputField
-                type="password"
-                placeholder="Lozinka"
-                value={this.state.password ? this.state.password : ""}
-                onChange={(val) => this.setInputValuePassword("password", val)}
-              />
-            </div>
+              <div className="registerDiv">
+                <InputField
+                  type="email"
+                  placeholder="Email"
+                  value={this.state.email ? this.state.email : ""}
+                  onChange={(val) => this.setInputValueEmail("email", val)}
+                />
+              </div>
 
-            <div className="registerDiv">
-              <InputField
-                type="email"
-                placeholder="Email"
-                value={this.state.email ? this.state.email : ""}
-                onChange={(val) => this.setInputValueEmail("email", val)}
-              />
-            </div>
-
-            <div className="imageUploader">
-            <div className="lijepi-obrub">
-              <ImageUploader
-                  singleImage = {true}
-                  withIcon={true}
-                  withLabel={false}
-                  withPreview={true}
-                  buttonText='Izaberi sliku profila'
-                  onChange={this.onDrop}
-                  imgExtension={['.jpg', '.png', '.jpeg']}
-                  maxFileSize={5242880}
-              />
-            </div>
-            </div>
-            
+              <div className="imageUploader">
+                <div className="lijepi-obrub">
+                  <ImageUploader
+                    singleImage={true}
+                    withIcon={true}
+                    withLabel={false}
+                    withPreview={true}
+                    buttonText="Izaberi sliku profila"
+                    onChange={this.onDrop}
+                    imgExtension={[".jpg", ".png", ".jpeg"]}
+                    maxFileSize={5242880}
+                  />
+                </div>
+              </div>
+            </form>
 
             <div className="registerButton">
               <SubmitButton
@@ -220,10 +222,15 @@ class RegisterForm extends React.Component {
                 Zatvori
               </button>
             </div>
-
-          </div>          
+          </div>
         </div>
-        <ToastContainer className="toast" bodyClassName="toastBody" toastClassName="toast" pauseOnFocusLoss={false} hideProgressBar={true}/>
+        <ToastContainer
+          className="toast"
+          bodyClassName="toastBody"
+          toastClassName="toast"
+          pauseOnFocusLoss={false}
+          hideProgressBar={true}
+        />
       </div>
     );
   }

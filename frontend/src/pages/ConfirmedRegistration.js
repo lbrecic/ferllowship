@@ -2,7 +2,6 @@ import React from 'react';
 import logo from '../logo.svg';
 import '../tailwind.css';
 import '../styles/RegisterForm.css';
-import { render } from '@testing-library/react';
 
 const queryString = require('query-string');
 

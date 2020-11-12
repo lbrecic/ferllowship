@@ -33,7 +33,6 @@ class RegisterForm extends React.Component {
     });
   }
 
-
   onClose = (e) => {
     this.props.onClose && this.props.onClose(e);
   };
@@ -59,7 +58,7 @@ class RegisterForm extends React.Component {
 
     console.log(this.state.show);
 
-    if(!this.validate()){
+    if (!this.validate()) {
       return;
     }
 
@@ -71,7 +70,7 @@ class RegisterForm extends React.Component {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          IBAN: this.state.IBAN
+          IBAN: this.state.IBAN,
         }),
       });
 
@@ -103,7 +102,7 @@ class RegisterForm extends React.Component {
       alertMessage = alertMessage + "Izaberi sliku!" + "\n";
     }
 
-    if(alertMessage !== ""){
+    if (alertMessage !== "") {
       alert(alertMessage);
     }
     return isValid;
@@ -120,30 +119,33 @@ class RegisterForm extends React.Component {
           <div className="registerForm modal-content">
             <div className="title-register">Postani kartograf</div>
 
-            <div className="registerDiv">
-            <p className="iban">Unesi IBAN:</p>
-              <InputField
-                type="text"
-                placeholder="IBAN"
-                value={this.state.IBAN ? this.state.IBAN : ""}
-                onChange={(val) => this.setInputValueIBAN("IBAN", val)}
-              />
-            </div>
+            <form>
+              <div className="registerDiv">
+                <p className="iban">Unesi IBAN:</p>
+                <InputField
+                  type="text"
+                  placeholder="IBAN"
+                  value={this.state.IBAN ? this.state.IBAN : ""}
+                  onChange={(val) => this.setInputValueIBAN("IBAN", val)}
+                />
+              </div>
 
-            <p className="cartographPicture">Priloži sliku osobne iskaznice:</p>
-            <div className="imageUploader">
-              <ImageUploader
-                singleImage={true}
-                withIcon={false}
-                withLabel={false}
-                withPreview={true}
-                buttonText="Izaberi sliku"
-                onChange={this.onDrop}
-                imgExtension={[".jpg", ".gif", ".png", ".gif", ".jpeg"]}
-                maxFileSize={5242880}
-              />
-            </div>
-
+              <p className="cartographPicture">
+                Priloži sliku osobne iskaznice:
+              </p>
+              <div className="imageUploader">
+                <ImageUploader
+                  singleImage={true}
+                  withIcon={false}
+                  withLabel={false}
+                  withPreview={true}
+                  buttonText="Izaberi sliku"
+                  onChange={this.onDrop}
+                  imgExtension={[".jpg", ".gif", ".png", ".gif", ".jpeg"]}
+                  maxFileSize={5242880}
+                />
+              </div>
+            </form>
 
             <div className="registerButton">
               <SubmitButton
@@ -152,7 +154,6 @@ class RegisterForm extends React.Component {
                 onClick={() => this.doRegister()}
               />
             </div>
-
           </div>
         </div>
       </div>

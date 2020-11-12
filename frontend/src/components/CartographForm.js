@@ -111,7 +111,7 @@ class RegisterForm extends React.Component {
 
   render() {
     return (
-          <div className="registerForm modal-content">
+          <div className="registerForm modal-contentForm">
             <div className="title-register">Postani kartograf</div>
 
             <div className="registerDiv">

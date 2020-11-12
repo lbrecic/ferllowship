@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import LocationRequests from '../components/LocationRequests';
 import Profile from '../components/Profile';
 import Header from '../components/Header';
@@ -7,7 +6,7 @@ import CartographForm from '../components/CartographForm';
 import CartographRequests from '../components/CartographRequests';
 
 function ProfilePage() {
-    const user = "igrac";
+    const user = "admin";
     
     if(user === "igrac")
         return (
