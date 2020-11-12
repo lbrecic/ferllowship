@@ -4,7 +4,7 @@ import SubmitButton from "../SubmitButton";
 import "../styles/CartographForm.css";
 import ImageUploader from "react-images-upload";
 
-class RegisterForm extends React.Component {
+class CartographForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -152,4 +152,4 @@ class RegisterForm extends React.Component {
   }
 }
 
-export default RegisterForm;
+export default CartographForm;

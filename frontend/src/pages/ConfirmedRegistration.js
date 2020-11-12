@@ -1,7 +1,5 @@
 import React from 'react';
 import logo from '../logo.svg';
-import '../tailwind.css';
-import '../styles/RegisterForm.css';
 
 const queryString = require('query-string');
 
