@@ -12,7 +12,7 @@ class PromoteAdmin extends React.Component {
     }
   }
 
-  setInputValueEmail(property, val) {
+  setInputValue(property, val) {
     val = val.trim();
     if (val.length > 128) {
       return;
@@ -39,7 +39,7 @@ class PromoteAdmin extends React.Component {
                     type="text"
                     placeholder="email"
                     value={this.state.email ? this.state.email : ""}
-                    onChange={(val) => this.setInputValueEmail("email", val)}
+                    onChange={(val) => this.setInputValue("email", val)}
                 />
                 </div>
 
