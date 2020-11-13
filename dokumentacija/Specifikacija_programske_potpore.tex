@@ -118,14 +118,14 @@
 	
 						\item \textbf{Glavni sudionik: }Korisnik
 						\item  \textbf{Cilj:} Stvoriti korisnički račun za pristup sustavu
-						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Sudionici:} Baza podataka, Cloudinary
 						\item  \textbf{Preduvjet:} -
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
 	
 							\item Korisnik odabire opciju za registraciju igrača
-							\item Korisnik unosi potrebne korisničke podatke(korisničko ime, e-mail, lozinka)
+							\item Korisnik unosi potrebne korisničke podatke(korisničko ime, e-mail, lozinka, fotografija)
 							\item Korisnik prima obavijest o uspješnoj registraciji
 							\item Nakon registracije korisnik automatski prijavljen u sustav
 						\end{packed_enum}
@@ -134,14 +134,14 @@
 						
 						\item[] \begin{packed_item}
 	
-							\item[2.a] Odabir već zauzetog korisničkog imena i/ili e-maila ili pružanje neispravnog e-maila
+							\item Odabir već zauzetog korisničkog imena i/ili e-maila ili pružanje neispravnog e-maila
 							\item[] \begin{packed_enum}
 								
 								\item Sustav obavještava korisnika o neuspjelom upisu i vraća ga na stranicu za registraciju 
 								\item Korisnik mijenja potrebne podatke te završava unos ili odustaje od registracije
 								
 							\end{packed_enum}
-							\item[2.b] Odabir "slabe" lozinke(za "jaku" lozinku obavezno barem 8 znakova, 1 veliko slovo, 1 broj)
+							\item Odabir "slabe" lozinke(za "jaku" lozinku obavezno barem 8 znakova, 1 veliko slovo, 1 broj)
 							\item[] \begin{packed_enum}
 								\item Sustav obavještava korisnika da je lozinka "slaba" i vraća ga na stranicu za registraciju
 								\item Korisnik odabire "jaču" lozinku te završava unos ili odustaje od registracije 
@@ -151,87 +151,84 @@
 						\end{packed_item}
 					\end{packed_item}
 				
-					\noindent \underbar{\textbf{UC3 - Registracija katografa}}
+					\noindent \underbar{\textbf{UC3 -Prijava u sustav}}
 					\begin{packed_item}
 						
-						\item \textbf{Glavni sudionik: }Kartograf
-						\item  \textbf{Cilj:} Stvoriti korisnički račun za kartografa
+						\item \textbf{Glavni sudionik: }Igrač
+						\item  \textbf{Cilj:} Dobiti pristup korisničkom sučelju
 						\item  \textbf{Sudionici:} Baza podataka
-						\item  \textbf{Preduvjet:} -
+						\item  \textbf{Preduvjet:} Registracija
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
 							
-							\item Korisnik odabire opciju za registraciju kartografa
-							\item Korisnik unosi potrebne korisničke podatke(korisničko ime, e-mail, lozinka)
-							\item Korisnik prima obavijest o uspješnoj registraciji
+							\item Unos korisničkog imena i lozinke
+							\item Potvrda o ispravnosti unesenih podataka
+							\item Pristup korisničkim funkcijama
 						\end{packed_enum}
 						
 						\item  \textbf{Opis mogućih odstupanja:}
 						
 						\item[] \begin{packed_item}
 							
-							\item[2.a] Odabir već zauzetog korisničkog imena i/ili e-maila ili pružanje neispravnog e-maila
+							\item Unos neispravnog korisničkog imena ili lozinke
 							\item[] \begin{packed_enum}
 								
-								\item Sustav obavještava korisnika o neuspjelom upisu i vraća ga na stranicu za registraciju kartografa
-								\item Korisnik mijenja potrebne podatke te završava unos ili odustaje od registracije
-								
-							\end{packed_enum}
-							\item[2.b] Odabir "slabe" lozinke(za "jaku" lozinku obavezno barem 8 znakova, 1 veliko slovo, 1 broj)
-							\item[] \begin{packed_enum}
-								\item Sustav obavještava korisnika da je lozinka "slaba" i vraća ga na stranicu za registraciju
-								\item Korisnik odabire "jaču" lozinku te završava unos ili odustaje od registracije 
+								\item Sustav obavještava korisnika o neispravnom upisu i vraća ga na stranicu za prijavu
 								
 							\end{packed_enum}
 							
 						\end{packed_item}
 					\end{packed_item}
 					
-				
-					\noindent \underbar{\textbf{UC4 -Prijava u sustav}}
-					\begin{packed_item}
-					
-					\item \textbf{Glavni sudionik: }Igrač
-					\item  \textbf{Cilj:} Dobiti pristup korisničkom sučelju
-					\item  \textbf{Sudionici:} Baza podataka
-					\item  \textbf{Preduvjet:} Registracija
-					\item  \textbf{Opis osnovnog tijeka:}
-					
-					\item[] \begin{packed_enum}
-						
-						\item Unos korisničkog imena ili e-maila i lozinke
-						\item Potvrda o ispravnosti unesenih podataka
-						\item Pristup korisničkim funkcijama
-					\end{packed_enum}
-					
-					\item  \textbf{Opis mogućih odstupanja:}
-					
-					\item[] \begin{packed_item}
-						
-						\item[2.a] Unos neispravnog korisničkog imena, e-maila ili lozinke
-						\item[] \begin{packed_enum}
-							
-							\item Sustav obavještava korisnika o neispravnom upisu i vraća ga na stranicu za prijavu
-							
-						\end{packed_enum}
-						
-					\end{packed_item}
-					\end{packed_item}
-				
-					\noindent \underbar{\textbf{UC5 - Pregled lokacija na karti}}
+					\noindent \underbar{\textbf{UC4 - Prijava za kartografa}}
 					\begin{packed_item}
 						
 						\item \textbf{Glavni sudionik: }Igrač
-						\item  \textbf{Cilj:} Pregled lokacija koje igrač može posjetiti
-						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Cilj:} Proširenje ovlasti igrača
+						\item  \textbf{Sudionici:} Baza podataka, Cloudinary
+						\item  \textbf{Preduvjet:} -
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+							
+							\item Korisnik odabire opciju prijava za kartografa
+							\item Korisnik unosi potrebne korisničke podatke(IBAN računa za uplatu i fotografiju osobne iskaznice)
+							\item Korisnik prima obavijest o uspješnoj prijavi za kartografa te čeka odobrenje administratora
+						\end{packed_enum}
+						
+						\item  \textbf{Opis mogućih odstupanja:}
+						
+						\item[] \begin{packed_item}
+							
+							\item Neispravan unos IBAN-a
+							\item[] \begin{packed_enum}
+								
+								\item Sustav obavještava korisnika o pogrešnom unosu i vraća ga na stranicu za prijavu
+								\item Korisnik mijenja potrebne podatke te završava prijavu ili odustaje od prijave
+								
+							\end{packed_enum}
+							
+						\end{packed_item}
+					\end{packed_item}
+				
+					\newpage
+					
+					\noindent \underbar{\textbf{UC5 - Skupljanje karata}}
+					\begin{packed_item}
+						
+						\item \textbf{Glavni sudionik: }Igrač
+						\item  \textbf{Cilj:} Igrač skupi karte
+						\item  \textbf{Sudionici:} Baza podataka, Cloudinary
 						\item  \textbf{Preduvjet:} Igrač je prijavljen
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
 							
 							\item Korisnik odabire opciju pregled lokacija na karti
-							\item Otvara karta s lokacijama
+							\item Sustav otvara kartu s lokacijama
+							\item Korisnik odabire lokaciju
+							\item Ako je korisnik skupio kartu prikažu se podaci o karti, inače prikazuje se opcija da skupi karticu te se dodaje u kolekciju
 						\end{packed_enum}
 					\end{packed_item}
 					
@@ -240,7 +237,7 @@
 						
 						\item \textbf{Glavni sudionik: }Igrač
 						\item  \textbf{Cilj:} Pregled informacija o lokaciji
-						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Sudionici:} Baza podataka, Cloudinary
 						\item  \textbf{Preduvjet:} Igrač je prijavljen
 						\item  \textbf{Opis osnovnog tijeka:}
 						
@@ -257,7 +254,7 @@
 					
 					\item \textbf{Glavni sudionik: }Igrač
 					\item  \textbf{Cilj:} Pregledati osobne podatke
-					\item  \textbf{Sudionici:} Baza podataka
+					\item  \textbf{Sudionici:} Baza podataka, Cloudinary
 					\item  \textbf{Preduvjet:} Igrač je prijavljen
 					\item  \textbf{Opis osnovnog tijeka:}
 					
@@ -273,7 +270,7 @@
 					
 					\item \textbf{Glavni sudionik: }Igrač
 					\item  \textbf{Cilj:} Promjeniti osobne podatke
-					\item  \textbf{Sudionici:} Baza podataka
+					\item  \textbf{Sudionici:} Baza podataka, Cloudinary
 					\item  \textbf{Preduvjet:} Igrač je prijavljen
 					\item  \textbf{Opis osnovnog tijeka:}
 					
@@ -289,19 +286,19 @@
 					
 					\item[] \begin{packed_item}
 						
-						\item[2.a] Odabir već zauzetog korisničkog imena i/ili e-maila
+						\item Odabir već zauzetog korisničkog imena i/ili e-maila
 						\item[] \begin{packed_enum}
 							
 							\item Sustav obavještava korisnika da je korisničko ime i/ili e-mail već zauzeto i traži ponovni unos
 							\item Korisnik unosi novo korisničko ime i/ili e-maila ili odustaje je promjene osobnih podataka
 							
 						\end{packed_enum}
-						\item[2.b] Korisnik odabire "slabu" zamjensku lozinku
+						\item Korisnik odabire "slabu" zamjensku lozinku
 						\item[] \begin{packed_enum}
 							\item Sustav obavještava korisnika da je odabrao "slabu" lozinku i traži ponovni unos
 							\item Korisnik unosi novu lozinku koja je dovoljno "jaka" ili odustaje od promjene lozinke
 						\end{packed_enum}
-						\item[2.c] Korisnik promijeni svoje osobne podatke, ali ne odabere opciju "Spremi promjenu"
+						\item Korisnik promijeni svoje osobne podatke, ali ne odabere opciju "Spremi promjenu"
 						\item[] \begin{packed_enum}
 							\item Sustav obavještava korisnika da nije spremio podatke prije izlaska iz prozora
 						\end{packed_enum}
@@ -314,7 +311,7 @@
 						
 						\item \textbf{Glavni sudionik: }Kartograf
 						\item  \textbf{Cilj:} Pregledati osobne podatke
-						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Sudionici:} Baza podataka, Cloudinary
 						\item  \textbf{Preduvjet:} Kartograf je prijavljen
 						\item  \textbf{Opis osnovnog tijeka:}
 						
@@ -330,7 +327,7 @@
 						
 						\item \textbf{Glavni sudionik: }Kartograf
 						\item  \textbf{Cilj:} Promjeniti osobne podatke
-						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Sudionici:} Baza podataka, Cloudinary
 						\item  \textbf{Preduvjet:} Kartograf je prijavljen
 						\item  \textbf{Opis osnovnog tijeka:}
 						
@@ -346,19 +343,19 @@
 						
 						\item[] \begin{packed_item}
 							
-							\item[2.a] Odabir već zauzetog korisničkog imena i/ili e-maila
+							\item Odabir već zauzetog korisničkog imena i/ili e-maila
 							\item[] \begin{packed_enum}
 								
 								\item Sustav obavještava korisnika da je korisničko ime i/ili e-mail već zauzeto i traži ponovni unos
 								\item Korisnik unosi novo korisničko ime i/ili e-maila ili odustaje je promjene osobnih podataka
 								
 							\end{packed_enum}
-							\item[2.b] Korisnik odabire "slabu" zamjensku lozinku
+							\item Korisnik odabire "slabu" zamjensku lozinku
 							\item[] \begin{packed_enum}
 								\item Sustav obavještava korisnika da je odabrao "slabu" lozinku i traži ponovni unos
 								\item Korisnik unosi novu lozinku koja je dovoljno "jaka" ili odustaje od promjene lozinke
 							\end{packed_enum}
-							\item[2.c] Korisnik promijeni svoje osobne podatke, ali ne odabere opciju "Spremi promjenu"
+							\item Korisnik promijeni svoje osobne podatke, ali ne odabere opciju "Spremi promjenu"
 							\item[] \begin{packed_enum}
 								\item Sustav obavještava korisnika da nije spremio podatke prije izlaska iz prozora
 							\end{packed_enum}
@@ -366,8 +363,7 @@
 						\end{packed_item}
 					\end{packed_item}
 					
-					
-					\noindent \underbar{\textbf{UC11 -Brisanje vlastitog korisničkog računa}}
+					\noindent \underbar{\textbf{UC11 -Brisanje korisničkog računa}}
 					\begin{packed_item}
 						
 						\item \textbf{Glavni sudionik: }Igrač, kartograf
@@ -388,13 +384,15 @@
 						
 					\end{packed_item}
 				
+					\newpage
+					
 					\noindent \underbar{\textbf{UC12 -Pregled (vlastith) sakupljenih karata}}
 					\begin{packed_item}
 						
 						\item \textbf{Glavni sudionik: }Igrač, administrator
 						\item  \textbf{Cilj:} Pregled skupljenih karata igrača
-						\item  \textbf{Sudionici:} Baza podataka
-						\item  \textbf{Preduvjet:} Igrač je prijavljen i skupio barem jednu kartu
+						\item  \textbf{Sudionici:} Baza podataka, Cloudinary
+						\item  \textbf{Preduvjet:} Igrač je prijavljen
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
@@ -402,15 +400,15 @@
 							\item Korisnik odabire opciju za pregled skupljenih karata
 							\item Otvara se stranica sa skupljenim kartama korisnika
 						\end{packed_enum}
-						
+
 						\item  \textbf{Opis mogućih odstupanja:}
 						
 						\item[] \begin{packed_item}
 							
-							\item[2.a] Korisnik nije skupio niti jednu kartu
+							\item Korisnik nije skupio niti jednu kartu
 							\item[] \begin{packed_enum}
 								
-								\item Sustav obavještava korisnika da mora skupiti barem jednu kartu da moze pristupiti pregledu i vraća ga na kartu
+								\item Sustav obavještava korisnika da mora skupiti barem jednu kartu da može pristupiti pregledu i vraća ga na kartu
 								
 							\end{packed_enum}
 						\end{packed_item}
@@ -438,7 +436,7 @@
 						\item \textbf{Glavni sudionik: }Igrač
 						\item  \textbf{Cilj:} Pregled borbi u kojima je igrač sudjelovao
 						\item  \textbf{Sudionici:} Baza podataka
-						\item  \textbf{Preduvjet:} Igrač je prijavljen i odigrao barem jednu borbu
+						\item  \textbf{Preduvjet:} Igrač je prijavljen
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
@@ -451,13 +449,15 @@
 						
 						\item[] \begin{packed_item}
 							
-							\item[2.a] Korisnik nije sudjelovao u niti jednoj borbi
+							\item Korisnik nije sudjelovao u niti jednoj borbi
 							\item[] \begin{packed_enum}
 								
-								\item Sustav obavještava korisnika da nije sudjelovao u brobi
+								\item Sustav obavještava korisnika da nije sudjelovao u borbi
 							\end{packed_enum}
 						\end{packed_item}
 					\end{packed_item}
+					
+					\newpage
 					
 					\noindent \underbar{\textbf{UC15 -Pregled vlastite statistike kartografa}}
 					\begin{packed_item}
@@ -480,7 +480,7 @@
 						
 						\item \textbf{Glavni sudionik: }Igrač
 						\item  \textbf{Cilj:} Pregled profila ostalih igrača
-						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Sudionici:} Baza podataka, Cloudinary
 						\item  \textbf{Preduvjet:} Igrač je prijavljen
 						\item  \textbf{Opis osnovnog tijeka:}
 						
@@ -512,8 +512,8 @@
 						
 						\item \textbf{Glavni sudionik: }Igrač
 						\item  \textbf{Cilj:} Pregled skupljenih karata igrača
-						\item  \textbf{Sudionici:} Baza podataka
-						\item  \textbf{Preduvjet:} Igrač je prijavljen i skupio barem jednu kartu
+						\item  \textbf{Sudionici:} Baza podataka, Cloudinary
+						\item  \textbf{Preduvjet:} Igrač je prijavljen
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
@@ -526,7 +526,7 @@
 						
 						\item[] \begin{packed_item}
 							
-							\item[2.a] Korisnik nije skupio niti jednu kartu
+							\item Korisnik nije skupio niti jednu kartu
 							\item[] \begin{packed_enum}
 								
 								\item Sustav obavještava korisnika da igrač nije sakupio niti jednu kartu			
@@ -545,18 +545,19 @@
 						
 						\item[] \begin{packed_enum}
 							
+							\item Korisnik odabire igrača s kojim se želi boriti
 							\item Korisnik odabire opciju "Izazovi"
-							\item Otvara se stranica za borbu igrača
+							\item Korisnik čeka odgovor izazvanog igrača
 						\end{packed_enum}
 						
 						\item  \textbf{Opis mogućih odstupanja:}
 						
 						\item[] \begin{packed_item}
 							
-							\item[2.a] Korisnik nije skupio barem tri karte
+							\item Izazvani igrač nije skupio barem tri karte
 							\item[] \begin{packed_enum}
 								
-								\item Sustav obavještava korisnika da mora skupiti barem tri kartu da moze sudjelovati u borbi
+								\item Sustav obavještava korisnika da željeni igrač nije skupio barem tri karte te ne može sudjelovati u borbi
 								
 							\end{packed_enum}
 						\end{packed_item}
@@ -568,26 +569,15 @@
 						\item \textbf{Glavni sudionik: }Igrač
 						\item  \textbf{Cilj:} Igrač može prihvatiti ili odbiti borbu
 						\item  \textbf{Sudionici:} Baza podataka
-						\item  \textbf{Preduvjet:} Igrač je prijavljen i sakupio barem tri karte
+						\item  \textbf{Preduvjet:} Igrač je prijavljen
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
 							
-							\item Korisnik odabire opciju za prihvaćanje izazova ili odbijanje
+							\item Korisnik odabire opciju za prihvaćanje ili odbijanje izazova
+							\item Ako je prihvatio izazov započinje borba te se otvara stranica za borbu igrača
 						\end{packed_enum}
 						
-						\item  \textbf{Opis mogućih odstupanja:}
-						
-						\item[] \begin{packed_item}
-							
-							\item[2.a] Korisnik nije skupio barem tri karte
-							\item[] \begin{packed_enum}
-								
-								\item Sustav obavještava korisnika da mora skupiti barem tri kartu da može sudjelovati u borbi
-								\item Borba se odbija
-								
-							\end{packed_enum}
-						\end{packed_item}
 					\end{packed_item}
 					
 					\noindent \underbar{\textbf{UC21 - Borba igrača}}
@@ -595,16 +585,41 @@
 						
 						\item \textbf{Glavni sudionik: }Igrač
 						\item  \textbf{Cilj:} Borba igrača za najbolji globalni rang
-						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Sudionici:} Baza podataka, Cloudinary
 						\item  \textbf{Preduvjet:} Igrač je prijavljen
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
 							
-							\item Korisnik odabire igrača s kojim se želi boriti
-							\item Izazvani igrač prihvaća ili odbija borbu
-							\item Ako je igrač prihvatio borbu, borba počinje
+							\item Igrač odabire 3 karte iz svoje kolekcije s kojima želi ući u borbu te čeka da suparnik učini isto 
+							\item Igrač koji ima manji globalni rang igra prvi 
+							\item Igrač izvlači jednu od tri izabrane karte, na što suparnik odgovara izvlačenjem jedne od svojih karata
+							\item Sustav uspoređuje dvije karte te igraču s jačom kartom upisuje bod
+							\item Igrač koji pobijedi u rundi prvi baca kartu u idućoj
+							\item Borba traje dok igrači ne iskoriste sve izabrane karte
+							\item Igrač s više bodova pobjeđuje u borbi
+							
 						\end{packed_enum}
+					
+					\item  \textbf{Opis mogućih odstupanja:}
+					
+					\item[] \begin{packed_item}
+						
+						\item Karte koje se uspoređuju su jednake jačine
+						\item[] \begin{packed_enum}
+							
+							\item Sustav obavještava korisnike da je runda poništena
+							\item Borba se nastavlja
+							
+						\end{packed_enum}
+					
+						\item Korisnici imaju jednak broj bodova
+						\item[] \begin{packed_enum}
+							
+							\item Sustav obavještava da je borba izjednačena
+							
+						\end{packed_enum}
+					\end{packed_item}
 					\end{packed_item}
 				
 					\noindent \underbar{\textbf{UC22 - Pregled globalnog ranga igrača}}
@@ -635,7 +650,7 @@
 						\item[] \begin{packed_enum}
 							
 							\item Korisnik odabire opciju za pregled globalne statistike odigranih borbi
-							\item Otvara se stranica globalnom statistikom odigranih borbi
+							\item Otvara se stranica s globalnom statistikom odigranih borbi
 						\end{packed_enum}
 					\end{packed_item}
 					
@@ -651,7 +666,7 @@
 						\item[] \begin{packed_enum}
 							
 							\item Korisnik odabire opciju za pregled globalne statistike sakupljenih lokacija
-							\item Otvara se stranica globalnom statistikom sakupljenih lokacija
+							\item Otvara se stranica s globalnom statistikom sakupljenih lokacija
 						\end{packed_enum}
 					\end{packed_item}
 					
@@ -660,7 +675,7 @@
 						
 						\item \textbf{Glavni sudionik: }Igrač
 						\item  \textbf{Cilj:} Dodati novu lokaciju
-						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Sudionici:} Baza podataka, Cloudinary
 						\item  \textbf{Preduvjet:} Igrač je prijavljen
 						\item  \textbf{Opis osnovnog tijeka:}
 						
@@ -694,22 +709,24 @@
 						\item \textbf{Glavni sudionik: }Kartograf, administrator
 						\item  \textbf{Cilj:} Obrisati nepostojeću/neispravnu lokaciju
 						\item  \textbf{Sudionici:} Baza podataka
-						\item  \textbf{Preduvjet:} -
+						\item  \textbf{Preduvjet:} Korisnik prijavljen i dodijeljena su mu prava administratora ili kartografa
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
 							
-							\item Kartograf/administrator odabire lokaciju koju želi obrisati
+							\item Korisnik odabire lokaciju koju želi obrisati
 							\item Baza podataka se ažurira
 						\end{packed_enum}
 					\end{packed_item}
-				
+					
+					\newpage
+					
 					\noindent \underbar{\textbf{UC28 - Pregled svih prijavljenih(neobrađenih) lokacija}}
 					\begin{packed_item}
 						
 						\item \textbf{Glavni sudionik: }Kartograf
 						\item  \textbf{Cilj:} Pregled prijavljenih lokacija koje nisu obrađene
-						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Sudionici:} Baza podataka, Cloudinary
 						\item  \textbf{Preduvjet:} Kartograf je prijavljen
 						\item  \textbf{Opis osnovnog tijeka:}
 						
@@ -742,15 +759,15 @@
 						
 						\item \textbf{Glavni sudionik: }Kartograf, administrator
 						\item  \textbf{Cilj:} Promjeniti podatke o lokaciji
-						\item  \textbf{Sudionici:} Baza podataka
-						\item  \textbf{Preduvjet:} Kartograf je prijavljen
+						\item  \textbf{Sudionici:} Baza podataka, Cloudinary
+						\item  \textbf{Preduvjet:} Korisnik je prijavljen i dodijeljena su mu prava administratora ili kartografa
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
 							
-							\item Kartograf odabire lokaciju za koju želi promijeniti podatke
-							\item Kartograf mijenja podatke
-							\item Kartograf sprema promjene
+							\item Korisnik odabire lokaciju za koju želi promijeniti podatke
+							\item Korisnik mijenja podatke
+							\item Korisnik sprema promjene
 							\item Baza podataka se ažurira
 						\end{packed_enum}
 						
@@ -758,7 +775,7 @@
 						
 						\item[] \begin{packed_item}
 							
-							\item[3.a] Kartograf promijeni podatke lokacije, ali ne odabere opciju "Spremi promjenu"
+							\item Kartograf promijeni podatke lokacije, ali ne odabere opciju "Spremi promjenu"
 							\item[] \begin{packed_enum}
 								\item Sustav obavještava kartografa da nije spremio podatke prije izlaska iz prozora
 							\end{packed_enum}
@@ -771,12 +788,12 @@
 						\item \textbf{Glavni sudionik: }Administrator
 						\item  \textbf{Cilj:} Pregled svih odigranih borbi
 						\item  \textbf{Sudionici:} Baza podataka
-						\item  \textbf{Preduvjet:} -
+						\item  \textbf{Preduvjet:} Korisnik je prijavljen i dodijeljena su mu prava administratora
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
 							
-							\item Korisnik odabire opciju za pregled svih odigranih borbi
+							\item Administratora odabire opciju za pregled svih odigranih borbi
 							\item Otvara se stranica s prikazom svih odigranih borbi
 						\end{packed_enum}
 					\end{packed_item}
@@ -787,7 +804,7 @@
 						
 						\item \textbf{Glavni sudionik: }Administrator
 						\item  \textbf{Cilj:} Pregledati registrirane korisnike
-						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Sudionici:} Baza podataka, Cloudinary
 						\item  \textbf{Preduvjet:} Korisnik je prijavljen i dodijeljena su mu prava administratora
 						\item  \textbf{Opis osnovnog tijeka:}
 						
@@ -816,6 +833,8 @@
 						\end{packed_enum}
 					\end{packed_item}
 				
+					\newpage
+					
 					\noindent \underbar{\textbf{UC34 - Promjena prava pristupa}}
 					\begin{packed_item}
 						
@@ -850,6 +869,22 @@
 						\end{packed_enum}
 					\end{packed_item}
 					
+					\noindent \underbar{\textbf{UC36 - Potvrda zahtjeva za kartografa}}
+					\begin{packed_item}
+						
+						\item \textbf{Glavni sudionik: }Administrator
+						\item  \textbf{Cilj:} Odobriti ili odbiti zahtjev igrača da postane kartograf
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Korisnik je prijavljen i dodijeljena su mu prava administratora
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+							
+							\item Administrator odobri ili odbije zahtjev igrača
+							\item Baza podataka se ažurira
+						\end{packed_enum}
+					\end{packed_item}
+					
 				\eject
 					
 				\subsubsection{Dijagrami obrazaca uporabe}
@@ -858,7 +893,7 @@
 					\begin{figure}[H]
 						\includegraphics[width=\textwidth, height=16cm]{dijagrami/OU_igrac} 
 						\centering
-						\caption{Dijagram obrasca uporabe, funkcionalnost korisnika i klijenta}
+						\caption{Dijagram obrasca uporabe, funkcionalnost korisnika i igrača}
 						\label{}
 					\end{figure}
 					
@@ -881,7 +916,7 @@
 				
 			\subsection{Sekvencijski dijagrami}
 			
-				\textbf{Obrazac uporabe UC5 - Pregled lokacija na karti}\\
+				\textbf{Obrazac uporabe UC5 - Skupljanje karata}\\
 					
 					{Igrač šalje zahtjev za prikaz karte s lokacijama kako bi mogao odabrati lokaciju koju želi skupiti. Poslužitelj dohvaća lokacije i prikazuje ih. Odabirom lokacije, poslužitelj iz baze podataka dohvaća osnovne podatke o lokaciji i prikazuje ih klijentu. Ako igrač nije skupio karticu, prikazuje mu se opcija da je sakupi. Poslužitelj tu informaciju prosljeđuje bazi koja spremna promjenu.}\\
 					
@@ -892,6 +927,18 @@
 						\label{}
 					\end{figure}
 				\newpage	
+				
+				\textbf{Obrazac uprabe UC21 - Borba igrača}
+					
+					{Igrač odabire opciju "Prikaz karata". Poslužitelj dohvaća karte iz baze podataka te ih prikazuje igraču. Igrači biraju 3 karte s kojima će se boriti. Na početku borbe prikazuje se koji igrač igra prvi. Poslužitelj dohvaća globalni rang igrača iz baze podataka te prikazuje igrača koji ima manji globalni rang. Dok ne iskoriste sve 3 izabrane karte, igrači bacaju naizmjenično kartu. Poslužitelj uspoređuje karte te vraća jaču kartu i dodaje bod igraču čija je to karta. Ukoliko su jačine karata jednake, sustav ispiše poruku da je runda izjednačena i nastavlja se borba. Na kraju borbe prikazuje se konačan broj bodova igrača. Igrač koji ima više bodova je pobjednik. }\\
+					
+					\begin{figure}[H]
+						\includegraphics[width=13cm, height=22cm]{dijagrami/sd_UC21}				
+						\centering
+						\caption{Sekvencijski dijagram UC21}
+						\label{}
+					\end{figure}
+				\newpage
 				
 				\textbf{Obrazac uporabe UC30 - Uređivanje postojeće lokacije}\\
 					
