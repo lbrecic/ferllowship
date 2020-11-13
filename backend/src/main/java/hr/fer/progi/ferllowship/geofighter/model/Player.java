@@ -34,6 +34,12 @@ public class Player {
 	@Column 
 	private Boolean enabled;
 	
+	@Column
+	private Boolean activity;
+	
+	@Column
+	private Integer expirience;
+
 	public Player() {
 		
 	}
@@ -44,14 +50,12 @@ public class Player {
 		this.email = email;
 		this.photoLink = photoLink;
 		enabled = false;
+		activity = false;
+		expirience = 0;
 	}
 
 	public UUID getUserId() {
 		return playerId;
-	}
-
-	public void setUserId(UUID playerId) {
-		this.playerId = playerId;
 	}
 
 	public String getUsername() {
@@ -108,6 +112,22 @@ public class Player {
 
 	public void setEnabled(Boolean enabled) {
 		this.enabled = enabled;
+	}
+
+	public Boolean getActivity() {
+		return activity;
+	}
+
+	public void setActivity(Boolean activity) {
+		this.activity = activity;
+	}
+
+	public Integer getExpirience() {
+		return expirience;
+	}
+
+	public void setExpirience(Integer expirience) {
+		this.expirience = expirience;
 	}
 	
 }

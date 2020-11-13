@@ -76,15 +76,18 @@ class LoginForm extends React.Component {
     try {
       let res = await fetch('/api/login', {
         method: 'post',
+        headers: {
+          'Authorization': 'Basic ' + window.btoa(this.state.username + ":" + this.state.password)  
+        },
         body: formData
       });
 
       let result = await res.json();
-      if (result && result.message) {
-        toast(result.message);
+      if (result && result.success) {
+        toast(result.success);
       }
     } catch (e) {
-      toast("Dogodila se pogreška.");
+      toast("Korisničko ime ili lozinka nisu ispravni.");
     }
 
     this.setState({
