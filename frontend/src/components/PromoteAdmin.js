@@ -29,7 +29,7 @@ class PromoteAdmin extends React.Component {
           <div className="modalRequest">
             <div className="cartographerRequest modal-contentRequest">
               <div className="username textBox">
-                Promote player to admin
+                Promote someone to admin
               </div>
               <div className="registerDiv">
                 <p className="email">Unesi email igrača:</p>

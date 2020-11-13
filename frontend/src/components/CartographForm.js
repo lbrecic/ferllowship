@@ -59,7 +59,8 @@ class CartographForm extends React.Component {
       return;
     }
     const formData = new FormData();
-    formData.append("username", this.state.username);
+    formData.append("username", localStorage.username);
+    formData.append("iban", this.state.IBAN);
     formData.append("picture", this.state.pictures[0]);
 
     try { 
