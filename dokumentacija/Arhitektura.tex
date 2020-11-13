@@ -9,9 +9,9 @@
 %		\item 	\textit{organizaciju aplikacije (npr. slojevi frontend i backend, MVC arhitektura) }		
 %	\end{itemize}
 
-		{Prilikom projektiranja samog sustava jedna od važnijih odluka bila je odabir programskog jezika i razvojnog okruženja u kojem ćemo razviti našu aplikaciju. Programski jezik kojeg smo odabrali je Java sa Spring Boot razvojim okvirom. Odabrano razvojno okruženje je Visual Studio Code.}	\\
+		{Prilikom projektiranja samog sustava jedna od važnijih odluka bila je odabir programskih jezika i razvojnih okruženja u kojima ćemo razviti našu aplikaciju. Programski jezici koje smo odabrali su Java sa Spring Boot razvojnim okvirom za \textit{backend} te React Javascript za \textit{frontend}. Odabrana razvojna okruženja su Eclipse za \textit{backend} te Visual Studio Code za \textit{frontend}.}	\\
 		{Također izbor odgovarajuće arhitekture programske potpore jedan je od najbitnijih koraka u oblikovanju sustava jer ona predstavlja poveznicu između zahtjeva u sustav i same implementacije sustava. Dobra arhitektura znači dobru fleksibilnost sustava, jednostavnu mogućnost nadogradnje i jeftino održavanje.}\\
-		{Sama arhitektura sustava je vrlo jednostavna, a sastoji se od dvije manje aplikacije: klijenta i poslužitelja. Osnovna prednost modela klijent-poslužitelj je u tome što nije potreban sustav za upravljanje bazom podataka na svakom klijentskom računalu, već se klijent s bazom podataka povezuje preko aplikacije. Time se postiže veća sigurnost i zaštita podataka. Poslužiteljska aplikacija ima pristup bazi podataka u kojoj će se pohranjivati podaci o lokacijama, kartama, borbama, igračima i kartografima. Poslužiteljska aplikacija neće dohvaćati slike iz baze podataka već preko servisa Cloudinary. Klijentska aplikacija osnovna je implementacija klijenta za REST web servise na poslužitelju, a ista dohvaća podatke te ih prezentira na korisniku razumljiv način. Obje aplikacije kreirane su pomoću Spring Boot razvojnog okvira, a inicijalizirane putem online servisa za inicijalizaciju SpringInitializr.}\\
+		{Sama arhitektura sustava je vrlo jednostavna, a sastoji se od dvije manje aplikacije: klijenta i poslužitelja. Osnovna prednost modela klijent-poslužitelj je u tome što nije potreban sustav za upravljanje bazom podataka na svakom klijentskom računalu, već se klijent s bazom podataka povezuje preko aplikacije. Time se postiže veća sigurnost i zaštita podataka. Poslužiteljska aplikacija ima pristup bazi podataka u kojoj će se pohranjivati podaci o lokacijama, kartama, borbama, igračima i kartografima. Poslužiteljska aplikacija neće dohvaćati slike iz baze podataka već preko servisa Cloudinary. Klijentska aplikacija osnovna je implementacija klijenta za REST web servise na poslužitelju, a ista dohvaća podatke te ih prezentira na korisniku razumljiv način. Obje aplikacije kreirane su pomoću Spring Boot razvojnog okvira, a inicijalizirane putem online servisa za inicijalizaciju SpringInitializer.}\\
 		{Za izradu aplikacije odabrali smo MVC arhitekturu jer omogućava dodatno strukturiranje aplikacije s obzirom na objektno orijentiranu paradigmu što znatno olakšava nezavisni razvoj, ispitivanje i održavanje aplikacije.}		
 
 				
@@ -257,19 +257,26 @@
 			
 		\section{Dijagram razreda}
 		
-			{Slike 4.2, 4.3 i 4.4 prikazuju razrede \textit{backend} dijela MVC arhitekture. Razredi na slici 4.2 prikazuju razrede Service i razrede Controller s anotacijom @RestController što je specifično za spring boot koji tom anotacijom kombinira anotacije @Controller i @ResponseBody te omogućuje da svaka metoda koja rukuje sa zahtjevima automatski serijalizira povratne vrijednosti objekata u \textit{HttpResponse}. Service razredi služe za modeliranje logike koja se događa nad modelima (npr. slanje mail-a) i služe za odvajanje takve logike od kontrolera čija je zadaća isključivo odgovarati na http zahtjeve (bilo GET, POST, PUT, PATCH ili DELETE).}
+			{Slike 4.2, 4.3, 4.4 i 4.5 prikazuju razrede \textit{backend} dijela MVC arhitekture. Razredi na slici 4.2 i 4.3 prikazuju razrede Service i razrede Controller s anotacijom @RestController što je specifično za spring boot koji tom anotacijom kombinira anotacije @Controller i @ResponseBody te omogućuje da svaka metoda koja rukuje sa zahtjevima automatski serijalizira povratne vrijednosti objekata u \textit{HttpResponse}. Service razredi služe za modeliranje logike koja se događa nad modelima (npr. slanje mail-a) i služe za odvajanje takve logike od kontrolera čija je zadaća isključivo odgovarati na http zahtjeve (bilo GET, POST, PUT, PATCH ili DELETE).}
 			
 			\begin{figure}[H]
 				\includegraphics[width=17cm, height=10cm]{dijagrami/servicecontroller_diagram}				
 				\centering
-				\caption{Dijagram razreda - dio Controllers i Service}
+				\caption{Dijagram razreda - dio trenutnih Controllers i Service razreda}
+				\label{}
+			\end{figure}
+		
+			\begin{figure}[H]
+				\includegraphics[width=\linewidth, height=14cm]{dijagrami/futureclass_diagram}				
+				\centering
+				\caption{Dijagram razreda - dio budućih Controller i Service razreda}
 				\label{}
 			\end{figure}
 			
 			\begin{figure}[H]
 				\includegraphics[width=\linewidth, height=14cm]{dijagrami/daoclass_diagram}				
 				\centering
-				\caption{Dijagram razreda - dio Data access object}
+				\caption{Dijagram razreda - dio Data access object razreda}
 				\label{}
 			\end{figure}
 		
@@ -278,7 +285,7 @@
 			\begin{figure}[H]
 				\includegraphics[width=\linewidth, height=14cm]{dijagrami/modelclass_diagram}				
 				\centering
-				\caption{Dijagram razreda - dio Models}
+				\caption{Dijagram razreda - dio Models razreda}
 				\label{}
 			\end{figure}
 			
