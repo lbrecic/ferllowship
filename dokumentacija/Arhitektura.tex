@@ -221,7 +221,7 @@
 					
 				\end{longtabu}
 			
-				{\noindent\textbf{card} $($Karta$)$ - Ovaj entitet sadržava sve važne informacije o kartama koje igrači mogu posjedovati. Sadrži atribute: ID karte, broj bodova koje karte i ID lokacije. Ovaj entitet u vezi je \textit{Many-to-One} s Location preko ID lokacije te \textit{Many-to-One} s korisnikom (player$)$ preko ID-a korisnika.}
+				{\noindent\textbf{card} $($Karta$)$ - Ovaj entitet sadržava sve važne informacije o kartama koje igrači mogu posjedovati. Sadrži atribute: ID karte, broj bodova karte i ID lokacije. Ovaj entitet u vezi je \textit{Many-to-One} s Location preko ID lokacije te \textit{Many-to-One} s korisnikom (player$)$ preko ID-a korisnika.}
 
 				\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
 					
@@ -260,7 +260,7 @@
 			{Slike 4.2, 4.3 i 4.4 prikazuju razrede \textit{backend} dijela MVC arhitekture. Razredi na slici 4.2 prikazuju razrede Service i razrede Controller s anotacijom @RestController što je specifično za spring boot koji tom anotacijom kombinira anotacije @Controller i @ResponseBody te omogućuje da svaka metoda koja rukuje sa zahtjevima automatski serijalizira povratne vrijednosti objekata u \textit{HttpResponse}. Service razredi služe za modeliranje logike koja se događa nad modelima (npr. slanje mail-a) i služe za odvajanje takve logike od kontrolera čija je zadaća isključivo odgovarati na http zahtjeve (bilo GET, POST, PUT, PATCH ili DELETE).}
 			
 			\begin{figure}[H]
-				\includegraphics[width=\linewidth, height=14cm]{dijagrami/servicecontroller_diagram}				
+				\includegraphics[width=17cm, height=10cm]{dijagrami/servicecontroller_diagram}				
 				\centering
 				\caption{Dijagram razreda - dio Controllers i Service}
 				\label{}
