@@ -28,8 +28,6 @@ class PromoteAdmin extends React.Component {
         <div className="overlayRequest">
           <div className="modalRequest">
             <div className="cartographerRequest modal-contentRequest">
-              <button onClick={() => this.setShow(0)} 
-                    style={{alignSelf:'start', margin:'5px'}}>x</button>
               <div className="username textBox">
                 Promote player to admin
               </div>
@@ -55,7 +53,7 @@ class PromoteAdmin extends React.Component {
                 <div className="requestButton">
                   <SubmitButton
                     className="requestButton"
-                    text="Odbaci"
+                    text="Odustani"
                     onClick={() => this.setShow(0)}
                   />
                 </div>
