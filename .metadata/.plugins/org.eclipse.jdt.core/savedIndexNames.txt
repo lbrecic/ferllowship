@@ -1,3 +1,0 @@
-INDEX VERSION 1.131+/home/luka/git-projekti/ferllowship/.metadata/.plugins/org.eclipse.jdt.core
-1476245916.index
-1902981762.index

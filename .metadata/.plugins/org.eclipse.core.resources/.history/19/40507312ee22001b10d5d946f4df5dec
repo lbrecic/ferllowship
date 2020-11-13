@@ -1,8 +1,0 @@
-package hr.fer.progi.ferllowship.geofighter.model;
-
-import javax.persistence.*;
-
-@Entity(name = "Cartograph")
-public class Cartograph extends Player{
-
-}
