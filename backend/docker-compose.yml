@@ -1,0 +1,10 @@
+geofighter-postgres:
+  image: 'postgres:12.4'
+  restart: always
+  container_name: 'geofighter-postgres'
+  environment:
+    - POSTGRES_DB=geofighter_db
+    - POSTGRES_USER=postgres
+    - POSTGRES_PASSWORD=root
+  ports:
+    - 5432:5432
