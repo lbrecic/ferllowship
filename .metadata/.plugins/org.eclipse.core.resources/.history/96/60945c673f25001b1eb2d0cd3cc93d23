@@ -1,0 +1,5 @@
+package hr.fer.progi.ferllowship.geofighter.dao;
+
+public interface CardRepository {
+
+}

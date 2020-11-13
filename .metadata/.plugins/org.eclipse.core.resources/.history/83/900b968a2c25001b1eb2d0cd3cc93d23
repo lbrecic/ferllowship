@@ -1,0 +1,18 @@
+package hr.fer.progi.ferllowship.geofighter.model;
+
+import java.util.UUID;
+
+import javax.persistence.*;
+
+@Entity
+public class Category {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "category_id", updatable = false, nullable = false)
+	private UUID categoryId;
+	
+	@Column(name = "category_name")
+	private String categoryName;
+	
+}
