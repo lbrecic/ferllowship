@@ -25,7 +25,6 @@ class Header extends React.Component {
             if (res.ok) {
                 this.state.redirect = true;
                 localStorage.removeItem('username');
-                localStorage.removeItem('password');
                 localStorage.removeItem('isLoggedIn');
                 window.location.reload();
             } else {

@@ -6,4 +6,8 @@ import org.springframework.data.repository.CrudRepository;
 
 import hr.fer.progi.ferllowship.geofighter.model.Cartograph;
 
-public interface CartographRepository extends CrudRepository<Cartograph, UUID> {}
+public interface CartographRepository extends CrudRepository<Cartograph, UUID> {
+	
+	Cartograph findByUsername(String username);
+	
+}
