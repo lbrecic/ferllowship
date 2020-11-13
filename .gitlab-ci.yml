@@ -1,5 +1,6 @@
 stages:
   - compile-pdf
+  - deploy
 
 compile-pdf:
   stage: compile-pdf
@@ -13,3 +14,27 @@ compile-pdf:
   only:
     - devdoc
     - /^doc/.*$/
+
+deploy-frontend:
+  stage: deploy
+  image: ruby:latest
+  script:
+    - apt-get update -qy
+    - apt-get install -y ruby-dev
+    - gem install dpl
+    - cd frontend
+    - dpl --provider=heroku --app=$HEROKU_FRONTEND --api-key=$HEROKU_API_KEY
+  only:
+    - develop
+
+deploy-backend:
+  stage: deploy
+  image: ruby:latest
+  script:
+    - apt-get update -qy
+    - apt-get install -y ruby-dev
+    - gem install dpl
+    - cd backend
+    - dpl --provider=heroku --app=$HEROKU_BACKEND --api-key=$HEROKU_API_KEY
+  only:
+    - develop
