@@ -1,0 +1,16 @@
+package hr.fer.progi.ferllowship.geofighter.model;
+
+import java.time.LocalDate;
+import java.util.UUID;
+
+import javax.persistence.*;
+
+@Entity
+public class Ban {
+	
+	@Column(name = "ban_end")
+	private LocalDate banEnd;
+	
+	@JoinColumn(name = "user_id")
+	private Player player;
+}

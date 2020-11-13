@@ -1,0 +1,7 @@
+package hr.fer.progi.ferllowship.geofighter.model;
+
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+public class Player {
+
+}
