@@ -6,3 +6,6 @@
 /dokumentacija/*.pdf
 /dokumentacija/*.synctex.gz
 /dokumentacija/*.toc
+/backend
+/frontend
+/.metadata
