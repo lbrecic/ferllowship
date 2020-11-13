@@ -15,7 +15,7 @@ function Navigation() {
 
     return (
         <nav>
-            <span className="relative text-xl z-50">
+            <span className="relative text-xl z-50 cursor-pointer">
                 <FontAwesomeIcon 
                     icon={faBars}
                     onClick={() => setShowMenu(!showMenu)}
