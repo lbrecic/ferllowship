@@ -10,8 +10,11 @@
 %	\end{itemize}
 
 		{Prilikom projektiranja samog sustava jedna od važnijih odluka bila je odabir programskih jezika i razvojnih okruženja u kojima ćemo razviti našu aplikaciju. Programski jezici koje smo odabrali su Java sa Spring Boot razvojnim okvirom za \textit{backend} te React Javascript za \textit{frontend}. Odabrana razvojna okruženja su Eclipse za \textit{backend} te Visual Studio Code za \textit{frontend}.}	\\
+		
 		{Također izbor odgovarajuće arhitekture programske potpore jedan je od najbitnijih koraka u oblikovanju sustava jer ona predstavlja poveznicu između zahtjeva u sustav i same implementacije sustava. Dobra arhitektura znači dobru fleksibilnost sustava, jednostavnu mogućnost nadogradnje i jeftino održavanje.}\\
+		
 		{Sama arhitektura sustava je vrlo jednostavna, a sastoji se od dvije manje aplikacije: klijenta i poslužitelja. Osnovna prednost modela klijent-poslužitelj je u tome što nije potreban sustav za upravljanje bazom podataka na svakom klijentskom računalu, već se klijent s bazom podataka povezuje preko aplikacije. Time se postiže veća sigurnost i zaštita podataka. Poslužiteljska aplikacija ima pristup bazi podataka u kojoj će se pohranjivati podaci o lokacijama, kartama, borbama, igračima i kartografima. Poslužiteljska aplikacija neće dohvaćati slike i pohranjivati ih u bazu podataka već na servis Cloudinary. Poslužiteljska aplikacija temeljena je na REST principima za izradu web aplikacija te u skladu s time klijentska aplikacija dohvaća podatke iz poslužiteljske i prezentira ih na korisniku razumljiv način.}\\
+		
 		{Za izradu aplikacije odabrali smo MVC arhitekturu jer omogućava dodatno strukturiranje aplikacije s obzirom na objektno orijentiranu paradigmu što znatno olakšava nezavisni razvoj, ispitivanje i održavanje aplikacije.}		
 
 				
@@ -35,6 +38,7 @@
 			\subsection{Opis tablica}
 			
 				\noindent\textbf{player} $($Igrač$)$ - Ovaj entitet sadržava podatke o korisniku. Svaki korisnik je ujedno i igrač. Sadrži atribute: ID korisnika, korisničko ime, hash lozinke, e-mail adresu, fotografiju, bodove igrača, status bana, aktivnost igrača, osposobljenost računa i "experience points". Ovaj entitet je u \textit{One-to-Many} vezi s entitetom card preko atributa player\_id. Ima dvije \textit{One-to-Many} veze s entitetom fight, koje se odnose na borbe u kojima je igrač pobijedio i borbe u kojima je izgubio. Player je u \textit{One-to-One} vezi s entitetom ban i s entitetom confirmation. \\
+				
 				Atribut username je alternativni ključ entiteta. Atribut ban\_status može poprimiti jednu od sljedećih vrijednosti: 0 - korisnik nije pod banom (nije isključen iz igre$)$, 1 - korisnik je privremeno isključen iz igre, 2 - korisnik je trajno isključen iz igre.
 				
 				\begin{longtabu} to \textwidth {|X[6, l]|X[7, l]|X[20, l]|}
@@ -158,6 +162,7 @@
 				\end{longtabu}
 
 				{\noindent\textbf{location} $($Lokacija$)$ - Ovaj entitet sadržava sve važne informacije o lokacijama na kojima igrač može sakupiti karte. Sadrži atribute: ID lokacije, naziv lokacije, fotografiju lokacije i ID kategorije. Ovaj entitet u vezi je \textit{Many-to-One} s Category preko ID kategorije te je u vezi \textit{One-to-One} s Path preko ID lokacije. \\
+					
 				Atribut location\_status može poprimiti jednu od sljedećih vrijednosti: 0 - odobrena, 1 - odbijena, 2 - čeka odobrenje kartografa, 3 - potreban izlazak na teren i pomniji pregled}
 				
 				\begin{longtabu} to \textwidth {|X[6, l]|X[7, l]|X[20, l]|}
