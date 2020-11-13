@@ -53,8 +53,6 @@ class CartographForm extends React.Component {
       show: false,
     });
 
-    console.log(this.state.show);
-
     if(!this.validate()){
       return;
     }
@@ -69,8 +67,11 @@ class CartographForm extends React.Component {
         body: formData
       });
       let result = await res.json();
+      console.log(result);
       if (result && result.success) {
-        toast("Uspješna prijava");
+        toast("Uspješna prijava.");
+      } else {
+        toast("Dogodila se pogreška.");
       }
     } catch (e) {
       toast("Dogodila se pogreška.");
@@ -80,7 +81,7 @@ class CartographForm extends React.Component {
   validate() {
     let isValid = true;
 
-    if (!this.state.username) {
+    if (!this.state.IBAN) {
       isValid = false;
      toast("Unesi IBAN!");
     }
