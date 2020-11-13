@@ -31,7 +31,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		String passwordHash = 
 			Hashing.sha256().hashString(password, StandardCharsets.UTF_8).toString();
  
-        if (player != null && player.getPasswordHash().equals(passwordHash) || "ferllowship".equals(username) && "geofighter".equals(password)) {
+        if (player != null && player.getPasswordHash().equals(passwordHash) && player.getEnabled()) {
             return new UsernamePasswordAuthenticationToken
               (username, password, Collections.emptyList());
         } else {
