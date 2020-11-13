@@ -1,0 +1,13 @@
+package hr.fer.progi.ferllowship.geofighter.model;
+
+import javax.persistence.*;
+
+@Entity
+public class Cartograph extends Player{
+	
+	@Column(nullable = false, length = 34)
+	private String iban;
+	
+	@Column(name = "id_photo_link", nullable = false, length = 200)
+	private String idPhotoLink;
+}

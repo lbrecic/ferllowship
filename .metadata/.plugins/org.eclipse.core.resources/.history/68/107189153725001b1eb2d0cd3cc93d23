@@ -1,0 +1,21 @@
+package hr.fer.progi.ferllowship.geofighter.model;
+
+import javax.persistence.*;
+
+@Entity(name = "path")
+public class ShortestPath {
+	
+	@Column
+	private Integer distance;
+	
+	@OneToOne(targetEntity = Location.class, fetch = FetchType.EAGER)
+	@JoinColumn(name = "location_id")
+	private Location location;
+	
+	public ShortestPath() {}
+	
+	public ShortestPath(Integer distance, Location location) {
+		this.distance = distance;
+		this.location = location;
+	}
+}
