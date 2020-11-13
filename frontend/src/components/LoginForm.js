@@ -1,6 +1,7 @@
 import React from 'react';
 import InputField from './InputField';
 import SubmitButton from './SubmitButton';
+import {Redirect, Route} from "react-router-dom";
 
 import { toast } from 'react-toastify';
 
@@ -14,7 +15,8 @@ class LoginForm extends React.Component {
     this.state = {
       username: '',
       password: '',
-      buttonDisabled: false
+      buttonDisabled: false,
+      redirect : false
     }
   }
 
@@ -77,14 +79,18 @@ class LoginForm extends React.Component {
       let res = await fetch('/api/login', {
         method: 'post',
         headers: {
-          'Authorization': 'Basic ' + window.btoa(this.state.username + ":" + this.state.password)  
+          'Authorization': 'Basic ' + window.btoa(this.state.username + ":" + this.state.password),
+          'X-Requested-With' : 'XMLHttpRequest'          
         },
         body: formData
       });
 
       let result = await res.json();
       if (result && result.success) {
-        toast(result.success);
+        this.state.redirect = true;
+        localStorage.setItem('username', this.state.username);
+        localStorage.setItem('password', this.state.password);
+        localStorage.setItem('isLoggedIn', true);
       }
     } catch (e) {
       toast("Korisničko ime ili lozinka nisu ispravni.");
@@ -119,6 +125,7 @@ class LoginForm extends React.Component {
           disabled={this.state.buttonDisabled}
           onClick={() => this.doLogin()}
         />
+        { this.state.redirect ? (<Redirect push to="/home"/>) : null }
       </div>
     );
   }

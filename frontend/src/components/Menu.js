@@ -69,10 +69,10 @@ function Menu(props) {
                     <div class="w-1/5 bg-white h-32"></div>
                     <div class="w-1/4 bg-gray-500 h-32">
                         <Link 
-                            to="/contact"
+                            to="/global-stats"
                             onClick={() => props.show(false)}
                         >
-                            <div className="static top-0 left-0 z-1 w-full h-full">Contact</div>
+                            <div className="static top-0 left-0 z-1 w-full h-full">Global statistics</div>
                         </Link>
                     </div>
                     <div class="w-1/5 bg-white h-32"></div>
