@@ -257,14 +257,10 @@
 			
 		\section{Dijagram razreda}
 		
-			\textit{Potrebno je priložiti dijagram razreda s pripadajućim opisom. Zbog preglednosti je moguće dijagram razlomiti na više njih, ali moraju biti grupirani prema sličnim razinama apstrakcije i srodnim funkcionalnostima.}\\
-			
-			\textbf{\textit{dio 1. revizije}}\\
-			
-			\textit{Prilikom prve predaje projekta, potrebno je priložiti potpuno razrađen dijagram razreda vezan uz \textbf{generičku funkcionalnost} sustava. Ostale funkcionalnosti trebaju biti idejno razrađene u dijagramu sa sljedećim komponentama: nazivi razreda, nazivi metoda i vrste pristupa metodama (npr. javni, zaštićeni), nazivi atributa razreda, veze i odnosi između razreda.}\\
+			{Slike 4.2, 4.3 i 4.4 prikazuju razrede \textit{backend} dijela MVC arhitekture. Razredi na slici 4.2 prikazuju razrede Service i razrede Controller s anotacijom @RestController što je specifično za spring boot koji tom anotacijom kombinira anotacije @Controller i @ResponseBody te omogućuje da svaka metoda koja rukuje sa zahtjevima automatski serijalizira povratne vrijednosti objekata u \textit{HttpResponse}. Service razredi služe za modeliranje logike koja se događa nad modelima (npr. slanje mail-a) i služe za odvajanje takve logike od kontrolera čija je zadaća isključivo odgovarati na http zahtjeve (bilo GET, POST, PUT, PATCH ili DELETE).}
 			
 			\begin{figure}[H]
-				%\includegraphics[width=\linewidth, height=14cm]{}				
+				\includegraphics[width=\linewidth, height=14cm]{dijagrami/servicecontroller_diagram}				
 				\centering
 				\caption{Dijagram razreda - dio Controllers i Service}
 				\label{}
@@ -273,20 +269,22 @@
 			\begin{figure}[H]
 				\includegraphics[width=\linewidth, height=14cm]{dijagrami/daoclass_diagram}				
 				\centering
-				\caption{Dijagram razreda - dio DAO}
+				\caption{Dijagram razreda - dio Data access object}
 				\label{}
 			\end{figure}
 		
+			{Model razredi preslikavaju strukturu baze podataka aplikacije. Razred Player predstavlja igrača koji se može registrirati, raspolaže svojim špilom karata koje skuplja te sudjeluje u borbama i otkrivanju novih lokacija. Razred Admin predstavlja administratora te nasljeđuje sve funkcije razreda Player i ima sve ovlasti nad bazom podataka i upravljanja igračima svih razina. Razred Cartograph predstavlja kartografa koji nasljeđuje sve funkcije razreda Player i ima mogućnosti upravljanja svim postojećim i novim lokacijama. Razred Fight predstavlja borbu u kojoj sudjeluju dva igrača. Razred Card predstavlja kartu koja obzirom na kategoriju lokacije kojoj pripada sadrži određen broj bodova koji se koristi u borbama. Razred Location predstavlja lokaciju na kojoj se mogu skupljati karte ukoliko ih kartograf odobri. Razred Category predstavlja kategoriju lokacije prema čijoj se klasifikaciji određuje broj bodova koje lokacije donose.}
+			
 			\begin{figure}[H]
 				\includegraphics[width=\linewidth, height=14cm]{dijagrami/modelclass_diagram}				
 				\centering
-				\caption{Dijagram razreda - dio model}
+				\caption{Dijagram razreda - dio Models}
 				\label{}
 			\end{figure}
 			
-			\textbf{\textit{dio 2. revizije}}\\			
-			
-			\textit{Prilikom druge predaje projekta dijagram razreda i opisi moraju odgovarati stvarnom stanju implementacije}
+%			\textbf{\textit{dio 2. revizije}}\\			
+%			
+%			\textit{Prilikom druge predaje projekta dijagram razreda i opisi moraju odgovarati stvarnom stanju implementacije}
 			
 			
 			
