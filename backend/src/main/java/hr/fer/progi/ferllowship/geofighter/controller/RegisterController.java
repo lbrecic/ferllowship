@@ -74,17 +74,17 @@ public class RegisterController {
 		ConfirmationToken confirmationToken = new ConfirmationToken(player);
 		confirmationTokenRepository.save(confirmationToken);
 		
-//		SimpleMailMessage mailMessage = new SimpleMailMessage();
-//		mailMessage.setTo(email);
-//		mailMessage.setSubject("Potvrdi svoju GeoFighter registraciju!");
-//		mailMessage.setFrom("ferllowship@gmail.com");
-//		String frontendURL = System.getenv("FRONTEND_URL");
-//		mailMessage.setText(
-//			"Bok " + username + "!\n\n" +
-//			"Klikom na sljedeći link potvrdi svoju GeoFighter registraciju: " + 
-//			frontendURL + "/confirm?token=" + confirmationToken.getConfirmationToken()
-//		);
-//		emailService.sendEmail(mailMessage);
+		SimpleMailMessage mailMessage = new SimpleMailMessage();
+		mailMessage.setTo(email);
+		mailMessage.setSubject("Potvrdi svoju GeoFighter registraciju!");
+		mailMessage.setFrom("ferllowship@gmail.com");
+		String frontendURL = System.getenv("FRONTEND_URL");
+		mailMessage.setText(
+			"Bok " + username + "!\n\n" +
+			"Klikom na sljedeći link potvrdi svoju GeoFighter registraciju: " + 
+			frontendURL + "/confirm?token=" + confirmationToken.getConfirmationToken()
+		);
+		emailService.sendEmail(mailMessage);
 		
 		response.put("message", "Potvrdi registraciju na emailu.");
         return response;

@@ -78,22 +78,19 @@ class LoginForm extends React.Component {
     try {
       let res = await fetch('/api/login', {
         method: 'post',
-        headers: {
-          'Authorization': 'Basic ' + window.btoa(this.state.username + ":" + this.state.password),
-          'X-Requested-With' : 'XMLHttpRequest'          
-        },
         body: formData
       });
 
-      let result = await res.json();
-      if (result && result.success) {
+      if (res.ok) {
         this.state.redirect = true;
         localStorage.setItem('username', this.state.username);
         localStorage.setItem('password', this.state.password);
         localStorage.setItem('isLoggedIn', true);
+      } else {
+        toast("Korisničko ime ili lozinka nisu ispravni.");
       }
     } catch (e) {
-      toast("Korisničko ime ili lozinka nisu ispravni.");
+        toast("Dogodila se pogreška.");
     }
 
     this.setState({

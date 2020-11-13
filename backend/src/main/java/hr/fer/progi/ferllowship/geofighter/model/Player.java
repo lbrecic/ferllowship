@@ -1,5 +1,7 @@
 package hr.fer.progi.ferllowship.geofighter.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import javax.persistence.*;
@@ -39,6 +41,14 @@ public class Player {
 	
 	@Column
 	private Integer expirience;
+	
+	@OneToMany(targetEntity = Fight.class, fetch = FetchType.EAGER)
+	@JoinColumn(name = "fight_id")
+	private List<Fight> fights;
+	
+	@OneToMany(targetEntity = Card.class, fetch = FetchType.EAGER)
+	@JoinColumn(name = "card_id")
+	private List<Card> deck;
 
 	public Player() {
 		
@@ -52,6 +62,8 @@ public class Player {
 		enabled = false;
 		activity = false;
 		expirience = 0;
+		fights = new ArrayList<>();
+		deck = new ArrayList<>();
 	}
 
 	public UUID getUserId() {
