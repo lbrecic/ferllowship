@@ -1,142 +1,70 @@
-import React        from 'react';
-import UserStore    from './stores/UserStore';
-import LoginForm    from './LoginForm';
-import SubmitButton from './SubmitButton';
-import {observer}   from 'mobx-react';
-import RegisterForm     from './RegisterForm';
-import { BrowserRouter, Link, Route, Switch } from 'react-router-dom';
-import RegularButton from './RegularButton';
+import React from 'react';
+import { observer } from 'mobx-react';
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
+import HomePage from './pages/HomePage';
+import ProfilePage from './pages/ProfilePage';
+import DeckPage from './pages/DeckPage';
+import MapPage from './pages/MapPage';
+import HelpPage from './pages/HelpPage';
+import GlobalStatsPage from './pages/GlobalStatsPage';
+import StatsPage from './pages/StatsPage';
+import LoginPage from './pages/LoginPage';
+import ConfirmedRegistration from './pages/ConfirmPage';
+import './styles/tailwind.css';
+import './styles/App.css';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import ConfirmPage from './pages/ConfirmPage';
 
-import './App.css';
 
+const PrivateRoute = ({ component: Component, ...rest }) => (
+  <Route {...rest} render={(props) => (
+    localStorage.getItem('isLoggedIn')
+      ? <Component {...props} />
+      : <Redirect to='/' />
+  )} />
+)
 
+const LoggedInRoute = ({ component: Component, ...rest }) => (
+  <Route {...rest} render={(props) => (
+    localStorage.getItem('isLoggedIn')
+      ? <Redirect to='/home' />
+      : <Component {...props} />
+  )} />
+)
 
 class App extends React.Component {
-
-  state = {
-    show: false
-  };
-
-  async componentDidMount(){
-    try{
-
-      let res = await fetch('/isLoggedIn',{
-        method: 'post',
-        headers : {
-          'Accept' : 'application/json',
-          'Content-Type' : 'application/json'
-        }
-      });
-
-      let result = await res.json();
-
-      if(result && result.success){
-        UserStore.loading = false;
-        UserStore.isLoggedIn = true;
-        UserStore.username = result.username;
-      }else{
-        UserStore.loading = false;
-        UserStore.isLoggedIn = false;
-      }
-
-    }catch(e){
-      UserStore.loading = false;
-      UserStore.isLoggedIn = false;
-    }
-  }
-
-  async doLogout(){
-    try{
-
-      let res = await fetch('/logout',{
-        method: 'post',
-        headers : {
-          'Accept' : 'application/json',
-          'Content-Type' : 'application/json'
-        }
-      });
-
-      let result = await res.json();
-
-      if(result && result.success){
-        UserStore.isLoggedIn = false;
-        UserStore.username = '';
-      }
-
-    }catch(e){
-      console.log(e);
-    }
-  }
-
-  showRegister = e => {
-    this.setState({
-      show: !this.state.show
-    })
-  }
-
-  onClose = e => {
-    this.setState({
-      show: false
-    })
-  };
-
-
-  Register = e => {
-    this.setState({
-      show: true
-    })
-  }
-
 
 
 
   render() {
-    if(UserStore.loading){
-      return (
-        <div className="app" >
-           <div className="container"> 
-           Ucitavanje...
-           </div>
-        </div>
-      )
-    }else{
+    return (
+      <div className="app">
+        <Router>
+          <Switch>
+            <LoggedInRoute exact path="/" component={LoginPage}/>
+            <PrivateRoute path="/home" component={HomePage}/>
+            <PrivateRoute path="/profile" component={ProfilePage}/>
+            <PrivateRoute path="/deck" component={DeckPage}/>
+            <PrivateRoute path="/map" component={MapPage}/>
+            <PrivateRoute path="/help" component={HelpPage}/>
+            <PrivateRoute path="/global-stats" component={GlobalStatsPage}/>
+            <PrivateRoute path="/stats" component={StatsPage}/>
+            <LoggedInRoute path="/confirm" component={ConfirmPage}/>
+          </Switch>
+        </Router>
+        <ToastContainer
+          className="toast"
+          bodyClassName="toastBody"
+          toastClassName="toast"
+          pauseOnFocusLoss={false}
+          hideProgressBar={true}
+        />
+      </div>
+    );
 
-      if(UserStore.isLoggedIn){
-        return (
-          <div className="app" >
-             <div className="container"> 
-              Pozdrav, {UserStore.username}!
-              <SubmitButton text={'Log out'} 
-              disabled={false} 
-              onClick={() => this.doLogout()}>
-              </SubmitButton>
-             </div>
-          </div>
-        )
-      }
-
-      return ( 
-        <div className="app" >
-          <div className="container">          
-            <LoginForm />
-            <div className="register">               
-            Nemaš račun?  
-              
-            <button className="btn" onClick={e=> {this.showRegister();}}
-              text='Registriraj se'> Registriraj se </button>
-            
-            <RegisterForm  show={this.state.show} onClose={() => this.onClose()} />             
-             
-          
-          </div>               
-          
-          </div>     
-        </div>
-        );
-    }
-
-    
   }
+
 }
 
 export default observer(App);

@@ -9,4 +9,5 @@
 /backend
 /frontend
 /frontend/node_modules
-/.metadata
+/.metadata/
+/frontend/build
