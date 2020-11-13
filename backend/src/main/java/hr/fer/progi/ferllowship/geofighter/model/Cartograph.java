@@ -10,6 +10,17 @@ public class Cartograph extends Player{
 	
 	@Column(name = "id_photo_link", nullable = false, length = 200)
 	private String idPhotoLink;
+	
+	@Column
+	private Boolean confirmed;
+
+	public Boolean getConfirmed() {
+		return confirmed;
+	}
+
+	public void setConfirmed(Boolean confirmed) {
+		this.confirmed = confirmed;
+	}
 
 	public String getIban() {
 		return iban;

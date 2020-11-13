@@ -2,16 +2,10 @@ package hr.fer.progi.ferllowship.geofighter.model;
 
 import java.util.UUID;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "confirmation")
 public class ConfirmationToken {
 
 	@Id
@@ -19,7 +13,7 @@ public class ConfirmationToken {
 	@Column(name = "token_id", updatable = false, nullable = false)
 	private UUID tokenId;
 	
-    @Column(name="confirmation_token")
+    @Column(name="token")
     private String confirmationToken;
 
     @OneToOne(targetEntity = Player.class, fetch = FetchType.EAGER)

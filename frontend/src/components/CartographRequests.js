@@ -1,10 +1,6 @@
-import React from 'react';
+import React from 'react'
 
-function showCartographApproval(x) {
-    alert(x)
-}
-
-function CartographRequests() {
+function CartographRequests(props) {
     return (
         <div>
             <div 
@@ -15,15 +11,15 @@ function CartographRequests() {
             <div className="h-8"></div>
             <div 
                 className="text-center text-sm geo-text black p-3 border border-black box-shadow cursor-pointer"
-                onClick={() => showCartographApproval(1)}  
+                onClick={() => {props.setShow(1); props.setRequest(1)}}  
             >
-                Zahtjev 1
+                zahtjev 1
             </div>
             <div 
                 className="text-center text-sm geo-text black p-3 border border-black box-shadow cursor-pointer"
-                onClick={() => showCartographApproval(2)}  
+                onClick={() => {props.setShow(2); props.setRequest(2)}}  
             >
-                Zahtjev 2
+                zahtjev 2
             </div>
         </div>
     );

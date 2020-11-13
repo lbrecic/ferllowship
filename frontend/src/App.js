@@ -6,7 +6,7 @@ import ProfilePage from './pages/ProfilePage';
 import DeckPage from './pages/DeckPage';
 import MapPage from './pages/MapPage';
 import HelpPage from './pages/HelpPage';
-import ContactPage from './pages/ContactPage';
+import GlobalStatsPage from './pages/GlobalStatsPage';
 import StatsPage from './pages/StatsPage';
 import LoginPage from './pages/LoginPage';
 import ConfirmedRegistration from './pages/ConfirmPage';
@@ -29,7 +29,7 @@ class App extends React.Component {
             <Route path="/deck"><DeckPage /></Route>
             <Route path="/map"><MapPage /></Route>
             <Route path="/help"><HelpPage /></Route>
-            <Route path="/contact"><ContactPage /></Route>
+            <Route path="/global-stats"><GlobalStatsPage /></Route>
             <Route path="/stats"><StatsPage /></Route>
             <Route path="/confirm"><ConfirmedRegistration /></Route>
             <Route path="/test"><Request /></Route>
