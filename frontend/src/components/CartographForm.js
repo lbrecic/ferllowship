@@ -3,6 +3,7 @@ import InputField from "./InputField";
 import SubmitButton from "./SubmitButton";
 import "../styles/CartographForm.css";
 import ImageUploader from "react-images-upload";
+import { toast } from "react-toastify";
 
 class CartographForm extends React.Component {
   constructor(props) {
@@ -49,7 +50,6 @@ class CartographForm extends React.Component {
 
   async doApply() {
     this.setState({
-      //buttonDisabled: true,
       show: false,
     });
 
@@ -58,49 +58,35 @@ class CartographForm extends React.Component {
     if(!this.validate()){
       return;
     }
+    const formData = new FormData();
+    formData.append("username", this.state.username);
+    formData.append("picture", this.state.pictures[0]);
 
-    try {
-      let res = await fetch("/api/people", {
+    try { 
+      let res = await fetch("/api/cartographRequest", {
         method: "post",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          IBAN: this.state.IBAN
-        }),
+        body: formData
       });
-
-      // let result = await res.json();
-      // if(result && result.success){
-      //   UserStore.isLoggedIn = true;
-      //   UserStore.username = result.username;
-      // } else if(result  && result.success === false){
-      //   this.resetForm();
-      //   alert(result.msg);
-      // }
+      let result = await res.json();
+      if (result && result.success) {
+        toast("Uspješna prijava");
+      }
     } catch (e) {
-      console.log(e);
-      this.resetForm();
+      toast("Dogodila se pogreška.");
     }
   }
 
   validate() {
     let isValid = true;
-    let alertMessage = "";
 
     if (!this.state.username) {
       isValid = false;
-      alertMessage = alertMessage + "Unesi IBAN!" + "\n";
+     toast("Unesi IBAN!");
     }
 
     if (!this.state.pictures[0]) {
       isValid = false;
-      alertMessage = alertMessage + "Izaberi sliku!" + "\n";
-    }
-
-    if(alertMessage !== ""){
-      alert(alertMessage);
+      toast("Priloži sliku osobne iskaznice!");
     }
     return isValid;
   }

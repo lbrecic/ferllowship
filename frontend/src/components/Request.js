@@ -1,6 +1,7 @@
 import React from "react";
 import SubmitButton from "./SubmitButton";
 import "../styles/Request.css";
+import { toast } from "react-toastify";
 
 class Request extends React.Component {
   constructor(props) {
@@ -13,6 +14,42 @@ class Request extends React.Component {
       picture: this.props.picture,
       buttonDisabled: false,
     };
+  }
+
+  async acceptApply(){
+    const formData = new FormData();
+    formData.append("username", this.props.username);
+    formData.append("status", true);
+    try{
+      let res = await fetch('/api/requests', {
+        method: 'post',
+        body: formData
+      });
+      let result = await res.json();
+      if (result && result.success) {
+        toast("Uspješno!");
+      }
+    }catch(e){
+      toast("Dogodila se pogreška!");
+    }
+  }
+
+  async declineApply(){
+    const formData = new FormData();
+    formData.append("username", this.props.username);
+    formData.append("status", false);
+    try{
+      let res = await fetch('/api/requests', {
+        method: 'post',
+        body: formData
+      });
+      let result = await res.json();
+      if (result && result.success) {
+        toast("Uspješno!");
+      }
+    }catch(e){
+      toast("Dogodila se pogreška!");
+    }
   }
 
   render() {
@@ -40,7 +77,7 @@ class Request extends React.Component {
                   <SubmitButton
                     className="requestButton"
                     text="Prihvati"
-                    onClick={() => this.setShow(0)}
+                    onClick={() => {this.setShow(0); this.acceptApply() } }
                   />
                 </div>
 
@@ -48,7 +85,7 @@ class Request extends React.Component {
                   <SubmitButton
                     className="requestButton"
                     text="Odbaci"
-                    onClick={() => this.setShow(0)}
+                    onClick={() => this.declineApply()}
                   />
                 </div>
               </div>
