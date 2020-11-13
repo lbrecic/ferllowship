@@ -7,10 +7,9 @@ class Request extends React.Component {
     super(props);
     this.setShow = this.props.setShow
     this.state = {
-      username: "user " + this.props.username,
-      date: this.props.date,
-      IBAN: this.props.IBAN,
-      picture: this.props.picture,
+      username: this.props.request.username,
+      IBAN: this.props.request.IBAN,
+      picture: this.props.request.picture,
       buttonDisabled: false,
     };
   }
@@ -25,7 +24,7 @@ class Request extends React.Component {
               <div className="username textBox">
                 Korisničko ime: {this.state.username}
               </div>
-              <div className="IBAN textBox">IBAN: </div>
+              <div className="IBAN textBox">IBAN: {this.state.IBAN}</div>
               <div className="picture">
                 <img
                   src={this.state.picture}
@@ -33,7 +32,6 @@ class Request extends React.Component {
                   alt="Profile pic"
                 ></img>
               </div>
-              <div className="date textBox ">Datum prijave: {this.state.date} </div>
 
               <div className="buttons">
                 <div className="requestButton">

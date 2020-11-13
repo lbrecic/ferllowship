@@ -5,6 +5,7 @@ import Footer from '../components/Footer';
 import CartographForm from '../components/CartographForm';
 import CartographRequests from '../components/CartographRequests';
 import Request from '../components/Request'
+import SubmitButton from "../components/SubmitButton";
 import PromoteAdmin from '../components/PromoteAdmin'
 import '../styles/App.css';
 import logo from '../logo.svg';
@@ -15,10 +16,11 @@ import '../styles/Profile.css';
 
 function ProfilePage() {
     const user = "admin";
-    const [show, setShow] = useState(0);
+    const [showRequest, setShowRequest] = useState(0);
+    const [promoteWindow, showPromoteWindow] = useState(0);
     const [request, setRequest] = useState(0);
 
-    if(show === 0)
+    if(showRequest === 0 && promoteWindow === 0)
     return (
         <>
         <Header />
@@ -65,13 +67,19 @@ function ProfilePage() {
                         </div>
                         <div className="w-1/4 text-center"></div>
                     </div>
+                    <div className="text-center m-8">
+                    <SubmitButton
+                        text="Promote someone to admin"
+                        onClick={() => showPromoteWindow(1)}
+                    />
+                    </div>
                 </div>
                 <div className="w-1/4">
                     <div className="h-12"></div>
                         {user === "igrac" && 
                             <CartographForm />}
                         {user === "admin" &&
-                            <CartographRequests setShow={ setShow } 
+                            <CartographRequests setShow={ setShowRequest }
                                                 setRequest={ setRequest }/>}
                         {user === "kartograf" &&
                             <LocationRequests />}
@@ -82,7 +90,7 @@ function ProfilePage() {
         </>
     );
 
-    if(show > 0)
+    if(showRequest !== 0 || promoteWindow === 1)
         return(
         <>
         <Header />
@@ -129,13 +137,23 @@ function ProfilePage() {
                         </div>
                         <div className="w-1/4 text-center"></div>
                     </div>
+                    <div className="text-center m-8">
+                        <SubmitButton
+                            text="Promote someone to admin"
+                            onClick={() => showPromoteWindow(1)}
+                        />
+                    </div>
                 </div>
                 <div className="w-1/4">
                     <div className="h-12"></div>
-                            <Request setShow={ setShow } 
+                            {promoteWindow === 1 &&
+                                <PromoteAdmin setShow={ showPromoteWindow }/>
+                            }
+                            {showRequest !== 0 &&
+                                <Request setShow={ setShowRequest } 
                                     setRequest={ setRequest }
-                                    username={request}/>
-                            <CartographRequests setShow={ setShow } 
+                                    request={request}/>}
+                            <CartographRequests setShow={ setShowRequest } 
                                                 setRequest={ setRequest }/>
                 </div>
             </div>
