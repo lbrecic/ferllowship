@@ -35,7 +35,7 @@ public class PlayerController {
 		
 		if (player instanceof Admin) {
 			response.put("authorityLevel", "admin");
-		} else if (player instanceof Cartograph) {
+		} else if (player instanceof Cartograph && ((Cartograph) player).getConfirmed()) {
 			response.put("authorityLevel", "cartograph");
 		} else {
 			response.put("authorityLevel", "player");

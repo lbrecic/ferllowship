@@ -14,14 +14,13 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.cloudinary.Cloudinary;
-import com.cloudinary.utils.ObjectUtils;
 import com.google.common.hash.Hashing;
 
 import hr.fer.progi.ferllowship.geofighter.dao.ConfirmationTokenRepository;
 import hr.fer.progi.ferllowship.geofighter.dao.PlayerRepository;
 import hr.fer.progi.ferllowship.geofighter.model.ConfirmationToken;
 import hr.fer.progi.ferllowship.geofighter.model.Player;
+import hr.fer.progi.ferllowship.geofighter.service.CloudinaryService;
 import hr.fer.progi.ferllowship.geofighter.service.EmailService;
 
 @RestController
@@ -35,6 +34,9 @@ public class RegisterController {
 	
     @Autowired
     private EmailService emailService;
+    
+    @Autowired 
+    private CloudinaryService cloudinaryService;
 
 	@PostMapping(path = "/register")
 	public Map<String, String> register(
@@ -55,15 +57,7 @@ public class RegisterController {
 			return response;
 		}
 		
-		Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
-			"cloud_name", "ferllowship",
-			"api_key", "558424752216417",
-			"api_secret", "Mcj9aGAcqmKi6Zx4OXNcV9Cy5KI"
-		));
-		
-		@SuppressWarnings("rawtypes")
-		Map result = cloudinary.uploader().upload(picture.getBytes(), ObjectUtils.emptyMap());
-		String pictureLink = (String) result.get("url");
+		String pictureLink = cloudinaryService.createLink(picture);
 		
 		String passwordHash = 
 			Hashing.sha256().hashString(password, StandardCharsets.UTF_8).toString();
