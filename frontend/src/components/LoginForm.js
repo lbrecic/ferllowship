@@ -101,9 +101,15 @@ class LoginForm extends React.Component {
     });
   }
 
+  handleKeypress = e => {
+    if (e.key === 'Enter') {
+      this.doLogin();
+    }
+  };
+
   render() {
     return (
-      <div className="loginForm">
+      <div className="loginForm" onKeyPress={this.handleKeypress}>
         <div className='title'> GeoFighter </div>
 
         <InputField

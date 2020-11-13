@@ -14,6 +14,16 @@ import stats from '../utils/statistics.png';
 import { Link } from "react-router-dom";
 import '../styles/Profile.css';
 
+async function getProfileAttributes() {
+    let res = await fetch('/api/profile', {
+        method: 'get'
+    });
+
+    let result = await res.json();
+    if (result && result.success) {
+    }
+};
+
 function ProfilePage() {
     const user = "admin";
     const [showRequest, setShowRequest] = useState(0);
@@ -38,7 +48,7 @@ function ProfilePage() {
                     <div className="w-full h-64 p-12">
                         <p className='title white' >
                             <div className='logo-title'> 
-                                Korisničko ime
+                                { localStorage.username }
                             </div>       
                         </p>
                     </div>

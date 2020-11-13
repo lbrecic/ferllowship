@@ -83,7 +83,7 @@ class Request extends React.Component {
                   <SubmitButton
                     className="requestButton"
                     text="Odbaci"
-                    onClick={() => this.declineApply()}
+                    onClick={() => { this.setShow(0); this.declineApply() } }
                   />
                 </div>
               </div>

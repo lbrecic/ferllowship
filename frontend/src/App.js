@@ -12,7 +12,6 @@ import LoginPage from './pages/LoginPage';
 import ConfirmedRegistration from './pages/ConfirmPage';
 import './styles/tailwind.css';
 import './styles/App.css';
-import Request from './components/Request';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ConfirmPage from './pages/ConfirmPage';
