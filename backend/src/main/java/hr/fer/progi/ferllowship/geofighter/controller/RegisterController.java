@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -57,7 +56,7 @@ public class RegisterController {
 			return response;
 		}
 		
-		String pictureLink = cloudinaryService.createLink(picture);
+		String pictureLink = cloudinaryService.upload(picture);
 		
 		String passwordHash = 
 			Hashing.sha256().hashString(password, StandardCharsets.UTF_8).toString();
@@ -68,17 +67,14 @@ public class RegisterController {
 		ConfirmationToken confirmationToken = new ConfirmationToken(player);
 		confirmationTokenRepository.save(confirmationToken);
 		
-		SimpleMailMessage mailMessage = new SimpleMailMessage();
-		mailMessage.setTo(email);
-		mailMessage.setSubject("Potvrdi svoju GeoFighter registraciju!");
-		mailMessage.setFrom("ferllowship@gmail.com");
-		String frontendURL = System.getenv("FRONTEND_URL");
-		mailMessage.setText(
-			"Bok " + username + "!\n\n" +
+		String to = email;
+		String from = System.getenv("EMAIL");
+		String subject = "Potvrdi svoju GeoFighter registraciju!";
+		String text = "Bok " + username + "!\n\n" +
 			"Klikom na sljedeći link potvrdi svoju GeoFighter registraciju: " + 
-			frontendURL + "/confirm?token=" + confirmationToken.getConfirmationToken()
-		);
-		emailService.sendEmail(mailMessage);
+			System.getenv("FRONTEND_URL") + "/confirm?token=" + confirmationToken.getConfirmationToken();
+		
+		emailService.sendEmail(to, from, subject, text);
 		
 		response.put("message", "Potvrdi registraciju na emailu.");
         return response;

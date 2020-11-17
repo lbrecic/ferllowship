@@ -57,7 +57,7 @@ public class CartographRequestController {
 			return response;
 		}
 		
-		String idPhotoLink = cloudinaryService.createLink(picture);
+		String idPhotoLink = cloudinaryService.upload(picture);
 		
 		Cartograph cartograph = new Cartograph();
 		cartograph.setUsername(player.getUsername());
