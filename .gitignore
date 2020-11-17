@@ -6,6 +6,13 @@
 /dokumentacija/*.pdf
 /dokumentacija/*.synctex.gz
 /dokumentacija/*.toc
-/frontend/node_modules
+
+/backend/target/
+/backend/.classpath
+/backend/.project
+/backend/.settings/
+
+/frontend/build/
+/frontend/node_modules/
+
 /.metadata/
-/frontend/build
