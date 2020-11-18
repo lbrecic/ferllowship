@@ -156,6 +156,12 @@ class RegisterForm extends React.Component {
     return isValid;
   }
 
+  handleKeypress = e => {
+    if (e.key === 'Enter') {
+      this.doRegister();
+    }
+  };
+
   render() {
     if (!this.props.show) {
       return null;
@@ -164,7 +170,7 @@ class RegisterForm extends React.Component {
     return (
       <div className="overlay">
         <div className="modal">
-          <div className="registerForm modal-content">
+          <div className="registerForm modal-content" onKeyPress={this.handleKeypress}>
             <div className="registerTitle">Registriraj se</div>
             <form>
               <div className="registerDiv">

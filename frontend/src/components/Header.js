@@ -18,16 +18,20 @@ class Header extends React.Component {
 
     async doLogout() {    
         try {
-            await fetch('/api/logout', {
+            let res = await fetch('/api/logout', {
                 method: 'post'
             });
             
-            this.state.redirect = true;
-            localStorage.removeItem('username');
-            localStorage.removeItem('isLoggedIn');
-            window.location.reload();
+            if (res.ok) {
+                this.state.redirect = true;
+                localStorage.removeItem('username');
+                localStorage.removeItem('isLoggedIn');
+                window.location.reload();
+            } else {
+                toast("Dogodila se pogreška.");
+            }
         } catch (e) {
-            toast("Dogodila se pogreška.")
+            toast("Dogodila se pogreška.");
         }
     }
 
