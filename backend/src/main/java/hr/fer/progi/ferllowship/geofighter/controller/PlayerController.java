@@ -21,8 +21,9 @@ public class PlayerController {
 	
 	@GetMapping(path = "/player")
 	public Map<String, String> getPlayer(@RequestParam("username") String username) {
-		Map<String, String> response = new HashMap<>();
 		
+		Map<String, String> response = new HashMap<>();
+
 		Player player = playerRepository.findByUsername(username);
 		if (player == null) {
 			response.put("error", "Igrač ne postoji.");

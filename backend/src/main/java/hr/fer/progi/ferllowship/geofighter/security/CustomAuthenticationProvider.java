@@ -31,12 +31,17 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		String passwordHash = 
 			Hashing.sha256().hashString(password, StandardCharsets.UTF_8).toString();
  
-        if (player != null && player.getPasswordHash().equals(passwordHash) && player.getEnabled()) {
-            return new UsernamePasswordAuthenticationToken
-              (username, password, Collections.emptyList());
+        if (player != null
+        	&& player.getPasswordHash().equals(passwordHash)
+        	&& player.getEnabled()) {
+        	
+            return new UsernamePasswordAuthenticationToken(
+        		username, 
+        		password, 
+        		Collections.emptyList()
+            );
         } else {
-            throw new 
-              BadCredentialsException("Authentication failed.");
+            throw new BadCredentialsException("Authentication failed.");
         }
     }
  

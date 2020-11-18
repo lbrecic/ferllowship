@@ -81,7 +81,7 @@ class LoginForm extends React.Component {
         body: formData
       });
 
-      if (res.ok) {
+      if (!new URL(res.url).searchParams.has("error")) {
         this.state.redirect = true;
         localStorage.setItem('username', this.state.username);
         localStorage.setItem('isLoggedIn', true);
