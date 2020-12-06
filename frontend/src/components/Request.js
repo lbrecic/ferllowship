@@ -16,38 +16,26 @@ class Request extends React.Component {
   }
 
   async acceptApply(){
-    const formData = new FormData();
-    formData.append("username", this.state.username);
-    formData.append("status", "accept");
-    try{
-      let res = await fetch('/api/requests/' + this.state.username, {
-        method: 'post',
-        body: formData
-      });
+    try {
+      let res = await fetch('/api/requests/accept?username=' + this.state.username);
       let result = await res.json();
-      if (result) {
-        toast("Prihvaćeno.");
+      if (result && result.message) {
+        toast(result.message);
       }
-    }catch(e){
-      toast("Dogodila se pogreška!");
+    } catch(e){
+        toast("Dogodila se pogreška.");
     }
   }
 
   async declineApply(){
-    const formData = new FormData();
-    formData.append("username", this.state.username);
-    formData.append("status", "decline");
-    try{
-      let res = await fetch('/api/requests/' + this.state.username, {
-        method: 'post',
-        body: formData
-      });
+    try {
+      let res = await fetch('/api/requests/decline?username=' + this.state.username);
       let result = await res.json();
-      if (result) {
-        toast("Odbijeno.");
+      if (result && result.message) {
+        toast(result.message);
       }
-    }catch(e){
-      toast("Dogodila se pogreška!");
+    } catch(e){
+        toast("Dogodila se pogreška.");
     }
   }
 

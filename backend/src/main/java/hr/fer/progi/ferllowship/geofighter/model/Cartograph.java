@@ -13,6 +13,20 @@ public class Cartograph extends Player{
 	
 	@Column
 	private Boolean confirmed;
+	
+	public Player createPlayer() {
+		Player player = new Player();
+		player.setActivity(getActivity());
+		player.setBanStatus(getBanStatus());
+		player.setEmail(getEmail());
+		player.setEnabled(getEnabled());
+		player.setExpirience(getExpirience());
+		player.setPasswordHash(getPasswordHash());
+		player.setPhotoLink(getPhotoLink());
+		player.setPoints(getPoints());
+		player.setUsername(getUsername());
+		return player;
+	}
 
 	public Boolean getConfirmed() {
 		return confirmed;

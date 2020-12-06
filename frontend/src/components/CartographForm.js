@@ -62,16 +62,14 @@ class CartographForm extends React.Component {
     formData.append("picture", this.state.pictures[0]);
 
     try { 
-      let res = await fetch("/api/cartographRequest", {
+      let res = await fetch("/api/requests", {
         method: "post",
         body: formData
       });
       let result = await res.json();
       console.log(result);
-      if (result && result.success) {
-        toast("Uspješna prijava.");
-      } else {
-        toast("Dogodila se pogreška.");
+      if (result && result.message) {
+        toast(result.message);
       }
     } catch (e) {
       toast("Dogodila se pogreška.");

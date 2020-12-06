@@ -65,6 +65,21 @@ public class Player {
 		fights = new ArrayList<>();
 		deck = new ArrayList<>();
 	}
+	
+	public Cartograph createCartograph() {
+		Cartograph cartograph = new Cartograph();
+		cartograph.setActivity(activity);
+		cartograph.setBanStatus(banStatus);
+		cartograph.setConfirmed(false);
+		cartograph.setEmail(email);
+		cartograph.setEnabled(enabled);
+		cartograph.setExpirience(expirience);
+		cartograph.setPasswordHash(passwordHash);
+		cartograph.setPhotoLink(photoLink);
+		cartograph.setPoints(points);
+		cartograph.setUsername(username);
+		return cartograph;
+	}
 
 	public UUID getUserId() {
 		return playerId;
