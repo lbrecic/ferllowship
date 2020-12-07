@@ -27,7 +27,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		.authorizeRequests()
 			.antMatchers("/register").permitAll()
 			.antMatchers("/confirm").permitAll()
-			.antMatchers("/").hasRole("ADMIN")
+			.antMatchers("/").hasAnyRole("ADMIN", "CARTOGRAPH", "PLAYER")
 		.anyRequest().authenticated()
 		.and()
 			.formLogin()
@@ -44,7 +44,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         auth.authenticationProvider(customAuthProvider);
         auth.inMemoryAuthentication()
 	        .withUser("admin")
-	        .password("{noop}admin")
+	        .password("$2y$12$E8ydHaF/Cpzc.swbCOYz0eWrokcCz26I71kayzAXnBqYy0mc2PKJ.")
 	        .roles("ADMIN");
     }
 	

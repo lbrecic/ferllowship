@@ -1,18 +1,16 @@
 package hr.fer.progi.ferllowship.geofighter.controller;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
-import com.google.common.hash.Hashing;
 
 import hr.fer.progi.ferllowship.geofighter.dao.ConfirmationTokenRepository;
 import hr.fer.progi.ferllowship.geofighter.dao.PlayerRepository;
@@ -37,6 +35,8 @@ public class RegistrationController {
     @Autowired
     private EmailService emailService;
     
+    @Autowired PasswordEncoder passwordEncoder;
+    
 	@PostMapping(path = "/register")
 	public MessageDTO register(@RequestPart String username,
 	                           @RequestPart String password,
@@ -52,10 +52,10 @@ public class RegistrationController {
 		}
 		
 		String pictureLink = cloudinaryService.upload(picture.getBytes());
-		String passwordHash = 
-			Hashing.sha256().hashString(password, StandardCharsets.UTF_8).toString();
+		String passwordHash = passwordEncoder.encode(password);
 		
 		Player player = new Player(username, passwordHash, email, pictureLink);
+		player.setEnabled(true);
 		playerRepository.save(player);
 		ConfirmationToken confirmationToken = new ConfirmationToken(player);
 		confirmationTokenRepository.save(confirmationToken);
