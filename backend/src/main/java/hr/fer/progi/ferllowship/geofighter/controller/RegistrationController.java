@@ -55,22 +55,29 @@ public class RegistrationController {
 		String passwordHash = passwordEncoder.encode(password);
 		
 		Player player = new Player(username, passwordHash, email, pictureLink);
-		player.setEnabled(true);
 		playerRepository.save(player);
 		ConfirmationToken confirmationToken = new ConfirmationToken(player);
 		confirmationTokenRepository.save(confirmationToken);
 		
-		SimpleMailMessage mailMessage = new SimpleMailMessage();
-		mailMessage.setTo(email);
-		mailMessage.setFrom(System.getenv("EMAIL"));
-		mailMessage.setSubject("Potvrdi svoju GeoFighter registraciju!");
-		mailMessage.setText(
-			"Bok " + username + "!\n\n" +
-			"Klikom na sljedeći link potvrdi svoju GeoFighter registraciju: " + 
-			System.getenv("FRONTEND_URL") + "/confirm?token=" + 
-			confirmationToken.getConfirmationToken()
-		);
-		emailService.sendEmail(mailMessage);
+//		UPUTE:
+//			- kod lokalnog developmenta zakomentirati 2) i otkomentirati 1)
+//			- kod pusha (i prije pulla) na git zakomentirati 1) i otkomentirati 2)
+//		==================
+//		1)
+		player.setEnabled(true);
+//		------------------
+//		2)
+//		SimpleMailMessage mailMessage = new SimpleMailMessage();
+//		mailMessage.setTo(email);
+//		mailMessage.setFrom(System.getenv("EMAIL"));
+//		mailMessage.setSubject("Potvrdi svoju GeoFighter registraciju!");
+//		mailMessage.setText(
+//			"Bok " + username + "!\n\n" +
+//			"Klikom na sljedeći link potvrdi svoju GeoFighter registraciju: " + 
+//			System.getenv("FRONTEND_URL") + "/confirm?token=" + 
+//			confirmationToken.getConfirmationToken()
+//		);
+////		==================
 		
 		return new MessageDTO("Potvrdi registraciju na emailu.");
 	}
