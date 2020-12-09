@@ -9,45 +9,33 @@ class Request extends React.Component {
     this.setShow = this.props.setShow
     this.state = {
       username: this.props.request.username,
-      IBAN: this.props.request.IBAN,
-      picture: this.props.request.picture,
+      iban: this.props.request.iban,
+      idPhotoLink: this.props.request.idPhotoLink,
       buttonDisabled: false,
     };
   }
 
   async acceptApply(){
-    const formData = new FormData();
-    formData.append("username", this.props.username);
-    formData.append("status", true);
-    try{
-      let res = await fetch('/api/requests', {
-        method: 'post',
-        body: formData
-      });
+    try {
+      let res = await fetch('/api/requests/accept?username=' + this.state.username);
       let result = await res.json();
-      if (result && result.success) {
-        toast("Uspješno!");
+      if (result && result.message) {
+        toast(result.message);
       }
-    }catch(e){
-      toast("Dogodila se pogreška!");
+    } catch(e){
+        toast("Dogodila se pogreška.");
     }
   }
 
   async declineApply(){
-    const formData = new FormData();
-    formData.append("username", this.props.username);
-    formData.append("status", false);
-    try{
-      let res = await fetch('/api/requests', {
-        method: 'post',
-        body: formData
-      });
+    try {
+      let res = await fetch('/api/requests/decline?username=' + this.state.username);
       let result = await res.json();
-      if (result && result.success) {
-        toast("Uspješno!");
+      if (result && result.message) {
+        toast(result.message);
       }
-    }catch(e){
-      toast("Dogodila se pogreška!");
+    } catch(e){
+        toast("Dogodila se pogreška.");
     }
   }
 
@@ -61,10 +49,10 @@ class Request extends React.Component {
               <div className="username textBox">
                 Korisničko ime: {this.state.username}
               </div>
-              <div className="IBAN textBox">IBAN: {this.state.IBAN}</div>
+              <div className="IBAN textBox">IBAN: {this.state.iban}</div>
               <div className="picture">
                 <img
-                  src={this.state.picture}
+                  src={this.state.idPhotoLink}
                   className="picture"
                   alt="Profile pic"
                 ></img>

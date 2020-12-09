@@ -28,10 +28,10 @@ class Header extends React.Component {
                 localStorage.removeItem('isLoggedIn');
                 window.location.reload();
             } else {
-                toast("Dogodila se pogreška.")
+                toast("Dogodila se pogreška.");
             }
         } catch (e) {
-            toast("Dogodila se pogreška.")
+            toast("Dogodila se pogreška.");
         }
     }
 

@@ -1,8 +1,8 @@
 package hr.fer.progi.ferllowship.geofighter.security;
 
+import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -11,7 +11,7 @@ import org.springframework.security.web.authentication.logout.HttpStatusReturnin
 
 @Configuration
 @EnableWebSecurity
-public class SpringSecurityConfigurationBasicAuth extends WebSecurityConfigurerAdapter {
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	
     @Autowired
     private CustomAuthenticationProvider customAuthProvider;
@@ -19,27 +19,33 @@ public class SpringSecurityConfigurationBasicAuth extends WebSecurityConfigurerA
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
+//		.exceptionHandling()
+//		.authenticationEntryPoint((req, resp, auth) -> resp.sendError(HttpStatus.SC_UNAUTHORIZED))
+//		.and()
 		.csrf().disable()
 		.requestCache().disable()
 		.authorizeRequests()
-		.antMatchers("/register").permitAll()
-		.antMatchers("/confirm").permitAll()
-		.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+			.antMatchers("/register").permitAll()
+			.antMatchers("/confirm").permitAll()
+			.antMatchers("/").hasAnyRole("ADMIN", "CARTOGRAPH", "PLAYER")
 		.anyRequest().authenticated()
 		.and()
-		.formLogin()
-        .successHandler((req, resp, auth) -> resp.setStatus(200))
-        .failureHandler((req, resp, ex) -> resp.setStatus(403)).and()
-        .sessionManagement()
-        .invalidSessionStrategy((req, resp) -> resp.setStatus(401)).and()
-        .logout()
-        .deleteCookies("auth_code", "JSESSIONID").invalidateHttpSession(true)
-        .logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler());
+			.formLogin()
+			.successHandler((req, resp, auth) -> resp.setStatus(HttpStatus.SC_OK))
+			.failureHandler((req, resp, ex) -> resp.setStatus(HttpStatus.SC_UNAUTHORIZED))
+        .and()
+        	.logout()
+        	.logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler())
+	        .deleteCookies("JSESSIONID");
 	}
 	
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(customAuthProvider);
+        auth.inMemoryAuthentication()
+	        .withUser("admin")
+	        .password("$2y$12$E8ydHaF/Cpzc.swbCOYz0eWrokcCz26I71kayzAXnBqYy0mc2PKJ.")
+	        .roles("ADMIN");
     }
 	
 }
