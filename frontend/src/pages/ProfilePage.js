@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import LocationRequests from '../components/LocationRequests';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -8,7 +8,6 @@ import Request from '../components/Request'
 import SubmitButton from "../components/SubmitButton";
 import PromoteAdmin from '../components/PromoteAdmin'
 import '../styles/App.css';
-import logo from '../logo.svg';
 import cards from '../utils/cards.png';
 import stats from '../utils/statistics.png';
 import { Link } from "react-router-dom";
@@ -79,11 +78,9 @@ class ProfilePage extends React.Component {
                     <div className="w-1/2">
                         <div className="h-12"></div>
                         <div className="w-full h-64 p-12">
-                            <p className='title white' >
-                                <div className='logo-title'> 
-                                    { this.state.username }
-                                </div>       
-                            </p>
+                            <div className='title white logo-title'> 
+                                { this.state.username }
+                            </div>
                         </div>
                         <div className="w-full h-20 links"></div>
                         <div className="flex justify-center">
@@ -150,11 +147,9 @@ class ProfilePage extends React.Component {
                     <div className="w-1/2">
                         <div className="h-12"></div>
                         <div className="w-full h-64 p-12">
-                            <p className='title white' >
-                                <div className='logo-title'> 
-                                    { this.state.username }
-                                </div>       
-                            </p>
+                            <div className='title white logo-title'> 
+                                { this.state.username }
+                            </div>
                         </div>
                         <div className="w-full h-20 links"></div>
                         <div className="flex justify-center">

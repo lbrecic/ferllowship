@@ -3,7 +3,7 @@ import Navigation from './Navigation';
 import '../styles/tailwind.css';
 import '../styles/App.css'
 import '../styles/Header.css'
-import {Redirect, Route} from "react-router-dom";
+import {Redirect} from "react-router-dom";
 
 import { toast } from 'react-toastify';
 
@@ -47,7 +47,7 @@ class Header extends React.Component {
                         </span>
                         <div className="flex justify-between items-center">
                             <div className="logoutButton">
-                                <button class="btnLogout" onClick={() => this.doLogout()}>Odjavi se</button> 
+                                <button className="btnLogout" onClick={() => this.doLogout()}>Odjavi se</button> 
                             </div>
                             <Navigation />
                         </div>

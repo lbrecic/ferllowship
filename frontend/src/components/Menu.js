@@ -6,11 +6,9 @@ function Menu(props) {
     return (
         <div>
             <div className="text-center w-full">
-                <p className='title white' >
-                    <div className='logo-title'> 
-                        GeoFighter
-                    </div>       
-                </p>
+                <div className='title white logo-title'> 
+                    GeoFighter
+                </div>
             </div>
             <div className="w-full">
                 <div className="h-20"></div>
