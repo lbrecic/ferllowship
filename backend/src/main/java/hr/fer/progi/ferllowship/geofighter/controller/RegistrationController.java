@@ -55,9 +55,6 @@ public class RegistrationController {
 		String passwordHash = passwordEncoder.encode(password);
 		
 		Player player = new Player(username, passwordHash, email, pictureLink);
-		playerRepository.save(player);
-		ConfirmationToken confirmationToken = new ConfirmationToken(player);
-		confirmationTokenRepository.save(confirmationToken);
 		
 //		UPUTE:
 //			- kod lokalnog developmenta zakomentirati 2) i otkomentirati 1)
@@ -77,7 +74,12 @@ public class RegistrationController {
 //			System.getenv("FRONTEND_URL") + "/confirm?token=" + 
 //			confirmationToken.getConfirmationToken()
 //		);
-////		==================
+//		emailService.sendEmail(mailMessage);
+//		==================
+		
+		playerRepository.save(player);
+		ConfirmationToken confirmationToken = new ConfirmationToken(player);
+		confirmationTokenRepository.save(confirmationToken);
 		
 		return new MessageDTO("Potvrdi registraciju na emailu.");
 	}

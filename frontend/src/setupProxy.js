@@ -8,11 +8,4 @@ module.exports = function (app) {
       pathRewrite: { '^/api': '/' }
     }
   ));
-  app.use(createProxyMiddleware(
-    '/heroku',
-    {
-      target: 'https://ferllowship-backend-testing.herokuapp.com',
-      pathRewrite: { '^/heroku': '/' }
-    }
-  ));
 }
