@@ -6,6 +6,8 @@ import CartographForm from '../components/CartographForm';
 import CartographRequests from '../components/CartographRequests';
 import Request from '../components/Request'
 import SubmitButton from "../components/SubmitButton";
+import RegularButton from "../components/RegularButton";
+import EditProfile from "../components/EditProfile";
 import PromoteAdmin from '../components/PromoteAdmin'
 import '../styles/App.css';
 import logo from '../logo.svg';
@@ -27,7 +29,8 @@ class ProfilePage extends React.Component {
         username: "",
         email: "",
         photoLink: "",
-        authorityLevel: ""
+        authorityLevel: "",
+        show: false
     };
     
     async componentDidMount() {        
@@ -62,6 +65,19 @@ class ProfilePage extends React.Component {
         this.setState(this.state);
     }
 
+    showEditWindow = e => {
+        this.setState({
+          show: !this.state.show
+        })
+    }
+    
+    onClose = e => {
+        this.setState({
+          show: false
+        })
+    };
+    
+
     render() {
         if(this.showRequest === 0 && this.promoteWindow === 0)
         return (
@@ -82,8 +98,14 @@ class ProfilePage extends React.Component {
                             <p className='title white' >
                                 <div className='logo-title'> 
                                     { this.state.username }
-                                </div>       
+                                </div>   
+                                <button className="btn editButton" 
+                                    onClick={e => { this.showEditWindow(); }} >
+                                        Uredi profil
+                                    </button>
+                                <EditProfile show={this.state.show} onClose={() => this.onClose()} />
                             </p>
+                                
                         </div>
                         <div className="w-full h-20 links"></div>
                         <div className="flex justify-center">

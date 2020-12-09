@@ -52,10 +52,11 @@ public class RegistrationController {
 		}
 		
 		String pictureLink = cloudinaryService.upload(picture.getBytes());
+		//String pictureLink = "abc";
 		String passwordHash = passwordEncoder.encode(password);
 		
 		Player player = new Player(username, passwordHash, email, pictureLink);
-		player.setEnabled(true);
+		//player.setEnabled(true);
 		playerRepository.save(player);
 		ConfirmationToken confirmationToken = new ConfirmationToken(player);
 		confirmationTokenRepository.save(confirmationToken);
