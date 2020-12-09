@@ -31,7 +31,7 @@ class ProfilePage extends React.Component {
     
     async componentDidMount() {        
         try {
-          let res = await fetch('/api/player?username=' + localStorage.username);
+          let res = await fetch('/api/player');
           let result = await res.json();
     
           if (result && !result.error) {
