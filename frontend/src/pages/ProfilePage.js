@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import LocationRequests from '../components/LocationRequests';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -10,7 +10,6 @@ import RegularButton from "../components/RegularButton";
 import EditProfile from "../components/EditProfile";
 import PromoteAdmin from '../components/PromoteAdmin'
 import '../styles/App.css';
-import logo from '../logo.svg';
 import cards from '../utils/cards.png';
 import stats from '../utils/statistics.png';
 import { Link } from "react-router-dom";
@@ -35,7 +34,7 @@ class ProfilePage extends React.Component {
     
     async componentDidMount() {        
         try {
-          let res = await fetch('/api/players?username=' + localStorage.username);
+          let res = await fetch('/api/player?username=' + localStorage.username);
           let result = await res.json();
     
           if (result && !result.error) {
@@ -95,8 +94,7 @@ class ProfilePage extends React.Component {
                     <div className="w-1/2">
                         <div className="h-12"></div>
                         <div className="w-full h-64 p-12">
-                            <p className='title white' >
-                                <div className='logo-title'> 
+                                <div className='title white logo-title'> 
                                     { this.state.username }
                                 </div>   
                                 <button className="btn editButton" 
@@ -104,8 +102,6 @@ class ProfilePage extends React.Component {
                                         Uredi profil
                                     </button>
                                 <EditProfile show={this.state.show} onClose={() => this.onClose()} />
-                            </p>
-                                
                         </div>
                         <div className="w-full h-20 links"></div>
                         <div className="flex justify-center">
@@ -172,11 +168,9 @@ class ProfilePage extends React.Component {
                     <div className="w-1/2">
                         <div className="h-12"></div>
                         <div className="w-full h-64 p-12">
-                            <p className='title white' >
-                                <div className='logo-title'> 
-                                    { this.state.username }
-                                </div>       
-                            </p>
+                            <div className='title white logo-title'> 
+                                { this.state.username }
+                            </div>
                         </div>
                         <div className="w-full h-20 links"></div>
                         <div className="flex justify-center">

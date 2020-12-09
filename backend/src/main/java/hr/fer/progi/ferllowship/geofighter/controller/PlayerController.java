@@ -27,7 +27,7 @@ public class PlayerController {
 	@Autowired
 	private PlayerRepository playerRepository;
 	
-	@GetMapping(path = "/players")
+	@GetMapping(path = "/player")
 	public ResponseEntity<?> getPlayer(@RequestParam String username) {
 		Player player = playerRepository.findByUsername(username);
 		if (player == null) {
@@ -70,7 +70,8 @@ public class PlayerController {
 				player.getUsername(), 
 				player.getEmail(), 
 				player.getPhotoLink(), 
-				authorityLevel)
+				authorityLevel
+			)
 		);
 	}
 

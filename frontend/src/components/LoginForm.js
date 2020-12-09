@@ -1,7 +1,7 @@
 import React from 'react';
 import InputField from './InputField';
 import SubmitButton from './SubmitButton';
-import {Redirect, Route} from "react-router-dom";
+import {Redirect} from "react-router-dom";
 
 import { toast } from 'react-toastify';
 
