@@ -80,7 +80,7 @@ class CartographForm extends React.Component {
   validate() {
     let isValid = true;
 
-    if (!this.state.username) {
+    if (!this.state.IBAN) {
       isValid = false;
      toast("Unesi IBAN!");
     }
