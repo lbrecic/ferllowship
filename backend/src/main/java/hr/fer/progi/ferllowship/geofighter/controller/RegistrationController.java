@@ -61,7 +61,7 @@ public class RegistrationController {
 		
 //		UPUTE:
 //			- kod lokalnog developmenta zakomentirati 2) i otkomentirati 1)
-//			- kod pusha (i prije pulla) na git zakomentirati 1) i otkomentirati 2)
+//			- tako neka i ostane, 2) otkomentirat samo kada je stvarno potrebno
 //		==================
 //		1)
 		player.setEnabled(true);

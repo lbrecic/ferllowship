@@ -7,7 +7,6 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -19,11 +18,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
-//		.exceptionHandling()
-//		.authenticationEntryPoint((req, resp, auth) -> resp.sendError(HttpStatus.SC_UNAUTHORIZED))
-//		.and()
 		.csrf().disable()
-		.requestCache().disable()
 		.authorizeRequests()
 			.antMatchers("/register").permitAll()
 			.antMatchers("/confirm").permitAll()
@@ -31,11 +26,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		.anyRequest().authenticated()
 		.and()
 			.formLogin()
-			.successHandler((req, resp, auth) -> resp.setStatus(HttpStatus.SC_OK))
+			.successHandler((req, resp, auth) -> resp.sendRedirect("/"))
 			.failureHandler((req, resp, ex) -> resp.setStatus(HttpStatus.SC_UNAUTHORIZED))
         .and()
         	.logout()
-        	.logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler())
+        	.logoutSuccessHandler((req, resp, auth) -> resp.sendRedirect("/"))
 	        .deleteCookies("JSESSIONID");
 	}
 	
