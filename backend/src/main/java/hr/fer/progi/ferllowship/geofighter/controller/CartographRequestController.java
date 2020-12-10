@@ -51,7 +51,6 @@ public class CartographRequestController {
 		Cartograph cartograph = player.createCartograph();
 		cartograph.setIban(iban);
 		cartograph.setIdPhotoLink(cloudinaryService.upload(picture.getBytes()));
-		//cartograph.setIdPhotoLink("abc");
 		
 		ConfirmationToken token = confirmationTokenRepository.findByPlayer(player);
 		if (token != null) {

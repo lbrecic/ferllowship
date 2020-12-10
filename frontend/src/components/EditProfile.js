@@ -1,25 +1,29 @@
 import React from "react";
 import InputField from "./InputField";
-import SubmitButton from "./SubmitButton";
 import "../styles/EditProfile.css";
 import ImageUploader from "react-images-upload";
 
 import { toast } from 'react-toastify';
-import ChangePassword from "./ChangePassword";
 
-const USERNAME_MAX_LENGTH = 128;
+const USERNAME_MAX_LENGTH = 5;
+const EMAIL_MAX_LENGTH = 128;
 const PASSWORD_MIN_LENGTH = 8;
 const PASSWORD_MAX_LENGTH = 128;
-const EMAIL_MAX_LENGTH = 128;
+
+/*  TO DO:  PROMJENA SLIKE?
+            PROVJERITI NOVI MAIL?
+            POVEZIVANJE S BACKEND?*/
 
 class EditProfile extends React.Component {
     
     state = {
         username: "",
         password: "",
+        oldPassword: "",
         email: "",
         photoLink: "",
-        show: false
+        show: false,
+        changedPassword: false
     };
     
     async componentDidMount() {        
@@ -30,7 +34,7 @@ class EditProfile extends React.Component {
             if (result && !result.error) {
                 this.setState({
                 username: result.username,
-                password: result.password,
+                //password: result.password,
                 email: result.email,
                 photoLink: result.photoLink
                 });
@@ -38,38 +42,23 @@ class EditProfile extends React.Component {
         } catch (e) {}
     }
 
-    setInputValueUsername(property, val) {
-        val = val.trim();
-        if (val.length > USERNAME_MAX_LENGTH) {
-            return;
-        }
-    
+    setInputValueUsername(val) {
         this.setState({
-          [property]: val,
+          username: val,
         });
-        
     }
     
+    setInputValueEmail(val) {
+        this.setState({
+          email: val,
+        });
+      }
+
     setInputValuePassword(property, val) {
-        val = val.trim();
-        if (val.length > PASSWORD_MAX_LENGTH) {
-          return;
-        }
-    
         this.setState({
-          [property]: val,
-        });
-    }
-    
-    setInputValueEmail(property, val) {
-        val = val.trim();
-        if (val.length > EMAIL_MAX_LENGTH) {
-          return;
-        }
-    
-        this.setState({
-          [property]: val,
-        });
+          [property]: val
+        })
+        this.state.changedPassword = true;
     }
     
     onClose = (e) => {
@@ -82,13 +71,14 @@ class EditProfile extends React.Component {
             isValid = false;
             toast("Korisničko ime je predugačko.");
         }
-
-        if (this.state.password.length < PASSWORD_MIN_LENGTH) {
-            isValid = false;
-            toast("Lozinka mora imati barem 8 znakova.");
-        } else if (this.state.password.length > PASSWORD_MAX_LENGTH) {
-            isValid = false;
-            toast("Lozinka je predugačka.");
+        if(this.state.changedPassword){
+            if (this.state.password.length < PASSWORD_MIN_LENGTH) {
+                isValid = false;
+                toast("Nova lozinka mora imati barem 8 znakova.");
+            } else if (this.state.password.length > PASSWORD_MAX_LENGTH) {
+                isValid = false;
+                toast("Lozinka je predugačka.");
+            }
         }
 
         if (this.state.email.length > EMAIL_MAX_LENGTH) {
@@ -104,23 +94,37 @@ class EditProfile extends React.Component {
 
     mySubmitHandler = (event) => {
         event.preventDefault();
-        alert("You are submitting " + this.state.username);
-       // this.doRegister(event);
+        if(this.validate() && this.state.changedPassword)
+                this.savePassword();
     }
-    // myChangeHandler = (event) => {}
-
-    showEditPassword = e => {
-        this.setState({
-          show: !this.state.show
-        })
+   
+    async savePassword(){
+        if(!this.state.oldPassword){
+          toast("Stara lozinka mora biti unesena");
+          return;
+        }
+  
+        const formData = new FormData();
+        formData.append("password", this.state.oldPassword);
+    
+        try {
+            let res = await fetch('/api/password', {
+            method: 'post',
+            body: formData
+            });
+    
+            if (res.ok) {
+            localStorage.setItem('password', this.state.password);
+            toast("Lozinka promjenjena.");
+            } else {
+            toast("Lozinka nije ispravna.");
+            }
+        } catch (e) {
+            toast("Dogodila se pogreška.");
+        }
+    
     }
-    
-    onCloses = e => {
-        this.setState({
-          show: false
-        })
-    };
-    
+  
 
     render() {
         if (!this.props.show) {
@@ -136,43 +140,48 @@ class EditProfile extends React.Component {
                         <div className="registerDivEdit">
                             <div className="editInput">
                                 Username: </div>
-                            <InputField className="inputEdit"
+                            <div className="inputEdit1">
+                            <InputField 
                                 type="text"
                                 value={this.state.username}
-                                //onChange= {this.myChangeHandler}
-                                onChange={(val) =>
-                                    this.setInputValueUsername("username", val)
-                                }
+                                onChange={(val) => this.setInputValueUsername(val)}
                             />
+                            </div>
                             
                         </div>
-                        
-                        <button className="btn editButton" type='button'
-                                    onClick={e => { this.showEditPassword(); }} >
-                                        Promijeni lozinku
-                        </button>
-                        <ChangePassword show={this.state.show} onClose={() => this.onCloses()} />
-                            
                         <div className="registerDivEdit">
                         <div className="editInput">
                                 Email: </div>
-                            
-                            <InputField className="inputEdit"
+                            <div className="inputEdit2">
+                            <InputField
                                 type="text"
                                 value={this.state.email}
-                                onChange={(val) =>
-                                    this.setInputValueEmail("email", val)
-                                }
+                                onChange={(val) =>this.setInputValueEmail(val)}
                             />
-                        </div>
+                            </div>
                             
-                            <button  className="btn registerButtonEdit" type='submit'  > 
-                                Spremi promjene 
-                            </button>
+                        </div>
+                        <div className="registerDivEdit">
+                            <InputField
+                                type="password"
+                                placeholder='Stara lozinka'
+                                onChange={(val) => this.setInputValuePassword('oldPassword', val)}
+                            />   
+                            <InputField
+                                type="password"
+                                placeholder='Nova lozinka'
+                                onChange={(val) => this.setInputValuePassword('password', val)}
+                            />       
+                            </div>
+                          
+                            
+                        <button className="btn registerButtonEdit" type='submit' > 
+                            Spremi promjene 
+                        </button>
                        
-                            <button className="btn registerButtonEdit" onClick={(e) => this.onClose(e)}>
-                                Odustani
-                            </button>
+                        <button className="btn registerButtonEdit" onClick={(e) => this.onClose(e)}>
+                            Odustani
+                        </button>
                         
                     </form>
                 </div>
