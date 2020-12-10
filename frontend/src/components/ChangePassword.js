@@ -1,11 +1,8 @@
 import React from "react";
 import "../styles/EditProfile.css";
-import "../styles/ChangePassword.css"
-import { Auth } from "aws-amplify";
-import { useHistory } from "react-router-dom";
+import "../styles/ChangePassword.css";
 import { FormGroup, FormControl, FormLabel } from "react-bootstrap";
 import LoaderButton from "../components/LoaderButton";
-import { useFormFields } from "../libs/hooksLib";
 
 
 class ChangePassword extends React.Component {

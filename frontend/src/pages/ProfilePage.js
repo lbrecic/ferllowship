@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import LocationRequests from '../components/LocationRequests';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -6,11 +6,9 @@ import CartographForm from '../components/CartographForm';
 import CartographRequests from '../components/CartographRequests';
 import Request from '../components/Request'
 import SubmitButton from "../components/SubmitButton";
-import RegularButton from "../components/RegularButton";
 import EditProfile from "../components/EditProfile";
 import PromoteAdmin from '../components/PromoteAdmin'
 import '../styles/App.css';
-import logo from '../logo.svg';
 import cards from '../utils/cards.png';
 import stats from '../utils/statistics.png';
 import { Link } from "react-router-dom";
@@ -29,7 +27,7 @@ class ProfilePage extends React.Component {
         username: "",
         email: "",
         photoLink: "",
-        authorityLevel: "",
+        authorityLevel: "player",
         show: false
     };
     
