@@ -1,8 +1,14 @@
 package hr.fer.progi.ferllowship.geofighter.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,7 +30,7 @@ public class PlayerController {
 	public PlayerDTO getLoggedInPlayer() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		Player player = playerRepository.findByUsername(auth.getName());
-		
+				
 		String authorityLevel;
 		if (player instanceof Admin) {
 			authorityLevel = "admin";
@@ -33,6 +39,15 @@ public class PlayerController {
 		} else {
 			authorityLevel = "player";
 		}
+		
+		List<GrantedAuthority> updatedAuthorities = new ArrayList<>();
+		updatedAuthorities.add(new SimpleGrantedAuthority("ROLE_" + authorityLevel.toUpperCase()));
+		Authentication newAuth = new UsernamePasswordAuthenticationToken(
+			auth.getPrincipal(), 
+			auth.getCredentials(), 
+			updatedAuthorities
+		);
+		SecurityContextHolder.getContext().setAuthentication(newAuth);
 
 		return new PlayerDTO(
 			player.getUsername(), 
