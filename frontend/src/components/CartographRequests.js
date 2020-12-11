@@ -8,7 +8,7 @@ class CartographRequests extends React.Component {
     }
 
     state = {
-        requests: []
+        requests: ["request1", "request2"]
     }
 
     async componentDidMount() {        
@@ -25,6 +25,7 @@ class CartographRequests extends React.Component {
         }
     }
 
+
     render() {
         return (
             <div id="requests">
@@ -36,10 +37,10 @@ class CartographRequests extends React.Component {
                 <div className="h-8"></div>
                 {this.state.requests.map((request) => (
                     <div 
-                        className="text-center text-sm geo-text black p-3 border border-black box-shadow cursor-pointer"
+                        className="text-center text-sm usernames p-3  box-shadow cursor-pointer"
                         onClick={() => {this.setShow(request); this.setRequest(request)}}  
                     >
-                        { request.username }
+                        username
                     </div>
                 ))}
             </div>
