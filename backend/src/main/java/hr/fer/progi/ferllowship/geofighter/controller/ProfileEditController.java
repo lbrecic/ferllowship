@@ -19,7 +19,6 @@ import hr.fer.progi.ferllowship.geofighter.model.Player;
 import hr.fer.progi.ferllowship.geofighter.service.CloudinaryService;
 
 @RestController
-@RequestMapping("/profile/edit")
 public class ProfileEditController {
 	
 	@Autowired
