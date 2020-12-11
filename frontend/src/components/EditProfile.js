@@ -1,7 +1,6 @@
 import React from "react";
 import InputField from "./InputField";
 import "../styles/EditProfile.css";
-import ImageUploader from "react-images-upload";
 
 import { toast } from 'react-toastify';
 
@@ -58,7 +57,7 @@ class EditProfile extends React.Component {
         this.setState({
           [property]: val
         })
-        this.state.changedPassword = true;
+        this.setState.changedPassword = true;
     }
     
     onClose = (e) => {

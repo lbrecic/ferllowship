@@ -130,7 +130,6 @@ class CartographForm extends React.Component {
                 onClick={() => this.doApply()}
               />
             </div>
-
           </div>
     );
   }
