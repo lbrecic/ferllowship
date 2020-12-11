@@ -3,6 +3,7 @@ package hr.fer.progi.ferllowship.geofighter.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,8 +16,10 @@ public class PlayerManageController {
 	@Autowired
 	private PlayerManageService playerManageService;
 
+	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping(path = "/profile/manage")
 	public List<Player> getPlayerManageList() {
 		return playerManageService.getPlayerList();
 	}
+	
 }

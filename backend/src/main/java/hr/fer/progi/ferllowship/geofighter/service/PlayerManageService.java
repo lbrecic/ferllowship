@@ -17,4 +17,5 @@ public class PlayerManageService {
 	public List<Player> getPlayerList() {
 		return playerList.findAll();
 	}
+	
 }
