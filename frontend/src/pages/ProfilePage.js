@@ -6,7 +6,6 @@ import CartographForm from '../components/CartographForm';
 import CartographRequests from '../components/CartographRequests';
 import Request from '../components/Request'
 import SubmitButton from "../components/SubmitButton";
-import RegularButton from "../components/RegularButton";
 import EditProfile from "../components/EditProfile";
 import PromoteAdmin from '../components/PromoteAdmin'
 import '../styles/App.css';
@@ -28,7 +27,7 @@ class ProfilePage extends React.Component {
         username: "",
         email: "",
         photoLink: "",
-        authorityLevel: "",
+        authorityLevel: "player",
         show: false
     };
     
