@@ -4,15 +4,13 @@ import "../styles/EditProfile.css";
 
 import { toast } from 'react-toastify';
 
-const USERNAME_MAX_LENGTH = 5;
+const USERNAME_MAX_LENGTH = 128;
 const EMAIL_MAX_LENGTH = 128;
 const PASSWORD_MIN_LENGTH = 8;
 const PASSWORD_MAX_LENGTH = 128;
 
-/*  TO DO:  PROMJENA SLIKE?
-            PROVJERITI NOVI MAIL?
-            POVEZIVANJE S BACKEND?*/
-
+/*  TO DO:  PROMJENA SLIKE? */
+            
 class EditProfile extends React.Component {
     
     state = {
@@ -78,6 +76,11 @@ class EditProfile extends React.Component {
                 isValid = false;
                 toast("Lozinka je predugačka.");
             }
+            if(!this.state.oldPassword){
+                toast("Stara lozinka mora biti unesena");
+                isValid = false;
+            }
+        
         }
 
         if (this.state.email.length > EMAIL_MAX_LENGTH) {
@@ -93,30 +96,29 @@ class EditProfile extends React.Component {
 
     mySubmitHandler = (event) => {
         event.preventDefault();
-        if(this.validate() && this.state.changedPassword)
-                this.savePassword();
+        if(this.validate()) 
+            this.edit();
     }
    
-    async savePassword(){
-        if(!this.state.oldPassword){
-          toast("Stara lozinka mora biti unesena");
-          return;
-        }
-  
+    async edit(){
+        
         const formData = new FormData();
-        formData.append("password", this.state.oldPassword);
+        if(this.state.changedPassword){
+            formData.append("oldPassword", this.state.oldPassword);
+            formData.append("password", this.state.password);
+        }
+        formData.append("username", this.state.username);
+        formData.append("email", this.state.email);
     
         try {
-            let res = await fetch('/api/password', {
+            let res = await fetch('/api/profile/edit', {
             method: 'post',
             body: formData
             });
     
-            if (res.ok) {
-            localStorage.setItem('password', this.state.password);
-            toast("Lozinka promjenjena.");
-            } else {
-            toast("Lozinka nije ispravna.");
+            let result = await res.json();
+            if (result && result.message) {
+              toast(result.message);
             }
         } catch (e) {
             toast("Dogodila se pogreška.");
