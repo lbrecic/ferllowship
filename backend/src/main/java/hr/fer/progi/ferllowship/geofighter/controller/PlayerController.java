@@ -50,10 +50,16 @@ public class PlayerController {
 		SecurityContextHolder.getContext().setAuthentication(newAuth);
 
 		return new PlayerDTO(
-			player.getUsername(), 
-			player.getEmail(), 
-			player.getPhotoLink(), 
-			authorityLevel
+				player.getUsername(),
+				player.getPasswordHash(),
+				player.getEmail(),
+				player.getPhotoLink(),
+				player.getPoints(),
+				player.getBanStatus(),
+				player.getEnabled(),
+				player.getActivity(),
+				player.getExperience(),
+				authorityLevel
 		);
 	}
 
