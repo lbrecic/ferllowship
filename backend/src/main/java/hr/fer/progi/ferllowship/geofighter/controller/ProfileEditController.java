@@ -32,11 +32,12 @@ public class ProfileEditController {
 	/**
 	 * metoda za uređivanje korisničkog profila, 
 	 * isti parametri kao i za registraciju igrača
+	 * - za sad se ne mijenja slika
 	 *  
 	 * @param username
 	 * @param password
 	 * @param email
-	 * @param picture
+	 * - @param picture -
 	 * @return
 	 * @throws IOException
 	 */
@@ -44,8 +45,8 @@ public class ProfileEditController {
 	@PostMapping(path = "/profile/edit")
 	public MessageDTO editProfile(@RequestPart String username,
 									@RequestPart String password,
-									@RequestPart String email,
-									@RequestPart MultipartFile picture)
+									@RequestPart String email/*,
+									@RequestPart MultipartFile picture*/)
 									throws IOException {
 		
 		/*
@@ -56,23 +57,23 @@ public class ProfileEditController {
 		
 		/*
 		 * što ako igrač ne želi promijeniti sve korisničke podatke, nego samo neke?
-		 *  --> može li parametar biti null?
+		 *  --> za vrijednosti koje se ne mijenjaju šalje se prazan string?
 		 */
-		if (username != null) {
+		if (!username.isBlank()) {
 			if (playerRepository.findByUsername(username) != null) {
 				return new MessageDTO("Željeno ime je već zauzeto.");
 			}
 			player.setUsername(username);
 		}
-		if (password != null) {
+		if (!password.isBlank()) {
 			player.setPasswordHash(passwordEncoder.encode(password));
 		}
-		if (email != null) {
+		if (!email.isBlank()) {
 			player.setEmail(email);
 		}
-		if (picture != null) {
-			player.setPhotoLink(cloudinaryService.upload(picture.getBytes()));
-		}
+//		if (picture != null) {
+//			player.setPhotoLink(cloudinaryService.upload(picture.getBytes()));
+//		}
 		
 		return new MessageDTO("Promjene profila uspješno pohranjene.");
 	}
