@@ -73,12 +73,21 @@ public class CartographRequestController {
 		for (Cartograph cartograph : cartographRepository.findAll()) {
 			if (!cartograph.getConfirmed()) {
 				response.add(
-					new CartographDTO(
-						cartograph.getUsername(), 
-						cartograph.getIban(), 
-						cartograph.getEmail(), 
-						cartograph.getIdPhotoLink()
-					)
+						new CartographDTO(
+								cartograph.getUsername(),
+								cartograph.getPasswordHash(),
+								cartograph.getEmail(),
+								cartograph.getPhotoLink(),
+								cartograph.getPoints(),
+								cartograph.getBanStatus(),
+								cartograph.getEnabled(),
+								cartograph.getActivity(),
+								cartograph.getExperience(),
+								"cartograph",
+								cartograph.getIban(),
+								cartograph.getIdPhotoLink(),
+								cartograph.getConfirmed()
+						)
 				);
 			}
 		}
