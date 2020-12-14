@@ -4,10 +4,11 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import CartographForm from '../components/CartographForm';
 import CartographRequests from '../components/CartographRequests';
-import Request from '../components/Request'
+import CartographRequest from '../components/CartographRequest'
 import SubmitButton from "../components/SubmitButton";
 import EditProfile from "../components/EditProfile";
-import PromoteAdmin from '../components/PromoteAdmin'
+import PromoteAdmin from '../components/PromoteAdmin';
+import AllUsersWindow from '../components/AllUsersWindow';
 import '../styles/App.css';
 import cards from '../utils/cards.png';
 import stats from '../utils/statistics.png';
@@ -18,14 +19,17 @@ class ProfilePage extends React.Component {
 
     constructor (props) {
         super(props);
-        this.showRequest = 0;
+        this.showCartographRequest = 0;
+        this.cartographRequest = 0;
+        this.showLocationRequest = 0;
+        this.locationRequest = 0;
         this.promoteWindow = 0;
-        this.request = 0;
+        this.allUsersWindow = 0;
     }
 
     state = {
-        username: "",
-        email: "",
+        username: "lukas",
+        email: "lb@fer.hr",
         photoLink: "",
         authorityLevel: "cartograph",
         show: false
@@ -48,8 +52,23 @@ class ProfilePage extends React.Component {
         }
     }
 
-    setShowRequest = e => {
-        this.showRequest = e;
+    setShowCartographRequest = e => {
+        this.showCartographRequest = e;
+        this.setState(this.state);
+    }
+
+    setCartographRequest = e => {
+        this.cartographRequest = e;
+        this.setState(this.state);
+    }
+
+    setShowLocationRequest = e => {
+        this.LocationRequest = e;
+        this.setState(this.state);
+    }
+
+    setLocationRequest = e => {
+        this.locationRequest = e;
         this.setState(this.state);
     }
 
@@ -58,8 +77,9 @@ class ProfilePage extends React.Component {
         this.setState(this.state);
     }
 
-    setRequest = e => {
-        this.request = e;
+    showAllUsersWindow = e => {
+        console.log(e);
+        this.allUsersWindow = e;
         this.setState(this.state);
     }
 
@@ -77,7 +97,7 @@ class ProfilePage extends React.Component {
     
 
     render() {
-        if(this.showRequest === 0 && this.promoteWindow === 0)
+        if(this.showCartographRequest === 0 && this.promoteWindow === 0 && this.allUsersWindow === 0)
         return (
             <>
             <Header />
@@ -102,7 +122,6 @@ class ProfilePage extends React.Component {
                                     </button>
                                 <EditProfile show={this.state.show} onClose={() => this.onClose()} />
                         </div>
-                        <div className="w-full h-20 links"></div>
                         <div className="flex justify-center">
                             <div className="w-1/4 text-center"></div>                            
                             <div className="w-1/4 text-center">
@@ -126,13 +145,31 @@ class ProfilePage extends React.Component {
                                 </Link>
                             </div>
                             <div className="w-1/4 text-center"></div>
+                            
                         </div>
-                        <div className="text-center m-8">
-                        {this.state.authorityLevel === "admin" &&
-                            <SubmitButton
-                                text="Promote someone to admin"
-                                onClick={() => this.showPromoteWindow(1)}
-                            />}
+                        <div className="text-center">
+                            {this.state.authorityLevel === "cartograph" &&
+                                <SubmitButton
+                                    text="Locations for validation in person"
+                                    onClick={() => 1}
+                                />
+                            }
+                        </div>
+                        <div className="text-center">
+                            {this.state.authorityLevel === "admin" &&
+                                <SubmitButton
+                                    text="Show all users"
+                                    onClick={() => this.showAllUsersWindow(1)}
+                                />
+                            }
+                        </div>
+                        <div className="text-center">
+                            {this.state.authorityLevel === "admin" &&
+                                <SubmitButton
+                                    text="Promote someone to admin"
+                                    onClick={() => this.showPromoteWindow(1)}
+                                />
+                            }
                         </div>
                     </div>
                     <div className="w-1/4">
@@ -140,10 +177,11 @@ class ProfilePage extends React.Component {
                             {this.state.authorityLevel === "player" && 
                                 <CartographForm />}
                             {this.state.authorityLevel === "admin" &&
-                                <CartographRequests setShow={ this.setShowRequest }
-                                                    setRequest={ this.setRequest }/>}
+                                <CartographRequests setShow={ this.setShowCartographRequest }
+                                                    setRequest={ this.setCartographRequest }/>}
                             {this.state.authorityLevel === "cartograph" &&
-                                <LocationRequests />}
+                                <LocationRequests setShow={ this.setShowLocationRequest }
+                                                setRequest={ this.setLocationRequest }/>}
                     </div>
                 </div>
             </div>
@@ -151,7 +189,7 @@ class ProfilePage extends React.Component {
             </>
         );
 
-        if(this.showRequest !== 0 || this.promoteWindow === 1)
+        if(this.showCartographRequest !== 0 || this.promoteWindow === 1 || this.allUsersWindow === 1)
             return(
             <>
             <Header />
@@ -171,8 +209,8 @@ class ProfilePage extends React.Component {
                                 { this.state.username }
                             </div>
                         </div>
-                        <div className="w-full h-20 links"></div>
                         <div className="flex justify-center">
+                            
                             <div className="w-1/4 text-center"></div>                            
                             <div className="w-1/4 text-center">
                                 <Link 
@@ -194,26 +232,37 @@ class ProfilePage extends React.Component {
                                     <span>Moja statistika</span>
                                 </Link>
                             </div>
+                            
                             <div className="w-1/4 text-center"></div>
+                            
                         </div>
-                        <div className="text-center m-8">
-                            <SubmitButton
-                                text="Promote someone to admin"
-                                onClick={() => this.showPromoteWindow(1)}
-                            />
+                        <div className="text-center">
+                                <SubmitButton
+                                        text="Show all users"
+                                        onClick={() => this.showAllUsersWindow(1)}
+                                    />
+                        </div>
+                        <div className="text-center">
+                                <SubmitButton
+                                        text="Promote someone to admin"
+                                        onClick={() => this.showPromoteWindow(1)}
+                                    />
                         </div>
                     </div>
                     <div className="w-1/4">
                         <div className="h-12"></div>
+                                {this.allUsersWindow === 1 &&
+                                    <AllUsersWindow setShow={ this.showAllUsersWindow }/>
+                                }
                                 {this.promoteWindow === 1 &&
                                     <PromoteAdmin setShow={ this.showPromoteWindow }/>
                                 }
-                                {this.showRequest !== 0 &&
-                                    <Request setShow={ this.setShowRequest } 
-                                        setRequest={ this.setRequest }
-                                        request={this.request}/>}
-                                <CartographRequests setShow={ this.setShowRequest } 
-                                                    setRequest={ this.setRequest }/>
+                                {this.showCartographRequest !== 0 &&
+                                    <CartographRequest setShow={ this.setShowCartographRequest } 
+                                        setRequest={ this.setCartographRequest }
+                                        request={this.cartographRequest}/>}
+                                <CartographRequests setShow={ this.setCartographRequest } 
+                                                    setRequest={ this.setCartographRequest }/>
                     </div>
                 </div>
             </div>
