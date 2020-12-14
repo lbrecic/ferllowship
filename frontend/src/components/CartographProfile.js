@@ -1,16 +1,18 @@
 import React from "react";
 import Header from "../components/Header";
-import CartographForm from "../components/CartographForm";
 import EditProfile from "../components/EditProfile";
 import "../styles/App.css";
 import cards from "../utils/cards.png";
 import stats from "../utils/statistics.png";
 import { Link } from "react-router-dom";
 import "../styles/PlayerProfile.css";
+import "../styles/CartographProfile.css";
+
+import CartographRequests from "./CartographRequests";
 
 /*      TO DO
 makniti pocetne podatke  */
-class PlayerProfile extends React.Component {
+class CartographProfile extends React.Component {
   state = {
     username: "ime",
     email: "email.email",
@@ -18,7 +20,7 @@ class PlayerProfile extends React.Component {
       "https://images.telegram.hr/oTlwxfMQf_77UaG5mrqBIrJkWP-1Afpd0H72rU9U6y0/preset:article2/aHR0cHM6Ly93d3cudGVsZWdyYW0uaHIvd3AtY29udGVudC91cGxvYWRzLzIwMjAvMTIvcHhsLTAyMDQxOC0yMDE4OTE5OS5qcGVn.jpg",
     authorityLevel: "player",
     showEdit: false,
-    showCartograph: false,
+    showRequest: false,
   };
 
   async componentDidMount() {
@@ -48,15 +50,19 @@ class PlayerProfile extends React.Component {
     });
   };
 
-  showCartograph = (e) => {
-    this.setState({
-      showCartograph: !this.state.showCartograph,
-    });
+  setRequest = (e) => {
+    this.request = e;
+    this.setState(this.state);
   };
 
-  onCloseCartograph = (e) => {
+  setShowRequest = (e) => {
+    this.showRequest = e;
+    this.setState(this.state);
+  };
+
+  onClose = (e) => {
     this.setState({
-      showCartograph: false,
+      show: false,
     });
   };
 
@@ -125,17 +131,17 @@ class PlayerProfile extends React.Component {
             </div>
           </div>
 
-          
-
-          <div className="w-1/4 form geo-color">
+          <div className="w-1/4 form geo-color requests">
             <div className="h-12"></div>
-            <CartographForm />
+              <CartographRequests
+                setShow={this.setShowRequest}
+                setRequest={this.setRequest}
+              />
           </div>
-
         </div>
       </>
     );
   }
 }
 
-export default PlayerProfile;
+export default CartographProfile;

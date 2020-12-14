@@ -27,7 +27,7 @@ class ProfilePage extends React.Component {
         username: "",
         email: "",
         photoLink: "",
-        authorityLevel: "player",
+        authorityLevel: "cartograph",
         show: false
     };
     
