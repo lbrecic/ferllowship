@@ -30,8 +30,8 @@ public class LocationRequestController {
 	
 	@Autowired
 	private CloudinaryService cloudinaryService;
-	
-	@PreAuthorize("hasRole('PLAYER')")
+
+	@PreAuthorize("hasAnyRole('ADMIN','CARTOGRAPH','PLAYER')")
 	@PostMapping(path = "/location/requests")
 	public MessageDTO createRequest(@RequestPart String locationName,
 	                                @RequestPart String locationDesc,
@@ -48,7 +48,7 @@ public class LocationRequestController {
 		location.setCoordinates(coordinates);
 		
 		Category category;
-		if (! categoryName.equals("")) {
+		if (!categoryName.equals("")) {
 			category = categoryRepository.findByCategoryName(categoryName);
 		} else {
 			category = null;
@@ -66,32 +66,31 @@ public class LocationRequestController {
 		
 		return new MessageDTO("Zahtjev uspješno zaprimljen.");
 	}
-	
-	@PreAuthorize("hasRole('ADMIN')")
+
+	@PreAuthorize("hasRole('ADMIN','CARTOGRAPH')")
 	@GetMapping(path = "/location/requests")
 	public List<LocationDTO> getRequests() {
 		List<LocationDTO> response = new ArrayList<>();
 		
 		for (Location location : locationRepository.findAll()) {
 			if (location.getLocationStatus() == 2) {
-				
 				if (location.getCategory() == null ||
-						location.getCoordinates().equals("") ||
-						location.getLocationDesc().equals("") ||
-						location.getLocationName().equals("")) {
+					location.getCoordinates().equals("") ||
+					location.getLocationDesc().equals("") ||
+					location.getLocationName().equals("")) {
 					
 					location.setLocationStatus(3);
-					
+					// TODO spremanje natrag u repozitorij?
 				} else {
 					response.add(
-							new LocationDTO(
-									location.getLocationName(),
-									location.getLocationDesc(),
-									location.getLocationPhoto(),
-									location.getLocationStatus(),
-									location.getCoordinates(),
-									location.getCategory()
-							)
+						new LocationDTO(
+							location.getLocationName(),
+							location.getLocationDesc(),
+							location.getLocationPhoto(),
+							location.getLocationStatus(),
+							location.getCoordinates(),
+							location.getCategory()
+						)
 					);
 				}
 			}
@@ -99,8 +98,8 @@ public class LocationRequestController {
 		
         return response;
 	}
-	
-	@PreAuthorize("hasRole('ADMIN')")
+
+	@PreAuthorize("hasRole('ADMIN','CARTOGRAPH')")
 	@GetMapping(path = "/location/requests/accept")
 	public MessageDTO acceptRequest(@RequestParam String locationName) {
 		Location location = locationRepository.findByLocationName(locationName);
@@ -113,8 +112,8 @@ public class LocationRequestController {
 		
 		return new MessageDTO("Zahtjev prihvaćen.");
 	}
-	
-	@PreAuthorize("hasRole('ADMIN')")
+
+	@PreAuthorize("hasRole('ADMIN','CARTOGRAPH')")
 	@GetMapping(path = "/location/requests/decline")
 	public MessageDTO declineRequest(@RequestParam String locationName) {
 		Location location = locationRepository.findByLocationName(locationName);
@@ -133,7 +132,7 @@ public class LocationRequestController {
 		return new MessageDTO("Zahtjev odbijen.");
 	}
 	
-	@PreAuthorize("hasRole('ADMIN', 'CARTOGRAPH')")
+	@PreAuthorize("hasRole('ADMIN','CARTOGRAPH')")
 	@GetMapping(path = "/location/requests/terrain")
 	public List<LocationDTO> getTerrainActionNeeded() {
 		List<LocationDTO> response = new ArrayList<>();
@@ -141,18 +140,19 @@ public class LocationRequestController {
 		for (Location location : locationRepository.findAll()) {
 			if (location.getLocationStatus() == 3) {
 				response.add(
-						new LocationDTO(
-								location.getLocationName(),
-								location.getLocationDesc(),
-								location.getLocationPhoto(),
-								location.getLocationStatus(),
-								location.getCoordinates(),
-								location.getCategory()
-						)
+					new LocationDTO(
+						location.getLocationName(),
+						location.getLocationDesc(),
+						location.getLocationPhoto(),
+						location.getLocationStatus(),
+						location.getCoordinates(),
+						location.getCategory()
+					)
 				);
 			}
 		}
 		
         return response;
 	}
+
 }

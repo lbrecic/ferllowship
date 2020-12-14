@@ -6,8 +6,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,6 +22,7 @@ import hr.fer.progi.ferllowship.geofighter.model.Cartograph;
 import hr.fer.progi.ferllowship.geofighter.model.ConfirmationToken;
 import hr.fer.progi.ferllowship.geofighter.model.Player;
 import hr.fer.progi.ferllowship.geofighter.service.CloudinaryService;
+import hr.fer.progi.ferllowship.geofighter.service.PlayerService;
 
 @RestController
 public class CartographRequestController {
@@ -39,6 +38,9 @@ public class CartographRequestController {
 	
 	@Autowired
 	private CloudinaryService cloudinaryService;
+
+	@Autowired
+	private PlayerService playerService;
 	
 	@PreAuthorize("hasRole('PLAYER')")
 	@PostMapping(path = "/requests")
@@ -46,10 +48,8 @@ public class CartographRequestController {
 	                                @RequestPart String iban,
 	                                @RequestPart MultipartFile picture) 
 	                                throws IOException {
-		
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		Player player = playerRepository.findByUsername(auth.getName());
-		
+
+		Player player = playerService.getLoggedInPlayer();
 		Cartograph cartograph = player.createCartograph();
 		cartograph.setIban(iban);
 		cartograph.setIdPhotoLink(cloudinaryService.upload(picture.getBytes()));
@@ -58,6 +58,7 @@ public class CartographRequestController {
 		if (token != null) {
 			confirmationTokenRepository.delete(token);			
 		}
+
 		playerRepository.delete(player);
 		playerRepository.flush();
 		cartographRepository.save(cartograph);
@@ -73,21 +74,21 @@ public class CartographRequestController {
 		for (Cartograph cartograph : cartographRepository.findAll()) {
 			if (!cartograph.getConfirmed()) {
 				response.add(
-						new CartographDTO(
-								cartograph.getUsername(),
-								cartograph.getPasswordHash(),
-								cartograph.getEmail(),
-								cartograph.getPhotoLink(),
-								cartograph.getPoints(),
-								cartograph.getBanStatus(),
-								cartograph.getEnabled(),
-								cartograph.getActivity(),
-								cartograph.getExperience(),
-								"cartograph",
-								cartograph.getIban(),
-								cartograph.getIdPhotoLink(),
-								cartograph.getConfirmed()
-						)
+					new CartographDTO(
+						cartograph.getUsername(),
+						cartograph.getPasswordHash(),
+						cartograph.getEmail(),
+						cartograph.getPhotoLink(),
+						cartograph.getPoints(),
+						cartograph.getBanStatus(),
+						cartograph.getEnabled(),
+						cartograph.getActivity(),
+						cartograph.getExperience(),
+						"cartograph",
+						cartograph.getIban(),
+						cartograph.getIdPhotoLink(),
+						cartograph.getConfirmed()
+					)
 				);
 			}
 		}

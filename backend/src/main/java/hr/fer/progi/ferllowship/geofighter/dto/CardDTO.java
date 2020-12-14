@@ -11,7 +11,6 @@ public class CardDTO {
 	private Location location;
 
 	public CardDTO(Integer cardPoints, Integer scaleFactor, Location location) {
-		super();
 		this.cardPoints = cardPoints;
 		this.scaleFactor = scaleFactor;
 		this.location = location;
@@ -40,8 +39,5 @@ public class CardDTO {
 	public void setLocation(Location location) {
 		this.location = location;
 	}
-	
-	
-	
-	
+
 }

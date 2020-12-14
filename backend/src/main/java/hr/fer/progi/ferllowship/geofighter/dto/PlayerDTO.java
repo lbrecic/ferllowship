@@ -21,8 +21,6 @@ public class PlayerDTO {
 	private Integer experience;
 	
 	private String authorityLevel;
-	
-	
 
 	public PlayerDTO(String username, String passHash, String email, String photoLink, Integer points,
 			Integer banStatus, Boolean enabled, Boolean activity, Integer experience, String authorityLevel) {

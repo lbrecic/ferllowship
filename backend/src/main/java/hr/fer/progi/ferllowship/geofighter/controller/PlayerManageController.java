@@ -8,33 +8,37 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import hr.fer.progi.ferllowship.geofighter.dao.PlayerRepository;
 import hr.fer.progi.ferllowship.geofighter.dto.AdminDTO;
 import hr.fer.progi.ferllowship.geofighter.dto.CartographDTO;
 import hr.fer.progi.ferllowship.geofighter.dto.PlayerDTO;
 import hr.fer.progi.ferllowship.geofighter.model.Admin;
 import hr.fer.progi.ferllowship.geofighter.model.Cartograph;
 import hr.fer.progi.ferllowship.geofighter.model.Player;
-import hr.fer.progi.ferllowship.geofighter.service.PlayerManageService;
+import hr.fer.progi.ferllowship.geofighter.service.PlayerService;
 
 @RestController
 public class PlayerManageController {
-	
+
 	@Autowired
-	private PlayerManageService playerManageService;
+	private PlayerRepository playerRepository;
+
+	@Autowired
+	private PlayerService playerService;
 
 	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping(path = "/profile/manage")
-	public List<PlayerDTO> getPlayerManageList() {
+	public List<PlayerDTO> getAllPlayers() {
 		List<PlayerDTO> playerDTOList = new ArrayList<>();
-		List<Player> playerList = new ArrayList<>();
-		playerList = playerManageService.getPlayerList();
-		
+		List<Player> playerList = playerRepository.findAll();
+
 		for (Player player : playerList) {
-			String authorityLevel;
-			
-			if (player instanceof Admin) {
-				authorityLevel = "admin";
-				playerDTOList.add(new AdminDTO(
+			String authorityLevel = playerService.getAuthorityLevelOfPlayer(player);
+			PlayerDTO playerDTO;
+
+			switch (authorityLevel) {
+				case "admin":
+					playerDTO = new AdminDTO(
 						player.getUsername(),
 						player.getPasswordHash(),
 						player.getEmail(),
@@ -46,10 +50,11 @@ public class PlayerManageController {
 						player.getExperience(),
 						authorityLevel,
 						((Admin) player).getIban(),
-						((Admin) player).getIdPhotoLink()));
-			} else if (player instanceof Cartograph && ((Cartograph) player).getConfirmed()) {
-				authorityLevel = "cartograph";
-				playerDTOList.add(new CartographDTO(
+						((Admin) player).getIdPhotoLink()
+					);
+					break;
+				case "cartograph":
+					playerDTO = new CartographDTO(
 						player.getUsername(),
 						player.getPasswordHash(),
 						player.getEmail(),
@@ -62,10 +67,11 @@ public class PlayerManageController {
 						authorityLevel,
 						((Cartograph) player).getIban(),
 						((Cartograph) player).getIdPhotoLink(),
-						((Cartograph) player).getConfirmed()));
-			} else {
-				authorityLevel = "player";
-				playerDTOList.add(new PlayerDTO(
+						((Cartograph) player).getConfirmed()
+					);
+					break;
+				default:
+					playerDTO = new PlayerDTO(
 						player.getUsername(),
 						player.getPasswordHash(),
 						player.getEmail(),
@@ -75,10 +81,14 @@ public class PlayerManageController {
 						player.getEnabled(),
 						player.getActivity(),
 						player.getExperience(),
-						authorityLevel));
+						authorityLevel
+					);
+					break;
 			}
+
+			playerDTOList.add(playerDTO);
 		}
-		
+
 		return playerDTOList;
 	}
 	

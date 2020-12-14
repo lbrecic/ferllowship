@@ -35,7 +35,8 @@ public class RegistrationController {
     @Autowired
     private EmailService emailService;
     
-    @Autowired PasswordEncoder passwordEncoder;
+    @Autowired
+	private PasswordEncoder passwordEncoder;
     
 	@PostMapping(path = "/register")
 	public MessageDTO register(@RequestPart String username,

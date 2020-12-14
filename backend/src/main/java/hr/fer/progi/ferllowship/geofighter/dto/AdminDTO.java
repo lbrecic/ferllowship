@@ -29,6 +29,5 @@ public class AdminDTO extends PlayerDTO {
 	public void setIdPhotoLink(String idPhotoLink) {
 		this.idPhotoLink = idPhotoLink;
 	}
-	
-	
+
 }

@@ -18,7 +18,6 @@ public class LocationDTO {
 
 	public LocationDTO(String locationName, String locationDesc, String locationPhoto, Integer locationStatus,
 			String coordinates, Category category) {
-		super();
 		this.locationName = locationName;
 		this.locationDesc = locationDesc;
 		this.locationPhoto = locationPhoto;
