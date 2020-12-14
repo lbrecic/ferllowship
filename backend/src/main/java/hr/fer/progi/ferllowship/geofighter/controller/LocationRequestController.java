@@ -133,8 +133,8 @@ public class LocationRequestController {
 		return new MessageDTO("Zahtjev odbijen.");
 	}
 	
-	@PreAuthorize("hasRole('ADMIN')")
-	@GetMapping(path = "/location/requests")
+	@PreAuthorize("hasRole('ADMIN', 'CARTOGRAPH')")
+	@GetMapping(path = "/location/requests/terrain")
 	public List<LocationDTO> getTerrainActionNeeded() {
 		List<LocationDTO> response = new ArrayList<>();
 		
