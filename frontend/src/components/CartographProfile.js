@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import "../styles/PlayerProfile.css";
 import "../styles/CartographProfile.css";
 
-import CartographRequests from "./CartographRequests";
+import LocationRequests from "./LocationRequests";
 
 /*      TO DO
 makniti pocetne podatke  */
@@ -133,7 +133,7 @@ class CartographProfile extends React.Component {
 
           <div className="w-1/4 form geo-color requests">
             <div className="h-12"></div>
-              <CartographRequests
+              <LocationRequests
                 setShow={this.setShowRequest}
                 setRequest={this.setRequest}
               />

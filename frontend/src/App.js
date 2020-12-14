@@ -16,6 +16,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import ConfirmPage from './pages/ConfirmPage';
 import PlayerProfile from './components/PlayerProfile'
 import CartographProfile from './components/CartographProfile';
+import AdminProfile from './components/AdminProfile';
 
 //TO DO: makniti route za testiranje i vratiti stare da budu zasticene
 
@@ -55,6 +56,8 @@ class App extends React.Component {
             <PrivateRoute path="/confirm" component={ConfirmPage}/>
             <Route path="/player-profile" component={PlayerProfile}/>        
             <Route path="/cartograph-profile" component={CartographProfile}/>      
+            <Route path="/admin-profile" component={AdminProfile}/>      
+
           </Switch>
         </Router>
         <ToastContainer

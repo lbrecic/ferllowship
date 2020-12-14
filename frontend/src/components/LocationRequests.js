@@ -5,25 +5,24 @@ class LocationRequests extends React.Component {
         super(props);
         this.setShow = this.props.setShow;
         this.setRequest = this.props.setRequest;
-    }
-
-    state = {
-        requests: ["request1", "request2"]
-    }
-
-    async componentDidMount() {        
-        try {
-          let res = await fetch('/api/location-requests');
-          let result = await res.json();
-    
-          if (result) {
-            this.setState({
-              requests: result
-            });
-          }
-        } catch (e) {
+        this.state = {
+            requests : ["request1", "request2"],
         }
     }
+
+    // async componentDidMount() {        
+    //     try {
+    //       let res = await fetch('/api/location-requests');
+    //       let result = await res.json();
+    
+    //       if (result) {
+    //         this.setState({
+    //           requests: result
+    //         });
+    //       }
+    //     } catch (e) {
+    //     }
+    // }
 
 
     render() {
