@@ -156,5 +156,15 @@ public class Player {
 	public void setExperience(Integer expirience) {
 		this.experience = expirience;
 	}
+
+	public List<Fight> getFights() {
+		return fights;
+	}
+
+	public List<Card> getDeck() {
+		return deck;
+	}
+	
+	
 	
 }
