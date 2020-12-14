@@ -9,6 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,38 +28,45 @@ public class ProfileEditController {
 	@Autowired
 	private CloudinaryService cloudinaryService;
 	
-	@Autowired PasswordEncoder passwordEncoder;
+	@Autowired 
+	private PasswordEncoder passwordEncoder;
 
 	/**
-	 * metoda za uređivanje korisničkog profila, 
-	 * isti parametri kao i za registraciju igrača
-	 * - za sad se ne mijenja slika
-	 *  
+	 * Metoda za uredjivanje profila korisnika.
+	 * Pri izmjeni podataka uvijek se unosi stara lozinka za provjeru
+	 * i novi podatci koji se zele promijeniti.
+	 * Za podatke koje korisnik ne zeli mijenjati parametar je prazan string.
+	 * 
+	 * Metoda vraca poruku ciji sadrzaj ovisi o uspjesnosti izmjene podataka.
 	 * @param username
 	 * @param password
+	 * @param oldPassword
 	 * @param email
-	 * - @param picture -
 	 * @return
 	 * @throws IOException
 	 */
 	@PreAuthorize("hasAnyRole('ADMIN','CARTOGRAPH','PLAYER')")
 	@PostMapping(path = "/profile/edit")
-	public MessageDTO editProfile(@RequestPart String username,
+	public MessageDTO editProfile(@RequestParam("username") String username,
+									@RequestParam("password") String password,
+									@RequestParam("oldPassword") String oldPassword,
+									@RequestParam("email") String email
+									/* parametri gore su za testiranje!
+									 * mozda je potrebna izmjena prije povezivanja s frontendom
+									@RequestPart String username,
 									@RequestPart String password,
-									@RequestPart String email/*,
+									@RequestPart String oldPassword,
+									@RequestPart String email, 
 									@RequestPart MultipartFile picture*/)
 									throws IOException {
 		
-		/*
-		 * kako se dohvaća player?
-		 */
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		Player player = playerRepository.findByUsername(auth.getName());
 		
-		/*
-		 * što ako igrač ne želi promijeniti sve korisničke podatke, nego samo neke?
-		 *  --> za vrijednosti koje se ne mijenjaju šalje se prazan string?
-		 */
+		if (!passwordEncoder.matches(oldPassword, player.getPasswordHash())) {
+			return new MessageDTO("Unesena pogrešna lozinka!");
+		}
+		
 		if (!username.isBlank()) {
 			if (playerRepository.findByUsername(username) != null) {
 				return new MessageDTO("Željeno ime je već zauzeto.");
@@ -74,6 +82,8 @@ public class ProfileEditController {
 //		if (picture != null) {
 //			player.setPhotoLink(cloudinaryService.upload(picture.getBytes()));
 //		}
+		
+		playerRepository.save(player);
 		
 		return new MessageDTO("Promjene profila uspješno pohranjene.");
 	}
