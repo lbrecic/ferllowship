@@ -22,10 +22,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		.csrf().disable()
 		.authorizeRequests()
 			.antMatchers("/register").permitAll()
+			.antMatchers("/login").permitAll()
 			.antMatchers("/confirm").permitAll()
 			.antMatchers(
 				"/",
-				"/h2-console",
+				"/h2-console/**",
 				"/admins",
 				"/bans",
 				"/cards",
@@ -37,7 +38,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				"/players",
 				"/shortestPaths"
 			).hasRole("ADMIN")
-		.anyRequest().authenticated()
+		.anyRequest()
+			.authenticated()
 		.and()
 			.formLogin()
 			.successHandler((req, resp, auth) -> resp.sendRedirect("/"))
@@ -45,7 +47,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         .and()
         	.logout()
         	.logoutSuccessHandler((req, resp, auth) -> resp.sendRedirect("/"))
-	        .deleteCookies("JSESSIONID");
+	        .deleteCookies("JSESSIONID")
+		.and()
+			.headers()
+			.frameOptions()
+			.disable();
 	}
 	
     @Override
