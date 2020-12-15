@@ -5,7 +5,7 @@ import "../styles/AddLocation.css";
 import ImageUploader from "react-images-upload";
 import { toast } from "react-toastify";
 import {useState} from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css'; //pogorša menu, ne radi bez toga dropdown 
+//import 'bootstrap/dist/css/bootstrap.min.css'; //pogorša menu, ne radi bez toga dropdown 
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown'
 
