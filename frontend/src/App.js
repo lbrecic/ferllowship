@@ -35,7 +35,6 @@ const LoggedInRoute = ({ component: Component, ...rest }) => (
 class App extends React.Component {
 
 
-
   render() {
     return (
       <div className="app">
@@ -49,7 +48,8 @@ class App extends React.Component {
             <PrivateRoute path="/help" component={HelpPage}/>
             <PrivateRoute path="/global-stats" component={GlobalStatsPage}/>
             <PrivateRoute path="/stats" component={StatsPage}/>
-            <LoggedInRoute path="/confirm" component={ConfirmPage}/>
+            <PrivateRoute path="/confirm" component={ConfirmPage}/>    
+
           </Switch>
         </Router>
         <ToastContainer
