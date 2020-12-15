@@ -14,11 +14,6 @@ import './styles/App.css';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ConfirmPage from './pages/ConfirmPage';
-import PlayerProfile from './components/PlayerProfile'
-import CartographProfile from './components/CartographProfile';
-import AdminProfile from './components/AdminProfile';
-
-//TO DO: makniti route za testiranje i vratiti stare da budu zasticene
 
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
@@ -47,16 +42,13 @@ class App extends React.Component {
           <Switch>
             <LoggedInRoute exact path="/" component={LoginPage}/>
             <PrivateRoute path="/home" component={HomePage}/>
-            <Route path="/profile" component={ProfilePage}/>
+            <PrivateRoute path="/profile" component={ProfilePage}/>
             <PrivateRoute path="/deck" component={DeckPage}/>
-            <Route path="/map" component={MapPage}/>
+            <PrivateRoute path="/map" component={MapPage}/>
             <PrivateRoute path="/help" component={HelpPage}/>
             <PrivateRoute path="/global-stats" component={GlobalStatsPage}/>
             <PrivateRoute path="/stats" component={StatsPage}/>
-            <PrivateRoute path="/confirm" component={ConfirmPage}/>
-            <Route path="/player-profile" component={PlayerProfile}/>        
-            <Route path="/cartograph-profile" component={CartographProfile}/>      
-            <Route path="/admin-profile" component={AdminProfile}/>      
+            <PrivateRoute path="/confirm" component={ConfirmPage}/>    
 
           </Switch>
         </Router>
