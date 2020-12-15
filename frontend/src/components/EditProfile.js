@@ -175,14 +175,16 @@ class EditProfile extends React.Component {
                             />       
                             </div>
                           
-                            
-                        <button className="btn registerButtonEdit" type='submit' > 
+                        <div className="btnDiv">
+                        <button className="btn editBtn" type='submit' > 
                             Spremi promjene 
                         </button>
                        
-                        <button className="btn registerButtonEdit" onClick={(e) => this.onClose(e)}>
+                        <button className="btn editBtn" onClick={(e) => this.onClose(e)}>
                             Odustani
                         </button>
+                       
+                        </div>    
                         
                     </form>
                 </div>
