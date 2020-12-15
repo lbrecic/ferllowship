@@ -18,7 +18,7 @@ import hr.fer.progi.ferllowship.geofighter.model.Player;
 import hr.fer.progi.ferllowship.geofighter.service.PlayerService;
 
 @RestController
-public class PlayerManageController {
+public class AdminController {
 
 	@Autowired
 	private PlayerRepository playerRepository;
@@ -27,7 +27,7 @@ public class PlayerManageController {
 	private PlayerService playerService;
 
 	@PreAuthorize("hasRole('ADMIN')")
-	@GetMapping(path = "/profile/manage")
+	@GetMapping(path = "/allPlayers")
 	public List<PlayerDTO> getAllPlayers() {
 		List<PlayerDTO> playerDTOList = new ArrayList<>();
 		List<Player> playerList = playerRepository.findAll();
