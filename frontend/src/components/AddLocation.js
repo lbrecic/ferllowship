@@ -5,12 +5,12 @@ import "../styles/AddLocation.css";
 import ImageUploader from "react-images-upload";
 import { toast } from "react-toastify";
 import {useState} from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css'; //pogorša menu, ne radi bez toga dropdown 
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown'
 
 
-class CartographForm extends React.Component {
+class AddLocation extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -51,12 +51,12 @@ class CartographForm extends React.Component {
       });
   }
 
-
+  /*  
   onClose = (e) => {
     this.props.onClose && this.props.onClose(e);
   };
-
-  
+  */
+ 
   async addLocation(){
         
     const formData = new FormData();
@@ -67,7 +67,7 @@ class CartographForm extends React.Component {
 
     
     try {
-        let res = await fetch('/api//location/request', {
+        let res = await fetch('/api/location/request', {
         method: 'post',
         body: formData
         });
@@ -137,7 +137,7 @@ class CartographForm extends React.Component {
                         onClick={() => this.addLocation()}> 
                             Dodaj
                         </button>
-                        
+
                         {/*<button className="editBtn" onClick={(e) => this.onClose(e)}>
                             Odustani
                         </button>
@@ -149,4 +149,4 @@ class CartographForm extends React.Component {
     );}
 }
 
-export default CartographForm;
+export default AddLocation;
