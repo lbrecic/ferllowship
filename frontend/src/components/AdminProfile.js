@@ -21,8 +21,8 @@ class AdminProfile extends React.Component {
   }
 
   state = {
-    username: "lukas",
-    email: "lb@fer.hr",
+    username: "",
+    email: "",
     photoLink: "",
     authorityLevel: "admin",
     show: false,

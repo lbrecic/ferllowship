@@ -14,10 +14,10 @@ import LocationRequests from "./LocationRequests";
 makniti pocetne podatke  */
 class CartographProfile extends React.Component {
   state = {
-    username: "ime",
-    email: "email.email",
+    username: "",
+    email: "",
     photoLink:
-      "https://images.telegram.hr/oTlwxfMQf_77UaG5mrqBIrJkWP-1Afpd0H72rU9U6y0/preset:article2/aHR0cHM6Ly93d3cudGVsZWdyYW0uaHIvd3AtY29udGVudC91cGxvYWRzLzIwMjAvMTIvcHhsLTAyMDQxOC0yMDE4OTE5OS5qcGVn.jpg",
+      "",
     authorityLevel: "player",
     showEdit: false,
     showRequest: false,
