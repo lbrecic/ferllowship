@@ -11,7 +11,7 @@ import com.cloudinary.utils.ObjectUtils;
 @Service
 public class CloudinaryService {
 
-	private static Cloudinary cloudinary = new Cloudinary();
+	private static final Cloudinary cloudinary = new Cloudinary();
 	
 	public String upload(byte[] bytes) {
 		try {

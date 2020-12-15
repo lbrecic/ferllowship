@@ -20,7 +20,7 @@ public class Cartograph extends Player{
 		player.setBanStatus(getBanStatus());
 		player.setEmail(getEmail());
 		player.setEnabled(getEnabled());
-		player.setExpirience(getExpirience());
+		player.setExperience(getExperience());
 		player.setPasswordHash(getPasswordHash());
 		player.setPhotoLink(getPhotoLink());
 		player.setPoints(getPoints());
