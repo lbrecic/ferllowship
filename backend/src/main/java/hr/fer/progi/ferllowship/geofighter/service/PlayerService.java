@@ -2,6 +2,7 @@ package hr.fer.progi.ferllowship.geofighter.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -12,15 +13,22 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import hr.fer.progi.ferllowship.geofighter.dao.PlayerRepository;
+import hr.fer.progi.ferllowship.geofighter.dto.AdminDTO;
+import hr.fer.progi.ferllowship.geofighter.dto.CartographDTO;
+import hr.fer.progi.ferllowship.geofighter.dto.PlayerDTO;
 import hr.fer.progi.ferllowship.geofighter.model.Admin;
 import hr.fer.progi.ferllowship.geofighter.model.Cartograph;
 import hr.fer.progi.ferllowship.geofighter.model.Player;
+import hr.fer.progi.ferllowship.geofighter.security.ActiveUserStore;
 
 @Service
 public class PlayerService {
 
     @Autowired
     private PlayerRepository playerRepository;
+
+    @Autowired
+    private ActiveUserStore activeUserStore;
 
     public Player getLoggedInPlayer() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -55,6 +63,72 @@ public class PlayerService {
             updatedAuthorities
         );
         SecurityContextHolder.getContext().setAuthentication(newAuth);
+    }
+
+    public PlayerDTO playerToPlayerDTO(Player player) {
+        String authorityLevel = getAuthorityLevelOfPlayer(player);
+
+        switch (authorityLevel) {
+            case "admin":
+                return new AdminDTO(
+                    player.getUsername(),
+                    player.getPasswordHash(),
+                    player.getEmail(),
+                    player.getPhotoLink(),
+                    player.getPoints(),
+                    player.getBanStatus(),
+                    player.getEnabled(),
+                    player.getActivity(),
+                    player.getExperience(),
+                    authorityLevel,
+                    ((Admin) player).getIban(),
+                    ((Admin) player).getIdPhotoLink()
+                );
+            case "cartograph":
+                return new CartographDTO(
+                    player.getUsername(),
+                    player.getPasswordHash(),
+                    player.getEmail(),
+                    player.getPhotoLink(),
+                    player.getPoints(),
+                    player.getBanStatus(),
+                    player.getEnabled(),
+                    player.getActivity(),
+                    player.getExperience(),
+                    authorityLevel,
+                    ((Cartograph) player).getIban(),
+                    ((Cartograph) player).getIdPhotoLink(),
+                    ((Cartograph) player).getConfirmed()
+                );
+            default:
+                return new PlayerDTO(
+                    player.getUsername(),
+                    player.getPasswordHash(),
+                    player.getEmail(),
+                    player.getPhotoLink(),
+                    player.getPoints(),
+                    player.getBanStatus(),
+                    player.getEnabled(),
+                    player.getActivity(),
+                    player.getExperience(),
+                    authorityLevel
+                );
+        }
+    }
+
+    public List<PlayerDTO> getAllPlayers() {
+        return playerRepository.findAll().stream()
+            .map(this::playerToPlayerDTO)
+            .collect(Collectors.toList());
+    }
+
+    public List<PlayerDTO> getAllActivePlayers() {
+        return activeUserStore.getUsers().stream()
+            .map(username -> {
+                Player player = playerRepository.findByUsername(username);
+                return playerToPlayerDTO(player);
+            })
+            .collect(Collectors.toList());
     }
 
 }

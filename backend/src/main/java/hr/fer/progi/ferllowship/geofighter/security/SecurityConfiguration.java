@@ -1,5 +1,7 @@
 package hr.fer.progi.ferllowship.geofighter.security;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -15,6 +17,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	
     @Autowired
     private CustomAuthenticationProvider customAuthProvider;
+
+    @Autowired
+	private ActiveUserStore activeUserStore;
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -42,11 +47,28 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.authenticated()
 		.and()
 			.formLogin()
-			.successHandler((req, resp, auth) -> resp.sendRedirect("/"))
+			.successHandler((req, resp, auth) -> {
+				HttpSession session = req.getSession(false);
+
+				if (session != null) {
+					LoggedUser user = new LoggedUser(auth.getName(), activeUserStore);
+					session.setAttribute("user", user);
+				}
+
+				resp.sendRedirect("/");
+			})
 			.failureHandler((req, resp, ex) -> resp.sendRedirect("/login"))
         .and()
         	.logout()
-        	.logoutSuccessHandler((req, resp, auth) -> resp.sendRedirect("/"))
+        	.logoutSuccessHandler((req, resp, auth) -> {
+				HttpSession session = req.getSession();
+
+				if (session != null) {
+					session.removeAttribute("user");
+				}
+
+        		resp.sendRedirect("/");
+        	})
 	        .deleteCookies("JSESSIONID")
 		.and()
 			.headers()

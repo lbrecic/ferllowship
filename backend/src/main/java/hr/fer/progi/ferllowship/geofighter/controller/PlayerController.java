@@ -126,4 +126,10 @@ public class PlayerController {
 		return deck;
 	}
 
+	@PreAuthorize("hasAnyRole('ADMIN','CARTOGRAPH','PLAYER')")
+	@GetMapping(path = "/active")
+	public List<PlayerDTO> getAllActivePlayers() {
+		return playerService.getAllActivePlayers();
+	}
+
 }
