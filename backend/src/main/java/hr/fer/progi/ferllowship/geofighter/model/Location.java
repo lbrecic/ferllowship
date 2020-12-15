@@ -12,7 +12,7 @@ public class Location {
 	@Column(name = "location_id", updatable = false, nullable = false)
 	private UUID locationId;
 	
-	@Column(name = "location_name", length = 32)
+	@Column(name = "location_name", unique = true, length = 32)
 	private String locationName;
 	
 	@Column(name = "location_desc")
