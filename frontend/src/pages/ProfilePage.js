@@ -31,7 +31,7 @@ class ProfilePage extends React.Component {
         username: "lukas",
         email: "lb@fer.hr",
         photoLink: "",
-        authorityLevel: "cartograph",
+        authorityLevel: "admin",
         show: false
     };
     

@@ -40,7 +40,7 @@ class Header extends React.Component {
             return (<Redirect push to="/"/>);
         } else {
             return (
-                <header className="absolute w-full bg-white background-color">
+                <header className="absolute w-full bg-white background-color header">
                     <div className="flex justify-between items-center border-b p-3">
                         <span className="logo-title-light">
                             GeoFighter

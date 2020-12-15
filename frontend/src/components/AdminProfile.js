@@ -140,7 +140,7 @@ class AdminProfile extends React.Component {
                 </Link>
               </div>
 
-              <p className=" white">
+              {/* <p className=" white">
                 <button
                   className="btnLogout btnEdit"
                   onClick={(e) => {
@@ -153,7 +153,7 @@ class AdminProfile extends React.Component {
                   show={this.state.showEdit}
                   onClose={() => this.onCloseEdit()}
                 />
-              </p>
+              </p> */}
             </div>
 
             <div className="w-1/4 form geo-color adminForm">
@@ -230,7 +230,7 @@ class AdminProfile extends React.Component {
                   </Link>
                 </div>
 
-                <p className=" white">
+                {/* <p className=" white">
                   <button
                     className="btnLogout btnEdit"
                     onClick={(e) => {
@@ -243,7 +243,7 @@ class AdminProfile extends React.Component {
                     show={this.state.showEdit}
                     onClose={() => this.onCloseEdit()}
                   />
-                </p>
+                </p> */}
               </div>
             </div>
             <div className="w-1/4 form geo-color adminForm">

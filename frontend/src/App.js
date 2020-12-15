@@ -49,7 +49,7 @@ class App extends React.Component {
             <PrivateRoute path="/home" component={HomePage}/>
             <Route path="/profile" component={ProfilePage}/>
             <PrivateRoute path="/deck" component={DeckPage}/>
-            <PrivateRoute path="/map" component={MapPage}/>
+            <Route path="/map" component={MapPage}/>
             <PrivateRoute path="/help" component={HelpPage}/>
             <PrivateRoute path="/global-stats" component={GlobalStatsPage}/>
             <PrivateRoute path="/stats" component={StatsPage}/>

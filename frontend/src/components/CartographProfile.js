@@ -94,7 +94,7 @@ class CartographProfile extends React.Component {
             </div>
 
             <div className="links">
-              <div className=" text-center link box-shadow">
+              <div className=" text-center link">
                 <Link to="/deck">
                   <div className="flex justify-center">
                     <img src={cards} className="karte" alt="logo" />
@@ -103,7 +103,7 @@ class CartographProfile extends React.Component {
                 </Link>
               </div>
 
-              <div className="text-center link box-shadow">
+              <div className="text-center link">
                 <Link to="/stats">
                   <div className="flex justify-center">
                     <img src={stats} className="statistika" alt="logo" />

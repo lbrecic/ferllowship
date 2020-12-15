@@ -5,6 +5,7 @@
     min-height: 720px;
     align-items: stretch;
     grid-template-columns: 40% 30% 35%;
+    justify-items: center;
   }
 
   .adminInfo {
@@ -52,7 +53,7 @@
   .adminLinks {
     display: grid;
     justify-content: center;
-    padding-top: 100px;
+    padding-top: 0px;
     align-items: center;
     margin-left: auto;
     margin-right: 0;
