@@ -98,7 +98,14 @@ class AddLocation extends React.Component {
                                 onChange={(val) => this.setInputValueName("name", val)}
                             />
                         </div>
-                        
+                        <select name="category" 
+                        onSelect={(val) => this.setInputValueCategory(val)}>
+                        <option value="Grad">Grad</option>
+                        <option value="Naselje">Naselje</option>
+                        <option value="Umjetnička instalacija">Umjetnička instalacija</option>
+                        <option value="Vrh planine">Vrh planine</option>
+                      </select>
+                        {/*
                         <div className="App container">
                             <DropdownButton 
                             title={this.state.category ? this.state.category : "Odaberi kategoriju..."}
@@ -113,7 +120,7 @@ class AddLocation extends React.Component {
                             </DropdownButton>
                             
                         </div>
-
+                        */}
                         <textarea className="textArea textInput"
                         placeholder="Dodaj opis lokacije"
                         onChange={(val) => this.setInputDescription(val)}
@@ -133,7 +140,7 @@ class AddLocation extends React.Component {
                         />
                         
                         </div>
-                        <button className="addBtn" type='submit' 
+                        <button className="btn addBtn" type='submit' 
                         onClick={() => this.addLocation()}> 
                             Dodaj
                         </button>

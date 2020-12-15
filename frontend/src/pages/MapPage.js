@@ -48,7 +48,7 @@ class MapPage extends Component {
             </Marker>
           </MapContainer>
         </div>
-
+        
         <Footer />
       </>
     );
