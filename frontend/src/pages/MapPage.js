@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import Header from '../components/Header';
+import MapHeader from '../components/MapHeader'
 import Footer from '../components/Footer';
 import "../styles/MapPage.css"
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
-
 import icon from 'leaflet/dist/images/marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
+
+import AddLocation from '../components/AddLocation'
 
 let DefaultIcon = L.icon({
     iconUrl: icon,
@@ -20,16 +22,17 @@ class MapPage extends Component {
         super(props);
         this.state = {
           currentLocation: { lat: 45.815399, lng: 15.966568 },
-          zoom: 12,
+          zoom: 12
         }
     }
+
     render(){
         const { currentLocation, zoom } = this.state;
 
     return (
         <>
             <Header />
-            
+            {/*
             <MapContainer center={currentLocation} zoom={zoom} className="map">
                 <TileLayer
                     url="https://api.maptiler.com/maps/basic/{z}/{x}/{y}.png?key=JiIiuxyafWjR1SPu3uIu"
@@ -40,7 +43,10 @@ class MapPage extends Component {
                 </Marker>
 
             </MapContainer >
+            */}
             
+         <AddLocation  />
+                   
             <Footer />
         </>
     );}
