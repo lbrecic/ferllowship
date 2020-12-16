@@ -25,7 +25,7 @@ class CartographProfile extends React.Component {
 
   async componentDidMount() {
     try {
-      let res = await fetch("/api/players?username=" + localStorage.username);
+      let res = await fetch("/api/player?username=" + localStorage.username);
       let result = await res.json();
 
       if (result && !result.error) {

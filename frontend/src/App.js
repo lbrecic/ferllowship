@@ -49,7 +49,7 @@ class App extends React.Component {
             <PrivateRoute path="/global-stats" component={GlobalStatsPage}/>
             <PrivateRoute path="/stats" component={StatsPage}/>
             <PrivateRoute path="/confirm" component={ConfirmPage}/>    
-
+            <Route path="map-test" component={MapPage}/>
           </Switch>
         </Router>
         <ToastContainer

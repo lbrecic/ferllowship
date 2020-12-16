@@ -40,7 +40,7 @@ public class Player {
 	private Boolean activity;
 	
 	@Column
-	private Integer expirience;
+	private Integer experience;
 	
 	@OneToMany(targetEntity = Fight.class, fetch = FetchType.EAGER)
 	@JoinColumn(name = "fight_id")
@@ -61,7 +61,7 @@ public class Player {
 		this.photoLink = photoLink;
 		enabled = false;
 		activity = false;
-		expirience = 0;
+		experience = 0;
 		fights = new ArrayList<>();
 		deck = new ArrayList<>();
 	}
@@ -73,7 +73,7 @@ public class Player {
 		cartograph.setConfirmed(false);
 		cartograph.setEmail(email);
 		cartograph.setEnabled(enabled);
-		cartograph.setExpirience(expirience);
+		cartograph.setExperience(experience);
 		cartograph.setPasswordHash(passwordHash);
 		cartograph.setPhotoLink(photoLink);
 		cartograph.setPoints(points);
@@ -149,12 +149,22 @@ public class Player {
 		this.activity = activity;
 	}
 
-	public Integer getExpirience() {
-		return expirience;
+	public Integer getExperience() {
+		return experience;
 	}
 
-	public void setExpirience(Integer expirience) {
-		this.expirience = expirience;
+	public void setExperience(Integer expirience) {
+		this.experience = expirience;
 	}
+
+	public List<Fight> getFights() {
+		return fights;
+	}
+
+	public List<Card> getDeck() {
+		return deck;
+	}
+	
+	
 	
 }

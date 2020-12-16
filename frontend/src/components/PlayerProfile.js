@@ -9,19 +9,27 @@ import { Link } from "react-router-dom";
 import "../styles/PlayerProfile.css";
 
 class PlayerProfile extends React.Component {
+
+  // constructor(props) {
+  //   super(props);
+  //   this.username = this.props.username;
+  //   this.email = this.props.email;
+  //   this.photoLink = this.props.photoLink;
+  //   this.authorityLevel = this.props.authorityLevel;
+  // } 
+
+
   state = {
     username: "",
     email: "",
-    photoLink:
-      "",
-    authorityLevel: "player",
+    photoLink: "",
+    authorityLevel: "",
     showEdit: false,
-    showCartograph: false,
   };
 
   async componentDidMount() {
     try {
-      let res = await fetch("/api/players?username=" + localStorage.username);
+      let res = await fetch("/api/player?username=" + localStorage.username);
       let result = await res.json();
 
       if (result && !result.error) {
@@ -29,6 +37,7 @@ class PlayerProfile extends React.Component {
           username: result.username,
           email: result.email,
           photoLink: result.photoLink,
+          authorityLevel: result.authorityLevel,
         });
       }
     } catch (e) {}

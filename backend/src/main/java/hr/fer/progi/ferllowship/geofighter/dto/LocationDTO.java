@@ -1,45 +1,29 @@
-package hr.fer.progi.ferllowship.geofighter.model;
+package hr.fer.progi.ferllowship.geofighter.dto;
 
-import java.util.UUID;
+import hr.fer.progi.ferllowship.geofighter.model.Category;
 
-import javax.persistence.*;
-
-@Entity
-public class Location {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "location_id", updatable = false, nullable = false)
-	private UUID locationId;
+public class LocationDTO {
 	
-	@Column(name = "location_name", unique = true, length = 32)
 	private String locationName;
 	
-	@Column(name = "location_desc")
 	private String locationDesc;
 	
-	@Column(name = "location_photo_link", length = 200)
 	private String locationPhoto;
 	
-	@Column(name = "location_status")
 	private Integer locationStatus;
 	
-	@Column(length = 32)
 	private String coordinates;
 	
-	@ManyToOne(targetEntity = Category.class, fetch = FetchType.EAGER)
-	@JoinColumn(name = "category_id")
 	private Category category;
-	
-	public Location() {}
-	
-	public Location(String name, String desc, String photo, String coordinates, Category category) {
-		this.locationName = name;
-		this.locationDesc = desc;
-		this.locationPhoto = photo;
+
+	public LocationDTO(String locationName, String locationDesc, String locationPhoto, Integer locationStatus,
+			String coordinates, Category category) {
+		this.locationName = locationName;
+		this.locationDesc = locationDesc;
+		this.locationPhoto = locationPhoto;
+		this.locationStatus = locationStatus;
 		this.coordinates = coordinates;
 		this.category = category;
-		locationStatus = 0;
 	}
 
 	public String getLocationName() {
@@ -89,8 +73,5 @@ public class Location {
 	public void setCategory(Category category) {
 		this.category = category;
 	}
-
-	public UUID getLocationId() {
-		return locationId;
-	}
+	
 }
