@@ -1,19 +1,30 @@
 import { Component } from "react";
 import Header from "../components/Header";
 import MapComponent from "../components/MapComponent";
-
-
+import "../styles/AddLocationButton.css";
 
 class MapPage extends Component {
-   
-  render(){
+  render() {
     return (
       <>
-      <Header/>
-      <MapComponent/>
+        <Header />
+        <div className="body">
+          <div className="map">
+            <MapComponent />
+          </div>
+          <div className="addBtn">
+            <button
+              className="btnLogout btnEdit"
+              onClick={(e) => {
+                this.showEditWindow();
+              }}
+            >
+              Prijavi lokaciju
+            </button>
+          </div>
+        </div>
       </>
-      
-    )
+    );
   }
 }
 
