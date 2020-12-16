@@ -6,9 +6,24 @@ class LocationRequests extends React.Component {
         this.setShow = this.props.setShow;
         this.setRequest = this.props.setRequest;
         this.state = {
-            requests : ["request1", "request2"],
+            locations: 0
         }
     }
+
+    locations = {
+        locationList: [{
+                            locationName: "location 1", 
+                            playerUsername: "player 64",
+                            locationPhotoLink: "pic 1",
+                            validationInPerson: 0
+                        }, 
+                        {   
+                            locationName: "location 2", 
+                            playerUsername: "player 55",
+                            locationPhotoLink: "pic 2",
+                            validationInPerson: 0
+                        }]
+    } 
 
     // async componentDidMount() {        
     //     try {
@@ -34,12 +49,12 @@ class LocationRequests extends React.Component {
                     Zahtjevi za lokaciju
                 </div>
                 <div className="h-8"></div>
-                {this.state.requests.map((request) => (
+                {this.locations.locationList.map((request) => (
                     <div key={request}
                         className="text-center text-sm usernames p-3  box-shadow cursor-pointer"
                         onClick={() => {this.setShow(request); this.setRequest(request)}}  
                     >
-                        {request}
+                        {request.locationName}
                     </div>
                 ))}
             </div>

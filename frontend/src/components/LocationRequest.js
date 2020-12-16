@@ -13,6 +13,7 @@ class LocationRequest extends React.Component {
       playerUsername: this.props.request.playerUsername,
       locationPhotoLink: this.props.request.locationPhotoLink,
       locationCoordinates: this.props.request.locationCoordinates,
+      validationInPerson: this.props.request.validationInPerson,
       buttonDisabled: false,
     };
   }
@@ -64,7 +65,26 @@ class LocationRequest extends React.Component {
                 ></img>
               </div>
 
-              <div className="buttons">
+            <div className="w-100%">
+                <SubmitButton
+                className="requestButton"
+                text="Prikaži na mapi"
+                style={{alignSelf:'center', width:'100%'}}
+                onClick={() => this.setShow(0) }
+                />
+            </div>
+
+            {this.state.validationInPerson == 0 &&
+                <div className="w-100%">
+                  <SubmitButton
+                    className="requestButton"
+                    text="Potreban pregled na terenu"
+                    onClick={() => this.setShow(0) }
+                  />
+                </div>
+            }
+
+            <div className="buttons">
                 <div className="requestButton">
                   <SubmitButton
                     className="requestButton"
@@ -80,21 +100,6 @@ class LocationRequest extends React.Component {
                     onClick={() => { this.setShow(0); this.declineApply() } }
                   />
                 </div>
-            </div>
-            <div className="requestButton w-100%">
-                <SubmitButton
-                className="requestButton"
-                text="Prikaži na mapi"
-                onClick={() => this.setShow(0) }
-                />
-            </div>
-
-            <div className="requestButton w-100%">
-                <SubmitButton
-                className="requestButton"
-                text="Potreban pregled na terenu"
-                onClick={() => this.setShow(0) }
-                />
             </div>
             </div>
           </div>

@@ -42,7 +42,7 @@ class App extends React.Component {
           <Switch>
             <LoggedInRoute exact path="/" component={LoginPage}/>
             <PrivateRoute path="/home" component={HomePage}/>
-            <PrivateRoute path="/profile" component={ProfilePage}/>
+            <Route path="/profile" component={ProfilePage}/>
             <PrivateRoute path="/deck" component={DeckPage}/>
             <PrivateRoute path="/map" component={MapPage}/>
             <PrivateRoute path="/help" component={HelpPage}/>

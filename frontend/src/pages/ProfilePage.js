@@ -10,6 +10,7 @@ import SubmitButton from "../components/SubmitButton";
 import EditProfile from "../components/EditProfile";
 import PromoteAdmin from '../components/PromoteAdmin';
 import AllUsersWindow from '../components/AllUsersWindow';
+import LocationsInPerson from '../components/LocationsInPerson';
 import '../styles/App.css';
 import cards from '../utils/cards.png';
 import stats from '../utils/statistics.png';
@@ -48,6 +49,7 @@ class ProfilePage extends React.Component {
         this.locationRequest = 0;
         this.promoteWindow = 0;
         this.allUsersWindow = 0;
+        this.locationsInPerson = 0;
     }
 
     state = {
@@ -100,6 +102,11 @@ class ProfilePage extends React.Component {
         this.setState(this.state);
     }
 
+    showLocationsInPerson = e => {
+        this.locationsInPerson = e;
+        this.setState(this.state);
+    }
+
     showEditWindow = e => {
         this.setState({
           show: !this.state.show
@@ -115,7 +122,8 @@ class ProfilePage extends React.Component {
 
     render() {
         if(this.showCartographRequest === 0 && this.showLocationRequest === 0 &&
-            this.promoteWindow === 0 && this.allUsersWindow === 0)
+            this.promoteWindow === 0 && this.allUsersWindow === 0 &&
+            this.locationsInPerson === 0)
         return (
             <>
             <Header />
@@ -133,11 +141,13 @@ class ProfilePage extends React.Component {
                         <div className="w-full h-64 p-12">
                                 <div className='title white logo-title'> 
                                     { this.state.username }
-                                </div>   
-                                <button className="btn editButton" 
-                                    onClick={e => { this.showEditWindow(); }} >
-                                        Uredi profil
+                                </div>
+                                <div className="text-center">   
+                                    <button className="btn editButton"
+                                            onClick={() => { this.showEditWindow(); }} >
+                                            Uredi profil
                                     </button>
+                                </div>
                                 <EditProfile show={this.state.show} onClose={() => this.onClose()} />
                         </div>
                         <div className="flex justify-center">
@@ -169,7 +179,7 @@ class ProfilePage extends React.Component {
                             {this.state.authorityLevel === "cartograph" &&
                                 <SubmitButton
                                     text="Locations for validation in person"
-                                    onClick={() => 1}
+                                    onClick={() => this.showLocationsInPerson(1)}
                                 />
                             }
                         </div>
@@ -211,7 +221,8 @@ class ProfilePage extends React.Component {
         );
 
         if(this.showCartographRequest !== 0 || this.showLocationRequest !== 0 ||
-            this.promoteWindow === 1 || this.allUsersWindow === 1)
+            this.promoteWindow === 1 || this.allUsersWindow === 1 ||
+            this.locationsInPerson === 1)
             return(
             <>
             <Header />
@@ -259,16 +270,28 @@ class ProfilePage extends React.Component {
                             
                         </div>
                         <div className="text-center">
+                            {this.state.authorityLevel === "cartograph" &&
                                 <SubmitButton
-                                        text="Show all users"
-                                        onClick={() => this.showAllUsersWindow(1)}
-                                    />
+                                    text="Locations for validation in person"
+                                    onClick={() => 1}
+                                />
+                            }
                         </div>
                         <div className="text-center">
+                            {this.state.authorityLevel === "admin" &&
                                 <SubmitButton
-                                        text="Promote someone to admin"
-                                        onClick={() => this.showPromoteWindow(1)}
-                                    />
+                                    text="Show all users"
+                                    onClick={() => this.showAllUsersWindow(1)}
+                                />
+                            }
+                        </div>
+                        <div className="text-center">
+                            {this.state.authorityLevel === "admin" &&
+                                <SubmitButton
+                                    text="Promote someone to admin"
+                                    onClick={() => this.showPromoteWindow(1)}
+                                />
+                            }
                         </div>
                     </div>
                     <div className="w-1/4">
@@ -278,6 +301,11 @@ class ProfilePage extends React.Component {
                                 }
                                 {this.promoteWindow === 1 &&
                                     <PromoteAdmin setShow={ this.showPromoteWindow }/>
+                                }
+                                {this.locationsInPerson === 1 &&
+                                    <LocationsInPerson setShow={ this.showLocationsInPerson }
+                                                    setShowLocation={ this.setShowLocationRequest }
+                                                    setRequest={ this.setLocationRequest }/>
                                 }
                                 {this.showCartographRequest !== 0 &&
                                     <CartographRequest setShow={ this.setShowCartographRequest } 
