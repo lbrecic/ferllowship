@@ -14,10 +14,8 @@ class MapPage extends Component {
           </div>
           <div className="addBtn">
             <button
-              className="btnLogout btnEdit"
-              onClick={(e) => {
-                this.showEditWindow();
-              }}
+              className="btnLogout btnEdit btnAdd"
+              
             >
               Prijavi lokaciju
             </button>
