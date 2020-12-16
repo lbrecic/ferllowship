@@ -20,12 +20,13 @@ class EditProfile extends React.Component {
         email: "",
         photoLink: "",
         show: false,
-        changedPassword: false
+        changedPassword: false,
+        chanedUsername: false
     };
     
     async componentDidMount() {        
         try {
-            let res = await fetch('/api/players?username=' + localStorage.username);
+            let res = await fetch('/api/player?username=' + localStorage.username);
             let result = await res.json();
     
             if (result && !result.error) {
@@ -33,7 +34,7 @@ class EditProfile extends React.Component {
                 username: result.username,
                 //password: result.password,
                 email: result.email,
-                photoLink: result.photoLink
+                //photoLink: result.photoLink
                 });
             }
         } catch (e) {}
@@ -42,22 +43,25 @@ class EditProfile extends React.Component {
     setInputValueUsername(val) {
         this.setState({
           username: val,
+          chanedUsername: true
         });
+        
     }
     
     setInputValueEmail(val) {
         this.setState({
           email: val,
         });
-      }
+        //this.state.changedEmail = true;
+    }
 
     setInputValuePassword(property, val) {
         this.setState({
-          [property]: val
-        })
-        this.setState.changedPassword = true;
-    }
-    
+          [property]: val,
+          changedPassword: true
+        });
+      }
+
     onClose = (e) => {
         this.props.onClose && this.props.onClose(e);
     };
@@ -75,12 +79,10 @@ class EditProfile extends React.Component {
             } else if (this.state.password.length > PASSWORD_MAX_LENGTH) {
                 isValid = false;
                 toast("Lozinka je predugačka.");
-            }
-            if(!this.state.oldPassword){
+            }else if(!this.state.oldPassword){
                 toast("Stara lozinka mora biti unesena");
                 isValid = false;
             }
-        
         }
 
         if (this.state.email.length > EMAIL_MAX_LENGTH) {
@@ -95,19 +97,24 @@ class EditProfile extends React.Component {
     }
 
     mySubmitHandler = (event) => {
-        event.preventDefault();
-        if(this.validate()) 
+        
+        if(this.validate()){
             this.edit();
+        } else{
+            event.preventDefault();
+        }
     }
    
     async edit(){
         
         const formData = new FormData();
-        if(this.state.changedPassword){
-            formData.append("oldPassword", this.state.oldPassword);
-            formData.append("password", this.state.password);
-        }
-        formData.append("username", this.state.username);
+        if(this.state.chanedUsername){    
+            formData.append("username", this.state.username);
+        }else
+            formData.append("username", "");
+
+        formData.append("oldPassword", this.state.oldPassword);
+        formData.append("password", this.state.password);
         formData.append("email", this.state.email);
     
         try {

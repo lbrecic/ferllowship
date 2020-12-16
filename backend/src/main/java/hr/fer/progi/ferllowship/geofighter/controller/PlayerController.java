@@ -82,10 +82,11 @@ public class PlayerController {
 
 		Player player = playerService.getLoggedInPlayer();
 
-		if (!passwordEncoder.matches(oldPassword, player.getPasswordHash())) {
-			return new MessageDTO("Unesena pogrešna lozinka!");
+		if(!oldPassword.isBlank()) {		//dodano - Ivana
+			if (!passwordEncoder.matches(oldPassword, player.getPasswordHash())) {
+				return new MessageDTO("Unesena pogrešna lozinka!");
+			}
 		}
-
 		if (!username.isBlank()) {
 			if (playerRepository.findByUsername(username) != null) {
 				return new MessageDTO("Željeno ime je već zauzeto.");
@@ -93,7 +94,10 @@ public class PlayerController {
 			player.setUsername(username);
 		}
 		if (!password.isBlank()) {
+			
 			player.setPasswordHash(passwordEncoder.encode(password));
+			
+
 		}
 		if (!email.isBlank()) {
 			player.setEmail(email);
