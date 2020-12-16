@@ -2,6 +2,7 @@ package hr.fer.progi.ferllowship.geofighter.security;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -55,9 +56,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 					session.setAttribute("user", user);
 				}
 
-				resp.sendRedirect("/");
+				resp.setStatus(HttpStatus.SC_OK);
 			})
-			.failureHandler((req, resp, ex) -> resp.sendRedirect("/login"))
+			.failureHandler((req, resp, ex) -> resp.setStatus(HttpStatus.SC_UNAUTHORIZED))
         .and()
         	.logout()
         	.logoutSuccessHandler((req, resp, auth) -> {
@@ -67,7 +68,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 					session.removeAttribute("user");
 				}
 
-        		resp.sendRedirect("/");
+				resp.setStatus(HttpStatus.SC_OK);
         	})
 	        .deleteCookies("JSESSIONID")
 		.and()

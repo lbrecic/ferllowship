@@ -80,7 +80,7 @@ class LoginForm extends React.Component {
         method: 'post',
         body: formData
       });
-      if (!res.url.endsWith("login")) {
+      if (res.ok) {
         this.state.redirect = true;
         localStorage.setItem('isLoggedIn', true);
       } else {
