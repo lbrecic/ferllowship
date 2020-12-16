@@ -9,7 +9,6 @@ import HelpPage from './pages/HelpPage';
 import GlobalStatsPage from './pages/GlobalStatsPage';
 import StatsPage from './pages/StatsPage';
 import LoginPage from './pages/LoginPage';
-import ConfirmedRegistration from './pages/ConfirmPage';
 import './styles/tailwind.css';
 import './styles/App.css';
 import { ToastContainer } from 'react-toastify';
@@ -36,7 +35,6 @@ const LoggedInRoute = ({ component: Component, ...rest }) => (
 class App extends React.Component {
 
 
-
   render() {
     return (
       <div className="app">
@@ -44,13 +42,14 @@ class App extends React.Component {
           <Switch>
             <LoggedInRoute exact path="/" component={LoginPage}/>
             <PrivateRoute path="/home" component={HomePage}/>
-            <PrivateRoute path="/profile" component={ProfilePage}/>
+            <Route path="/profile" component={ProfilePage}/>
             <PrivateRoute path="/deck" component={DeckPage}/>
             <PrivateRoute path="/map" component={MapPage}/>
             <PrivateRoute path="/help" component={HelpPage}/>
             <PrivateRoute path="/global-stats" component={GlobalStatsPage}/>
             <PrivateRoute path="/stats" component={StatsPage}/>
-            <LoggedInRoute path="/confirm" component={ConfirmPage}/>
+            <PrivateRoute path="/confirm" component={ConfirmPage}/>    
+            <Route path="map-test" component={MapPage}/>
           </Switch>
         </Router>
         <ToastContainer

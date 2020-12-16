@@ -1,28 +1,20 @@
 package hr.fer.progi.ferllowship.geofighter.dto;
 
-public class CartographDTO {
-	
-	private String username;
+public class CartographDTO extends PlayerDTO {
 	
 	private String iban;
 	
-	private String email;
-	
 	private String idPhotoLink;
+	
+	private Boolean confirmed;
 
-	public CartographDTO(String username, String iban, String email, String idPhotoLink) {
-		this.username = username;
+	public CartographDTO(String username, String passHash, String email, String photoLink, Integer points,
+			Integer banStatus, Boolean enabled, Boolean activity, Integer experience, String authorityLevel,
+			String iban, String idPhotoLink, Boolean confirmed) {
+		super(username, passHash, email, photoLink, points, banStatus, enabled, activity, experience, authorityLevel);
 		this.iban = iban;
-		this.email = email;
 		this.idPhotoLink = idPhotoLink;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
+		this.confirmed = confirmed;
 	}
 
 	public String getIban() {
@@ -33,20 +25,20 @@ public class CartographDTO {
 		this.iban = iban;
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
 	public String getIdPhotoLink() {
 		return idPhotoLink;
 	}
 
 	public void setIdPhotoLink(String idPhotoLink) {
 		this.idPhotoLink = idPhotoLink;
+	}
+
+	public Boolean getConfirmed() {
+		return confirmed;
+	}
+
+	public void setConfirmed(Boolean confirmed) {
+		this.confirmed = confirmed;
 	}
 	
 }

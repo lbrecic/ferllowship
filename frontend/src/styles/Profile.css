@@ -35,3 +35,18 @@
         height: 20%
     }
 }
+
+.editButton{
+  color: rgb(248, 246, 248);
+  background-color: darkmagenta;
+  font-size: 12px;
+  width: auto;
+  height: auto;
+}
+
+.editButton:hover,
+.editButton:focus {
+  color: darkmagenta;
+  text-decoration: none;
+  cursor: pointer;
+}

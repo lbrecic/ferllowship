@@ -3,7 +3,7 @@ import SubmitButton from "./SubmitButton";
 import "../styles/Request.css";
 import { toast } from "react-toastify";
 
-class Request extends React.Component {
+class CartographRequest extends React.Component {
   constructor(props) {
     super(props);
     this.setShow = this.props.setShow
@@ -82,4 +82,4 @@ class Request extends React.Component {
   }
 }
 
-export default Request;
+export default CartographRequest;

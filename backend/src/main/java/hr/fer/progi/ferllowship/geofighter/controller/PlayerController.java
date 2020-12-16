@@ -1,77 +1,135 @@
 package hr.fer.progi.ferllowship.geofighter.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import hr.fer.progi.ferllowship.geofighter.dao.PlayerRepository;
-import hr.fer.progi.ferllowship.geofighter.dto.ErrorDTO;
+import hr.fer.progi.ferllowship.geofighter.dto.CardDTO;
+import hr.fer.progi.ferllowship.geofighter.dto.MessageDTO;
 import hr.fer.progi.ferllowship.geofighter.dto.PlayerDTO;
-import hr.fer.progi.ferllowship.geofighter.model.Cartograph;
+import hr.fer.progi.ferllowship.geofighter.model.Card;
 import hr.fer.progi.ferllowship.geofighter.model.Player;
+import hr.fer.progi.ferllowship.geofighter.service.CloudinaryService;
+import hr.fer.progi.ferllowship.geofighter.service.PlayerService;
 
 @RestController
 public class PlayerController {
 	
 	@Autowired
 	private PlayerRepository playerRepository;
+
+	@Autowired
+	private PlayerService playerService;
+
+	@Autowired
+	private CloudinaryService cloudinaryService;
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
-	@GetMapping(path = "/players")
-	public ResponseEntity<?> getPlayer(@RequestParam String username) {
-		Player player = playerRepository.findByUsername(username);
-		if (player == null) {
-			return ResponseEntity.ok(new ErrorDTO("Igrač ne postoji."));
-		}
-		
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
-		
-		boolean isAdmin = authorities.stream()
-			.anyMatch(r -> r.getAuthority().equals("ROLE_ADMIN"));
-		boolean isCartograph = authorities.stream()
-			.anyMatch(r -> r.getAuthority().equals("ROLE_CARTOGRAPH"));
+	@PreAuthorize("hasAnyRole('ADMIN','CARTOGRAPH','PLAYER')")
+	@GetMapping(path = "/player")
+	public PlayerDTO getProfileInfo() {
+		Player player = playerService.getLoggedInPlayer();
+		String authorityLevel = playerService.getAuthorityLevelOfLoggedInPlayer();
+		playerService.updateRoleOfLoggedInPlayer("ROLE_" + authorityLevel.toUpperCase());
 
-		if (player instanceof Cartograph && ((Cartograph) player).getConfirmed() && !isCartograph) {
-			List<GrantedAuthority> updatedAuthorities = new ArrayList<>();
-			updatedAuthorities.add(new SimpleGrantedAuthority("ROLE_CARTOGRAPH"));
-			
-			Authentication newAuth = new UsernamePasswordAuthenticationToken(
-				auth.getPrincipal(), 
-				auth.getCredentials(), 
-				updatedAuthorities
-			);
-			
-			SecurityContextHolder.getContext().setAuthentication(newAuth);
-			isCartograph = true;
-		}
-
-		String authorityLevel;
-		if (isAdmin) {
-			authorityLevel = "admin";
-		} else if (isCartograph) {
-			authorityLevel = "cartograph";
-		} else {
-			authorityLevel = "player";
-		}
-
-		return ResponseEntity.ok(
-			new PlayerDTO(
-				player.getUsername(), 
-				player.getEmail(), 
-				player.getPhotoLink(), 
-				authorityLevel)
+		return new PlayerDTO(
+			player.getUsername(),
+			player.getPasswordHash(),
+			player.getEmail(),
+			player.getPhotoLink(),
+			player.getPoints(),
+			player.getBanStatus(),
+			player.getEnabled(),
+			player.getActivity(),
+			player.getExperience(),
+			authorityLevel
 		);
+	}
+
+	/**
+	 * Metoda za uredjivanje profila korisnika.
+	 * Pri izmjeni podataka uvijek se unosi stara lozinka za provjeru
+	 * i novi podatci koji se zele promijeniti.
+	 * Za podatke koje korisnik ne zeli mijenjati parametar je prazan string.
+	 *
+	 * Metoda vraca poruku ciji sadrzaj ovisi o uspjesnosti izmjene podataka.
+	 */
+	@PreAuthorize("hasAnyRole('ADMIN','CARTOGRAPH','PLAYER')")
+	@PostMapping(path = "/profile/edit")
+	public MessageDTO editProfile(@RequestParam("username") String username,
+								  @RequestParam("password") String password,
+								  @RequestParam("oldPassword") String oldPassword,
+								  @RequestParam("email") String email
+									/* parametri gore su za testiranje!
+									 * mozda je potrebna izmjena prije povezivanja s frontendom
+									@RequestPart String username,
+									@RequestPart String password,
+									@RequestPart String oldPassword,
+									@RequestPart String email,
+									@RequestPart MultipartFile picture*/)
+			throws IOException {
+
+		Player player = playerService.getLoggedInPlayer();
+
+		if (!passwordEncoder.matches(oldPassword, player.getPasswordHash())) {
+			return new MessageDTO("Unesena pogrešna lozinka!");
+		}
+
+		if (!username.isBlank()) {
+			if (playerRepository.findByUsername(username) != null) {
+				return new MessageDTO("Željeno ime je već zauzeto.");
+			}
+			player.setUsername(username);
+		}
+		if (!password.isBlank()) {
+			player.setPasswordHash(passwordEncoder.encode(password));
+		}
+		if (!email.isBlank()) {
+			player.setEmail(email);
+		}
+//		if (picture != null) {
+//			player.setPhotoLink(cloudinaryService.upload(picture.getBytes()));
+//		}
+
+		playerRepository.save(player);
+
+		return new MessageDTO("Promjene profila uspješno pohranjene.");
+	}
+
+	@PreAuthorize("hasAnyRole('ADMIN','CARTOGRAPH','PLAYER')")
+	@GetMapping(path = "/player/deck")
+	public List<CardDTO> getPlayerDeck() {
+		Player player = playerService.getLoggedInPlayer();
+
+		List<CardDTO> deck = new ArrayList<>();
+		List<Card> cards = player.getDeck();
+
+		for (Card card : cards) {
+			deck.add(new CardDTO(
+				card.getCardPoints(),
+				card.getScaleFactor(),
+				card.getLocation()
+			));
+		}
+
+		return deck;
+	}
+
+	@PreAuthorize("hasAnyRole('ADMIN','CARTOGRAPH','PLAYER')")
+	@GetMapping(path = "/active")
+	public List<PlayerDTO> getAllActivePlayers() {
+		return playerService.getAllActivePlayers();
 	}
 
 }

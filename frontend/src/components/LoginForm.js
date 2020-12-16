@@ -1,7 +1,7 @@
 import React from 'react';
 import InputField from './InputField';
 import SubmitButton from './SubmitButton';
-import {Redirect, Route} from "react-router-dom";
+import {Redirect} from "react-router-dom";
 
 import { toast } from 'react-toastify';
 
@@ -80,10 +80,8 @@ class LoginForm extends React.Component {
         method: 'post',
         body: formData
       });
-
-      if (res.ok) {
+      if (!res.url.endsWith("login")) {
         this.state.redirect = true;
-        localStorage.setItem('username', this.state.username);
         localStorage.setItem('isLoggedIn', true);
       } else {
         toast("Korisničko ime ili lozinka nisu ispravni.");

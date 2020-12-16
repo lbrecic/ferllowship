@@ -35,7 +35,8 @@ public class RegistrationController {
     @Autowired
     private EmailService emailService;
     
-    @Autowired PasswordEncoder passwordEncoder;
+    @Autowired
+	private PasswordEncoder passwordEncoder;
     
 	@PostMapping(path = "/register")
 	public MessageDTO register(@RequestPart String username,
@@ -51,7 +52,8 @@ public class RegistrationController {
 			return new MessageDTO("Igrač s unesenim e-mailom već postoji.");
 		}
 		
-		String pictureLink = cloudinaryService.upload(picture.getBytes());
+		//String pictureLink = cloudinaryService.upload(picture.getBytes());
+		String pictureLink = "abc";
 		String passwordHash = passwordEncoder.encode(password);
 		
 		Player player = new Player(username, passwordHash, email, pictureLink);
@@ -59,7 +61,7 @@ public class RegistrationController {
 		playerRepository.save(player);
 		ConfirmationToken confirmationToken = new ConfirmationToken(player);
 		confirmationTokenRepository.save(confirmationToken);
-		
+		/*
 		SimpleMailMessage mailMessage = new SimpleMailMessage();
 		mailMessage.setTo(email);
 		mailMessage.setFrom(System.getenv("EMAIL"));
@@ -71,7 +73,7 @@ public class RegistrationController {
 			confirmationToken.getConfirmationToken()
 		);
 		emailService.sendEmail(mailMessage);
-		
+		*/
 		return new MessageDTO("Potvrdi registraciju na emailu.");
 	}
 	

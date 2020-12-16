@@ -34,11 +34,9 @@ class ConfirmPage extends React.Component {
       <div className="App">
         <div className="App-header App-header-background">
           <img src={logo} className="App-logo animate-pulse" alt="logo" />
-          <p className='title white' >
-            <div className='confirm-message'>
-              {this.state.message}
-            </div>
-          </p>
+          <div className='title white confirm-message'>
+            {this.state.message}
+          </div>
         </div>
       </div>
     );
