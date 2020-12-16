@@ -80,10 +80,8 @@ class LoginForm extends React.Component {
         method: 'post',
         body: formData
       });
-
-      if (res.ok) {
+      if (!res.url.endsWith("login")) {
         this.state.redirect = true;
-        localStorage.setItem('username', this.state.username);
         localStorage.setItem('isLoggedIn', true);
       } else {
         toast("Korisničko ime ili lozinka nisu ispravni.");

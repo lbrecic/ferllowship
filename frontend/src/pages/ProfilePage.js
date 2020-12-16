@@ -17,6 +17,28 @@ import { Link } from "react-router-dom";
 import '../styles/Profile.css'; 
 
 class ProfilePage extends React.Component {
+  state = {
+    username: "",
+    email: "",
+    photoLink: "",
+    authorityLevel: "",
+  };
+
+  async componentDidMount() {
+    try {
+      let res = await fetch("/api/player?username=" + localStorage.username);
+      let result = await res.json();
+
+      if (result && !result.error) {
+        this.setState({
+          username: result.username,
+          email: result.email,
+          photoLink: result.photoLink,
+          authorityLevel: result.authorityLevel,
+        });
+      }
+    } catch (e) {}
+  }
 
     constructor (props) {
         super(props);
@@ -75,12 +97,6 @@ class ProfilePage extends React.Component {
 
     showPromoteWindow = e => {
         this.promoteWindow = e;
-        this.setState(this.state);
-    }
-
-    showAllUsersWindow = e => {
-        console.log(e);
-        this.allUsersWindow = e;
         this.setState(this.state);
     }
 
@@ -289,5 +305,4 @@ class ProfilePage extends React.Component {
             );
     }
 }
-
 export default ProfilePage;

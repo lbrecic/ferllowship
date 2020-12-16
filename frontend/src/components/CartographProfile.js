@@ -8,16 +8,16 @@ import { Link } from "react-router-dom";
 import "../styles/PlayerProfile.css";
 import "../styles/CartographProfile.css";
 
-import CartographRequests from "./CartographRequests";
+import LocationRequests from "./LocationRequests";
 
 /*      TO DO
 makniti pocetne podatke  */
 class CartographProfile extends React.Component {
   state = {
-    username: "ime",
-    email: "email.email",
+    username: "",
+    email: "",
     photoLink:
-      "https://images.telegram.hr/oTlwxfMQf_77UaG5mrqBIrJkWP-1Afpd0H72rU9U6y0/preset:article2/aHR0cHM6Ly93d3cudGVsZWdyYW0uaHIvd3AtY29udGVudC91cGxvYWRzLzIwMjAvMTIvcHhsLTAyMDQxOC0yMDE4OTE5OS5qcGVn.jpg",
+      "",
     authorityLevel: "player",
     showEdit: false,
     showRequest: false,
@@ -94,7 +94,7 @@ class CartographProfile extends React.Component {
             </div>
 
             <div className="links">
-              <div className=" text-center link box-shadow">
+              <div className=" text-center link">
                 <Link to="/deck">
                   <div className="flex justify-center">
                     <img src={cards} className="karte" alt="logo" />
@@ -103,7 +103,7 @@ class CartographProfile extends React.Component {
                 </Link>
               </div>
 
-              <div className="text-center link box-shadow">
+              <div className="text-center link">
                 <Link to="/stats">
                   <div className="flex justify-center">
                     <img src={stats} className="statistika" alt="logo" />
@@ -133,7 +133,7 @@ class CartographProfile extends React.Component {
 
           <div className="w-1/4 form geo-color requests">
             <div className="h-12"></div>
-              <CartographRequests
+              <LocationRequests
                 setShow={this.setShowRequest}
                 setRequest={this.setRequest}
               />

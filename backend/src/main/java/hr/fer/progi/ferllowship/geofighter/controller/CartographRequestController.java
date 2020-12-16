@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -37,16 +40,15 @@ public class CartographRequestController {
 	@Autowired
 	private CloudinaryService cloudinaryService;
 	
+	@PreAuthorize("hasRole('PLAYER')")
 	@PostMapping(path = "/requests")
 	public MessageDTO createRequest(@RequestPart String username,
 	                                @RequestPart String iban,
 	                                @RequestPart MultipartFile picture) 
 	                                throws IOException {
 		
-		Player player = playerRepository.findByUsername(username);
-		if (player == null) {
-			return new MessageDTO("Igrač ne postoji.");
-		}
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Player player = playerRepository.findByUsername(auth.getName());
 		
 		Cartograph cartograph = player.createCartograph();
 		cartograph.setIban(iban);
@@ -63,6 +65,7 @@ public class CartographRequestController {
 		return new MessageDTO("Prijava uspješno zaprimljena.");
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping(path = "/requests")
 	public List<CartographDTO> getRequests() {
 		List<CartographDTO> response = new ArrayList<>();
@@ -83,6 +86,7 @@ public class CartographRequestController {
         return response;
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping(path = "/requests/accept")
 	public MessageDTO acceptRequest(@RequestParam String username) {
 		Cartograph cartograph = cartographRepository.findByUsername(username);
@@ -96,6 +100,7 @@ public class CartographRequestController {
 		return new MessageDTO("Zahtjev prihvaćen.");
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping(path = "/requests/decline")
 	public MessageDTO declineRequest(@RequestParam String username) {
 		Cartograph cartograph = cartographRepository.findByUsername(username);

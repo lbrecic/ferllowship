@@ -41,7 +41,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         	List<GrantedAuthority> authorities = new ArrayList<>(); 
         	
     		if (player instanceof Admin) {
-    			authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));;
+    			authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
     		} else if (player instanceof Cartograph && ((Cartograph) player).getConfirmed()) {
     			authorities.add(new SimpleGrantedAuthority("ROLE_CARTOGRAPH"));
     		} else {
