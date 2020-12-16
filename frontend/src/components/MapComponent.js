@@ -22,21 +22,30 @@ class MapComponent extends Component {
     this.state = {
       currentLocation: { lat: 45.815399, lng: 15.966568 },
       zoom: 12,
+      data: [
+        { lat: 45.815399, lng: 15.966568 },
+        { lat: 45.835399, lng: 15.966568 },
+        { lat: 45.815399, lng: 16.066568 },
+      ],
     };
   }
+
   render() {
-    const { currentLocation, zoom } = this.state;
+    const { currentLocation, zoom, data } = this.state;
     return (
       <>
-        <Header />
         <div className="mapContainer">
-        <MapContainer center={currentLocation} zoom={zoom} className="map">
-          <TileLayer
-            url="https://api.maptiler.com/maps/basic/{z}/{x}/{y}.png?key=JiIiuxyafWjR1SPu3uIu"
-            attribution='<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>'
-          />
-          <Marker position={currentLocation}></Marker>
-        </MapContainer>
+          <MapContainer center={currentLocation} zoom={zoom} className="map">
+            <TileLayer
+              url="https://api.maptiler.com/maps/basic/{z}/{x}/{y}.png?key=JiIiuxyafWjR1SPu3uIu"
+              attribution='<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>'
+            />
+            {data.map((value, index) => {
+                return <Marker position={value}>
+                <Popup>{index}</Popup>
+              </Marker>
+            })}            
+          </MapContainer>
         </div>
       </>
     );
