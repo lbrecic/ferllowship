@@ -1,10 +1,11 @@
 import React from 'react'
 import LocationRequests from '../components/LocationRequests';
+import LocationRequest from '../components/LocationRequest';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import CartographForm from '../components/CartographForm';
 import CartographRequests from '../components/CartographRequests';
-import CartographRequest from '../components/CartographRequest'
+import CartographRequest from '../components/CartographRequest';
 import SubmitButton from "../components/SubmitButton";
 import EditProfile from "../components/EditProfile";
 import PromoteAdmin from '../components/PromoteAdmin';
@@ -63,7 +64,7 @@ class ProfilePage extends React.Component {
     }
 
     setShowLocationRequest = e => {
-        this.LocationRequest = e;
+        this.showLocationRequest = e;
         this.setState(this.state);
     }
 
@@ -97,7 +98,8 @@ class ProfilePage extends React.Component {
     
 
     render() {
-        if(this.showCartographRequest === 0 && this.promoteWindow === 0 && this.allUsersWindow === 0)
+        if(this.showCartographRequest === 0 && this.showLocationRequest === 0 &&
+            this.promoteWindow === 0 && this.allUsersWindow === 0)
         return (
             <>
             <Header />
@@ -175,13 +177,16 @@ class ProfilePage extends React.Component {
                     <div className="w-1/4">
                         <div className="h-12"></div>
                             {this.state.authorityLevel === "player" && 
-                                <CartographForm />}
+                                <CartographForm />
+                            }
                             {this.state.authorityLevel === "admin" &&
                                 <CartographRequests setShow={ this.setShowCartographRequest }
-                                                    setRequest={ this.setCartographRequest }/>}
+                                                    setRequest={ this.setCartographRequest }/>
+                            }
                             {this.state.authorityLevel === "cartograph" &&
                                 <LocationRequests setShow={ this.setShowLocationRequest }
-                                                setRequest={ this.setLocationRequest }/>}
+                                                setRequest={ this.setLocationRequest }/>
+                            }
                     </div>
                 </div>
             </div>
@@ -189,7 +194,8 @@ class ProfilePage extends React.Component {
             </>
         );
 
-        if(this.showCartographRequest !== 0 || this.promoteWindow === 1 || this.allUsersWindow === 1)
+        if(this.showCartographRequest !== 0 || this.showLocationRequest !== 0 ||
+            this.promoteWindow === 1 || this.allUsersWindow === 1)
             return(
             <>
             <Header />
@@ -259,10 +265,22 @@ class ProfilePage extends React.Component {
                                 }
                                 {this.showCartographRequest !== 0 &&
                                     <CartographRequest setShow={ this.setShowCartographRequest } 
-                                        setRequest={ this.setCartographRequest }
-                                        request={this.cartographRequest}/>}
-                                <CartographRequests setShow={ this.setCartographRequest } 
+                                                    setRequest={ this.setCartographRequest }
+                                                    request={this.cartographRequest}/>
+                                }
+                                {this.showLocationRequest !== 0 &&
+                                    <LocationRequest setShow={ this.setShowLocationRequest } 
+                                                    setRequest={ this.setLocationRequest }
+                                                    request={this.locationRequest}/>
+                                }
+                                {this.state.authorityLevel === "admin" &&
+                                    <CartographRequests setShow={ this.setCartographRequest } 
                                                     setRequest={ this.setCartographRequest }/>
+                                }
+                                {this.state.authorityLevel === "cartograph" &&
+                                    <LocationRequests setShow={ this.setShowLocationRequest }
+                                                    setRequest={ this.setLocationRequest }/>
+                                }
                     </div>
                 </div>
             </div>
