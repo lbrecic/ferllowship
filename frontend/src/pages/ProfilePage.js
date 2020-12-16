@@ -38,7 +38,14 @@ class ProfilePage extends React.Component {
       return <CartographProfile />;
     }
 
-    return <PlayerProfile />;
+    return (
+      <PlayerProfile
+        // username={this.state.username}
+        // email={this.email}
+        // photoLink={this.photoLink}
+        // authorityLevel={this.authorityLevel}
+      />
+    );
   }
 }
 

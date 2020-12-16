@@ -3,7 +3,6 @@ import Header from "../components/Header";
 import CartographRequests from "../components/CartographRequests";
 import CartographRequest from "../components/CartographRequest";
 import SubmitButton from "../components/SubmitButton";
-import EditProfile from "../components/EditProfile";
 import PromoteAdmin from "../components/PromoteAdmin";
 import AllUsersWindow from "../components/AllUsersWindow";
 import "../styles/AdminProfile.css";

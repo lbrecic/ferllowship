@@ -1,9 +1,1 @@
-.map {
-    height: 50%;
-    width: 50%;
-    margin: auto;
-}
-
-.addButton{
-    background-color: blueviolet;
-}
+#mapid { height: 1000px; }
