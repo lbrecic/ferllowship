@@ -1,5 +1,8 @@
 package hr.fer.progi.ferllowship.geofighter.dto;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import hr.fer.progi.ferllowship.geofighter.model.Category;
 
 public class LocationDTO {
@@ -11,18 +14,17 @@ public class LocationDTO {
 	private String locationPhoto;
 	
 	private Integer locationStatus;
-	
-	private String coordinates;
+
+	private final Map<String, String> coordinates;
 	
 	private Category category;
-
 	public LocationDTO(String locationName, String locationDesc, String locationPhoto, Integer locationStatus,
-			String coordinates, Category category) {
+			String lat, String lng, Category category) {
 		this.locationName = locationName;
 		this.locationDesc = locationDesc;
 		this.locationPhoto = locationPhoto;
 		this.locationStatus = locationStatus;
-		this.coordinates = coordinates;
+		this.coordinates = Map.of("lat", lat, "lng", lng);
 		this.category = category;
 	}
 
@@ -58,14 +60,6 @@ public class LocationDTO {
 		this.locationStatus = locationStatus;
 	}
 
-	public String getCoordinates() {
-		return coordinates;
-	}
-
-	public void setCoordinates(String coordinates) {
-		this.coordinates = coordinates;
-	}
-
 	public Category getCategory() {
 		return category;
 	}
@@ -73,5 +67,21 @@ public class LocationDTO {
 	public void setCategory(Category category) {
 		this.category = category;
 	}
-	
+
+	public String getLatitude() {
+		return coordinates.get("lat");
+	}
+
+	public void setLatitude(String latitude) {
+		this.coordinates.put("lat", latitude);
+	}
+
+	public String getLongitude() {
+		return coordinates.get("lng");
+	}
+
+	public void setLongitude(String longitude) {
+		this.coordinates.put("lng", longitude);
+	}
+
 }

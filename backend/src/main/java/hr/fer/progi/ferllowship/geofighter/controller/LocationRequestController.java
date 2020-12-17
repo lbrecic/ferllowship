@@ -54,7 +54,9 @@ public class LocationRequestController {
 	                                @RequestPart String categoryName) 
 	                                throws IOException {
 		
-		Location location = new Location();
+		Location location = new Location(
+
+		);
 
 		location.setLocationName(locationName);
 		location.setLocationDesc(locationDesc);
@@ -73,20 +75,20 @@ public class LocationRequestController {
 	public List<LocationDTO> getRequestsWithStatus(@RequestParam int status) {
 		List<LocationDTO> response = new ArrayList<>();
 		
-		for (Location location : locationRepository.findAll()) {
-			if (location.getLocationStatus() == status) {
-				response.add(
-					new LocationDTO(
-						location.getLocationName(),
-						location.getLocationDesc(),
-						location.getLocationPhoto(),
-						location.getLocationStatus(),
-						location.getCoordinates(),
-						location.getCategory()
-					)
-				);
-			}
-		}
+//		for (Location location : locationRepository.findAll()) {
+//			if (location.getLocationStatus() == status) {
+//				response.add(
+//					new LocationDTO(
+//						location.getLocationName(),
+//						location.getLocationDesc(),
+//						location.getLocationPhoto(),
+//						location.getLocationStatus(),
+//						location.getCoordinates(),
+//						location.getCategory()
+//					)
+//				);
+//			}
+//		}
 		
         return response;
 	}
