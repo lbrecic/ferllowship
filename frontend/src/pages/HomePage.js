@@ -2,8 +2,8 @@ import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import logo from '../logo.svg';
-import '../styles/App.css'
-
+import '../styles/App.css';
+import '../styles/HomePage.css';
 
 function HomePage() {
     return (
@@ -11,9 +11,9 @@ function HomePage() {
         <Header />
         <div className="App-header background-color">
           <img src={logo} className="App-logo animate-pulse" alt="logo" />
-             <div className='title white logo-title'> 
-                GeoFighter
-             </div>
+          <button className="btnFight" onClick={() => {}}>
+              Bori se!
+          </button>
         </div>
         <Footer />
       </div>
