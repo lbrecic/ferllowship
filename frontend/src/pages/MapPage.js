@@ -1,7 +1,7 @@
 import { Component } from "react";
 import Header from "../components/Header";
 import MapComponent from "../components/MapComponent";
-
+import AddLocation from "../components/AddLocation"
 
 
 class MapPage extends Component {
@@ -10,7 +10,7 @@ class MapPage extends Component {
     return (
       <>
       <Header/>
-      <MapComponent/>
+      <AddLocation/>
       </>
       
     )

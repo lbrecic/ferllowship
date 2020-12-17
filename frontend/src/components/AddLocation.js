@@ -51,11 +51,11 @@ class AddLocation extends React.Component {
       });
   }
 
-  /*  
+    
   onClose = (e) => {
     this.props.onClose && this.props.onClose(e);
   };
-  */
+  
  
   async addLocation(){
         
@@ -90,16 +90,16 @@ class AddLocation extends React.Component {
                 <div className="modal-contentEdit">
                     <div className="registerTitle">Dodaj lokaciju</div>
                     <div className="imageUploaderForm">
-                        <div className="registerDivEdit">
                             <InputField
                                 type="text"
                                 placeholder="Naziv lokacije"
                                 value={this.state.name ? this.state.name : ""}
                                 onChange={(val) => this.setInputValueName("name", val)}
                             />
-                        </div>
-                        <select name="category" 
+                      
+                        <select name="category" className="dropdown"
                         onSelect={(val) => this.setInputValueCategory(val)}>
+                        <option value="" hidden>Odaberi kategoriju...</option>
                         <option value="Grad">Grad</option>
                         <option value="Naselje">Naselje</option>
                         <option value="Umjetnička instalacija">Umjetnička instalacija</option>
@@ -121,7 +121,7 @@ class AddLocation extends React.Component {
                             
                         </div>
                         */}
-                        <textarea className="textArea textInput"
+                        <textarea className="textArea"
                         placeholder="Dodaj opis lokacije"
                         onChange={(val) => this.setInputDescription(val)}
                         />
@@ -140,15 +140,16 @@ class AddLocation extends React.Component {
                         />
                         
                         </div>
-                        <button className="btn addBtn" type='submit' 
-                        onClick={() => this.addLocation()}> 
-                            Dodaj
+                        <div className="btnDiv">
+                        <button className="btn editBtn" type='submit' > 
+                            Spremi promjene 
                         </button>
-
-                        {/*<button className="editBtn" onClick={(e) => this.onClose(e)}>
+                       
+                        <button className="btn editBtn" onClick={(e) => this.onClose(e)}>
                             Odustani
                         </button>
-    */}
+                       
+                        </div>    
                     </div>
                 </div>
             </div>
