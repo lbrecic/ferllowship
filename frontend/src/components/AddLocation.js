@@ -17,7 +17,8 @@ class AddLocation extends React.Component {
       name: "",
       pictures: [],
       category: "",
-      description: ""
+      description: "",
+      show: false
     };
     this.onDrop = this.onDrop.bind(this);
   }
@@ -83,7 +84,9 @@ class AddLocation extends React.Component {
 }
 
   render() {
-    
+    if (!this.props.show) {
+      return null;
+  }
     return (
         <div className="overlayEdit">
             <div className="modalEdit">

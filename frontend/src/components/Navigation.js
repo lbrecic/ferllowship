@@ -3,6 +3,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons'
 import { useTransition, animated } from 'react-spring'
 import Menu from './Menu'
+import '../styles/Navigation.css';
+
 
 function Navigation() {
     const [showMenu, setShowMenu] = useState(false);
@@ -14,7 +16,7 @@ function Navigation() {
     })
 
     return (
-        <nav>
+        <nav className="nav">
             <span className="relative text-xl z-50 cursor-pointer">
                 <FontAwesomeIcon 
                     icon={faBars}
