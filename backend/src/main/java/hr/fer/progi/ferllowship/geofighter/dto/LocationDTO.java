@@ -3,6 +3,20 @@ package hr.fer.progi.ferllowship.geofighter.dto;
 import hr.fer.progi.ferllowship.geofighter.model.Category;
 
 public class LocationDTO {
+
+	public static class Coordinates {
+		public double lat;
+		public double lng;
+
+		public Coordinates() {
+
+		}
+
+		public Coordinates(double lat, double lng) {
+			this.lat = lat;
+			this.lng = lng;
+		}
+	}
 	
 	private String locationName;
 	
@@ -11,13 +25,13 @@ public class LocationDTO {
 	private String locationPhoto;
 	
 	private Integer locationStatus;
+
+	private Coordinates coordinates;
 	
-	private String coordinates;
-	
-	private Category category;
+	private CategoryDTO category;
 
 	public LocationDTO(String locationName, String locationDesc, String locationPhoto, Integer locationStatus,
-			String coordinates, Category category) {
+					   Coordinates coordinates, CategoryDTO category) {
 		this.locationName = locationName;
 		this.locationDesc = locationDesc;
 		this.locationPhoto = locationPhoto;
@@ -58,20 +72,20 @@ public class LocationDTO {
 		this.locationStatus = locationStatus;
 	}
 
-	public String getCoordinates() {
+	public Coordinates getCoordinates() {
 		return coordinates;
 	}
 
-	public void setCoordinates(String coordinates) {
+	public void setCoordinates(Coordinates coordinates) {
 		this.coordinates = coordinates;
 	}
 
-	public Category getCategory() {
+	public CategoryDTO getCategory() {
 		return category;
 	}
 
-	public void setCategory(Category category) {
+	public void setCategory(CategoryDTO category) {
 		this.category = category;
 	}
-	
+
 }

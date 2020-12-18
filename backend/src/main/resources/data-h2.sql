@@ -20,3 +20,16 @@ INSERT INTO "PUBLIC"."ADMIN" VALUES
 ('HR1925000092781141814', 'https://res.cloudinary.com/ferllowship/image/authenticated/s---6AmsTGn--/v1607972421/pictures/qu0szw4e1j9pfdonjoat.png', X'0458c926ea9b4d64b7c1bb8d99e57199'),
 ('HR5224020062577714825', 'https://res.cloudinary.com/ferllowship/image/authenticated/s---6AmsTGn--/v1607972421/pictures/qu0szw4e1j9pfdonjoat.png', X'73cdd3855a054cbdbf1cfc8273980323'),
 ('HR2324840081238429587', 'https://res.cloudinary.com/ferllowship/image/authenticated/s---6AmsTGn--/v1607972421/pictures/qu0szw4e1j9pfdonjoat.png', X'64fe37bddf564d059433346788485b05');
+
+INSERT INTO "PUBLIC"."CATEGORY" VALUES
+(X'47f58b362fce479aa7099653a20f966a', 'Grad', 25),
+(X'2a4c3fe11a184881a4430de517aa2db5', 'Naselje', 30),
+(X'03417c375ef34b5280eea606839cf8a1', STRINGDECODE('Umjetni\u010dka instalacija'), 35),
+(X'88a770c981e54b9695b2448618a5e13a', 'Vrh planine', 40);
+
+INSERT INTO "PUBLIC"."LOCATION" VALUES
+(X'6152fbe05c94429b8ac80e2a17676717', '45.09512524633465;14.121508598327637', 'Opis Labina.', 'Labin', 'https://res.cloudinary.com/ferllowship/image/authenticated/s--jFm3YYnt--/v1608254551/pictures/leoitge70k5s9eeyfyjm.jpg', 0, X'47f58b362fce479aa7099653a20f966a'),
+(X'0e54010cda8b4fd7b16fa9d7e1f1ca8e', '45.49311926297023;15.55569648742676', 'Opis Karlovca.', 'Karlovac', 'https://res.cloudinary.com/ferllowship/image/authenticated/s--1vjleUWW--/v1608254551/pictures/sbsgni06rzofbv00g37x.jpg', 0, X'47f58b362fce479aa7099653a20f966a'),
+(X'8b0df3bcd3624febaca560cda860a4c7', '43.05814908754195;17.652282714843754', 'Opis Metkovića.', STRINGDECODE('Metkovi\u0107'), 'https://res.cloudinary.com/ferllowship/image/authenticated/s--doNLIehE--/v1608254552/pictures/d70rhsoxg7idnxhdqik9.jpg', 0, X'47f58b362fce479aa7099653a20f966a'),
+(X'661ca7a82dc8405c93d1dcfd7a0546ae', '45.81318363862028;15.977227091789247', 'Opis Zagreba.', 'Zagreb', 'https://res.cloudinary.com/ferllowship/image/authenticated/s--CJrsBTAO--/v1608254551/pictures/ru1goa6btgyxqyfbpicx.jpg', 0, X'47f58b362fce479aa7099653a20f966a'),
+(X'6fc2141f7e1c481ba1c865284f871174', '45.683098068982;18.406262397766117', 'Opis Belišća.', STRINGDECODE('Beli\u0161\u0107e'), 'https://res.cloudinary.com/ferllowship/image/authenticated/s--Ma-1F4-L--/v1608254553/pictures/u6noxxm9mjnpsb9lmkki.jpg', 0, X'47f58b362fce479aa7099653a20f966a');

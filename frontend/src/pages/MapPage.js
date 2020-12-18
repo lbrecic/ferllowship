@@ -4,6 +4,7 @@ import MapComponent from "../components/MapComponent";
 import AddLocation from "../components/AddLocation";
 
 import "../styles/AddLocationButton.css";
+import { toast } from "react-toastify";
 
 class MapPage extends Component {
   state = {
@@ -34,7 +35,11 @@ class MapPage extends Component {
             <button
               className="btnLogout btnEdit btnAdd"
               onClick={(e) => {
-                this.showWindow();
+                if (localStorage.getItem("selectedLocation")) {
+                  this.showWindow();
+                } else {
+                  toast("Odaberi lokaciju na karti.")
+                }
               }}
             >
               Prijavi lokaciju
