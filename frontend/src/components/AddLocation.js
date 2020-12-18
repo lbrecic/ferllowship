@@ -47,7 +47,6 @@ class AddLocation extends React.Component {
   }
 
   setInputDescription(val){
-    console.log(val);
       this.setState({
         description: val
       });
@@ -101,7 +100,7 @@ class AddLocation extends React.Component {
                             />
                       
                         <select name="category" className="dropdown"
-                        onChange={(val) => this.setInputValueCategory(val)}>
+                        onChange={(val) => this.setInputValueCategory(val.target.value)}>
                         <option value="" hidden>Odaberi kategoriju...</option>
                         <option value="Grad">Grad</option>
                         <option value="Naselje">Naselje</option>
