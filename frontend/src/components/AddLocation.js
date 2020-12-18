@@ -47,6 +47,7 @@ class AddLocation extends React.Component {
   }
 
   setInputDescription(val){
+    console.log(val);
       this.setState({
         description: val
       });
@@ -59,16 +60,15 @@ class AddLocation extends React.Component {
   
  
   async addLocation(){
-        
     const formData = new FormData();
-    formData.append("name", this.state.name);
-    formData.append("category", this.state.category);
-    formData.append("description", this.state.description);
-    formData.append("picture", this.state.pictures[0]);
-
+    formData.append("locationName", this.state.name);
+    formData.append("categoryName", this.state.category);
+    formData.append("locationDesc", this.state.description);
+    formData.append("locationPhoto", this.state.pictures[0]);
+    formData.append("coordinates", new Blob([localStorage.getItem("selectedLocation")], {type: "application/json"}));
     
     try {
-        let res = await fetch('/api/location/request', {
+        let res = await fetch('/api/location/requests', {
         method: 'post',
         body: formData
         });
@@ -101,7 +101,7 @@ class AddLocation extends React.Component {
                             />
                       
                         <select name="category" className="dropdown"
-                        onSelect={(val) => this.setInputValueCategory(val)}>
+                        onChange={(val) => this.setInputValueCategory(val)}>
                         <option value="" hidden>Odaberi kategoriju...</option>
                         <option value="Grad">Grad</option>
                         <option value="Naselje">Naselje</option>
@@ -126,7 +126,7 @@ class AddLocation extends React.Component {
                         */}
                         <textarea className="textArea"
                         placeholder="Dodaj opis lokacije"
-                        onChange={(val) => this.setInputDescription(val)}
+                        onChange={(val) => this.setInputDescription(val.target.value)}
                         />
 
                         <p className="imgText">Priloži sliku lokacije:</p>
@@ -144,7 +144,7 @@ class AddLocation extends React.Component {
                         
                         </div>
                         <div className="btnDiv">
-                        <button className="btn editBtn" type='submit' > 
+                        <button className="btn editBtn" onClick={() => this.addLocation()} > 
                             Spremi promjene 
                         </button>
                        

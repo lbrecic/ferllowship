@@ -1,11 +1,22 @@
 package hr.fer.progi.ferllowship.geofighter.dto;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import hr.fer.progi.ferllowship.geofighter.model.Category;
 
 public class LocationDTO {
+
+	public static class Coordinates {
+		public double lat;
+		public double lng;
+
+		public Coordinates() {
+
+		}
+
+		public Coordinates(double lat, double lng) {
+			this.lat = lat;
+			this.lng = lng;
+		}
+	}
 	
 	private String locationName;
 	
@@ -15,16 +26,16 @@ public class LocationDTO {
 	
 	private Integer locationStatus;
 
-	private final Map<String, String> coordinates;
+	private Coordinates coordinates;
 	
 	private Category category;
 	public LocationDTO(String locationName, String locationDesc, String locationPhoto, Integer locationStatus,
-			String lat, String lng, Category category) {
+					   Coordinates coordinates, Category category) {
 		this.locationName = locationName;
 		this.locationDesc = locationDesc;
 		this.locationPhoto = locationPhoto;
 		this.locationStatus = locationStatus;
-		this.coordinates = Map.of("lat", lat, "lng", lng);
+		this.coordinates = coordinates;
 		this.category = category;
 	}
 
@@ -60,28 +71,20 @@ public class LocationDTO {
 		this.locationStatus = locationStatus;
 	}
 
+	public Coordinates getCoordinates() {
+		return coordinates;
+	}
+
+	public void setCoordinates(Coordinates coordinates) {
+		this.coordinates = coordinates;
+	}
+
 	public Category getCategory() {
 		return category;
 	}
 
 	public void setCategory(Category category) {
 		this.category = category;
-	}
-
-	public String getLatitude() {
-		return coordinates.get("lat");
-	}
-
-	public void setLatitude(String latitude) {
-		this.coordinates.put("lat", latitude);
-	}
-
-	public String getLongitude() {
-		return coordinates.get("lng");
-	}
-
-	public void setLongitude(String longitude) {
-		this.coordinates.put("lng", longitude);
 	}
 
 }

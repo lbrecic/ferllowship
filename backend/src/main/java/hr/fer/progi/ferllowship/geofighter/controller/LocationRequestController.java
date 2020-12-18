@@ -50,21 +50,17 @@ public class LocationRequestController {
 	public MessageDTO createRequest(@RequestPart String locationName,
 	                                @RequestPart String locationDesc,
 	                                @RequestPart MultipartFile locationPhoto,
-	                                @RequestPart String coordinates,
+	                                @RequestPart LocationDTO.Coordinates coordinates,
 	                                @RequestPart String categoryName) 
 	                                throws IOException {
 		
-		Location location = new Location(
-
-		);
-
+		Location location = new Location();
 		location.setLocationName(locationName);
 		location.setLocationDesc(locationDesc);
 		location.setLocationPhoto(cloudinaryService.upload(locationPhoto.getBytes()));
-		location.setCoordinates(coordinates);
+		location.setCoordinates(coordinates.lat + ";" + coordinates.lng);
 		location.setCategory(categoryRepository.findByCategoryName(categoryName));
 		location.setLocationStatus(LOCATION_STATUS.NEEDS_APPROVAL.value);
-
 		locationRepository.save(location);
 		
 		return new MessageDTO("Zahtjev uspješno zaprimljen.");
@@ -75,22 +71,47 @@ public class LocationRequestController {
 	public List<LocationDTO> getRequestsWithStatus(@RequestParam int status) {
 		List<LocationDTO> response = new ArrayList<>();
 		
-//		for (Location location : locationRepository.findAll()) {
-//			if (location.getLocationStatus() == status) {
-//				response.add(
-//					new LocationDTO(
-//						location.getLocationName(),
-//						location.getLocationDesc(),
-//						location.getLocationPhoto(),
-//						location.getLocationStatus(),
-//						location.getCoordinates(),
-//						location.getCategory()
-//					)
-//				);
-//			}
-//		}
+		for (Location location : locationRepository.findAll()) {
+			if (location.getLocationStatus() == status) {
+				double lat = Double.parseDouble(location.getCoordinates().split(";")[0]);
+				double lng = Double.parseDouble(location.getCoordinates().split(";")[1]);
+				response.add(
+					new LocationDTO(
+						location.getLocationName(),
+						location.getLocationDesc(),
+						location.getLocationPhoto(),
+						location.getLocationStatus(),
+						new LocationDTO.Coordinates(lat, lng),
+						location.getCategory()
+					)
+				);
+			}
+		}
 		
         return response;
+	}
+
+	@PreAuthorize("hasAnyRole('ADMIN','CARTOGRAPH','PLAYER')")
+	@GetMapping(path = "/location/all")
+	public List<LocationDTO> getAllLocations() {
+		List<LocationDTO> response = new ArrayList<>();
+
+		for (Location location : locationRepository.findAll()) {
+			double lat = Double.parseDouble(location.getCoordinates().split(";")[0]);
+			double lng = Double.parseDouble(location.getCoordinates().split(";")[1]);
+			response.add(
+				new LocationDTO(
+					location.getLocationName(),
+					location.getLocationDesc(),
+					location.getLocationPhoto(),
+					location.getLocationStatus(),
+					new LocationDTO.Coordinates(lat, lng),
+					location.getCategory()
+				)
+			);
+		}
+
+		return response;
 	}
 
 	@PreAuthorize("hasAnyRole('ADMIN','CARTOGRAPH')")
