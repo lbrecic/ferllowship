@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import hr.fer.progi.ferllowship.geofighter.dao.CategoryRepository;
 import hr.fer.progi.ferllowship.geofighter.dao.LocationRepository;
+import hr.fer.progi.ferllowship.geofighter.dto.CategoryDTO;
 import hr.fer.progi.ferllowship.geofighter.dto.LocationDTO;
 import hr.fer.progi.ferllowship.geofighter.dto.MessageDTO;
 import hr.fer.progi.ferllowship.geofighter.model.Location;
@@ -82,36 +83,16 @@ public class LocationRequestController {
 						location.getLocationPhoto(),
 						location.getLocationStatus(),
 						new LocationDTO.Coordinates(lat, lng),
-						location.getCategory()
+						new CategoryDTO(
+							location.getCategory().getCategoryName(),
+							location.getCategory().getCategoryPoints()
+						)
 					)
 				);
 			}
 		}
 		
         return response;
-	}
-
-	@PreAuthorize("hasAnyRole('ADMIN','CARTOGRAPH','PLAYER')")
-	@GetMapping(path = "/location/all")
-	public List<LocationDTO> getAllLocations() {
-		List<LocationDTO> response = new ArrayList<>();
-
-		for (Location location : locationRepository.findAll()) {
-			double lat = Double.parseDouble(location.getCoordinates().split(";")[0]);
-			double lng = Double.parseDouble(location.getCoordinates().split(";")[1]);
-			response.add(
-				new LocationDTO(
-					location.getLocationName(),
-					location.getLocationDesc(),
-					location.getLocationPhoto(),
-					location.getLocationStatus(),
-					new LocationDTO.Coordinates(lat, lng),
-					location.getCategory()
-				)
-			);
-		}
-
-		return response;
 	}
 
 	@PreAuthorize("hasAnyRole('ADMIN','CARTOGRAPH')")

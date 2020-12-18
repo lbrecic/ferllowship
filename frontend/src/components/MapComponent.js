@@ -54,7 +54,7 @@ class MapComponent extends Component {
 
   async componentDidMount() {
     try {
-      let res = await fetch('/api/location/all');
+      let res = await fetch('/api/location/requests?status=0');
       let result = await res.json();
       if (result) {
         this.setState({
@@ -87,13 +87,15 @@ class MapComponent extends Component {
                         <Card.Body>
                           <Card.Title>{value.locationName}</Card.Title>
                           <Card.Text>
-                            {value.locationDesc}
+                            <p>Kategorija: {value.category.categoryName}</p>
+                            <p>Bodovi: {value.category.categoryPoints}</p>
+                            <p>Opis: {value.locationDesc}</p>
                           </Card.Text>
                         </Card.Body>
                       </Card>
                     </Popup>
                   </Marker>
-                )
+                );
             })}
 
             <SelectedLocationMarker />

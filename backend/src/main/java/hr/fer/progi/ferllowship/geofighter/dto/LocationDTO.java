@@ -28,9 +28,10 @@ public class LocationDTO {
 
 	private Coordinates coordinates;
 	
-	private Category category;
+	private CategoryDTO category;
+
 	public LocationDTO(String locationName, String locationDesc, String locationPhoto, Integer locationStatus,
-					   Coordinates coordinates, Category category) {
+					   Coordinates coordinates, CategoryDTO category) {
 		this.locationName = locationName;
 		this.locationDesc = locationDesc;
 		this.locationPhoto = locationPhoto;
@@ -79,11 +80,11 @@ public class LocationDTO {
 		this.coordinates = coordinates;
 	}
 
-	public Category getCategory() {
+	public CategoryDTO getCategory() {
 		return category;
 	}
 
-	public void setCategory(Category category) {
+	public void setCategory(CategoryDTO category) {
 		this.category = category;
 	}
 
