@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import hr.fer.progi.ferllowship.geofighter.dao.CategoryRepository;
 import hr.fer.progi.ferllowship.geofighter.dao.LocationRepository;
+import hr.fer.progi.ferllowship.geofighter.dto.CategoryDTO;
 import hr.fer.progi.ferllowship.geofighter.dto.LocationDTO;
 import hr.fer.progi.ferllowship.geofighter.dto.MessageDTO;
 import hr.fer.progi.ferllowship.geofighter.model.Location;
@@ -50,19 +51,17 @@ public class LocationRequestController {
 	public MessageDTO createRequest(@RequestPart String locationName,
 	                                @RequestPart String locationDesc,
 	                                @RequestPart MultipartFile locationPhoto,
-	                                @RequestPart String coordinates,
+	                                @RequestPart LocationDTO.Coordinates coordinates,
 	                                @RequestPart String categoryName) 
 	                                throws IOException {
 		
 		Location location = new Location();
-
 		location.setLocationName(locationName);
 		location.setLocationDesc(locationDesc);
 		location.setLocationPhoto(cloudinaryService.upload(locationPhoto.getBytes()));
-		location.setCoordinates(coordinates);
+		location.setCoordinates(coordinates.lat + ";" + coordinates.lng);
 		location.setCategory(categoryRepository.findByCategoryName(categoryName));
 		location.setLocationStatus(LOCATION_STATUS.NEEDS_APPROVAL.value);
-
 		locationRepository.save(location);
 		
 		return new MessageDTO("Zahtjev uspješno zaprimljen.");
@@ -75,14 +74,19 @@ public class LocationRequestController {
 		
 		for (Location location : locationRepository.findAll()) {
 			if (location.getLocationStatus() == status) {
+				double lat = Double.parseDouble(location.getCoordinates().split(";")[0]);
+				double lng = Double.parseDouble(location.getCoordinates().split(";")[1]);
 				response.add(
 					new LocationDTO(
 						location.getLocationName(),
 						location.getLocationDesc(),
 						location.getLocationPhoto(),
 						location.getLocationStatus(),
-						location.getCoordinates(),
-						location.getCategory()
+						new LocationDTO.Coordinates(lat, lng),
+						new CategoryDTO(
+							location.getCategory().getCategoryName(),
+							location.getCategory().getCategoryPoints()
+						)
 					)
 				);
 			}

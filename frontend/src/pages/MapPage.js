@@ -1,43 +1,55 @@
-import React, { Component } from "react";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { Component } from "react";
 import Header from "../components/Header";
-import Footer from "../components/Footer";
-import "../styles/MapPage.css";
-import "leaflet/dist/leaflet.css";
-import Leaflet from "leaflet";
+import MapComponent from "../components/MapComponent";
+import AddLocation from "../components/AddLocation";
 
-import icon from "leaflet/dist/images/marker-icon.png";
-import iconShadow from "leaflet/dist/images/marker-shadow.png";
-
-let DefaultIcon = Leaflet.icon({
-  iconUrl: icon,
-  shadowUrl: iconShadow,
-});
-
-
-Leaflet.Marker.prototype.options.icon = DefaultIcon;
+import "../styles/AddLocationButton.css";
+import { toast } from "react-toastify";
 
 class MapPage extends Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     Locations: [],
-  //     currentLocation: { lat: 45.815399, lng: 15.966568 },
-  //     zoom: 12,
-  //   };
-  // }
+  state = {
+    show: false,
+  };
 
+  showWindow = (e) => {
+    this.setState({
+      show: !this.state.show,
+    });
+  };
 
-   render() {
-  //   const { currentLocation, zoom } = this.state;
+  onClose = (e) => {
+    this.setState({
+      show: false,
+    });
+  };
 
+  render() {
     return (
       <>
         <Header />
-        <div id="mapid">
-          
+        <div className="body">
+          <div className="map">
+            <MapComponent />
+          </div>
+          <div className="addBtn">
+            <button
+              className="btnLogout btnEdit btnAdd"
+              onClick={(e) => {
+                if (localStorage.getItem("selectedLocation")) {
+                  this.showWindow();
+                } else {
+                  toast("Odaberi lokaciju na karti.")
+                }
+              }}
+            >
+              Prijavi lokaciju
+            </button>
+            <AddLocation
+              show={this.state.show}
+              onClose={() => this.onClose()}
+            />
+          </div>
         </div>
-        <Footer />
       </>
     );
   }

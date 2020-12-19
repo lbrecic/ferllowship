@@ -2,6 +2,7 @@ package hr.fer.progi.ferllowship.geofighter.security;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -55,9 +56,29 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 					session.setAttribute("user", user);
 				}
 
+//				UPUTE:
+//				- kod lokalnog developmenta zakomentirati 2) i otkomentirati 1)
+//				- tako neka i ostane, 2) otkomentirati samo kada je stvarno potrebno
+//				==================
+//				1)
 				resp.sendRedirect("/");
+//				------------------
+//				2)
+//				resp.setStatus(HttpStatus.SC_OK);
+//				==================
 			})
-			.failureHandler((req, resp, ex) -> resp.sendRedirect("/login"))
+			.failureHandler((req, resp, ex) -> {
+//				UPUTE:
+//				- kod lokalnog developmenta zakomentirati 2) i otkomentirati 1)
+//				- tako neka i ostane, 2) otkomentirati samo kada je stvarno potrebno
+//				==================
+//				1)
+				resp.sendRedirect("/login");
+//				------------------
+//				2)
+//				resp.setStatus(HttpStatus.SC_UNAUTHORIZED);
+//				==================
+			})
         .and()
         	.logout()
         	.logoutSuccessHandler((req, resp, auth) -> {
@@ -67,7 +88,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 					session.removeAttribute("user");
 				}
 
-        		resp.sendRedirect("/");
+//				UPUTE:
+//				- kod lokalnog developmenta zakomentirati 2) i otkomentirati 1)
+//				- tako neka i ostane, 2) otkomentirati samo kada je stvarno potrebno
+//				==================
+//				1)
+				resp.sendRedirect("/");
+//				------------------
+//				2)
+//				resp.setStatus(HttpStatus.SC_OK);
+//				==================
         	})
 	        .deleteCookies("JSESSIONID")
 		.and()

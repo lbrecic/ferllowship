@@ -1,0 +1,57 @@
+.linkBox{
+    font-family: 'Orbitron', sans-serif;
+    font-size: 20px;
+    color: rgb(218, 209, 209);
+    align-items: center;
+    text-shadow:  0 0 1px #FF0000, 0 0 2px #0000FF;
+}
+
+.lightGreen1{
+    background-color: #91a594;
+}
+
+.lightGreen2{
+    background-color: #7f9081;
+}
+
+.lightGreen3{
+    background-color: #738275;
+}
+
+.darkGreen1{
+    background-color: #626e63;
+}
+
+.darkGreen2{
+    background-color: #5a655b;
+}
+
+.darkGreen3{
+    background-color: #545e54;
+}
+
+.text{
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.text:hover, 
+.gsText:hover{
+    color: rgb(255, 249, 249);
+}
+@media only screen and (min-width: 750px) {
+    .gsText{
+        margin-top: 50px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@media only screen and (max-width: 750px) {
+    .gsText{
+        margin-top: 35px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}

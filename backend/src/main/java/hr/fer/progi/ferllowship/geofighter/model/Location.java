@@ -24,7 +24,7 @@ public class Location {
 	@Column(name = "location_status")
 	private Integer locationStatus;
 	
-	@Column(length = 32)
+	@Column(length = 50)
 	private String coordinates;
 	
 	@ManyToOne(targetEntity = Category.class, fetch = FetchType.EAGER)

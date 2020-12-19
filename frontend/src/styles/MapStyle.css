@@ -1,0 +1,17 @@
+.leaflet-container {
+    position: fixed;
+    margin-top: 60px;
+    z-index: 0;
+    height: 100%;
+    width: 100%;
+}
+
+@media only screen and (min-height: 700px) {
+    .leaflet-container {
+        position: fixed;
+        margin-top: 60px;
+        z-index: 0;
+        height: 100%;
+        width: 100%;
+    }
+}

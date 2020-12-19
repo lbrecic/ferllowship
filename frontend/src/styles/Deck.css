@@ -1,0 +1,27 @@
+.card-group{
+    display: inline-flex;
+    padding-top: 150px;
+    justify-content: space-between;
+    overflow-x: auto; 
+    overflow-y: auto; 
+    height: 700px;
+    width: 100%;
+}
+
+.card{
+    min-width: 200px;
+    width: 250px;
+    margin: 10px;
+    height: 400px;
+    max-height: 400px;
+    padding: 10px;
+    background-color: #e8f0ea;
+    box-shadow: 0 0 3px #FF0000, 0 0 5px #0000FF;
+}
+.card-title{
+    margin-left: 35%;
+    margin-top: 5px;
+    font-size: 15px;
+    font-weight: bold;
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+}

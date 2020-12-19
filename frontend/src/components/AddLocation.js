@@ -17,7 +17,8 @@ class AddLocation extends React.Component {
       name: "",
       pictures: [],
       category: "",
-      description: ""
+      description: "",
+      show: false
     };
     this.onDrop = this.onDrop.bind(this);
   }
@@ -51,23 +52,22 @@ class AddLocation extends React.Component {
       });
   }
 
-  /*  
+    
   onClose = (e) => {
     this.props.onClose && this.props.onClose(e);
   };
-  */
+  
  
   async addLocation(){
-        
     const formData = new FormData();
-    formData.append("name", this.state.name);
-    formData.append("category", this.state.category);
-    formData.append("description", this.state.description);
-    formData.append("picture", this.state.pictures[0]);
-
+    formData.append("locationName", this.state.name);
+    formData.append("categoryName", this.state.category);
+    formData.append("locationDesc", this.state.description);
+    formData.append("locationPhoto", this.state.pictures[0]);
+    formData.append("coordinates", new Blob([localStorage.getItem("selectedLocation")], {type: "application/json"}));
     
     try {
-        let res = await fetch('/api/location/request', {
+        let res = await fetch('/api/location/requests', {
         method: 'post',
         body: formData
         });
@@ -83,23 +83,25 @@ class AddLocation extends React.Component {
 }
 
   render() {
-    
+    if (!this.props.show) {
+      return null;
+  }
     return (
         <div className="overlayEdit">
             <div className="modalEdit">
                 <div className="modal-contentEdit">
                     <div className="registerTitle">Dodaj lokaciju</div>
                     <div className="imageUploaderForm">
-                        <div className="registerDivEdit">
                             <InputField
                                 type="text"
                                 placeholder="Naziv lokacije"
                                 value={this.state.name ? this.state.name : ""}
                                 onChange={(val) => this.setInputValueName("name", val)}
                             />
-                        </div>
-                        <select name="category" 
-                        onSelect={(val) => this.setInputValueCategory(val)}>
+                      
+                        <select name="category" className="dropdown"
+                        onChange={(val) => this.setInputValueCategory(val.target.value)}>
+                        <option value="" hidden>Odaberi kategoriju...</option>
                         <option value="Grad">Grad</option>
                         <option value="Naselje">Naselje</option>
                         <option value="Umjetnička instalacija">Umjetnička instalacija</option>
@@ -121,9 +123,9 @@ class AddLocation extends React.Component {
                             
                         </div>
                         */}
-                        <textarea className="textArea textInput"
+                        <textarea className="textArea"
                         placeholder="Dodaj opis lokacije"
-                        onChange={(val) => this.setInputDescription(val)}
+                        onChange={(val) => this.setInputDescription(val.target.value)}
                         />
 
                         <p className="imgText">Priloži sliku lokacije:</p>
@@ -140,15 +142,16 @@ class AddLocation extends React.Component {
                         />
                         
                         </div>
-                        <button className="btn addBtn" type='submit' 
-                        onClick={() => this.addLocation()}> 
-                            Dodaj
+                        <div className="btnDiv">
+                        <button className="btn editBtn" onClick={() => this.addLocation()} > 
+                            Spremi promjene 
                         </button>
-
-                        {/*<button className="editBtn" onClick={(e) => this.onClose(e)}>
+                       
+                        <button className="btn editBtn" onClick={(e) => this.onClose(e)}>
                             Odustani
                         </button>
-    */}
+                       
+                        </div>    
                     </div>
                 </div>
             </div>
