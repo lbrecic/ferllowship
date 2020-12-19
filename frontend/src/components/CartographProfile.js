@@ -59,6 +59,7 @@ class CartographProfile extends React.Component {
   };
 
   setShowLocationRequest = e => {
+    this.setLocationRequest(e)
     this.showLocationRequest = e;
     this.setState(this.state);
   }

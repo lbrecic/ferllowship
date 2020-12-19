@@ -36,11 +36,11 @@ class CartographRequests extends React.Component {
                 </div>
                 <div className="h-8"></div>
                 {this.state.requests.map((request) => (
-                    <div key={request}
+                    <div key={request.username}
                         className="text-center text-sm usernames p-3  box-shadow cursor-pointer"
                         onClick={() => {this.setShow(request); this.setRequest(request)}}  
                     >
-                        username
+                        {request.username}
                     </div>
                 ))}
             </div>

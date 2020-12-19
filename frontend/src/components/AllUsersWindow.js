@@ -8,9 +8,7 @@ class AllUsersWindow extends React.Component {
     this.setShow = this.props.setShow
     this.state = {
         players: 1,
-        cartographs: 0,
-        playerList: ["player1", "player2"],
-        cartographList: ["cartograph1", "cartograph2"]
+        cartographs: 0
     }
   }
 
@@ -62,7 +60,7 @@ class AllUsersWindow extends React.Component {
           <div className="modalRequest">
             <div className="cartographerRequest modal-contentRequest">
                 <button onClick={() => this.setShow(0)} 
-                    style={{alignSelf:'start', margin:'5px'}}>x</button>
+                    style={{alignSelf:'start', margin:'5px'}}>Close</button>
               <div className="text-center text-base geo-text white p-3">
                 All users
               </div>
@@ -85,7 +83,7 @@ class AllUsersWindow extends React.Component {
                             className="text-center text-sm usernames p-3  box-shadow cursor-pointer"
                             onClick={() => {}}  
                         >
-                            {player}
+                            {player.username}
                         </div>
                     ))
               }
@@ -95,7 +93,7 @@ class AllUsersWindow extends React.Component {
                             className="text-center text-sm usernames p-3  box-shadow cursor-pointer"
                             onClick={() => {}}  
                         >
-                            {cartograph}
+                            {cartograph.username}
                         </div>
                     ))
               }
