@@ -8,14 +8,11 @@ class AllUsersWindow extends React.Component {
     this.setShow = this.props.setShow
     this.state = {
         players: 1,
-        cartographs: 0
-    }
-  }
-
-    state = {
+        cartographs: 0,
         playerList: ["player1", "player2"],
         cartographList: ["cartograph1", "cartograph2"]
     }
+  }
 
     setPlayers = () => {
         this.state = {
