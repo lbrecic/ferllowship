@@ -1,7 +1,7 @@
 @media only screen and (min-width: 600px) {
   .adminBody {
     display: grid;
-    height: 100%;
+    height: 100vh;
     min-height: 720px;
     align-items: stretch;
     grid-template-columns: 40% 30% 35%;
