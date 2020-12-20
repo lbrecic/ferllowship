@@ -5,10 +5,9 @@ class CartographRequests extends React.Component {
         super(props);
         this.setShow = this.props.setShow;
         this.setRequest = this.props.setRequest;
-    }
-
-    state = {
-        requests: ["request1", "request2"]
+        this.state = {
+            requests: null
+        }
     }
 
     async componentDidMount() {        
@@ -27,24 +26,37 @@ class CartographRequests extends React.Component {
 
 
     render() {
-        return (
-            <div id="requests">
-                <div 
-                    className="text-center text-base geo-text white p-3" 
-                >
-                    Kartografski zahtjevi
-                </div>
-                <div className="h-8"></div>
-                {this.state.requests.map((request) => (
-                    <div key={request.username}
-                        className="text-center text-sm usernames p-3  box-shadow cursor-pointer"
-                        onClick={() => {this.setShow(request); this.setRequest(request)}}  
+        if (this.state.requests !== null && this.state.requests[0] !== null)
+            return (
+                <div id="requests">
+                    <div 
+                        className="text-center text-base geo-text white p-3" 
                     >
-                        {request.username}
+                        Kartografski zahtjevi
                     </div>
-                ))}
-            </div>
-        );
+                    <div className="h-8"></div>
+                    {this.state.requests.map((request) => (
+                        <div key={request.username}
+                            className="text-center text-sm usernames p-3  box-shadow cursor-pointer"
+                            onClick={() => {this.setShow(request); this.setRequest(request)}}  
+                        >
+                            {request.username}
+                        </div>
+                    ))}
+                </div>
+            );
+        else
+            return (
+                <div id="requests">
+                    <div 
+                        className="text-center text-base geo-text white p-3" 
+                    >
+                        Kartografski zahtjevi
+                    </div>
+                    <div className="h-8"></div>
+                        <div className="text-center">Nema novih zahtjeva za kartografa</div>
+                </div>
+            );             
     }
 }
 

@@ -92,6 +92,10 @@ public class LocationRequestController {
 			}
 		}
 		
+		if (response.isEmpty()) {
+			response.add(null);
+		}
+		
         return response;
 	}
 

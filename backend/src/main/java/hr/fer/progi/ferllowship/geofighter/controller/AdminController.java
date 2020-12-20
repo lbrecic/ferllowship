@@ -1,5 +1,6 @@
 package hr.fer.progi.ferllowship.geofighter.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,36 @@ public class AdminController {
 	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping(path = "/allPlayers")
 	public List<PlayerDTO> getAllPlayers() {
-		return playerService.getAllPlayers();
+		List<PlayerDTO> response = new ArrayList<>();
+		
+		for (PlayerDTO user : playerService.getAllPlayers())
+			if (user.getAuthorityLevel().toUpperCase().equals("PLAYER"))
+				response.add(user);
+		
+		return response;
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
+	@GetMapping(path = "/allCartographs")
+	public List<PlayerDTO> getAllCartographs() {
+		List<PlayerDTO> response = new ArrayList<>();
+		
+		for (PlayerDTO user : playerService.getAllPlayers())
+			if (user.getAuthorityLevel().toUpperCase().equals("CARTOGRAPH"))
+				response.add(user);
+		
+		return response;
+	}
+	
+	@PreAuthorize("hasRole('ADMIN')")
+	@GetMapping(path = "/allAdmins")
+	public List<PlayerDTO> getAllAdmins() {
+		List<PlayerDTO> response = new ArrayList<>();
+		
+		for (PlayerDTO user : playerService.getAllPlayers())
+			if (user.getAuthorityLevel().toUpperCase().equals("ADMIN"))
+				response.add(user);
+		
+		return response;
+	}
 }

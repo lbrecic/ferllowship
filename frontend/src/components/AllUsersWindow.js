@@ -1,5 +1,5 @@
 import React from "react";
-import SubmitButton from "./SubmitButton";
+import Loader from "./Loader";
 import "../styles/Request.css";
 
 class AllUsersWindow extends React.Component {
@@ -8,14 +8,16 @@ class AllUsersWindow extends React.Component {
     this.setShow = this.props.setShow
     this.state = {
         players: 1,
-        cartographs: 0
+        cartographs: 0,
+        admins: 0
     }
   }
 
     setPlayers = () => {
         this.state = {
             players: 1,
-            cartographs: 0
+            cartographs: 0,
+            admins: 0
         }
         this.setState(this.state);
     }
@@ -23,10 +25,20 @@ class AllUsersWindow extends React.Component {
     setCartographs = () => {
         this.state = {
             players: 0,
-            cartographs: 1
+            cartographs: 1,
+            admins: 0
         }
         this.setState(this.state);
     }
+
+    setAdmins = () => {
+      this.state = {
+          players: 0,
+          cartographs: 0,
+          admins: 1
+      }
+      this.setState(this.state);
+    } 
 
     async componentDidMount() {        
         try {
@@ -42,19 +54,34 @@ class AllUsersWindow extends React.Component {
         }
 
         try {
-            let res = await fetch('/api/allCartographs');
-            let result = await res.json();
-      
-            if (result) {
-              this.setState({
-                  cartographList: result
-              });
-            }
-          } catch (e) {
+          let res = await fetch('/api/allCartographs');
+          let result = await res.json();
+    
+          if (result) {
+            this.setState({
+                cartographList: result
+            });
           }
+        } catch (e) {
+        }
+
+        try {
+          let res = await fetch('/api/allAdmins');
+          let result = await res.json();
+    
+          if (result) {
+            this.setState({
+                adminList: result
+            });
+          }
+        } catch (e) {
+        }
     }
 
   render() {
+    if (this.state.playerList === undefined)
+      return (<Loader />);
+    else
       return (
         <div className="overlayRequest">
           <div className="modalRequest">
@@ -75,6 +102,11 @@ class AllUsersWindow extends React.Component {
                     style={{cursor:'pointer'}}>
                     Cartographs
                 </div>
+                <div className="buttons" 
+                    onClick={() => this.setAdmins()}
+                    style={{cursor:'pointer'}}>
+                    Admins
+                </div>
               </div>
                 <hr />
               {this.state.players === 1 &&
@@ -94,6 +126,16 @@ class AllUsersWindow extends React.Component {
                             onClick={() => {}}  
                         >
                             {cartograph.username}
+                        </div>
+                    ))
+              }
+              {this.state.admins === 1 &&
+                    this.state.adminList.map((admin) => (
+                        <div 
+                            className="text-center text-sm usernames p-3  box-shadow cursor-pointer"
+                            onClick={() => {}}  
+                        >
+                            {admin.username}
                         </div>
                     ))
               }

@@ -1,4 +1,5 @@
 import React from 'react'
+import Loader from '../components/Loader'
 import PlayerProfile from '../components/PlayerProfile'
 import CartographProfile from '../components/CartographProfile'
 import AdminProfile from '../components/AdminProfile'
@@ -14,13 +15,7 @@ class ProfilePage extends React.Component {
         this.promoteWindow = 0;
         this.allUsersWindow = 0;
         this.locationsInPerson = 0;
-        this.state = {
-            username: "lukas",
-            email: "lb@fer.hr",
-            photoLink: "",
-            authorityLevel: "cartograph",
-            show: false
-        };
+        this.state = {}
     }
 
     async componentDidMount() {
@@ -83,6 +78,8 @@ class ProfilePage extends React.Component {
     
 
     render() {
+        if (this.state.authorityLevel === undefined)
+            return <Loader />
         if (this.state.authorityLevel === 'player')
             return (<PlayerProfile />);
         if (this.state.authorityLevel === 'cartograph')

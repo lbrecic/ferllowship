@@ -5,10 +5,9 @@ class LocationRequests extends React.Component {
         super(props);
         this.setShow = this.props.setShow;
         this.setRequest = this.props.setRequest;
-    }
-
-    state = {
-        locations: null
+        this.state = {
+            locations: null
+        }    
     }
 
     async componentDidMount() {        
@@ -23,12 +22,14 @@ class LocationRequests extends React.Component {
           }
         } catch (e) {
         }
+
+        console.log(this.state.locations !== null && this.state.locations[0] !== null)
     }
 
 
     render() {
 
-        if (this.state.locations !== null)
+        if (this.state.locations !== null && this.state.locations[0] !== null)
             return (
                 <div id="requests">
                     <div 
@@ -56,7 +57,7 @@ class LocationRequests extends React.Component {
                         Zahtjevi za lokaciju
                     </div>
                     <div className="h-8"></div>
-                        Nema novih zahtjeva za prijavu lokacije
+                    <div className="text-center">Nema novih zahtjeva za prijavu lokacije</div>
                 </div>
             );             
     }

@@ -24,10 +24,12 @@ class LocationsInPerson extends React.Component {
           }
         } catch (e) {
         }
+
+        console.log(this.state.locations !== null && this.state.locations[0] !== null);
     }
 
   render() {
-    if (this.state.locations !== null)
+    if (this.state.locations !== null && this.state.locations[0] !== null)
       return (
         <div className="overlayRequest">
             <div className="modalRequest">
