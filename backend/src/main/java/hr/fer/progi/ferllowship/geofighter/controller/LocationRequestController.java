@@ -67,7 +67,7 @@ public class LocationRequestController {
 		return new MessageDTO("Zahtjev uspješno zaprimljen.");
 	}
 
-	@PreAuthorize("hasAnyRole('ADMIN','CARTOGRAPH')")
+	@PreAuthorize("hasAnyRole('ADMIN','CARTOGRAPH','PLAYER')")
 	@GetMapping(path = "/location/requests")
 	public List<LocationDTO> getRequestsWithStatus(@RequestParam int status) {
 		List<LocationDTO> response = new ArrayList<>();
