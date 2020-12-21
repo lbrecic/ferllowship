@@ -86,6 +86,8 @@ class GlobalStatsTable extends React.Component {
           data={this.state.playerList}
           title=""
           options={{
+            toolbar: false,
+            search: false,
             paging: false,
             rowStyle: (rowData) => ({
               backgroundColor: "#D8E1D9",
