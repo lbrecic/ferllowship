@@ -73,16 +73,8 @@ public class PlayerController {
 	public MessageDTO editProfile(/*@RequestParam("username") String username,
 								  @RequestParam("password") String password,
 								  @RequestParam("oldPassword") String oldPassword,
-<<<<<<< HEAD
-								  @RequestParam("email") String email
-								  //@RequestParam MultipartFile picture
-									/* parametri gore su za testiranje!
-									 * mozda je potrebna izmjena prije povezivanja s frontendom
-									@RequestPart String username,
-=======
 								  @RequestParam("email") String email*/
 //									@RequestPart String username,
->>>>>>> backend
 									@RequestPart String password,
 									@RequestPart String oldPassword,
 									@RequestPart String email,

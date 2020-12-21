@@ -4,11 +4,13 @@ public class GlobalStatDTO implements Comparable<GlobalStatDTO>{
 
 	private String username;
 	private Integer points;
+	private String photoLink;
 	
-	public GlobalStatDTO(String username, Integer points) {
+	public GlobalStatDTO(String username, Integer points, String photoLink) {
 		super();
 		this.username = username;
 		this.points = points;
+		this.photoLink = photoLink;
 	}
 
 	public String getUsername() {
@@ -26,6 +28,15 @@ public class GlobalStatDTO implements Comparable<GlobalStatDTO>{
 
 	public void setPoints(Integer points) {
 		this.points = points;
+	}
+	
+
+	public String getPhotoLink() {
+		return photoLink;
+	}
+
+	public void setPhotoLink(String photoLink) {
+		this.photoLink = photoLink;
 	}
 
 	@Override

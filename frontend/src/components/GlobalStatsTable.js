@@ -2,7 +2,6 @@ import React from "react";
 import Loader from "./Loader";
 import MaterialTable from "material-table";
 import "../styles/GlobalStatsTable.css";
-import { faFont } from "@fortawesome/free-solid-svg-icons";
 
 class GlobalStatsTable extends React.Component {
   constructor(props) {
@@ -14,7 +13,7 @@ class GlobalStatsTable extends React.Component {
 
   async componentDidMount() {
     try {
-      let res = await fetch("/api/allPlayers");
+      let res = await fetch("/api/stats/global");
       let result = await res.json();
 
       if (result) {
@@ -79,13 +78,15 @@ class GlobalStatsTable extends React.Component {
                 backgroundColor: "#98AF97",
                 zIndex: 0,
               },
-              defaultSort: "desc",
+             //defaultSort: "desc",
               sorting: false,
+
             },
           ]}
           data={this.state.playerList}
-          title="Globalna statistika"
+          title=""
           options={{
+            paging: false,
             rowStyle: (rowData) => ({
               backgroundColor: "#D8E1D9",
               zIndex: 0,

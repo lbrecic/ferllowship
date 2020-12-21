@@ -2,6 +2,7 @@ package hr.fer.progi.ferllowship.geofighter.controller;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,11 +58,15 @@ public class StatsController {
 		
 		List<PlayerDTO> allPlayers = playerService.getAllPlayers();
 		for (PlayerDTO player : allPlayers) {
-			stats.add(new GlobalStatDTO(player.getUsername(), player.getPoints()));
+			stats.add(new GlobalStatDTO(player.getUsername(), player.getPoints(), player.getPhotoLink()));
 		}
 		
-		Collections.sort(stats);
-		
+		Collections.sort(stats, new Comparator<GlobalStatDTO>() {
+			@Override
+			  public int compare(GlobalStatDTO u1, GlobalStatDTO u2) {
+			    return u2.getPoints() - u1.getPoints();
+			  }
+		});		
 		return stats;
 	}
 	
