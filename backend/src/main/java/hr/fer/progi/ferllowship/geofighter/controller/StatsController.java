@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -31,7 +32,6 @@ public class StatsController {
 	@GetMapping("/stats/personal")
 	public PersonalStatsDTO getPersonalStats() {
 		Player player = playerService.getLoggedInPlayer();
-		
 		List<Fight> allFights = fightRepository.findAll();
 		Integer fightsParticipatedIn = 0;
 		Integer fightsWon = 0;
