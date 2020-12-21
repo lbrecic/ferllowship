@@ -4,19 +4,17 @@ import "../styles/EditProfile.css";
 import ImageUploader from "react-images-upload";
 import { toast } from 'react-toastify';
 
-const USERNAME_MAX_LENGTH = 128;
+//const USERNAME_MAX_LENGTH = 128;
 const EMAIL_MAX_LENGTH = 128;
 const PASSWORD_MIN_LENGTH = 8;
 const PASSWORD_MAX_LENGTH = 128;
-
-/*  TO DO:  PRILAGODBA PROZORA ZA EDIT */
             
 class EditProfile extends React.Component {
     
     constructor(props){
         super(props);
         this.state = {
-            username: "",
+           // username: "",
             password: "",
             oldPassword: "",
             email: "",
@@ -24,7 +22,7 @@ class EditProfile extends React.Component {
             pictures:[],
             show: false,
             changedPassword: false,
-            chanedUsername: false,
+            //chanedUsername: false,
             changedPicture: false,
             open: false
         };
@@ -50,7 +48,7 @@ class EditProfile extends React.Component {
     
             if (result && !result.error) {
                 this.setState({
-                username: result.username,
+                //username: result.username,
                 //password: result.password,
                 email: result.email,
                 photoLink: result.photoLink
@@ -58,7 +56,7 @@ class EditProfile extends React.Component {
             }
         } catch (e) {}
     }
-
+/*
     setInputValueUsername(val) {
         this.setState({
           username: val,
@@ -66,7 +64,7 @@ class EditProfile extends React.Component {
         });
         
     }
-    
+  */  
     setInputValueEmail(val) {
         this.setState({
           email: val,
@@ -87,10 +85,10 @@ class EditProfile extends React.Component {
 
     validate() {
         let isValid = true;
-        if (this.state.username.length > USERNAME_MAX_LENGTH) {
+        /*if (this.state.username.length > USERNAME_MAX_LENGTH) {
             isValid = false;
             toast("Korisničko ime je predugačko.");
-        }
+        }*/
         if(this.state.changedPassword){
             if (this.state.password.length < PASSWORD_MIN_LENGTH) {
                 isValid = false;
@@ -127,10 +125,10 @@ class EditProfile extends React.Component {
     async edit(){
         
         const formData = new FormData();
-        if(this.state.chanedUsername){    
+        /*if(this.state.chanedUsername){    
             formData.append("username", this.state.username);
         }else
-            formData.append("username", "");
+            formData.append("username", "");*/
 
         formData.append("oldPassword", this.state.oldPassword);
         formData.append("password", this.state.password);
@@ -167,7 +165,7 @@ class EditProfile extends React.Component {
                 <div className="modal-contentEdit">
                     <div className="registerTitle">Uredi profil</div>
                     <form onSubmit={this.mySubmitHandler} >
-                        <div className="registerDivEdit">
+                        {/*<div className="registerDivEdit">
                             <div className="editInput">
                                 Username: </div>
                             <div className="inputEdit1">
@@ -178,7 +176,7 @@ class EditProfile extends React.Component {
                             />
                             </div>
                             
-                        </div>
+        </div>*/}
                         <div className="registerDivEdit">
                         <div className="editInput">
                                 Email: </div>
