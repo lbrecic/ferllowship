@@ -2,6 +2,7 @@ package hr.fer.progi.ferllowship.geofighter.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import hr.fer.progi.ferllowship.geofighter.dao.PlayerRepository;
 import hr.fer.progi.ferllowship.geofighter.dto.CardDTO;
@@ -67,17 +70,15 @@ public class PlayerController {
 	 */
 	@PreAuthorize("hasAnyRole('ADMIN','CARTOGRAPH','PLAYER')")
 	@PostMapping(path = "/profile/edit")
-	public MessageDTO editProfile(@RequestParam("username") String username,
+	public MessageDTO editProfile(/*@RequestParam("username") String username,
 								  @RequestParam("password") String password,
 								  @RequestParam("oldPassword") String oldPassword,
-								  @RequestParam("email") String email
-									/* parametri gore su za testiranje!
-									 * mozda je potrebna izmjena prije povezivanja s frontendom
-									@RequestPart String username,
+								  @RequestParam("email") String email*/
+//									@RequestPart String username,
 									@RequestPart String password,
 									@RequestPart String oldPassword,
 									@RequestPart String email,
-									@RequestPart MultipartFile picture*/)
+									@RequestPart MultipartFile picture)
 			throws IOException {
 
 		Player player = playerService.getLoggedInPlayer();
@@ -87,12 +88,12 @@ public class PlayerController {
 				return new MessageDTO("Unesena pogrešna lozinka!");
 			}
 		}
-		if (!username.isBlank()) {
-			if (playerRepository.findByUsername(username) != null) {
-				return new MessageDTO("Željeno ime je već zauzeto.");
-			}
-			player.setUsername(username);
-		}
+//		if (!username.isBlank()) {
+//			if (playerRepository.findByUsername(username) != null) {
+//				return new MessageDTO("Željeno ime je već zauzeto.");
+//			}
+//			player.setUsername(username);
+//		}
 		if (!password.isBlank()) {
 			
 			player.setPasswordHash(passwordEncoder.encode(password));
@@ -102,9 +103,10 @@ public class PlayerController {
 		if (!email.isBlank()) {
 			player.setEmail(email);
 		}
-//		if (picture != null) {
-//			player.setPhotoLink(cloudinaryService.upload(picture.getBytes()));
-//		}
+		byte comparisonBytes[] = new byte[0] /*{0x1a, 0x1c}*/;
+		if (!Arrays.equals(picture.getBytes(), comparisonBytes)) {
+			player.setPhotoLink(cloudinaryService.upload(picture.getBytes()));
+		}
 
 		playerRepository.save(player);
 
