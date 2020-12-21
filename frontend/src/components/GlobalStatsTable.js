@@ -41,11 +41,11 @@ class GlobalStatsTable extends React.Component {
                 backgroundColor: "#98AF97",
                 zIndex: 0,
                 fontFamily: "Arial, Helvetica,sans-serif",
-                textAlign: "center"
+                textAlign: "center",
               },
               cellStyle: {
-                textAlign: "center"
-                },
+                textAlign: "center",
+              },
               sorting: false,
               render: (rowData) => <span> {rowData.tableData.id + 1}</span>,
             },
@@ -56,19 +56,24 @@ class GlobalStatsTable extends React.Component {
                 <img
                   src={rowData.photoLink}
                   alt="avatar"
-                  style={{ width: 50, borderRadius: "50%", marginLeft : "auto", marginRight : "auto"}}
+                  style={{
+                    width: 50,
+                    borderRadius: "50%",
+                    marginLeft: "auto",
+                    marginRight: "auto",
+                  }}
                 />
               ),
               headerStyle: {
                 fontSize: 18,
                 backgroundColor: "#98AF97",
                 zIndex: 0,
-                textAlign: "center"
+                textAlign: "center",
               },
               sorting: false,
               cellStyle: {
-                alignContent : "right",
-                },
+                alignContent: "right",
+              },
             },
 
             {
@@ -78,12 +83,12 @@ class GlobalStatsTable extends React.Component {
                 fontSize: 18,
                 backgroundColor: "#98AF97",
                 zIndex: 0,
-                textAlign: "center"
+                textAlign: "center",
               },
               sorting: false,
               cellStyle: {
-                textAlign: "center"
-                },
+                textAlign: "center",
+              },
             },
             {
               title: "Broj bodova",
@@ -95,11 +100,11 @@ class GlobalStatsTable extends React.Component {
                 fontSize: 18,
                 zIndex: 0,
               },
-             //defaultSort: "desc",
+              //defaultSort: "desc",
               sorting: false,
               cellStyle: {
-                textAlign: "center"
-                },
+                textAlign: "center",
+              },
             },
           ]}
           data={this.state.playerList}
@@ -115,7 +120,7 @@ class GlobalStatsTable extends React.Component {
               fontFamily: "Arial, Helvetica,sans-serif",
             }),
             cellStyle: {
-                alignContent: "center"
+              alignContent: "center",
             },
           }}
         />
