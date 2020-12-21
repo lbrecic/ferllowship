@@ -1,12 +1,10 @@
 package hr.fer.progi.ferllowship.geofighter.controller;
 
-import java.time.Duration;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import hr.fer.progi.ferllowship.geofighter.dao.FightRepository;
-import hr.fer.progi.ferllowship.geofighter.dao.PlayerRepository;
 import hr.fer.progi.ferllowship.geofighter.dto.FightDTO;
 import hr.fer.progi.ferllowship.geofighter.dto.GlobalStatsDTO;
 import hr.fer.progi.ferllowship.geofighter.dto.PersonalStatsDTO;
@@ -33,32 +30,27 @@ public class StatsController {
 	@Autowired
 	private FightRepository fightRepository;
 
-	@Autowired
-	private PlayerRepository playerRepository;
-
 	@PreAuthorize("hasAnyRole('ADMIN','CARTOGRAPH','PLAYER')")
 	@GetMapping("/stats/fights")
 	public List<FightDTO> getAllFights() {
 		Player player = playerService.getLoggedInPlayer();
-		List<FightDTO> fights = new ArrayList<>();
 
-		List<Fight> allFights = fightRepository.findAll();
-		for (Fight fight : allFights) {
-			if (fight.getWinner().getUsername().equals(player.getUsername()) ||
-				fight.getLoser().getUsername().equals(player.getUsername())) {
-
-				fights.add(new FightDTO(
+		return fightRepository.findAll().stream()
+			.filter(fight ->
+				fight.getWinner().getUsername().equals(player.getUsername()) ||
+				fight.getLoser().getUsername().equals(player.getUsername())
+			)
+			.map(fight ->
+				new FightDTO(
 					fight.getStart().atZone(ZoneId.systemDefault()).toEpochSecond(),
 					fight.getDuration().getSeconds(),
 					playerService.playerToPlayerDTO(fight.getWinner()),
 					playerService.playerToPlayerDTO(fight.getLoser())
-				));
-			}
-		}
-
-		fights.sort(Comparator.comparing(FightDTO::getStart).reversed());
-
-		return fights.subList(0, Math.min(fights.size(), 10));
+				)
+			)
+			.sorted(Comparator.comparing(FightDTO::getStart).reversed())
+			.limit(10)
+			.collect(Collectors.toList());
 	}
 	
 	@PreAuthorize("hasAnyRole('ADMIN','CARTOGRAPH','PLAYER')")
@@ -79,7 +71,6 @@ public class StatsController {
 		}
 
 		List<PlayerDTO> allPlayers = playerService.getAllPlayers();
-
 		allPlayers.sort(Comparator.comparing(PlayerDTO::getPoints).reversed());
 		Integer rank = IntStream.range(0, allPlayers.size())
 			.filter(i -> allPlayers.get(i).getUsername().equals(player.getUsername()))
@@ -107,7 +98,6 @@ public class StatsController {
 			stats.add(new GlobalStatsDTO(player.getUsername(), player.getPoints(), player.getPhotoLink()));
 		}
 
-		System.out.println(stats);
 		stats.sort(Comparator.comparing(GlobalStatsDTO::getPoints).reversed());
 
 		int rank = 1;
