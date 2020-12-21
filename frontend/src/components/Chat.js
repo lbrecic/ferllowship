@@ -3,6 +3,10 @@ import Header from './Header';
 import Footer from './Footer';
 import '../styles/Chat.css'
 
+/**
+ * TO DO
+ * kako maknuti igraca iz aktivnih igraca?? (da igrac ne vidi sam sebe na popisu akivnih)
+ */
 class Chat extends React.Component {
     state = {
         playerList: [],
