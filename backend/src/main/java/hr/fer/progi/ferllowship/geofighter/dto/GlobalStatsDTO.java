@@ -1,13 +1,16 @@
 package hr.fer.progi.ferllowship.geofighter.dto;
 
-public class GlobalStatDTO implements Comparable<GlobalStatDTO>{
+public class GlobalStatsDTO {
 
 	private String username;
+
 	private Integer points;
+
 	private String photoLink;
+
+	private Integer rank;
 	
-	public GlobalStatDTO(String username, Integer points, String photoLink) {
-		super();
+	public GlobalStatsDTO(String username, Integer points, String photoLink) {
 		this.username = username;
 		this.points = points;
 		this.photoLink = photoLink;
@@ -21,7 +24,6 @@ public class GlobalStatDTO implements Comparable<GlobalStatDTO>{
 		this.username = username;
 	}
 
-
 	public Integer getPoints() {
 		return points;
 	}
@@ -29,7 +31,6 @@ public class GlobalStatDTO implements Comparable<GlobalStatDTO>{
 	public void setPoints(Integer points) {
 		this.points = points;
 	}
-	
 
 	public String getPhotoLink() {
 		return photoLink;
@@ -39,9 +40,12 @@ public class GlobalStatDTO implements Comparable<GlobalStatDTO>{
 		this.photoLink = photoLink;
 	}
 
-	@Override
-	public int compareTo(GlobalStatDTO o) {
-		return this.points.compareTo(o.points);
+	public Integer getRank() {
+		return rank;
+	}
+
+	public void setRank(Integer rank) {
+		this.rank = rank;
 	}
 	
 }
