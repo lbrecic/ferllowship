@@ -37,10 +37,15 @@ class GlobalStatsTable extends React.Component {
               field: "rang",
               type: "numeric",
               headerStyle: {
+                fontSize: 18,
                 backgroundColor: "#98AF97",
                 zIndex: 0,
                 fontFamily: "Arial, Helvetica,sans-serif",
+                textAlign: "center"
               },
+              cellStyle: {
+                textAlign: "center"
+                },
               sorting: false,
               render: (rowData) => <span> {rowData.tableData.id + 1}</span>,
             },
@@ -51,36 +56,50 @@ class GlobalStatsTable extends React.Component {
                 <img
                   src={rowData.photoLink}
                   alt="avatar"
-                  style={{ width: 50, borderRadius: "50%" }}
+                  style={{ width: 50, borderRadius: "50%", marginLeft : "auto", marginRight : "auto"}}
                 />
               ),
               headerStyle: {
+                fontSize: 18,
                 backgroundColor: "#98AF97",
                 zIndex: 0,
+                textAlign: "center"
               },
               sorting: false,
+              cellStyle: {
+                alignContent : "right",
+                },
             },
 
             {
               title: "Korisničko ime",
               field: "username",
               headerStyle: {
+                fontSize: 18,
                 backgroundColor: "#98AF97",
                 zIndex: 0,
+                textAlign: "center"
               },
               sorting: false,
+              cellStyle: {
+                textAlign: "center"
+                },
             },
             {
               title: "Broj bodova",
               field: "points",
               type: "numeric",
               headerStyle: {
+                textAlign: "center",
                 backgroundColor: "#98AF97",
+                fontSize: 18,
                 zIndex: 0,
               },
              //defaultSort: "desc",
               sorting: false,
-
+              cellStyle: {
+                textAlign: "center"
+                },
             },
           ]}
           data={this.state.playerList}
@@ -90,10 +109,14 @@ class GlobalStatsTable extends React.Component {
             search: false,
             paging: false,
             rowStyle: (rowData) => ({
+              fontSize: 18,
               backgroundColor: "#D8E1D9",
               zIndex: 0,
               fontFamily: "Arial, Helvetica,sans-serif",
             }),
+            cellStyle: {
+                alignContent: "center"
+            },
           }}
         />
       </div>
