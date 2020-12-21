@@ -1,30 +1,30 @@
 import React from 'react';
-import Header from '../Header';
-import Footer from '../Footer';
-import './pokusaj.css'
+import Header from './Header';
+import Footer from './Footer';
+import '../styles/Chat.css'
 
 class Chat extends React.Component {
     state = {
-        playerList: ["Igrac1", "Igrac2"],
+        playerList: [],
         title: "",
         text: ""
     }
 
     setTitle(player){
         this.setState({
-            title: player,
+            title: player.username,
             text: "Ovo je text"
         });
     }
 
     setFight(player){
         this.setState({
-            title: player + "-borba",
+            title: player.username + "-borba",
             text: "ovo je borba"
         });
     }
 
-    /*
+    
     async componentDidMount() {        
         try {
           let res = await fetch('/api/active');
@@ -38,7 +38,7 @@ class Chat extends React.Component {
         } catch (e) {
         }
     }
-*/
+
 render(){
     return (
         
@@ -60,7 +60,7 @@ render(){
                                     <div className="player">
                                         <div className="player-center">
                                             <text  onClick={() => this.setTitle(player)} >
-                                                {player}
+                                                {player.username}
                                             </text>
                                             <button className="userBtn" onClick={() => this.setFight(player)}>
                                                 Borba
@@ -88,40 +88,9 @@ render(){
                         </div>
                         
                     </div>
-
-                    
-                    
                 </div>
             <Footer />
-        </div>
-
-                 /*
-        
-            <div id="chat-container">
-                <div id="search-container">
-                    <input type="text" placeholder="Search" />
-                </div>
-                <div id="conversation-list">
-
-                </div>
-                <div id="new-message-container">
-                    <a href="#">+</a>
-                </div>
-                <div id="chat-title">
-
-                </div>
-                <div id="chat-message-list">
-
-                </div>
-                <div id="chat-form">
-
-                </div>
-
-            </div>
-            
-*/
-        
-            
+        </div>      
     );}
 }
 

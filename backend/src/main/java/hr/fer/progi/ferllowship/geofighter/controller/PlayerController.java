@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import hr.fer.progi.ferllowship.geofighter.dao.PlayerRepository;
 import hr.fer.progi.ferllowship.geofighter.dto.CardDTO;
@@ -71,6 +72,7 @@ public class PlayerController {
 								  @RequestParam("password") String password,
 								  @RequestParam("oldPassword") String oldPassword,
 								  @RequestParam("email") String email
+								  //@RequestParam MultipartFile picture
 									/* parametri gore su za testiranje!
 									 * mozda je potrebna izmjena prije povezivanja s frontendom
 									@RequestPart String username,

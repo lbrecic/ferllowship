@@ -1,7 +1,7 @@
 import React from "react";
 import InputField from "./InputField";
 import "../styles/EditProfile.css";
-
+import ImageUploader from "react-images-upload";
 import { toast } from 'react-toastify';
 
 const USERNAME_MAX_LENGTH = 128;
@@ -9,20 +9,39 @@ const EMAIL_MAX_LENGTH = 128;
 const PASSWORD_MIN_LENGTH = 8;
 const PASSWORD_MAX_LENGTH = 128;
 
-/*  TO DO:  PROMJENA SLIKE? */
+/*  TO DO:  PRILAGODBA PROZORA ZA EDIT */
             
 class EditProfile extends React.Component {
     
-    state = {
-        username: "",
-        password: "",
-        oldPassword: "",
-        email: "",
-        photoLink: "",
-        show: false,
-        changedPassword: false,
-        chanedUsername: false
-    };
+    constructor(props){
+        super(props);
+        this.state = {
+            username: "",
+            password: "",
+            oldPassword: "",
+            email: "",
+            photoLink: "",
+            pictures:[],
+            show: false,
+            changedPassword: false,
+            chanedUsername: false,
+            changedPicture: false,
+            open: false
+        };
+        this.onDrop = this.onDrop.bind(this);
+    }
+
+    toggle() {
+        this.setState({
+          open: !this.state.open
+        });
+    }
+    onDrop(picture) {
+        this.setState({
+          pictures: this.state.pictures.concat(picture),
+          changedPicture: !this.state.changedPicture
+        });
+    }
     
     async componentDidMount() {        
         try {
@@ -34,7 +53,7 @@ class EditProfile extends React.Component {
                 username: result.username,
                 //password: result.password,
                 email: result.email,
-                //photoLink: result.photoLink
+                photoLink: result.photoLink
                 });
             }
         } catch (e) {}
@@ -60,7 +79,7 @@ class EditProfile extends React.Component {
           [property]: val,
           changedPassword: true
         });
-      }
+    }
 
     onClose = (e) => {
         this.props.onClose && this.props.onClose(e);
@@ -98,11 +117,11 @@ class EditProfile extends React.Component {
 
     mySubmitHandler = (event) => {
         
+        event.preventDefault();
         if(this.validate()){
             this.edit();
-        } else{
-            event.preventDefault();
         }
+        
     }
    
     async edit(){
@@ -116,6 +135,9 @@ class EditProfile extends React.Component {
         formData.append("oldPassword", this.state.oldPassword);
         formData.append("password", this.state.password);
         formData.append("email", this.state.email);
+        
+        formData.append("picture", this.state.pictures[0]);
+        
     
         try {
             let res = await fetch('/api/profile/edit', {
@@ -180,7 +202,44 @@ class EditProfile extends React.Component {
                                 placeholder='Nova lozinka'
                                 onChange={(val) => this.setInputValuePassword('password', val)}
                             />       
+                        </div>
+                        <div className={"pictureDiv" + (this.state.open ? ' in' : '')}>
+                            <div className="pictureEdit">
+                                <img
+                                src={this.state.photoLink}
+                                alt="logo"
+                                className="box-shadow imageEdit" 
+                                />
+                                <div className="pictureChange" onClick={this.toggle.bind(this)}>
+                                    <div className="textEdit">
+                                    Promijeni sliku
+                                    </div>
+                                </div>
+                                
                             </div>
+                        </div>
+                        
+                        <div className="pictureDiv">
+                            
+                            <div className={"collapse" + (this.state.open ? ' in' : '')}>
+                                <p className="imgText"
+                                onClick={this.toggle.bind(this)}>
+                                    Priloži sliku profila:</p>
+                                <div className="lijepi-obrub">
+                                    <ImageUploader className="uploadWindow"
+                                        singleImage={true}
+                                        withIcon={false}
+                                        withLabel={false}
+                                        withPreview={true}
+                                        buttonText="Izaberi sliku"
+                                        onChange={this.onDrop}
+                                        imgExtension={[".jpg", ".gif", ".png", ".gif", ".jpeg"]}
+                                        maxFileSize={5242880}
+                                    />
+                        
+                                </div>
+                            </div>
+                        </div>
                           
                         <div className="btnDiv">
                         <button className="btn editBtn" type='submit' > 
