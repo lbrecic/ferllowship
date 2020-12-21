@@ -42,10 +42,6 @@ public class Player {
 	@Column
 	private Integer experience;
 	
-	@OneToMany(targetEntity = Fight.class, fetch = FetchType.EAGER)
-	@JoinColumn(name = "fight_id")
-	private List<Fight> fights;
-	
 	@OneToMany(targetEntity = Card.class, fetch = FetchType.EAGER)
 	@JoinColumn(name = "card_id")
 	private List<Card> deck;
@@ -62,7 +58,6 @@ public class Player {
 		enabled = false;
 		activity = false;
 		experience = 0;
-		fights = new ArrayList<>();
 		deck = new ArrayList<>();
 	}
 	
@@ -153,18 +148,12 @@ public class Player {
 		return experience;
 	}
 
-	public void setExperience(Integer expirience) {
-		this.experience = expirience;
-	}
-
-	public List<Fight> getFights() {
-		return fights;
+	public void setExperience(Integer experience) {
+		this.experience = experience;
 	}
 
 	public List<Card> getDeck() {
 		return deck;
 	}
-	
-	
 	
 }

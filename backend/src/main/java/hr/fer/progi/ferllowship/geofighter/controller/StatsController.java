@@ -1,5 +1,9 @@
 package hr.fer.progi.ferllowship.geofighter.controller;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -11,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import hr.fer.progi.ferllowship.geofighter.dao.FightRepository;
+import hr.fer.progi.ferllowship.geofighter.dao.PlayerRepository;
 import hr.fer.progi.ferllowship.geofighter.dto.FightDTO;
 import hr.fer.progi.ferllowship.geofighter.dto.GlobalStatsDTO;
 import hr.fer.progi.ferllowship.geofighter.dto.PersonalStatsDTO;
@@ -28,6 +33,9 @@ public class StatsController {
 	@Autowired
 	private FightRepository fightRepository;
 
+	@Autowired
+	private PlayerRepository playerRepository;
+
 	@PreAuthorize("hasAnyRole('ADMIN','CARTOGRAPH','PLAYER')")
 	@GetMapping("/stats/fights")
 	public List<FightDTO> getAllFights() {
@@ -40,8 +48,8 @@ public class StatsController {
 				fight.getLoser().getUsername().equals(player.getUsername())) {
 
 				fights.add(new FightDTO(
-					fight.getStart(),
-					fight.getDuration(),
+					fight.getStart().atZone(ZoneId.systemDefault()).toEpochSecond(),
+					fight.getDuration().getSeconds(),
 					playerService.playerToPlayerDTO(fight.getWinner()),
 					playerService.playerToPlayerDTO(fight.getLoser())
 				));
@@ -50,7 +58,7 @@ public class StatsController {
 
 		fights.sort(Comparator.comparing(FightDTO::getStart).reversed());
 
-		return fights.subList(0, 10);
+		return fights.subList(0, Math.min(fights.size(), 10));
 	}
 	
 	@PreAuthorize("hasAnyRole('ADMIN','CARTOGRAPH','PLAYER')")
@@ -71,6 +79,7 @@ public class StatsController {
 		}
 
 		List<PlayerDTO> allPlayers = playerService.getAllPlayers();
+
 		allPlayers.sort(Comparator.comparing(PlayerDTO::getPoints).reversed());
 		Integer rank = IntStream.range(0, allPlayers.size())
 			.filter(i -> allPlayers.get(i).getUsername().equals(player.getUsername()))
@@ -98,6 +107,7 @@ public class StatsController {
 			stats.add(new GlobalStatsDTO(player.getUsername(), player.getPoints(), player.getPhotoLink()));
 		}
 
+		System.out.println(stats);
 		stats.sort(Comparator.comparing(GlobalStatsDTO::getPoints).reversed());
 
 		int rank = 1;
