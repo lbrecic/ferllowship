@@ -5,6 +5,7 @@ import Footer from '../components/Footer';
 import logo from '../logo.svg';
 import '../styles/App.css';
 import '../styles/HomePage.css';
+import { Link } from "react-router-dom";
 
 function HomePage() {
     return (
@@ -12,9 +13,9 @@ function HomePage() {
         <Header />
         <div className="App-header background-color">
           <img src={logo} className="App-logo animate-pulse" alt="logo" />
-          <button className="btnFight" onClick={() => {}}>
+          <Link className="btnFight" to="/chat">
               Bori se!
-          </button>
+          </Link>
         </div>
         <Footer />
       </div>

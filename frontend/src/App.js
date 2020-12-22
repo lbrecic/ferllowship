@@ -9,7 +9,7 @@ import HelpPage from './pages/HelpPage';
 import GlobalStatsPage from './pages/GlobalStatsPage';
 import StatsPage from './pages/StatsPage';
 import LoginPage from './pages/LoginPage';
-import Chat from './components/pokusaj/Chat';
+import Chat from './components/Chat';
 import './styles/tailwind.css';
 import './styles/App.css';
 import { ToastContainer } from 'react-toastify';
