@@ -25,7 +25,7 @@ public class Fight {
 	private Player winner;
 	
 	@ManyToOne(targetEntity = Player.class, fetch = FetchType.EAGER)
-	@JoinColumn(name = "loser_id", insertable = false, updatable = false)
+	@JoinColumn(name = "loser_id")
 	private Player loser;
 	
 	public Fight(LocalDateTime start, Duration duration, Player winner, Player loser) {

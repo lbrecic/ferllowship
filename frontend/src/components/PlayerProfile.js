@@ -10,37 +10,19 @@ import "../styles/PlayerProfile.css";
 
 class PlayerProfile extends React.Component {
 
-  // constructor(props) {
-  //   super(props);
-  //   this.username = this.props.username;
-  //   this.email = this.props.email;
-  //   this.photoLink = this.props.photoLink;
-  //   this.authorityLevel = this.props.authorityLevel;
-  // } 
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: this.props.user.username,
+      email: this.props.user.email,
+      photoLink: this.props.user.photoLink,
+      anotherPlayer: this.props.user.anotherPlayer,
+      showEdit: false
+    }
+  }
 
-
-  state = {
-    username: "",
-    email: "",
-    photoLink: "",
-    authorityLevel: "",
-    showEdit: false,
-  };
-
-  async componentDidMount() {
-    try {
-      let res = await fetch("/api/player?username=" + localStorage.username);
-      let result = await res.json();
-
-      if (result && !result.error) {
-        this.setState({
-          username: result.username,
-          email: result.email,
-          photoLink: result.photoLink,
-          authorityLevel: result.authorityLevel,
-        });
-      }
-    } catch (e) {}
+  componentDidMount() {
+    console.log(this.state)
   }
 
   showEditWindow = (e) => {
@@ -86,10 +68,13 @@ class PlayerProfile extends React.Component {
               <div className="logo-title">
                 <span className="logo-title-light profileName">
                   {this.state.username}
-                </span>{" "}
-                <br />
+                </span>
                 <span className="logo-title-light email">
                   {this.state.email}
+                </span>
+                <br />
+                <span className="logo-title-light title">
+                  Player
                 </span>
               </div>
             </div>
@@ -115,20 +100,21 @@ class PlayerProfile extends React.Component {
                 </Link>
               </div>
 
-              <p className=" white">
-                <button
-                  className="btnLogout btnEdit"
-                  onClick={(e) => {
-                    this.showEditWindow();
-                  }}
-                >
-                  Uredi profil
-                </button>
-                <EditProfile
-                  show={this.state.showEdit}
-                  onClose={() => this.onCloseEdit()}
-                />
-              </p>
+              {this.state.anotherPlayer === false &&
+                <p className=" white">
+                  <button
+                    className="btnLogout btnEdit"
+                    onClick={(e) => {
+                      this.showEditWindow();
+                    }}
+                  >
+                    Uredi profil
+                  </button>
+                  <EditProfile
+                    show={this.state.showEdit}
+                    onClose={() => this.onCloseEdit()}
+                  />
+                </p>}
             </div>
           </div>
 
@@ -136,7 +122,7 @@ class PlayerProfile extends React.Component {
 
           <div className="w-1/4 form geo-color">
             <div className="h-12"></div>
-            <CartographForm />
+            {this.state.anotherPlayer === false && <CartographForm />}
           </div>
 
         </div>

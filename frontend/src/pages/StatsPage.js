@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from "react-router-dom";
 import Header from '../components/Header';
 import PersonalStats from '../components/PersonalStats';
 
@@ -14,4 +15,4 @@ function StatsPage() {
     );
 }
 
-export default StatsPage;
+export default withRouter(StatsPage);

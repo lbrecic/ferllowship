@@ -19,31 +19,13 @@ class CartographProfile extends React.Component {
     super(props);
     this.locationsInPerson = 0;
     this.showLocationRequest = 0;
-  }
-
-  state = {
-    username: "",
-    email: "",
-    photoLink:
-      "",
-    authorityLevel: "player",
-    showEdit: false,
-    showRequest: false,
-  };
-
-  async componentDidMount() {
-    try {
-      let res = await fetch("/api/player?username=" + localStorage.username);
-      let result = await res.json();
-
-      if (result && !result.error) {
-        this.setState({
-          username: result.username,
-          email: result.email,
-          photoLink: result.photoLink,
-        });
-      }
-    } catch (e) {}
+    this.state = {
+      username: this.props.user.username,
+      email: this.props.user.email,
+      photoLink: this.props.user.photoLink,
+      anotherPlayer: this.props.user.anotherPlayer,
+      showEdit: false
+    }
   }
 
   showEditWindow = (e) => {
@@ -112,20 +94,24 @@ class CartographProfile extends React.Component {
                 <div className="logo-title">
                   <span className="logo-title-light profileName">
                     {this.state.username}
-                  </span>{" "}
-                  <br />
+                  </span>
                   <span className="logo-title-light email">
                     {this.state.email}
                   </span>
+                  <br />
+                  <span className="logo-title-light title">
+                    Cartograph
+                  </span>
                 </div>
-
-                <div className="adminBtns">
-                    <SubmitButton
-                        className="adminBtn"
-                        text="Locations for validation in person"
-                        onClick={() => this.showLocationsInPerson(1)}
-                    />
-                </div>
+                {this.state.anotherPlayer === false &&
+                  <div className="adminBtns">
+                      <SubmitButton
+                          className="adminBtn"
+                          text="Locations for validation in person"
+                          onClick={() => this.showLocationsInPerson(1)}
+                      />
+                  </div>
+                }
               </div>
 
               <div className="links">
@@ -148,30 +134,34 @@ class CartographProfile extends React.Component {
                     </span>
                   </Link>
                 </div>
-
-                <p className=" white">
-                  <button
-                    className="btnLogout btnEdit"
-                    onClick={(e) => {
-                      this.showEditWindow();
-                    }}
-                  >
-                    Uredi profil
-                  </button>
-                  <EditProfile
-                    show={this.state.showEdit}
-                    onClose={() => this.onCloseEdit()}
-                  />
-                </p>
+                
+                {this.state.anotherPlayer === false &&
+                  <p className=" white">
+                    <button
+                      className="btnLogout btnEdit"
+                      onClick={(e) => {
+                        this.showEditWindow();
+                      }}
+                    >
+                      Uredi profil
+                    </button>
+                    <EditProfile
+                      show={this.state.showEdit}
+                      onClose={() => this.onCloseEdit()}
+                    />
+                  </p>
+                }
               </div>
             </div>
 
             <div className="w-1/4 form geo-color requests">
               <div className="h-12"></div>
+              {this.state.anotherPlayer === false &&
                 <LocationRequests
                   setShow={this.setShowLocationRequest}
                   setRequest={this.setLocationRequest}
                 />
+              }
             </div>
           </div>
         </>
@@ -198,10 +188,13 @@ class CartographProfile extends React.Component {
                   <div className="logo-title">
                     <span className="logo-title-light profileName">
                       {this.state.username}
-                    </span>{" "}
-                    <br />
+                    </span>
                     <span className="logo-title-light email">
                       {this.state.email}
+                    </span>
+                    <br />
+                    <span className="logo-title-light title">
+                      Cartograph
                     </span>
                   </div>
   

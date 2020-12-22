@@ -1,5 +1,6 @@
 package hr.fer.progi.ferllowship.geofighter.controller;
 
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -33,25 +34,23 @@ public class StatsController {
 	@GetMapping("/stats/fights")
 	public List<FightDTO> getAllFights() {
 		Player player = playerService.getLoggedInPlayer();
-		List<FightDTO> fights = new ArrayList<>();
 
-		List<Fight> allFights = fightRepository.findAll();
-		for (Fight fight : allFights) {
-			if (fight.getWinner().getUsername().equals(player.getUsername()) ||
-				fight.getLoser().getUsername().equals(player.getUsername())) {
-
-				fights.add(new FightDTO(
-					fight.getStart(),
-					fight.getDuration(),
+		return fightRepository.findAll().stream()
+			.filter(fight ->
+				fight.getWinner().getUsername().equals(player.getUsername()) ||
+				fight.getLoser().getUsername().equals(player.getUsername())
+			)
+			.map(fight ->
+				new FightDTO(
+					fight.getStart().atZone(ZoneId.systemDefault()).toEpochSecond(),
+					fight.getDuration().getSeconds(),
 					playerService.playerToPlayerDTO(fight.getWinner()),
 					playerService.playerToPlayerDTO(fight.getLoser())
-				));
-			}
-		}
-
-		fights.sort(Comparator.comparing(FightDTO::getStart).reversed());
-
-		return fights.subList(0, 10);
+				)
+			)
+			.sorted(Comparator.comparing(FightDTO::getStart).reversed())
+			.limit(10)
+			.collect(Collectors.toList());
 	}
 	
 	@PreAuthorize("hasAnyRole('ADMIN','CARTOGRAPH','PLAYER')")

@@ -5,34 +5,34 @@ import java.time.LocalDateTime;
 
 public class FightDTO {
 
-    private LocalDateTime start;
+    private long start;
 
-    private Duration duration;
+    private long duration;
 
     private PlayerDTO winner;
 
     private PlayerDTO loser;
 
-    public FightDTO(LocalDateTime start, Duration duration, PlayerDTO winner, PlayerDTO loser) {
+    public FightDTO(long start, long duration, PlayerDTO winner, PlayerDTO loser) {
         this.start = start;
         this.duration = duration;
         this.winner = winner;
         this.loser = loser;
     }
 
-    public LocalDateTime getStart() {
+    public long getStart() {
         return start;
     }
 
-    public void setStart(LocalDateTime start) {
+    public void setStart(long start) {
         this.start = start;
     }
 
-    public Duration getDuration() {
+    public long getDuration() {
         return duration;
     }
 
-    public void setDuration(Duration duration) {
+    public void setDuration(long duration) {
         this.duration = duration;
     }
 

@@ -25,6 +25,7 @@ class CartographRequest extends React.Component {
     } catch(e){
         toast("Dogodila se pogreška.");
     }
+    window.location.reload();
   }
 
   async declineApply(){
@@ -37,6 +38,7 @@ class CartographRequest extends React.Component {
     } catch(e){
         toast("Dogodila se pogreška.");
     }
+    window.location.reload();
   }
 
   render() {

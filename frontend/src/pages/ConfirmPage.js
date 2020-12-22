@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from "react-router-dom";
 import logo from '../logo.svg';
 
 const queryString = require('query-string');
@@ -44,4 +45,4 @@ class ConfirmPage extends React.Component {
 
 }
 
-export default ConfirmPage;
+export default withRouter(ConfirmPage);

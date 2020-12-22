@@ -1,4 +1,5 @@
 import React from 'react'
+import { withRouter } from "react-router-dom";
 import Loader from '../components/Loader'
 import PlayerProfile from '../components/PlayerProfile'
 import CartographProfile from '../components/CartographProfile'
@@ -19,8 +20,10 @@ class ProfilePage extends React.Component {
     }
 
     async componentDidMount() {
+        const handle = this.props.match.params.handle;
+
         try {
-          let res = await fetch("/api/player?username=" + localStorage.username);
+          let res = handle === localStorage.username ? await fetch(`/api/player`) : await fetch(`/api/anotherPlayer?username=${handle}`);
           let result = await res.json();
     
           if (result && !result.error) {
@@ -29,6 +32,7 @@ class ProfilePage extends React.Component {
               email: result.email,
               photoLink: result.photoLink,
               authorityLevel: result.authorityLevel,
+              anotherPlayer: handle !== localStorage.username
             });
           }
         } catch (e) {}
@@ -81,11 +85,11 @@ class ProfilePage extends React.Component {
         if (this.state.authorityLevel === undefined)
             return <Loader />
         if (this.state.authorityLevel === 'player')
-            return (<PlayerProfile />);
+            return (<PlayerProfile user={this.state}/>);
         if (this.state.authorityLevel === 'cartograph')
-            return (<CartographProfile />);
+            return (<CartographProfile user={this.state}/>);
         if (this.state.authorityLevel === 'admin')
-            return (<AdminProfile />);
+            return (<AdminProfile user={this.state}/>);
     }
 }
-export default ProfilePage;
+export default withRouter(ProfilePage);

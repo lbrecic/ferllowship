@@ -4,6 +4,8 @@ import "../styles/MapStyle.css";
 import "leaflet/dist/leaflet.css";
 import { Card } from "react-bootstrap";
 
+
+
 class MapOneLocation extends React.Component {
     constructor(props) {
         super(props);
@@ -11,15 +13,15 @@ class MapOneLocation extends React.Component {
         this.location = this.props.location;
         this.state = {
           center: this.props.location.coordinates,
-          zoom: 7
+          zoom: 12
         };
       }
 
   render() {
       return (
           <>
-            <button onClick={() => this.setShow(this.location)} 
-                    style={{alignSelf:'start', margin:'5px'}}>Close</button>
+            <button onClick={() => this.setShow(0)} 
+                    style={{alignSelf:'start'}}>Close</button>
             <div className="mapContainer">
                 <MapContainer center={this.state.center} zoom={this.state.zoom} className="map">
 

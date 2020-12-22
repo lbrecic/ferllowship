@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Redirect, withRouter } from "react-router-dom";
 import HomePage from './pages/HomePage';
 import ProfilePage from './pages/ProfilePage';
 import DeckPage from './pages/DeckPage';
@@ -41,16 +41,16 @@ class App extends React.Component {
       <div className="app">
         <Router>
           <Switch>
-            <LoggedInRoute exact path="/" component={LoginPage}/>
-            <PrivateRoute path="/home" component={HomePage}/>
-            <PrivateRoute path="/profile" component={ProfilePage}/>
-            <PrivateRoute path="/deck" component={DeckPage}/>
-            <PrivateRoute path="/map" component={MapPage}/>
-            <PrivateRoute path="/help" component={HelpPage}/>
-            <PrivateRoute path="/global-stats" component={GlobalStatsPage}/>
-            <PrivateRoute path="/stats" component={StatsPage}/>
-            <PrivateRoute path="/chat" component={Chat}/>
-            <LoggedInRoute path="/confirm" component={ConfirmPage}/>    
+            <LoggedInRoute exact path="/" component={withRouter(LoginPage)}/>
+            <PrivateRoute path="/home" component={withRouter(HomePage)}/>
+            <PrivateRoute exact path='/profile/:handle' component={withRouter(ProfilePage)}/>
+            <PrivateRoute path="/deck" component={withRouter(DeckPage)}/>
+            <PrivateRoute path="/map" component={withRouter(MapPage)}/>
+            <PrivateRoute path="/help" component={withRouter(HelpPage)}/>
+            <PrivateRoute path="/global-stats" component={withRouter(GlobalStatsPage)}/>
+            <PrivateRoute path="/stats" component={withRouter(StatsPage)}/>
+            <PrivateRoute path="/chat" component={withRouter(Chat)}/>
+            <LoggedInRoute path="/confirm" component={withRouter(ConfirmPage)}/>    
           </Switch>
         </Router>
         <ToastContainer
