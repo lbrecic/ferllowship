@@ -1,16 +1,15 @@
 import React from 'react';
 import Header from '../components/Header';
-import Footer from '../components/Footer';
+import PersonalStats from '../components/PersonalStats';
 
 function StatsPage() {
     return (
         <>
+        <div className="stats-page geo-color">
+
             <Header />
-            <div className="h-16"></div>
-            <div className="text-center p-3">
-                this is stats page
-            </div>
-            <Footer />
+            <PersonalStats />
+        </div>
         </>
     );
 }
