@@ -92,6 +92,7 @@ class LoginForm extends React.Component {
 //    ==================
         this.state.redirect = true;
         localStorage.setItem('isLoggedIn', true);
+        localStorage.setItem('username', this.state.username);
       } else {
         toast("Korisničko ime ili lozinka nisu ispravni.");
       }

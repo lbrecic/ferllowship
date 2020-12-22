@@ -31,6 +31,7 @@ class LocationRequest extends React.Component {
     } catch(e){
         toast("Dogodila se pogreška.");
     }
+    window.location.reload();
   }
 
   async declineApply(){
@@ -45,6 +46,7 @@ class LocationRequest extends React.Component {
     } catch(e){
         toast("Dogodila se pogreška.");
     }
+    window.location.reload();
   }
 
   async validationInPerson(){
@@ -59,6 +61,7 @@ class LocationRequest extends React.Component {
     } catch(e){
         toast("Dogodila se pogreška.");
     }
+    window.location.reload();
   }
 
   showMap(e) {
@@ -102,7 +105,7 @@ class LocationRequest extends React.Component {
                 />
             </div>
 
-            {this.state.validationInPerson === 0 &&
+            {this.state.validationInPerson === 2 &&
                 <div className="w-100%">
                   <SubmitButton
                     className="requestButton"
@@ -136,10 +139,12 @@ class LocationRequest extends React.Component {
       if (this.showOnMap === 1)
         return (
           <div className="overlayRequest">
-            <div className="modalRequest">
-              <div className="map">
-                  <MapOneLocation setShow={this.showMap}
-                                  location = {this.props.request}/>
+            <div className="mapOneLocation">
+              <div className="mapOneLocation-content">
+                <div className="map">
+                    <MapOneLocation setShow={this.setShow}
+                                    location = {this.props.request}/>
+                </div>
               </div>
             </div>
           </div>

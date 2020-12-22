@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from "react-router-dom";
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import logo from '../logo.svg';
@@ -20,4 +21,4 @@ function HomePage() {
     );
   }
   
-export default HomePage;
+export default withRouter(HomePage);

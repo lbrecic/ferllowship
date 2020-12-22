@@ -35,6 +35,19 @@ public class PlayerDTO {
 		this.experience = experience;
 		this.authorityLevel = authorityLevel;
 	}
+	
+	public PlayerDTO(String username, String email, String photoLink, Integer points,
+			Integer banStatus, Boolean enabled, Boolean activity, Integer experience, String authorityLevel) {
+		this.username = username;
+		this.email = email;
+		this.photoLink = photoLink;
+		this.points = points;
+		this.banStatus = banStatus;
+		this.enabled = enabled;
+		this.activity = activity;
+		this.experience = experience;
+		this.authorityLevel = authorityLevel;
+	}
 
 	public String getUsername() {
 		return username;

@@ -5,6 +5,7 @@ import CartographRequest from "../components/CartographRequest";
 import SubmitButton from "../components/SubmitButton";
 import PromoteAdmin from "../components/PromoteAdmin";
 import AllUsersWindow from "../components/AllUsersWindow";
+import LocationRequestsAdmin from "../components/LocationRequestsAdmin";
 import "../styles/AdminProfile.css";
 import cards from "../utils/cards.png";
 import stats from "../utils/statistics.png";
@@ -17,30 +18,14 @@ class AdminProfile extends React.Component {
     this.cartographRequest = 0;
     this.promoteWindow = 0;
     this.allUsersWindow = 0;
-  }
-
-  state = {
-    username: "",
-    email: "",
-    photoLink: "",
-    authorityLevel: "admin",
-    show: false,
-  };
-
-  async componentDidMount() {
-    try {
-      let res = await fetch("/api/player?username=" + localStorage.username);
-      let result = await res.json();
-
-      if (result && !result.error) {
-        this.setState({
-          username: result.username,
-          email: result.email,
-          photoLink: result.photoLink,
-          authorityLevel: result.authorityLevel,
-        });
-      }
-    } catch (e) {}
+    this.locationRequestsWindow = 0;
+    this.state = {
+      username: this.props.user.username,
+      email: this.props.user.email,
+      photoLink: this.props.user.photoLink,
+      anotherPlayer: this.props.user.anotherPlayer,
+      showEdit: false
+    }
   }
 
   setShowCartographRequest = (e) => {
@@ -63,6 +48,11 @@ class AdminProfile extends React.Component {
     this.setState(this.state);
   };
 
+  showLocationRequestsWindow = (e) => {
+    this.locationRequestsWindow = e;
+    this.setState(this.state);
+  };
+
   showEditWindow = (e) => {
     this.setState({
       show: !this.state.show,
@@ -79,7 +69,8 @@ class AdminProfile extends React.Component {
     if (
       this.showCartographRequest === 0 &&
       this.promoteWindow === 0 &&
-      this.allUsersWindow === 0
+      this.allUsersWindow === 0 && 
+      this.locationRequestsWindow === 0
     )
       return (
         <>
@@ -98,24 +89,35 @@ class AdminProfile extends React.Component {
                 <span className="logo-title-light profileName">
                   {this.state.username}
                 </span>
-                <br />
                 <span className="logo-title-light email">
                   {this.state.email}
                 </span>
+                <br />
+                <span className="logo-title-light title">
+                  Administrator
+                </span>
+                <br />
               </div>
 
-              <div className="adminBtns">
-                <SubmitButton
-                  className="adminBtn"
-                  text="Show all users"
-                  onClick={() => this.showAllUsersWindow(1)}
-                />
-                <SubmitButton
-                  className="adminBtn"
-                  text="Promote someone to admin"
-                  onClick={() => this.showPromoteWindow(1)}
-                />
-              </div>
+              {this.state.anotherPlayer === false &&
+                <div className="adminBtns">
+                  <SubmitButton
+                    className="adminBtn"
+                    text="Show all users"
+                    onClick={() => this.showAllUsersWindow(1)}
+                  />
+                  <SubmitButton
+                    className="adminBtn"
+                    text="Promote someone to admin"
+                    onClick={() => this.showPromoteWindow(1)}
+                  />
+                  <SubmitButton
+                    className="adminBtn"
+                    text="Location requests"
+                    onClick={() => this.showLocationRequestsWindow(1)}
+                  />
+                </div>
+              }
             </div>
             <div className="adminLinks">
               <div className=" text-center link ">
@@ -156,10 +158,12 @@ class AdminProfile extends React.Component {
 
             <div className="w-1/4 form geo-color adminForm">
               <div className="h-12"></div>
-              <CartographRequests
-                setShow={this.setShowCartographRequest}
-                setRequest={this.setCartographRequest}
-              />
+              {this.state.anotherPlayer === false &&
+                <CartographRequests
+                  setShow={this.setShowCartographRequest}
+                  setRequest={this.setCartographRequest}
+                />
+              }
             </div>
           </div>
         </>
@@ -168,7 +172,8 @@ class AdminProfile extends React.Component {
     if (
       this.showCartographRequest !== 0 ||
       this.promoteWindow === 1 ||
-      this.allUsersWindow === 1
+      this.allUsersWindow === 1 ||
+      this.locationRequestsWindow === 1
     )
       return (
         <>
@@ -187,10 +192,14 @@ class AdminProfile extends React.Component {
                 <span className="logo-title-light profileName">
                   {this.state.username}
                 </span>
-                <br />
                 <span className="logo-title-light email">
                   {this.state.email}
                 </span>
+                <br />
+                <span className="logo-title-light title">
+                  Administrator
+                </span>
+                <br />
               </div>
 
               <div className="adminBtns">
@@ -203,6 +212,11 @@ class AdminProfile extends React.Component {
                   className="adminBtn"
                   text="Promote someone to admin"
                   onClick={() => this.showPromoteWindow(1)}
+                />
+                <SubmitButton
+                  className="adminBtn"
+                  text="Location requests"
+                  onClick={() => this.showLocationRequestsWindow(1)}
                 />
               </div>
             </div>
@@ -255,6 +269,9 @@ class AdminProfile extends React.Component {
             )}
             {this.promoteWindow === 1 && (
               <PromoteAdmin setShow={this.showPromoteWindow} />
+            )}
+            {this.locationRequestsWindow === 1 && (
+              <LocationRequestsAdmin setShow={this.showLocationRequestsWindow} />
             )}
             {this.showCartographRequest !== 0 && (
               <CartographRequest

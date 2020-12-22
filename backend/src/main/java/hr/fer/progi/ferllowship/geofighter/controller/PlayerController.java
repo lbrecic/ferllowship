@@ -56,6 +56,25 @@ public class PlayerController {
 			authorityLevel
 		);
 	}
+	
+	@PreAuthorize("hasAnyRole('ADMIN','CARTOGRAPH','PLAYER')")
+	@GetMapping(path = "/anotherPlayer")
+	public PlayerDTO getAnotherPlayerProfileInfo(@RequestParam("username") String username) {
+		Player player = playerRepository.findByUsername(username);
+		String authorityLevel = playerService.getAuthorityLevelOfPlayer(player);
+
+		return new PlayerDTO(
+			player.getUsername(),
+			player.getEmail(),
+			player.getPhotoLink(),
+			player.getPoints(),
+			player.getBanStatus(),
+			player.getEnabled(),
+			player.getActivity(),
+			player.getExperience(),
+			authorityLevel
+		);
+	}
 
 	/**
 	 * Metoda za uredjivanje profila korisnika.

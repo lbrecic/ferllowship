@@ -1,4 +1,5 @@
 import { Component } from "react";
+import { withRouter } from "react-router-dom";
 import Header from "../components/Header";
 import MapComponent from "../components/MapComponent";
 import AddLocation from "../components/AddLocation";
@@ -55,4 +56,4 @@ class MapPage extends Component {
   }
 }
 
-export default MapPage;
+export default withRouter(MapPage);

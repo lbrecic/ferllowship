@@ -1,6 +1,11 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Loader from "./Loader";
 import "../styles/Request.css";
+
+const sleep = (milliseconds) => {
+  return new Promise(resolve => setTimeout(resolve, milliseconds))
+}
 
 class AllUsersWindow extends React.Component {
   constructor(props) {
@@ -78,9 +83,22 @@ class AllUsersWindow extends React.Component {
         }
     }
 
+    async load(change = false) {
+      if(change === true) {
+        await sleep(200);
+        window.location.reload();
+      }
+    }
+
   render() {
     if (this.state.playerList === undefined)
-      return (<Loader />);
+      return (
+        <div className="overlayRequest">
+          <div className="mapOneLocation">
+              <Loader />
+            </div>
+        </div>
+      );
     else
       return (
         <div className="overlayRequest">
@@ -111,32 +129,40 @@ class AllUsersWindow extends React.Component {
                 <hr />
               {this.state.players === 1 &&
                     this.state.playerList.map((player) => (
-                        <div 
-                            className="text-center text-sm usernames p-3  box-shadow cursor-pointer"
-                            onClick={() => {}}  
+                        <Link 
+                          to={`/profile/${player.username}`}
                         >
-                            {player.username}
-                        </div>
+                          <div className="text-center text-sm usernames p-3  box-shadow cursor-pointer"
+                              onClick={() => this.load(true)}>
+                                {player.username}
+                          </div>
+                        </Link>
                     ))
               }
               {this.state.cartographs === 1 &&
                     this.state.cartographList.map((cartograph) => (
-                        <div 
-                            className="text-center text-sm usernames p-3  box-shadow cursor-pointer"
-                            onClick={() => {}}  
-                        >
-                            {cartograph.username}
+                      <Link 
+                        to={`/profile/${cartograph.username}`}
+                      >
+                        <div className="text-center text-sm usernames p-3  box-shadow cursor-pointer"
+                            onClick={() => this.load(true)}>
+                              {cartograph.username}
                         </div>
+                      </Link>
                     ))
               }
               {this.state.admins === 1 &&
                     this.state.adminList.map((admin) => (
-                        <div 
-                            className="text-center text-sm usernames p-3  box-shadow cursor-pointer"
-                            onClick={() => {}}  
+                        <Link 
+                          to={`/profile/${admin.username}`}
                         >
-                            {admin.username}
-                        </div>
+                          <div 
+                              className="text-center text-sm usernames p-3  box-shadow cursor-pointer"
+                              onClick={() => this.load(true)}  
+                          >
+                              {admin.username}
+                          </div>
+                        </Link>
                     ))
               }
             </div>

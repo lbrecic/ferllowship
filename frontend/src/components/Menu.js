@@ -3,6 +3,17 @@ import { Link } from "react-router-dom";
 import '../styles/tailwind.css';
 import '../styles/Navigation.css';
 
+const sleep = (milliseconds) => {
+    return new Promise(resolve => setTimeout(resolve, milliseconds))
+}
+
+async function load(change = false) {
+    if(change === true) {
+      await sleep(300);
+      window.location.reload();
+    }
+  }
+
 function Menu(props) {
     return (
         <div>
@@ -38,8 +49,8 @@ function Menu(props) {
                     <div class="w-1/5 bg-white h-32"></div>
                     <div class="w-1/4 bg-gray-400 h-32 linkBox lightGreen3">
                         <Link 
-                            to="/profile"
-                            onClick={() => props.show(false)}
+                            to={`/profile/${localStorage.username}`}
+                            onClick={() => {props.show(false); load(true)}}
                         >
                             <div className="static top-0 left-0 z-1 w-full h-full"><div className="text">Profile</div></div>
                         </Link>

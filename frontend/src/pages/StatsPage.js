@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from "react-router-dom";
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
@@ -15,4 +16,4 @@ function StatsPage() {
     );
 }
 
-export default StatsPage;
+export default withRouter(StatsPage);

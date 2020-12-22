@@ -2,8 +2,8 @@ import React, { Component, useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from "react-leaflet";
 import "../styles/MapStyle.css";
 import "leaflet/dist/leaflet.css";
-import L, { map } from "leaflet";
-import { Card, CardGroup, ToastBody } from "react-bootstrap";
+import L from "leaflet";
+import { Card } from "react-bootstrap";
 
 import icon from "leaflet/dist/images/marker-icon.png";
 import iconShadow from "leaflet/dist/images/marker-shadow.png";
