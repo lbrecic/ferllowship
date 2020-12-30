@@ -1,13 +1,12 @@
 \chapter{Opis projektnog zadatka}
 		
-		\textbf{\textit{\large 2.1 Uvod}}\\
+		\section{Uvod}
 		
-		{Kroz ovaj je projekt potrebno razviti programsku potporu za igru  \emph{GeoFighter}. \emph{GeoFighter} je web-aplikacija kojom se u obliku karata određenih jačina evidentiraju stvarne lokacije koje su korisnici (č. igrači) posjetili. Skupljenim se kartama tada geografski bliski igrači mogu međusobno boriti. Pobjednik borbe dobiva određeni broj bodova koji se oduzimaju gubitniku te se promjenom bodova mijenja i globalni rang igrača. Cilj igrača je posjetiti što veći broj mjesta, skupiti što više karata i postići što bolji rang. } \\
+		{Kroz ovaj je projekt potrebno razviti programsku potporu za igru  \emph{GeoFighter}. \\ \emph{GeoFighter} je web-aplikacija kojom se u obliku karata određenih jačina evidentiraju stvarne lokacije koje su korisnici (č. igrači) posjetili. Skupljenim se kartama tada geografski bliski igrači mogu međusobno boriti. Pobjednik borbe dobiva određeni broj bodova koji se oduzimaju gubitniku te se promjenom bodova mijenja i globalni rang igrača. Cilj igrača je posjetiti što veći broj mjesta, skupiti što više karata i postići što bolji rang. }
 		
+		\section{Razrada}
 		
-		\textbf{\textit{\large 2.2 Razrada }}\\ 
-		
-		\textbf{\textit{2.2.1 Registracija i prijava }}\\
+		\subsection{Registracija i prijava}
 		
 		{Prije korištenja same aplikacije, ukoliko je korisnik novi igrač, dužan je najprije registrirati se. Za registraciju potrebni su:}
 	
@@ -21,10 +20,9 @@
 		{Validacijom podataka utvrđuje se ispravnost unosa podataka te se provjerava postoji li već korisnik s istim korisničkim imenom ili e-mail adresom. Kada registracija bude gotova, korisniku se na navedenu adresu šalje poveznica putem koje potvrđuje svoj račun. Tek nakon što je račun potvrđen, omogućuje se ulazak u sâm igrački sustav.}
 		{Ako je igrač već prethodno registriran, on u sustav ulazi upisujući korisničko ime i lozinku.}\\ \\ \\
 		
-		\textbf{\textit{2.2.2 Korištenje sustava}}\\
+		\subsection{Korištenje sustava}
 		
-		\textbf{\textit{\small2.2.2.1 Početni zaslon i mogućnosti}}\\
-		
+		\subsubsection{Početni zaslon i mogućnosti}
 		
 		{Pri ulasku u sustav korisniku se na karti prikazuje njegova lokacija zajedno s obližnjim lokacijama. Pritiskom na određenu lokaciju otvara se prozor s atributima poput naziva lokacije, opisa, fotografije, kategorije i jačina karte te lokacije. Kategorije lokacija uključuju naseljena mjesta, vrhove planina i gora, umjetničke instalacije... Na zaslonu se nalazi simbol za padajući izbornik. Pritiskom na taj simbol, izbornik se otvara na vrhu te prikazuje simbole koji označavaju:  }
 		
@@ -39,14 +37,13 @@
 		
 		{Izbornik se zatvara ponovnim klikom na njegov simbol te se vraća početni zaslon. Igrač zatim svoje stvarno kretanje prati na karti te pokušava obići što više stvarnih lokacija. Kada igrač stigne na neku lokaciju koja je označena kao karta, pojavljuje se poruka koja javlja da korisnik ima novu lokaciju u kolekciji karata te prikazuje atribute te lokacije.}\newpage
 		
-		\textbf{\textit{\small2.2.2.2 Borba}}\\
+		\subsubsection{Borba}
 		
 		Ukoliko korisnik ugleda na karti u krugu od 50 km drugoga igrača s kojim se želi boriti, pritiskom na drugog igrača pojavljuje se prozor u kojemu onda potvrđuje slanje pozivnice za borbu ili odustaje od izazova. S druge strane, drugome se  igraču prikazuje iskočni prozor s ponudom za borbu i podatcima o protivniku kao što su korisničko ime, broj bodova i trenutačni rang. Tada drugi igrač može prihvatiti ili odbiti borbu.
 			 
-		Ako je borba prihvaćena, svaki od igrača bira po tri karte s kojima će se boriti. Borba se odvija u tri runde. Borbu prvi započinje igrač s manjim globalnim rangom. On odabire jednu od svojih karata, koje je prethodno odabrao i baca ju. Drugi igrač zatim također odabire kartu i baca ju. Ukoliko su karte jednake jačine, poništava se runda. Jača karta pobjeđuje te sljedeću rundu otvara pobjednik prethodne runde. Igrač koji ima najviše bodova nakon odigranih rundi je pobjednik. Tada pobjednik dobiva broj bodova koji odgovara broju bodova najjače karte, dok se isti taj broj bodova oduzima gubitniku. Karte korištene u borbi zatim slabe za broj bodova koji imaju podijeljen sa 100. Prozor s borbom se zatvara kod oba igrača te im se prikazuje ažuriranje njihovih osobnih bodova i bodova karata iz kojega se zatim vraća na početni zaslon. \\
+		Ako je borba prihvaćena, svaki od igrača bira po tri karte s kojima će se boriti. Borba se odvija u tri runde. Borbu prvi započinje igrač s manjim globalnim rangom. On odabire jednu od svojih karata, koje je prethodno odabrao i baca ju. Drugi igrač zatim također odabire kartu i baca ju. Ukoliko su karte jednake jačine, poništava se runda. Jača karta pobjeđuje te sljedeću rundu otvara pobjednik prethodne runde. Igrač koji ima najviše bodova nakon odigranih rundi je pobjednik. Tada pobjednik dobiva broj bodova koji odgovara broju bodova najjače karte, dok se isti taj broj bodova oduzima gubitniku. Karte korištene u borbi zatim slabe za broj bodova koji imaju podijeljen sa 100. Prozor s borbom se zatvara kod oba igrača te im se prikazuje ažuriranje njihovih osobnih bodova i bodova karata iz kojega se zatim vraća na početni zaslon.
 		
-		
-		\textbf{\textit{\small2.2.2.3 Bodovanje karata}}\\
+		\subsubsection{Bodovanje karata}
 		
 		{Svaka karta ima broj bodova koji mu daje kategorija kojoj pripada. Što je kategorija rjeđa i teža za posjetiti (npr. vrh planine naspram nekoga grada) to donosi više bodova. Svaka karta osim toga ima i početnih 100 bodova koji se onda smanjuju za 0.25 boda za svaku posjetu toj lokaciji. Minimalni broj tih bodova 0. Ukupan broj bodova neke karte je zbroj tih dvaju vrijednosti.\\ }
 		
@@ -61,25 +58,26 @@
 		\end{tabular}
 	
 		\newpage
-		\textbf{\textit{2.2.3 Održavanje sustava}}\\
+		
+		\subsection{Održavanje sustava}
 		 
-		\textbf{\textit{\small2.2.3.1 Administratori}}\\
+		\subsubsection{Administratori}
 		
-		{Administratori imaju sve ovlasti kao i ostali registrirani korisnici uz još neke dodatne. Oni imaju pristup bazi podataka i mogućnost uređivanja profila korisnika. Administratori također pregledavaju prijave za kartografe i odobravaju ih ili odbijaju. Osim toga, ukoliko korisnici pošalju pitanja unutar prozora za pomoć, oni na njih odgovaraju.} \\
+		{Administratori imaju sve ovlasti kao i ostali registrirani korisnici uz još neke dodatne. Oni imaju pristup bazi podataka i mogućnost uređivanja profila korisnika. Administratori također pregledavaju prijave za kartografe i odobravaju ih ili odbijaju. Osim toga, ukoliko korisnici pošalju pitanja unutar prozora za pomoć, oni na njih odgovaraju.}
 		
-		\textbf{\textit{\small2.2.3.2 Kartografi}}\\
+		\subsubsection{Kartografi}
 		
-		{Ako korisniku administrator odobri status kartografa, prije nego što počne koristiti svoje kartografske ovlasti, on mora u svoje korisničke podatke dodati IBAN računa za uplatu i fotografiju osobne iskaznice. Kartografi su osobe zadužene za nadopunjavanje baze podataka s lokacijama koje su igrači prijavili za moguće proširenje. Njima se u padajućem izborniku pojavljuje posebni gumb pomoću kojega se otvara prozor s prijedlozima za nove lokacije. Osim toga, prijedlozi im se prikazuju na karti, a oni ih mogu odbiti, potvrditi, urediti ili označiti da je potrebna potvrda s terena. Kartograf za one prijave za koje je potrebno potvrđivanje s terena može označiti da će ih osobno doći provjeriti, a sustav mu preko vanjskog servisa OSRM dohvaća najbliži put do lokacije.} \\
+		{Ako korisniku administrator odobri status kartografa, prije nego što počne koristiti svoje kartografske ovlasti, on mora u svoje korisničke podatke dodati IBAN računa za uplatu i fotografiju osobne iskaznice. Kartografi su osobe zadužene za nadopunjavanje baze podataka s lokacijama koje su igrači prijavili za moguće proširenje. Njima se u padajućem izborniku pojavljuje posebni gumb pomoću kojega se otvara prozor s prijedlozima za nove lokacije. Osim toga, prijedlozi im se prikazuju na karti, a oni ih mogu odbiti, potvrditi, urediti ili označiti da je potrebna potvrda s terena. Kartograf za one prijave za koje je potrebno potvrđivanje s terena može označiti da će ih osobno doći provjeriti, a sustav mu preko vanjskog servisa OSRM dohvaća najbliži put do lokacije.} 
 		
-		\textbf{\textit{\large 2.3 Potencijalne koristi}}\\
+		\section{Potencijalne koristi}
 		
-		{Geofighter potiče igrače na istraživanje onih manje poznatih ili čak neotkrivenih lokacija oko njih. Osim toga, korisnika se obogaćuje novim znanjima pomoću informacija o lokacijama na kartama i motivira na otkrivanje novih kultura što dovodi do razvijanja međuljudskih odnosa.} \newpage
+		{Geofighter potiče igrače na istraživanje onih manje poznatih ili čak neotkrivenih lokacija oko njih. Osim toga, korisnika se obogaćuje novim znanjima pomoću informacija o lokacijama na kartama i motivira na otkrivanje novih kultura što dovodi do razvijanja međuljudskih odnosa.} 
 		
-		\textbf{\textit{\large 2.4 Korisničke skupine}}\\
+		\section{Korisničke skupine}
 		
-		{Ova je aplikacija prije svega namijenjena ljudima natjecateljskoga duha koji uz to vole i putovati ili jednostavno onima koji žele naučiti nove informacije o već poznatim lokacijama kroz igru. Igrači bi trebali biti boljeg fizičkog stanja kako bi došli do teže dostupnih lokacija te biti punoljetne kako bi se mogle kretati bez većih zakonskih ograničenja. Skupine igrača koje najviše odgovaraju opisu su osobe od oko 20 do oko 50 godina, neovisno kojega spola.}\\
+		{Ova je aplikacija prije svega namijenjena ljudima natjecateljskoga duha koji uz to vole i putovati ili jednostavno onima koji žele naučiti nove informacije o već poznatim lokacijama kroz igru. Igrači bi trebali biti boljeg fizičkog stanja kako bi došli do teže dostupnih lokacija te biti punoljetne kako bi se mogle kretati bez većih zakonskih ograničenja. Skupine igrača koje najviše odgovaraju opisu su osobe od oko 20 do oko 50 godina, neovisno kojega spola.}
 		
-		\textbf{\textit{\large 2.5 Moguće nadogradnje}}\\
+		\section{Moguće nadogradnje}
 		
 		{Kao moguće nadogradnje naveli bismo:
 		\begin{packed_item}
@@ -87,8 +85,8 @@
 			\item {\textbf{Organizacija turnira} - unutar igre bi se organizirali turniri nakon kojih bi pobjednici dobivali određeni broj bodova ili, u daljoj budućnosti i u potencijalnoj suradnji sa zainteresiranim turističkim agencijama koje bi zauzvrat dobivale reklame, putovanja na neke od lokacija na kartama.}\\
 			\item {\textbf{Proširenje udaljenosti za borbu} - udaljenost od 50 km unutar koje se igrači mogu boriti bi se potencijalno mogla povećati.} \\
 	\end{packed_item} } 
-		\newpage
-		\textbf{\textit{\large 2.6 Postojeća slična rješenja}} \\
+		
+		\section{Postojeća slična rješenja}
 		
 		{GeoFighter bi se mogao definirati kao hibrid između igara proširene stvarnosti u kojima korisnici putuju stvarnim lokacijama kako bi pristupili lokacijama, artifaktima i sl. unutar igre poput: Harry Potter: Wizards Unite, Pokemon GO, Ingress, The Walking Dead: Our World... i igara u kojima igrači skupljaju karte kao što su: Faeria, Hearthstone, Magic: The Gathering Arena... Kao sustave s najsličnijim specifikacijama treba izdvojiti Pokemon GO - igru u kojoj igrači na stvarnim lokacijama skupljaju Pokemone raznih rijetkosti, posjećuju tzv. Pokemon dvorane u kojima se mogu boriti s drugim stvarnim igračima te skupljati bodove i tako dalje napredovati. Pokemon GO kao framework aplikacije koristi Libgdx i programske jezike Javu, C++ i C\#. Osim Pokemon GO-a trebalo bi izdvojiti i Hearthstone - igru u kojoj igrači skupljaju karte iz različitih kategorija u dekove kako bi se zatim njima borili s drugim igračima. Hearthstone je rađen pomoću Unity-ja, pokretača igara za više platformi, u  C\#.  }
 		\eject
