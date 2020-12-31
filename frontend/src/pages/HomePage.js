@@ -14,7 +14,7 @@ function HomePage() {
         <div className="App-header background-color">
           <img src={logo} className="App-logo animate-pulse" alt="logo" />
           <Link className="btnFight" to="/chat">
-              Bori se!
+              Fight!
           </Link>
         </div>
         <Footer />

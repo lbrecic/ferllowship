@@ -87,9 +87,9 @@ class MapComponent extends Component {
                         <Card.Body>
                           <Card.Title>{value.locationName}</Card.Title>
                           <Card.Text>
-                            Kategorija: {value.category.categoryName}<br />
-                            Bodovi: {value.category.categoryPoints}<br />
-                            Opis: {value.locationDesc}
+                            Category: {value.category.categoryName}<br />
+                            Points: {value.category.categoryPoints}<br />
+                            Description: {value.locationDesc}
                           </Card.Text>
                         </Card.Body>
                       </Card>

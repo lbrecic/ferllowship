@@ -37,9 +37,9 @@ class MapOneLocation extends React.Component {
                         <Card.Body>
                         <Card.Title>{this.location.locationName}</Card.Title>
                         <Card.Text>
-                            Kategorija: {this.location.category.categoryName}<br />
-                            Bodovi: {this.location.category.categoryPoints}<br />
-                            Opis: {this.location.locationDesc}
+                            Category: {this.location.category.categoryName}<br />
+                            Points: {this.location.category.categoryPoints}<br />
+                            Description: {this.location.locationDesc}
                         </Card.Text>
                         </Card.Body>
                     </Card>

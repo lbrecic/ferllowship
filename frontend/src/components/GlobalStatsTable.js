@@ -33,8 +33,8 @@ class GlobalStatsTable extends React.Component {
         <MaterialTable
           columns={[
             {
-              title: "Rang",
-              field: "rang",
+              title: "Rank",
+              field: "rank",
               type: "numeric",
               headerStyle: {
                 fontSize: 18,
@@ -77,7 +77,7 @@ class GlobalStatsTable extends React.Component {
             },
 
             {
-              title: "Korisničko ime",
+              title: "Username",
               field: "username",
               headerStyle: {
                 fontSize: 18,
@@ -91,7 +91,7 @@ class GlobalStatsTable extends React.Component {
               },
             },
             {
-              title: "Broj bodova",
+              title: "Points",
               field: "points",
               type: "numeric",
               headerStyle: {

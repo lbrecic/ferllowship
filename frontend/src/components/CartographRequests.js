@@ -32,7 +32,7 @@ class CartographRequests extends React.Component {
                     <div 
                         className="text-center text-base geo-text white p-3" 
                     >
-                        Kartografski zahtjevi
+                        Cartograph requests
                     </div>
                     <div className="h-8"></div>
                     {this.state.requests.map((request) => (
@@ -51,10 +51,10 @@ class CartographRequests extends React.Component {
                     <div 
                         className="text-center text-base geo-text white p-3" 
                     >
-                        Kartografski zahtjevi
+                        Cartograph requests
                     </div>
                     <div className="h-8"></div>
-                        <div className="text-center">Nema novih zahtjeva za kartografa</div>
+                        <div className="text-center">No new cartograph requests</div>
                 </div>
             );             
     }

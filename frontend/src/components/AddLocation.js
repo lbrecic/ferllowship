@@ -77,7 +77,7 @@ class AddLocation extends React.Component {
           toast(result.message);
         }
     } catch (e) {
-        toast("Dogodila se pogreška.");
+        toast("Error occured.");
     }
 
 }
@@ -90,22 +90,22 @@ class AddLocation extends React.Component {
         <div className="overlayEdit">
             <div className="modalEdit">
                 <div className="modal-contentEdit">
-                    <div className="registerTitle">Dodaj lokaciju</div>
+                    <div className="registerTitle">Add location</div>
                     <div className="imageUploaderForm">
                             <InputField
                                 type="text"
-                                placeholder="Naziv lokacije"
+                                placeholder="Location name"
                                 value={this.state.name ? this.state.name : ""}
                                 onChange={(val) => this.setInputValueName("name", val)}
                             />
                       
                         <select name="category" className="dropdown"
                         onChange={(val) => this.setInputValueCategory(val.target.value)}>
-                        <option value="" hidden>Odaberi kategoriju...</option>
-                        <option value="Grad">Grad</option>
-                        <option value="Naselje">Naselje</option>
-                        <option value="Umjetnička instalacija">Umjetnička instalacija</option>
-                        <option value="Vrh planine">Vrh planine</option>
+                        <option value="" hidden>Choose category...</option>
+                        <option value="City">City</option>
+                        <option value="Small town">Small town</option>
+                        <option value="Art installation">Art installation</option>
+                        <option value="Mountain top">Mountain top</option>
                       </select>
                         {/*
                         <div className="App container">
@@ -124,18 +124,18 @@ class AddLocation extends React.Component {
                         </div>
                         */}
                         <textarea className="textArea"
-                        placeholder="Dodaj opis lokacije"
+                        placeholder="Add location description"
                         onChange={(val) => this.setInputDescription(val.target.value)}
                         />
 
-                        <p className="imgText">Priloži sliku lokacije:</p>
+                        <p className="imgText">Attach location image:</p>
                         <div className="lijepi-obrub">
                         <ImageUploader className="uploadWindow"
                             singleImage={true}
                             withIcon={false}
                             withLabel={false}
                             withPreview={true}
-                            buttonText="Izaberi sliku"
+                            buttonText="Choose image"
                             onChange={this.onDrop}
                             imgExtension={[".jpg", ".gif", ".png", ".gif", ".jpeg"]}
                             maxFileSize={5242880}
@@ -144,11 +144,11 @@ class AddLocation extends React.Component {
                         </div>
                         <div className="btnDiv">
                         <button className="btn editBtn" onClick={() => this.addLocation()} > 
-                            Spremi promjene 
+                            Save changes 
                         </button>
                        
                         <button className="btn editBtn" onClick={(e) => this.onClose(e)}>
-                            Odustani
+                            Cancel
                         </button>
                        
                         </div>    

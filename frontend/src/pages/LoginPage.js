@@ -33,9 +33,9 @@ class LoginPage extends React.Component {
       <div className="container-Login">
         <LoginForm setOnLogin={() => this.setOnLogin()} />
         <div className="register"> 
-          Nemaš račun? 
+          You don't have an account? 
           <button className="btn" onClick={e => { this.showRegister(); }}
-            text='Registriraj se'> Registriraj se </button>
+            text='Registriraj se'> Register </button>
           <RegisterForm show={this.state.show} onClose={() => this.onClose()} />
         </div>
       </div>

@@ -23,7 +23,7 @@ class CartographRequest extends React.Component {
         toast(result.message);
       }
     } catch(e){
-        toast("Dogodila se pogreška.");
+        toast("Error occured.");
     }
     window.location.reload();
   }
@@ -36,7 +36,7 @@ class CartographRequest extends React.Component {
         toast(result.message);
       }
     } catch(e){
-        toast("Dogodila se pogreška.");
+        toast("Error occured.");
     }
     window.location.reload();
   }
@@ -49,7 +49,7 @@ class CartographRequest extends React.Component {
               <button onClick={() => this.setShow(0)} 
                     style={{alignSelf:'start', margin:'5px'}}>x</button>
               <div className="username textBox">
-                Korisničko ime: {this.state.username}
+                Username: {this.state.username}
               </div>
               <div className="IBAN textBox">IBAN: {this.state.iban}</div>
               <div className="picture">
@@ -64,7 +64,7 @@ class CartographRequest extends React.Component {
                 <div className="requestButton">
                   <SubmitButton
                     className="requestButton"
-                    text="Prihvati"
+                    text="Accept"
                     onClick={() => {this.setShow(0); this.acceptApply() } }
                   />
                 </div>
@@ -72,7 +72,7 @@ class CartographRequest extends React.Component {
                 <div className="requestButton">
                   <SubmitButton
                     className="requestButton"
-                    text="Odbaci"
+                    text="Decline"
                     onClick={() => { this.setShow(0); this.declineApply() } }
                   />
                 </div>

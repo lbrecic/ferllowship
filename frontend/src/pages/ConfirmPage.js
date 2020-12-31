@@ -24,7 +24,7 @@ class ConfirmPage extends React.Component {
       }
     } catch (e) {
         this.setState({
-            message: "Dogodila se pogreška."
+            message: "Error occured."
         });
     }
   }

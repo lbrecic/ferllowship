@@ -39,11 +39,11 @@ class MapPage extends Component {
                 if (localStorage.getItem("selectedLocation")) {
                   this.showWindow();
                 } else {
-                  toast("Odaberi lokaciju na karti.")
+                  toast("Select location on the map.")
                 }
               }}
             >
-              Prijavi lokaciju
+              Make a location request
             </button>
             <AddLocation
               show={this.state.show}

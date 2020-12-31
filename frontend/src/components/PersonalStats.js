@@ -39,7 +39,7 @@ class PersonalStats extends React.Component {
       <div className="stats">
         <div className="personal">
           <span>
-            Ukupan broj borbi:
+            Total number of fights:
             {this.state.stats.fightsParticipatedIn}
             <hr/>
           </span>
@@ -47,7 +47,7 @@ class PersonalStats extends React.Component {
 
           <br />
           <span>
-            Ukupan broj pobijeđenih borbi:
+            Total number of won fights:
             {this.state.stats.fightsWon}
             <hr/>
           </span>
@@ -55,28 +55,28 @@ class PersonalStats extends React.Component {
 
           <br />
           <span>
-            Ukupan broj izgubljenih borbi:
+            Total number of lost fights:
             {this.state.stats.fightsLost}
           </span>
           <hr/>
 
           <br />
           <span>
-            Broj bodova:
+            Points:
             {this.state.stats.points}
           </span>
           <hr/>
 
           <br />
           <span>
-            Ukupno iskustvo:
+            Total expirience:
             {this.state.stats.experience}
           </span>
           <hr/>
 
           <br />
           <span>
-            Rang:
+            Rank:
             {this.state.stats.rank}
           </span>
           <hr/>

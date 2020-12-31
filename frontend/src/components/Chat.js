@@ -3,10 +3,6 @@ import Header from './Header';
 import Footer from './Footer';
 import '../styles/Chat.css'
 
-/**
- * TO DO
- * kako maknuti igraca iz aktivnih igraca?? (da igrac ne vidi sam sebe na popisu akivnih)
- */
 class Chat extends React.Component {
     state = {
         playerList: [],
@@ -52,7 +48,7 @@ render(){
                     <div className="chat-container">
                         
                         <div className="titleActiveUsers">
-                            Igraci
+                            Active players
                         </div>
                         <div className="titleMessage">
                             {this.state.title}
@@ -60,18 +56,17 @@ render(){
                     
                         <div className="activeUsers ">
                             {this.state.playerList.map((player) => (
-                                
+                                localStorage.username !== player.username && 
                                     <div className="player">
                                         <div className="player-center">
                                             <text  onClick={() => this.setTitle(player)} >
                                                 {player.username}
                                             </text>
                                             <button className="userBtn" onClick={() => this.setFight(player)}>
-                                                Borba
+                                                Fight
                                             </button>
                                         </div>
                                     </div>
-                                
                             ))}
                             
                         </div>
@@ -81,10 +76,10 @@ render(){
                                 
                                 <div className="message">
                                     <input className="messageInput"
-                                    placeholder="Posalji poruku...">
+                                    placeholder="Send message...">
                                     </input>
                                     <button className="messageBtn">
-                                        Posalji
+                                        Send
                                     </button>
                                 </div>
                                 

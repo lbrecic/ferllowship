@@ -21,45 +21,39 @@ class LocationRequest extends React.Component {
 
   async acceptApply(){
     try {
-      let res = await fetch('/api/location/requests/update?locationName=' 
-                              + this.state.locationName
-                              + '&status=0');
+      let res = await fetch(`/api/location/requests/update?locationName=${this.state.locationName}&status=0`);
       let result = await res.json();
       if (result && result.message) {
         toast(result.message);
       }
     } catch(e){
-        toast("Dogodila se pogreška.");
+        toast("Error occured.");
     }
     window.location.reload();
   }
 
   async declineApply(){
     try {
-      let res = await fetch('/api/location/requests/update?locationName=' 
-                              + this.state.locationName
-                              + '&status=1');
+      let res = await fetch(`/api/location/requests/update?locationName=${this.state.locationName}&status=1`);
       let result = await res.json();
       if (result && result.message) {
         toast(result.message);
       }
     } catch(e){
-        toast("Dogodila se pogreška.");
+        toast("Error occured.");
     }
     window.location.reload();
   }
 
   async validationInPerson(){
     try {
-      let res = await fetch('/api/location/requests/update?locationName=' 
-                            + this.state.locationName
-                            + '&status=3');
+      let res = await fetch(`/api/location/requests/update?locationName=${this.state.locationName}&status=3`);
       let result = await res.json();
       if (result && result.message) {
         toast(result.message);
       }
     } catch(e){
-        toast("Dogodila se pogreška.");
+        toast("Error occured.");
     }
     window.location.reload();
   }
@@ -83,10 +77,10 @@ class LocationRequest extends React.Component {
               <button onClick={() => this.setShow(0)} 
                     style={{alignSelf:'start', margin:'5px'}}>Close</button>
               <div className="username textBox">
-                Lokacija: {this.state.locationName}
+                Location: {this.state.locationName}
               </div>
               <div className="username textBox">
-                Opis lokacije: {this.state.locationDesc}
+                Location description: {this.state.locationDesc}
               </div>
               <div className="picture">
                 <img
@@ -99,7 +93,7 @@ class LocationRequest extends React.Component {
             <div className="w-100%">
                 <SubmitButton
                   className="requestButton"
-                  text="Prikaži na mapi"
+                  text="Show on map"
                   style={{alignSelf:'center', width:'100%'}}
                   onClick={() => this.showMap(1)}
                 />
@@ -109,7 +103,7 @@ class LocationRequest extends React.Component {
                 <div className="w-100%">
                   <SubmitButton
                     className="requestButton"
-                    text="Potreban pregled na terenu"
+                    text="Validation in person needed"
                     onClick={() => {this.setShow(0); this.validationInPerson() } }
                   />
                 </div>
@@ -119,7 +113,7 @@ class LocationRequest extends React.Component {
                 <div className="requestButton">
                   <SubmitButton
                     className="requestButton"
-                    text="Prihvati"
+                    text="Accept"
                     onClick={() => {this.setShow(0); this.acceptApply() } }
                   />
                 </div>
@@ -127,7 +121,7 @@ class LocationRequest extends React.Component {
                 <div className="requestButton">
                   <SubmitButton
                     className="requestButton"
-                    text="Odbaci"
+                    text="Decline"
                     onClick={() => { this.setShow(0); this.declineApply() } }
                   />
                 </div>

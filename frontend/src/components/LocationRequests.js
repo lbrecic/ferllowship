@@ -33,7 +33,7 @@ class LocationRequests extends React.Component {
                     <div 
                         className="text-center text-base geo-text white p-3" 
                     >
-                        Zahtjevi za lokaciju
+                        Location requests
                     </div>
                     <div className="h-8"></div>
                     {this.state.locations.map((request) => (
@@ -52,10 +52,10 @@ class LocationRequests extends React.Component {
                     <div 
                         className="text-center text-base geo-text white p-3" 
                     >
-                        Zahtjevi za lokaciju
+                        Location requests
                     </div>
                     <div className="h-8"></div>
-                    <div className="text-center">Nema novih zahtjeva za prijavu lokacije</div>
+                    <div className="text-center">No new location requests</div>
                 </div>
             );             
     }

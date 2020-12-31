@@ -27,10 +27,10 @@ class Header extends React.Component {
         localStorage.removeItem("isLoggedIn");
         window.location.reload();
       } else {
-        toast("Dogodila se pogreška.");
+        toast("Error occured.");
       }
     } catch (e) {
-      toast("Dogodila se pogreška.");
+      toast("Error occured.");
     }
   }
 
@@ -47,7 +47,7 @@ class Header extends React.Component {
             <div className="flex justify-between items-center">
               <div className="logoutButton">
                 <button className="btnLogout" onClick={() => this.doLogout()}>
-                  Odjavi se
+                  Log out
                 </button>
               </div>
               <Navigation />

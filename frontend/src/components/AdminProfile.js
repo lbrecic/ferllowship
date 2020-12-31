@@ -125,7 +125,7 @@ class AdminProfile extends React.Component {
                   <div className="flex justify-center">
                     <img src={cards} className="karte" alt="logo" />
                   </div>
-                  <span className="logo-title-light textKarte">Moje karte</span>
+                  <span className="logo-title-light textKarte">My cards</span>
                 </Link>
               </div>
 
@@ -135,7 +135,7 @@ class AdminProfile extends React.Component {
                     <img src={stats} className="statistika" alt="logo" />
                   </div>
                   <span className="logo-title-light textStatistika">
-                    Moja statistika
+                    My statistics
                   </span>
                 </Link>
               </div>
@@ -226,7 +226,7 @@ class AdminProfile extends React.Component {
                   <div className="flex justify-center">
                     <img src={cards} className="karte" alt="logo" />
                   </div>
-                  <span className="logo-title-light textKarte">Moje karte</span>
+                  <span className="logo-title-light textKarte">My cards</span>
                 </Link>
               </div>
 
@@ -236,7 +236,7 @@ class AdminProfile extends React.Component {
                     <img src={stats} className="statistika" alt="logo" />
                   </div>
                   <span className="logo-title-light textStatistika">
-                    Moja statistika
+                    My statistics
                   </span>
                 </Link>
               </div>

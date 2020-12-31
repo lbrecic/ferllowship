@@ -92,22 +92,22 @@ class EditProfile extends React.Component {
         if(this.state.changedPassword){
             if (this.state.password.length < PASSWORD_MIN_LENGTH) {
                 isValid = false;
-                toast("Nova lozinka mora imati barem 8 znakova.");
+                toast("New password needs to be at least 8 charachters long.");
             } else if (this.state.password.length > PASSWORD_MAX_LENGTH) {
                 isValid = false;
-                toast("Lozinka je predugačka.");
+                toast("Password is to long.");
             }else if(!this.state.oldPassword){
-                toast("Stara lozinka mora biti unesena");
+                toast("Input old password!");
                 isValid = false;
             }
         }
 
         if (this.state.email.length > EMAIL_MAX_LENGTH) {
             isValid = false;
-            toast("Email je predugačak.");
+            toast("E-mail address is too long.");
         } else if (!/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/.test(this.state.email)) {
             isValid = false;
-            toast("Email nije u valjanom formatu.");
+            toast("E-mail address is not in valid format.");
         }
 
         return isValid;
@@ -148,7 +148,7 @@ class EditProfile extends React.Component {
               toast(result.message);
             }
         } catch (e) {
-            toast("Dogodila se pogreška.");
+            toast("Error occured.");
         }
     
     }
@@ -163,7 +163,7 @@ class EditProfile extends React.Component {
         <div className="overlayEdit">
             <div className="modalEdit">
                 <div className="modal-contentEdit">
-                    <div className="registerTitle">Uredi profil</div>
+                    <div className="registerTitle">Edit profile</div>
                     <form onSubmit={this.mySubmitHandler} >
                         {/*<div className="registerDivEdit">
                             <div className="editInput">
@@ -179,7 +179,7 @@ class EditProfile extends React.Component {
         </div>*/}
                         <div className="registerDivEdit">
                         <div className="editInput">
-                                Email: </div>
+                                E-mail: </div>
                             <div className="inputEdit2">
                             <InputField
                                 type="text"
@@ -192,12 +192,12 @@ class EditProfile extends React.Component {
                         <div className="registerDivEdit">
                             <InputField
                                 type="password"
-                                placeholder='Stara lozinka'
+                                placeholder='Old password'
                                 onChange={(val) => this.setInputValuePassword('oldPassword', val)}
                             />   
                             <InputField
                                 type="password"
-                                placeholder='Nova lozinka'
+                                placeholder='New password'
                                 onChange={(val) => this.setInputValuePassword('password', val)}
                             />       
                         </div>
@@ -222,14 +222,14 @@ class EditProfile extends React.Component {
                             <div className={"collapse" + (this.state.open ? ' in' : '')}>
                                 <p className="imgText"
                                 onClick={this.toggle.bind(this)}>
-                                    Priloži sliku profila:</p>
+                                    Attach profile picture:</p>
                                 <div className="lijepi-obrub">
                                     <ImageUploader className="uploadWindow"
                                         singleImage={true}
                                         withIcon={false}
                                         withLabel={false}
                                         withPreview={true}
-                                        buttonText="Izaberi sliku"
+                                        buttonText="Choose image"
                                         onChange={this.onDrop}
                                         imgExtension={[".jpg", ".gif", ".png", ".gif", ".jpeg"]}
                                         maxFileSize={5242880}
@@ -241,11 +241,11 @@ class EditProfile extends React.Component {
                           
                         <div className="btnDiv">
                         <button className="btn editBtn" type='submit' > 
-                            Spremi promjene 
+                            Save changes 
                         </button>
                        
                         <button className="btn editBtn" onClick={(e) => this.onClose(e)}>
-                            Odustani
+                            Cancel
                         </button>
                        
                         </div>    
