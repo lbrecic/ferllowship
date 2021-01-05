@@ -8,9 +8,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class ActiveUserStore {
 
-    private final List<String> users = new ArrayList<>();
+    private final List<LoggedUser> users = new ArrayList<>();
 
-    public List<String> getUsers() {
+    public List<LoggedUser> getUsers() {
         return users;
     }
 

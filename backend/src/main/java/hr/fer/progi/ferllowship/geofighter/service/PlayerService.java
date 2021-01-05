@@ -124,8 +124,8 @@ public class PlayerService {
 
     public List<PlayerDTO> getAllActivePlayers() {
         return activeUserStore.getUsers().stream()
-            .map(username -> {
-                Player player = playerRepository.findByUsername(username);
+            .map(user -> {
+                Player player = playerRepository.findByUsername(user.getUsername());
                 return playerToPlayerDTO(player);
             })
             .collect(Collectors.toList());
