@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.juli.logging.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,6 +22,8 @@ import hr.fer.progi.ferllowship.geofighter.dto.MessageDTO;
 import hr.fer.progi.ferllowship.geofighter.dto.PlayerDTO;
 import hr.fer.progi.ferllowship.geofighter.model.Card;
 import hr.fer.progi.ferllowship.geofighter.model.Player;
+import hr.fer.progi.ferllowship.geofighter.security.ActiveUserStore;
+import hr.fer.progi.ferllowship.geofighter.security.LoggedUser;
 import hr.fer.progi.ferllowship.geofighter.service.CloudinaryService;
 import hr.fer.progi.ferllowship.geofighter.service.PlayerService;
 
@@ -38,6 +41,9 @@ public class PlayerController {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+
+	@Autowired
+	private ActiveUserStore activeUserStore;
 	
 	@PreAuthorize("hasAnyRole('ADMIN','CARTOGRAPH','PLAYER')")
 	@GetMapping(path = "/player")
@@ -155,6 +161,16 @@ public class PlayerController {
 	@GetMapping(path = "/active")
 	public List<PlayerDTO> getAllActivePlayers() {
 		return playerService.getAllActivePlayers();
+	}
+
+	@PreAuthorize("hasAnyRole('ADMIN','CARTOGRAPH','PLAYER')")
+	@GetMapping(path = "/ping")
+	public void setActivity() {
+		List<LoggedUser> users = activeUserStore.getUsers();
+		String username = playerService.getLoggedInPlayer().getUsername();
+		LoggedUser user = new LoggedUser(username, activeUserStore);
+		users.remove(user);
+		users.add(user);
 	}
 
 }

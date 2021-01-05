@@ -5,6 +5,8 @@ import javax.servlet.http.HttpSession;
 import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -14,6 +16,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableScheduling
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	
     @Autowired
@@ -33,6 +36,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.antMatchers(
 				"/",
 				"/h2-console/**",
+				"/profile",
 				"/admins",
 				"/bans",
 				"/cards",
@@ -50,54 +54,23 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.formLogin()
 			.successHandler((req, resp, auth) -> {
 				HttpSession session = req.getSession(false);
-
 				if (session != null) {
 					LoggedUser user = new LoggedUser(auth.getName(), activeUserStore);
 					session.setAttribute("user", user);
 				}
-
-//				UPUTE:
-//				- kod lokalnog developmenta zakomentirati 2) i otkomentirati 1)
-//				- tako neka i ostane, 2) otkomentirati samo kada je stvarno potrebno
-//				==================
-//				1)
-				resp.sendRedirect("/");
-//				------------------
-//				2)
-//				resp.setStatus(HttpStatus.SC_OK);
-//				==================
+				resp.setStatus(HttpStatus.SC_OK);
 			})
 			.failureHandler((req, resp, ex) -> {
-//				UPUTE:
-//				- kod lokalnog developmenta zakomentirati 2) i otkomentirati 1)
-//				- tako neka i ostane, 2) otkomentirati samo kada je stvarno potrebno
-//				==================
-//				1)
-				resp.sendRedirect("/login");
-//				------------------
-//				2)
-//				resp.setStatus(HttpStatus.SC_UNAUTHORIZED);
-//				==================
+				resp.setStatus(HttpStatus.SC_UNAUTHORIZED);
 			})
         .and()
         	.logout()
         	.logoutSuccessHandler((req, resp, auth) -> {
 				HttpSession session = req.getSession();
-
 				if (session != null) {
 					session.removeAttribute("user");
 				}
-
-//				UPUTE:
-//				- kod lokalnog developmenta zakomentirati 2) i otkomentirati 1)
-//				- tako neka i ostane, 2) otkomentirati samo kada je stvarno potrebno
-//				==================
-//				1)
-				resp.sendRedirect("/");
-//				------------------
-//				2)
-//				resp.setStatus(HttpStatus.SC_OK);
-//				==================
+				resp.setStatus(HttpStatus.SC_OK);
         	})
 	        .deleteCookies("JSESSIONID")
 		.and()
@@ -110,5 +83,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(customAuthProvider);
     }
+
+    @Scheduled(fixedDelay = 60 * 1000, initialDelay = 60 * 1000)
+    public void removeInactiveUsers() {
+		activeUserStore.getUsers().removeIf(user ->
+			System.currentTimeMillis() - user.getLastTimeWhenActive() > 5 * 60 * 1000
+		);
+	}
 	
 }

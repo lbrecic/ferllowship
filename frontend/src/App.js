@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { observer } from 'mobx-react';
 import { BrowserRouter as Router, Switch, Route, Redirect, withRouter } from "react-router-dom";
 import HomePage from './pages/HomePage';
@@ -17,13 +17,30 @@ import 'react-toastify/dist/ReactToastify.css';
 import ConfirmPage from './pages/ConfirmPage';
 
 
-const PrivateRoute = ({ component: Component, ...rest }) => (
-  <Route {...rest} render={(props) => (
-    localStorage.getItem('isLoggedIn')
-      ? <Component {...props} />
-      : <Redirect to='/' />
-  )} />
-)
+const PrivateRoute = ({ component: Component, ...rest }) => {
+  const [loggedOut, setLoggedOut] = useState(null);
+
+  useEffect(() => {
+    let isMounted = true;
+    fetch('/api/ping')
+    .then(response => {
+      if (response.redirected) {
+        localStorage.removeItem('isLoggedIn');
+        localStorage.removeItem('username');
+        if (isMounted) {
+          setLoggedOut(true);
+        }
+      }
+    });
+    return () => { isMounted = false };
+  });
+
+  if (loggedOut) {
+    return (<Route {...rest} render={(props) => ( <Redirect to='/' /> )} />);
+  } else {
+    return (<Route {...rest} render={(props) => ( <Component {...props} /> )} />);
+  }
+}
 
 const LoggedInRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={(props) => (
