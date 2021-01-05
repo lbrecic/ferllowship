@@ -28,28 +28,34 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
-		.csrf().disable()
-		.authorizeRequests()
-			.antMatchers("/register").permitAll()
-			.antMatchers("/login").permitAll()
-			.antMatchers("/confirm").permitAll()
-			.antMatchers(
-				"/",
-				"/h2-console/**",
-				"/profile",
-				"/admins",
-				"/bans",
-				"/cards",
-				"/cartographs",
-				"/categories",
-				"/confirmationTokens",
-				"/fights",
-				"/locations",
-				"/players",
-				"/shortestPaths"
-			).hasRole("ADMIN")
-		.anyRequest()
-			.authenticated()
+		.exceptionHandling()
+			.authenticationEntryPoint((req, resp, auth) -> {
+				resp.sendError(HttpStatus.SC_UNAUTHORIZED);
+			})
+		.and()
+			.csrf().disable()
+			.requestCache().disable()
+			.authorizeRequests()
+				.antMatchers("/register").permitAll()
+				.antMatchers("/login").permitAll()
+				.antMatchers("/confirm").permitAll()
+				.antMatchers(
+					"/",
+					"/h2-console/**",
+					"/profile",
+					"/admins",
+					"/bans",
+					"/cards",
+					"/cartographs",
+					"/categories",
+					"/confirmationTokens",
+					"/fights",
+					"/locations",
+					"/players",
+					"/shortestPaths"
+				).hasRole("ADMIN")
+			.anyRequest()
+				.authenticated()
 		.and()
 			.formLogin()
 			.successHandler((req, resp, auth) -> {

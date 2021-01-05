@@ -16,22 +16,19 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ConfirmPage from './pages/ConfirmPage';
 
-
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const [loggedOut, setLoggedOut] = useState(null);
 
-  useEffect(() => {
+  useEffect(async () => {
     let isMounted = true;
-    fetch('/api/ping')
-    .then(response => {
-      if (response.redirected) {
-        localStorage.removeItem('isLoggedIn');
-        localStorage.removeItem('username');
-        if (isMounted) {
-          setLoggedOut(true);
-        }
+    let res = await fetch('/api/ping');
+    if (!res.ok) {
+      localStorage.removeItem('isLoggedIn');
+      localStorage.removeItem('username');
+      if (isMounted) {
+        setLoggedOut(true);
       }
-    });
+    }
     return () => { isMounted = false };
   });
 
@@ -51,7 +48,6 @@ const LoggedInRoute = ({ component: Component, ...rest }) => (
 )
 
 class App extends React.Component {
-
 
   render() {
     return (
@@ -79,7 +75,6 @@ class App extends React.Component {
         />
       </div>
     );
-
   }
 
 }
