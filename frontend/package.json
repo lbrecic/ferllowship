@@ -28,7 +28,9 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
     "react-spring": "^8.0.27",
-    "react-toastify": "^6.1.0"
+    "react-toastify": "^6.1.0",
+    "sockjs-client": "^1.5.0",
+    "stompjs": "^2.3.3"
   },
   "scripts": {
     "build:css": "postcss src/index.css -o src/tailwind.css",

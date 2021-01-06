@@ -1,4 +1,4 @@
-package hr.fer.progi.ferllowship.geofighter.security;
+package hr.fer.progi.ferllowship.geofighter.configuration;
 
 import javax.servlet.http.HttpSession;
 
