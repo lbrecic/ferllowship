@@ -50,7 +50,8 @@ function Menu(props) {
                     <div class="w-1/4 bg-gray-400 h-32 linkBox lightGreen3">
                         <Link 
                             to={`/profile/${localStorage.username}`}
-                            onClick={() => {props.show(false); load(true)}}
+                            // onClick={() => {props.show(false); load(true)}}
+                            onClick={() => {props.show(false); }}
                         >
                             <div className="static top-0 left-0 z-1 w-full h-full"><div className="text">Profile</div></div>
                         </Link>

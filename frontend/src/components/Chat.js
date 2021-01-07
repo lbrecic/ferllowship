@@ -1,10 +1,8 @@
 import React from 'react';
+import { withRouter } from "react-router-dom";
 import Header from './Header';
 import Footer from './Footer';
 import '../styles/Chat.css';
-import { toast } from 'react-toastify';
-import Stomp from 'stompjs';
-import SockJS from 'sockjs-client';
 
 class Chat extends React.Component {
 
@@ -16,8 +14,7 @@ class Chat extends React.Component {
             text: "",
             message: "",
             selectedPlayer: {},
-            stompClient: {},
-            connected: false
+            stompClient: {}
         }
     }
 
@@ -42,7 +39,7 @@ class Chat extends React.Component {
     }
 
     sendMessage(to) {
-        this.state.stompClient.send('/app/message', {}, JSON.stringify({
+        this.props.stompClient.send('/app/message', {}, JSON.stringify({
             from: localStorage.username,
             to: to,
             message: this.state.message
@@ -62,41 +59,6 @@ class Chat extends React.Component {
         } catch (e) {
             // ignore
         }
-
-        let reconnectInterval;
-
-        let stompConnect = () => {
-            clearInterval(reconnectInterval);
-
-            toast("Connecting...");
-            
-            let socket = new SockJS('/api/chat');
-            let stompClient = Stomp.over(socket);
-
-            let stompSuccessCallback = frame => {
-                toast.dismiss();
-                toast("Connected.");
-    
-                stompClient.subscribe('/user/queue/reply', msg => {
-                    let receivedMessage = JSON.parse(msg.body);
-                    toast(receivedMessage.from + " u " + receivedMessage.time + " > " + receivedMessage.message);
-                });
-    
-                this.setState({
-                    connected: true,
-                    stompClient: stompClient
-                });
-            };
-
-            let stompFailureCallback = error => {
-                toast("Connection lost. Reconnecting in 15 seconds.");
-                reconnectInterval = setInterval(stompConnect, 15000);
-            };
-
-            stompClient.connect({}, stompSuccessCallback, stompFailureCallback);
-        };
-
-        stompConnect();
     }
 
     render() {
@@ -146,7 +108,7 @@ class Chat extends React.Component {
                                         </textarea>
                                         <button 
                                             className="messageBtn" 
-                                            disabled={!this.state.connected || Object.keys(this.state.selectedPlayer).length == 0}
+                                            disabled={Object.keys(this.state.selectedPlayer).length == 0}
                                             onClick={() => this.sendMessage(this.state.selectedPlayer.username)}
                                         >
                                             Send 
@@ -165,4 +127,4 @@ class Chat extends React.Component {
 
 }
 
-export default Chat;
+export default withRouter(Chat);

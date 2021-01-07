@@ -94,6 +94,8 @@ class LoginForm extends React.Component {
     this.setState({
       buttonDisabled: false
     });
+
+    window.location.reload();
   }
 
   handleKeypress = e => {
