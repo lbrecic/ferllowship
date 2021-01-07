@@ -12,7 +12,7 @@ class Header extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      redirect: false,
+      redirect: false
     };
   }
 
@@ -23,9 +23,10 @@ class Header extends React.Component {
       });
 
       if (res.ok) {
-        this.state.redirect = true;
+        this.setState({
+          redirect: true
+        });
         localStorage.removeItem("isLoggedIn");
-        window.location.reload();
       } else {
         toast("Error occured.");
       }

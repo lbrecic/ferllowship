@@ -19,6 +19,10 @@ import { toast } from 'react-toastify';
 import Stomp from 'stompjs';
 import SockJS from 'sockjs-client';
 
+let socket;
+let stompClient;
+let reconnectInterval;
+
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const [loggedOut, setLoggedOut] = useState(null);
 
@@ -31,6 +35,10 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
       if (isMounted) {
         setLoggedOut(true);
       }
+      if (stompClient.connected) {
+        stompClient.disconnect();
+      }
+      toast.dismiss();
     }
     return () => { isMounted = false };
   });
@@ -61,16 +69,14 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    let reconnectInterval;
-
     if (localStorage.isLoggedIn) {
       let stompConnect = () => {
           clearInterval(reconnectInterval);
 
-          toast("Connecting...");
+          toast("Connecting...", { autoClose: false });
           
-          let socket = new SockJS('/api/chat');
-          let stompClient = Stomp.over(socket);
+          socket = new SockJS('/api/chat');
+          stompClient = Stomp.over(socket);
 
           let stompSuccessCallback = frame => {
               toast.dismiss();
@@ -92,8 +98,10 @@ class App extends React.Component {
           };
 
           let stompFailureCallback = error => {
+            if (localStorage.isLoggedIn) {
               toast("Connection lost. Reconnecting in 15 seconds.");
               reconnectInterval = setInterval(stompConnect, 15000);
+            }
           };
 
           stompClient.connect({}, stompSuccessCallback, stompFailureCallback);
@@ -117,7 +125,7 @@ class App extends React.Component {
             <PrivateRoute path="/global-stats" component={withRouter(GlobalStatsPage)}/>
             <PrivateRoute path="/stats" component={withRouter(StatsPage)}/>
             <PrivateRoute path="/chat" component={withRouter(Chat)} stompClient={this.state.stompClient} messages={this.state.messages} />
-            <LoggedInRoute path="/confirm" component={withRouter(ConfirmPage)}/>    
+            <LoggedInRoute path="/confirm" component={withRouter(ConfirmPage)}/>
           </Switch>
         </Router>
         <ToastContainer
