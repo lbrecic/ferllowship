@@ -63,24 +63,40 @@ class Chat extends React.Component {
             // ignore
         }
 
-        toast(<div> Connecting... <br /> Try to refresh page if this takes too long. </div>, { autoClose: false });
+        let reconnectInterval;
 
-        let socket = new SockJS('/api/chat');
-        let stompClient = Stomp.over(socket);
+        let stompConnect = () => {
+            clearInterval(reconnectInterval);
 
-        stompClient.connect({}, frame => {
-            toast.dismiss();
-            toast("Connected.");
+            toast("Connecting...");
+            
+            let socket = new SockJS('/api/chat');
+            let stompClient = Stomp.over(socket);
 
-            stompClient.subscribe('/user/queue/reply', function (msgOut) {
-                console.log(msgOut.body);
-            });
+            let stompSuccessCallback = frame => {
+                toast.dismiss();
+                toast("Connected.");
+    
+                stompClient.subscribe('/user/queue/reply', msg => {
+                    let receivedMessage = JSON.parse(msg.body);
+                    toast(receivedMessage.from + " u " + receivedMessage.time + " > " + receivedMessage.message);
+                });
+    
+                this.setState({
+                    connected: true,
+                    stompClient: stompClient
+                });
+            };
 
-            this.setState({
-                connected: true,
-                stompClient: stompClient
-            });
-        });
+            let stompFailureCallback = error => {
+                toast("Connection lost. Reconnecting in 15 seconds.");
+                reconnectInterval = setInterval(stompConnect, 15000);
+            };
+
+            stompClient.connect({}, stompSuccessCallback, stompFailureCallback);
+        };
+
+        stompConnect();
     }
 
     render() {
@@ -124,7 +140,6 @@ class Chat extends React.Component {
                                     <div className="message">
                                         <textarea
                                             className="messageInput"
-                                            disabled={!this.state.connected || Object.keys(this.state.selectedPlayer).length == 0}
                                             placeholder="Send message..."
                                             onChange={(e) => this.setProperty('message', e.target.value)}
                                         >
