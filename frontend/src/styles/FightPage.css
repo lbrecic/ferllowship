@@ -1,0 +1,43 @@
+.fightBody{
+    background-color: #2E3F30;
+    height:100vh;
+    width: 100%;
+    
+}
+
+.fightTitle{
+    padding-top: 30px;
+    color: white;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 40px;
+    text-align: center;
+    letter-spacing: 2px;
+    text-shadow: 0 0 5px #FF0000, 0 0 7px #0000FF;
+}
+
+.userCards{
+  display: flex;
+  flex-wrap: no-wrap;
+  height: 400px;
+  margin-top: auto;
+  margin-bottom: 70px;
+
+}
+
+.opponentCards{
+    height: 400px; 
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 0;   
+}
+
+.fightCards{
+    display: grid;
+    grid-template-columns: auto auto;
+    overflow-x: hidden;
+    position: fixed;
+    height: 100vh;
+    width: 100%;
+}
+
+

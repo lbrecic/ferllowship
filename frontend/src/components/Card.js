@@ -15,7 +15,7 @@ class DeckCard extends Component{
       render(){
           return(
           <>
-            <Card>
+            <Card style={{height: "350px", width: "220px"}}>
                  <Card.Img variant="top" src={this.state.locationPhoto} />
                  <Card.Body>
                    <Card.Title>{this.state.locationName}</Card.Title>
