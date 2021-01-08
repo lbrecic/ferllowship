@@ -83,10 +83,9 @@ public class AdminController {
 			Ban ban = new Ban();
 			ban.setPlayer(player);
 			/*
-			 * Bilo bi dobro dogovoriti format unosa datuma za sada cu staviti format
-			 * 'dd-mm-yyyy'
+			 * Format datuma 'mm-dd-yyyy'
 			 */
-			final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+			final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM-dd-yyyy");
 			final LocalDate banDate = LocalDate.parse(banEnd, dtf);
 			ban.setBanEnd(banDate);
 
