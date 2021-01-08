@@ -1,16 +1,21 @@
 package hr.fer.progi.ferllowship.geofighter.controller;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 
+import hr.fer.progi.ferllowship.geofighter.dao.BanRepository;
 import hr.fer.progi.ferllowship.geofighter.dao.PlayerRepository;
 import hr.fer.progi.ferllowship.geofighter.dto.PlayerDTO;
+import hr.fer.progi.ferllowship.geofighter.model.Ban;
 import hr.fer.progi.ferllowship.geofighter.model.Player;
 import hr.fer.progi.ferllowship.geofighter.service.PlayerService;
 
@@ -19,43 +24,62 @@ public class AdminController {
 
 	@Autowired
 	private PlayerService playerService;
-	
+
 	@Autowired
     private PlayerRepository playerRepository;
+	
+	@Autowired
+	private BanRepository banRepository;
 
 	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping(path = "/allPlayers")
 	public List<PlayerDTO> getAllPlayers() {
-		List<PlayerDTO> response = new ArrayList<>();
-		
-		for (PlayerDTO user : playerService.getAllPlayers())
-			if (user.getAuthorityLevel().toUpperCase().equals("PLAYER"))
-				response.add(user);
-		
-		return response;
+		return getAll("PLAYER");
 	}
-	
+
 	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping(path = "/allCartographs")
 	public List<PlayerDTO> getAllCartographs() {
+		return getAll("CARTOGRAPH");
+	}
+
+	@PreAuthorize("hasRole('ADMIN')")
+	@GetMapping(path = "/allAdmins")
+	public List<PlayerDTO> getAllAdmins() {
+		return getAll("ADMIN");
+	}
+
+	public List<PlayerDTO> getAll(String role) {
 		List<PlayerDTO> response = new ArrayList<>();
-		
-		for (PlayerDTO user : playerService.getAllPlayers())
-			if (user.getAuthorityLevel().toUpperCase().equals("CARTOGRAPH"))
+
+		for (PlayerDTO user : playerService.getAllPlayers()) {
+			if (user.getAuthorityLevel().toUpperCase().equals(role)) {
 				response.add(user);
-		
+			}
+		}
+
 		return response;
 	}
 	
 	@PreAuthorize("hasRole('ADMIN')")
-	@GetMapping(path = "/allAdmins")
-	public List<PlayerDTO> getAllAdmins() {
-		List<PlayerDTO> response = new ArrayList<>();
+	@PostMapping(path = "/player/ban")
+	public void banPlayer(@RequestPart String username,
+							@RequestPart String banStatus,
+							@RequestPart String banEnd) {
+		Player player = playerRepository.findByUsername(username);
 		
-		for (PlayerDTO user : playerService.getAllPlayers())
-			if (user.getAuthorityLevel().toUpperCase().equals("ADMIN"))
-				response.add(user);
+		player.setBanStatus(Integer.parseInt(banStatus));
+		playerRepository.save(player);
 		
-		return response;
+		Ban ban = new Ban();
+		ban.setPlayer(player);
+		/* Bilo bi dobro dogovoriti format unosa datuma
+		 * za sada cu staviti format 'dd-mm-yyy'
+		 */
+		final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+		final LocalDate banDate = LocalDate.parse(banEnd, dtf);
+		ban.setBanEnd(banDate);
+		
+		banRepository.save(ban);
 	}
 }
