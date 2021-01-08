@@ -15,6 +15,7 @@ import './styles/App.css';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ConfirmPage from './pages/ConfirmPage';
+import FightPage from './pages/FightPage';
 import { toast } from 'react-toastify';
 import Stomp from 'stompjs';
 import SockJS from 'sockjs-client';
@@ -73,14 +74,14 @@ class App extends React.Component {
       let stompConnect = () => {
           clearInterval(reconnectInterval);
 
-          toast("Connecting...", { autoClose: false });
+          //toast("Connecting...", { autoClose: false });
           
           socket = new SockJS('/api/chat');
           stompClient = Stomp.over(socket);
 
           let stompSuccessCallback = frame => {
               toast.dismiss();
-              toast("Connected.");
+              //toast("Connected.");
 
               stompClient.subscribe('/user/queue/reply', msg => {
                   console.log(msg);
@@ -106,7 +107,7 @@ class App extends React.Component {
 
           let stompFailureCallback = error => {
             if (localStorage.isLoggedIn) {
-              toast("Connection lost. Reconnecting in 15 seconds.");
+              //toast("Connection lost. Reconnecting in 15 seconds.");
               reconnectInterval = setInterval(stompConnect, 15000);
             }
           };
@@ -133,6 +134,8 @@ class App extends React.Component {
             <PrivateRoute path="/stats" component={withRouter(StatsPage)}/>
             <PrivateRoute path="/chat" component={withRouter(Chat)} 
             stompClient={this.state.stompClient} receivedMessages={this.state.receivedMessages} />
+            <PrivateRoute path="/fight" component={withRouter(FightPage)}/>
+            <PrivateRoute path="/chat" component={withRouter(Chat)} stompClient={this.state.stompClient} messages={this.state.messages} />
             <LoggedInRoute path="/confirm" component={withRouter(ConfirmPage)}/>
           </Switch>
         </Router>
