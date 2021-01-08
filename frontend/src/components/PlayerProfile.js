@@ -2,6 +2,7 @@ import React from "react";
 import Header from "../components/Header";
 import CartographForm from "../components/CartographForm";
 import EditProfile from "../components/EditProfile";
+import Ban from "../components/Ban";
 import "../styles/App.css";
 import cards from "../utils/cards.png";
 import stats from "../utils/statistics.png";
@@ -12,12 +13,14 @@ class PlayerProfile extends React.Component {
 
   constructor(props) {
     super(props);
+    this.adminView = this.props.adminView // ovo bolje napraviti
     this.state = {
       username: this.props.user.username,
       email: this.props.user.email,
       photoLink: this.props.user.photoLink,
       anotherPlayer: this.props.user.anotherPlayer,
-      showEdit: false
+      showEdit: false,
+      showBan: false
     }
   }
 
@@ -28,6 +31,12 @@ class PlayerProfile extends React.Component {
   showEditWindow = (e) => {
     this.setState({
       showEdit: !this.state.showEdit,
+    });
+  };
+
+  showBanWindow = (e) => {
+    this.setState({
+      showBan: !this.state.showBan
     });
   };
 
@@ -76,6 +85,18 @@ class PlayerProfile extends React.Component {
                 <span className="logo-title-light title">
                   Player
                 </span>
+                <button
+                    className="btnLogout btnEdit"
+                    onClick={(e) => {
+                      this.showBanWindow();
+                    }}
+                  >
+                    Ban
+                </button>
+                <Ban
+                    show={this.state.showBan}
+                    onClose={() => this.onCloseEdit()}
+                />
               </div>
             </div>
 
@@ -85,6 +106,9 @@ class PlayerProfile extends React.Component {
                   <div className="flex justify-center">
                     <img src={cards} className="karte" alt="logo" />
                   </div>
+                  {this.adminView === 1 &&
+                  <span className="logo-title-light textKarte">My cards</span>
+                  } 
                   <span className="logo-title-light textKarte">My cards</span>
                 </Link>
               </div>
@@ -94,9 +118,16 @@ class PlayerProfile extends React.Component {
                   <div className="flex justify-center">
                     <img src={stats} className="statistika" alt="logo" />
                   </div>
+                  {/*Kad je admin gleda igrace da vidi njihovu statisiku, isto za karte*/}
+                  {this.adminView === 1 &&
+                    <span className="logo-title-light textStatistika">
+                      {this.state.username}-statistics
+                    </span>
+                  }
                   <span className="logo-title-light textStatistika">
-                    My statistics
-                  </span>
+                      My statistics
+                    </span>
+
                 </Link>
               </div>
 
