@@ -26,8 +26,8 @@ public class AdminController {
 	private PlayerService playerService;
 
 	@Autowired
-    private PlayerRepository playerRepository;
-	
+	private PlayerRepository playerRepository;
+
 	@Autowired
 	private BanRepository banRepository;
 
@@ -60,26 +60,38 @@ public class AdminController {
 
 		return response;
 	}
-	
+
+	private enum BAN_STATUS {
+		UNBANNED(0), TEMPORARY(1), PERMANENT(2);
+
+		public final int value;
+
+		BAN_STATUS(int value) {
+			this.value = value;
+		}
+	}
+
 	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping(path = "/player/ban")
-	public void banPlayer(@RequestPart String username,
-							@RequestPart String banStatus,
-							@RequestPart String banEnd) {
+	public void banPlayer(@RequestPart String username, @RequestPart String banStatus, @RequestPart String banEnd) {
 		Player player = playerRepository.findByUsername(username);
-		
+
 		player.setBanStatus(Integer.parseInt(banStatus));
 		playerRepository.save(player);
-		
-		Ban ban = new Ban();
-		ban.setPlayer(player);
-		/* Bilo bi dobro dogovoriti format unosa datuma
-		 * za sada cu staviti format 'dd-mm-yyy'
-		 */
-		final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-		final LocalDate banDate = LocalDate.parse(banEnd, dtf);
-		ban.setBanEnd(banDate);
-		
-		banRepository.save(ban);
+
+		if (Integer.parseInt(banStatus) == BAN_STATUS.TEMPORARY.value) {
+			Ban ban = new Ban();
+			ban.setPlayer(player);
+			/*
+			 * Bilo bi dobro dogovoriti format unosa datuma za sada cu staviti format
+			 * 'dd-mm-yyyy'
+			 */
+			final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+			final LocalDate banDate = LocalDate.parse(banEnd, dtf);
+			ban.setBanEnd(banDate);
+
+			banRepository.save(ban);
+		}
 	}
+
 }
