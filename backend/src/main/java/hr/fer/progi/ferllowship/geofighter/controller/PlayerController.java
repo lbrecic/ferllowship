@@ -21,8 +21,8 @@ import hr.fer.progi.ferllowship.geofighter.dto.MessageDTO;
 import hr.fer.progi.ferllowship.geofighter.dto.PlayerDTO;
 import hr.fer.progi.ferllowship.geofighter.model.Card;
 import hr.fer.progi.ferllowship.geofighter.model.Player;
-import hr.fer.progi.ferllowship.geofighter.security.ActiveUserStore;
-import hr.fer.progi.ferllowship.geofighter.security.LoggedUser;
+import hr.fer.progi.ferllowship.geofighter.configuration.ActiveUserStore;
+import hr.fer.progi.ferllowship.geofighter.configuration.LoggedUser;
 import hr.fer.progi.ferllowship.geofighter.service.CloudinaryService;
 import hr.fer.progi.ferllowship.geofighter.service.PlayerService;
 

@@ -19,7 +19,7 @@ import hr.fer.progi.ferllowship.geofighter.dto.PlayerDTO;
 import hr.fer.progi.ferllowship.geofighter.model.Admin;
 import hr.fer.progi.ferllowship.geofighter.model.Cartograph;
 import hr.fer.progi.ferllowship.geofighter.model.Player;
-import hr.fer.progi.ferllowship.geofighter.security.ActiveUserStore;
+import hr.fer.progi.ferllowship.geofighter.configuration.ActiveUserStore;
 
 @Service
 public class PlayerService {
