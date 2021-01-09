@@ -8,6 +8,7 @@ class DeckCard extends Component{
           locationName: this.props.locationName,
           locationPhoto : this.props.locationPhoto,
           cardPoints: this.props.cardPoints,
+          locationDesc : this.props.locationDesc,
         };
       }
 
@@ -19,11 +20,11 @@ class DeckCard extends Component{
                  <Card.Body>
                    <Card.Title>{this.state.locationName}</Card.Title>
                    <Card.Text>
-                     Points: {this.state.cardPoints}
+                    <small className="text-muted">{this.state.locationDesc}</small>
                    </Card.Text>
                  </Card.Body>
                  <Card.Footer>
-                   <small className="text-muted">Last updated 3 mins ago</small>
+                 Points: {this.state.cardPoints}                   
                  </Card.Footer>
                </Card>
            </>
