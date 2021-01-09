@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { Card, CardGroup } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 import "../styles/Card.css";
 
 class DeckCard extends Component{
