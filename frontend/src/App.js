@@ -64,7 +64,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       stompClient: {},
-      messages: []
+      receivedMessages: []
     }
   }
 
@@ -83,13 +83,20 @@ class App extends React.Component {
               toast("Connected.");
 
               stompClient.subscribe('/user/queue/reply', msg => {
+                  console.log(msg);
                   let receivedMessage = JSON.parse(msg.body);
 
-                  this.setState(prevState => ({
-                    messages: [...prevState.messages, receivedMessage]
-                  }));
+                  this.setState({
+                    receivedMessages: this.state.receivedMessages.concat(receivedMessage),
+                  });
 
-                  toast(receivedMessage.from + " (" + receivedMessage.time + ") > " + receivedMessage.message);
+                  toast(
+                    <div>
+                      <p>{receivedMessage.from}</p>
+                      <p style={{ whiteSpace: "pre-line" }}>{receivedMessage.message}</p>
+                      <p>{receivedMessage.time.substring(0, 5)}</p>
+                    </div>
+                  );
               });
 
               this.setState({
@@ -124,7 +131,8 @@ class App extends React.Component {
             <PrivateRoute path="/help" component={withRouter(HelpPage)}/>
             <PrivateRoute path="/global-stats" component={withRouter(GlobalStatsPage)}/>
             <PrivateRoute path="/stats" component={withRouter(StatsPage)}/>
-            <PrivateRoute path="/chat" component={withRouter(Chat)} stompClient={this.state.stompClient} messages={this.state.messages} />
+            <PrivateRoute path="/chat" component={withRouter(Chat)} 
+            stompClient={this.state.stompClient} receivedMessages={this.state.receivedMessages} />
             <LoggedInRoute path="/confirm" component={withRouter(ConfirmPage)}/>
           </Switch>
         </Router>

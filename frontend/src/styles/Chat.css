@@ -92,8 +92,14 @@
     border-radius: 20px;
     padding: 15px;
     height: 100px;
-    overflow: hidden;
+    overflow: scroll;
+    scrollbar-width: none;
     resize: none;
+}
+
+.messageInput::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
 }
 
 .messageBtn{
