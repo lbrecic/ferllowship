@@ -42,8 +42,7 @@ public class Player {
 	@Column
 	private Integer experience;
 	
-	@OneToMany(targetEntity = Card.class, fetch = FetchType.EAGER)
-	@JoinColumn(name = "card_id")
+	@OneToMany(targetEntity = Card.class, fetch = FetchType.EAGER, mappedBy = "player")
 	private List<Card> deck;
 
 	public Player() {
