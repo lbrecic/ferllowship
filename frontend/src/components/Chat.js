@@ -214,8 +214,13 @@ class Chat extends React.Component {
                                             </textarea>
                                             <button 
                                                 className="messageBtn" 
-                                                disabled={Object.keys(this.state.selectedPlayer).length == 0}
-                                                onClick={() => this.sendMessage(this.state.selectedPlayer.username)}
+                                                disabled={Object.keys(this.state.selectedPlayer).length == 0 ||
+                                                    this.state.message.trim() === ""}
+                                                onClick={() => { 
+                                                    this.sendMessage(); 
+                                                    this.setState({message: ""});
+                                                    message = ""; 
+                                                }}
                                             >
                                                 Send 
                                             </button> 
