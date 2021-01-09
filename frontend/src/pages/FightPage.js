@@ -2,6 +2,7 @@ import React from "react";
 import "../styles/FightPage.css";
 import { withRouter } from "react-router-dom";
 import DeckCard from "../components/Card";
+import OpponentCard from "../components/OpponentCard";
 
 class FightPage extends React.Component {
   constructor(props) {
@@ -20,16 +21,22 @@ class FightPage extends React.Component {
           </div>
 
           <div className="fightCards">
-            <div className="userCards">
-              <DeckCard locationPhoto="" />
-              <DeckCard locationPhoto="" />
-              <DeckCard locationPhoto="" />
+            <div className="userCardsWrapper">
+              <span>Your cards</span>
+              <div className="userCards">
+                <DeckCard locationPhoto="" />
+                <DeckCard locationPhoto="" />
+                <DeckCard locationPhoto="" />
+              </div>
             </div>
-            <div className="opponentCards"> 
-                <DeckCard locationPhoto="" />
-                <DeckCard locationPhoto="" />
-                <DeckCard locationPhoto="" />
-            </div>   
+            <div className="opponentCardsWrapper">
+              <div className="opponentCards">
+                <OpponentCard />
+                <OpponentCard />
+                <OpponentCard/>
+              </div>
+              <span>Opponent's cards</span>
+            </div>
           </div>
         </div>
       </>
