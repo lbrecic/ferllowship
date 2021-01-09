@@ -74,14 +74,14 @@ class App extends React.Component {
       let stompConnect = () => {
           clearInterval(reconnectInterval);
 
-          //toast("Connecting...", { autoClose: false });
+          toast("Connecting...", { autoClose: false });
           
           socket = new SockJS('/api/chat');
           stompClient = Stomp.over(socket);
 
           let stompSuccessCallback = frame => {
               toast.dismiss();
-              //toast("Connected.");
+              toast("Connected.");
 
               stompClient.subscribe('/user/queue/reply', msg => {
                   console.log(msg);
@@ -107,7 +107,7 @@ class App extends React.Component {
 
           let stompFailureCallback = error => {
             if (localStorage.isLoggedIn) {
-              //toast("Connection lost. Reconnecting in 15 seconds.");
+              toast("Connection lost. Reconnecting in 15 seconds.");
               reconnectInterval = setInterval(stompConnect, 15000);
             }
           };
