@@ -2,6 +2,7 @@ import React from "react";
 import Header from "../components/Header";
 import CartographForm from "../components/CartographForm";
 import EditProfile from "../components/EditProfile";
+import Ban from "../components/Ban";
 import "../styles/App.css";
 import cards from "../utils/cards.png";
 import stats from "../utils/statistics.png";
@@ -10,6 +11,9 @@ import "../styles/PlayerProfile.css";
 
 class PlayerProfile extends React.Component {
 
+  /*
+  TODO: prikaz gumba na igracevom profilu ako je ulogiran admin(edit i ban)
+  */
   constructor(props) {
     super(props);
     this.state = {
@@ -17,7 +21,9 @@ class PlayerProfile extends React.Component {
       email: this.props.user.email,
       photoLink: this.props.user.photoLink,
       anotherPlayer: this.props.user.anotherPlayer,
-      showEdit: false
+      authorityLevel: localStorage.authorityLevel,  //???
+      showEdit: false,
+      showBan: false
     }
   }
 
@@ -28,6 +34,12 @@ class PlayerProfile extends React.Component {
   showEditWindow = (e) => {
     this.setState({
       showEdit: !this.state.showEdit,
+    });
+  };
+
+  showBanWindow = (e) => {
+    this.setState({
+      showBan: !this.state.showBan
     });
   };
 
@@ -76,6 +88,20 @@ class PlayerProfile extends React.Component {
                 <span className="logo-title-light title">
                   Player
                 </span>
+
+                {this.state.authorityLevel === 'admin' &&
+                  <button 
+                    className="btnLogout btnEdit"
+                    onClick={(e) => {
+                      this.showBanWindow();
+                  }}>
+                    Ban
+                  </button> &&
+                  <Ban
+                     show={this.state.showBan}
+                    onClose={() => this.onCloseEdit()}
+                  />
+                }
               </div>
             </div>
 
@@ -95,12 +121,13 @@ class PlayerProfile extends React.Component {
                     <img src={stats} className="statistika" alt="logo" />
                   </div>
                   <span className="logo-title-light textStatistika">
-                    My statistics
-                  </span>
+                      My statistics
+                    </span>
+
                 </Link>
               </div>
 
-              {this.state.anotherPlayer === false &&
+              {this.state.anotherPlayer === false || this.state.authorityLevel === 'admin' &&
                 <p className=" white">
                   <button
                     className="btnLogout btnEdit"

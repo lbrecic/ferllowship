@@ -14,7 +14,8 @@ class AllUsersWindow extends React.Component {
     this.state = {
         players: 1,
         cartographs: 0,
-        admins: 0
+        admins: 0,
+        adminView: 0
     }
   }
 
@@ -22,7 +23,8 @@ class AllUsersWindow extends React.Component {
         this.state = {
             players: 1,
             cartographs: 0,
-            admins: 0
+            admins: 0,
+            adminView: 1
         }
         this.setState(this.state);
     }
@@ -31,7 +33,8 @@ class AllUsersWindow extends React.Component {
         this.state = {
             players: 0,
             cartographs: 1,
-            admins: 0
+            admins: 0,
+            adminView: 1
         }
         this.setState(this.state);
     }
@@ -40,7 +43,8 @@ class AllUsersWindow extends React.Component {
       this.state = {
           players: 0,
           cartographs: 0,
-          admins: 1
+          admins: 1,
+          adminView:1
       }
       this.setState(this.state);
     } 
