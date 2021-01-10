@@ -56,6 +56,7 @@ class PlayerProfile extends React.Component {
   onCloseEdit = (e) => {
     this.setState({
       showEdit: false,
+      showBan: false
     });
   };
 
@@ -108,7 +109,7 @@ class PlayerProfile extends React.Component {
                     Ban
                   </button>}
                   <Ban
-                     show={this.state.showBan}
+                    show={this.state.showBan}
                     onClose={() => this.onCloseEdit()}
                     user={this.state}
                   />
