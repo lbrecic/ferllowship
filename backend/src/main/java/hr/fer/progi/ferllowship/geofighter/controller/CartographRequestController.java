@@ -47,7 +47,7 @@ public class CartographRequestController {
 		Player player = playerService.getLoggedInPlayer();
 		String idPhotoLink = cloudinaryService.upload(picture.getBytes());
 		playerService.changeRoleToCartograph(player, iban, idPhotoLink, false);
-		return new MessageDTO("Prijava uspješno zaprimljena.");
+		return new MessageDTO("Request successfully received.");
 	}
 	
 	@PreAuthorize("hasRole('ADMIN')")
@@ -85,13 +85,13 @@ public class CartographRequestController {
 	public MessageDTO acceptRequest(@RequestParam String username) {
 		Cartograph cartograph = cartographRepository.findByUsername(username);
 		if (cartograph == null) {
-			return new MessageDTO("Zahtjev nije pronađen.");
+			return new MessageDTO("Request not found.");
 		}
-		
+
 		cartograph.setConfirmed(true);
 		cartographRepository.save(cartograph);
-		
-		return new MessageDTO("Zahtjev prihvaćen.");
+
+		return new MessageDTO("Request accepted.");
 	}
 	
 	@PreAuthorize("hasRole('ADMIN')")
@@ -99,12 +99,12 @@ public class CartographRequestController {
 	public MessageDTO declineRequest(@RequestParam String username) {
 		Cartograph cartograph = cartographRepository.findByUsername(username);
 		if (cartograph == null) {
-			return new MessageDTO("Zahtjev nije pronađen.");
+			return new MessageDTO("Request not found.");
 		}
 
 		playerService.changeRoleToPlayer(cartograph);
-		
-		return new MessageDTO("Zahtjev odbijen.");
+
+		return new MessageDTO("Request declined.");
 	}
 	
 }

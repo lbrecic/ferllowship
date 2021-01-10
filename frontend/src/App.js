@@ -74,7 +74,7 @@ class App extends React.Component {
       let stompConnect = () => {
           clearInterval(reconnectInterval);
 
-          toast("Connecting...", { autoClose: false });
+          toast((<div>Connecting to chat... <br /> Please wait for a connection to be established. </div>), { autoClose: false });
           
           socket = new SockJS('/api/chat');
           stompClient = Stomp.over(socket);
@@ -84,7 +84,6 @@ class App extends React.Component {
               toast("Connected.");
 
               stompClient.subscribe('/user/queue/reply', msg => {
-                  console.log(msg);
                   let receivedMessage = JSON.parse(msg.body);
 
                   this.setState({
@@ -107,6 +106,7 @@ class App extends React.Component {
 
           let stompFailureCallback = error => {
             if (localStorage.isLoggedIn) {
+              toast.dismiss();
               toast("Connection lost. Reconnecting in 15 seconds.");
               reconnectInterval = setInterval(stompConnect, 15000);
             }
@@ -134,7 +134,7 @@ class App extends React.Component {
             <PrivateRoute path="/global-stats" component={withRouter(GlobalStatsPage)}/>
             <PrivateRoute path="/stats" component={withRouter(StatsPage)}/>
             <PrivateRoute path="/chat" component={withRouter(Chat)} 
-            stompClient={this.state.stompClient} receivedMessages={this.state.receivedMessages} />            
+            stompClient={this.state.stompClient} receivedMessages={this.state.receivedMessages} />
             <LoggedInRoute path="/confirm" component={withRouter(ConfirmPage)}/>
           </Switch>
         </Router>

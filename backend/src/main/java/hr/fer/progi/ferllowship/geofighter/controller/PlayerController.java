@@ -109,7 +109,7 @@ public class PlayerController {
 
 		if(!oldPassword.isBlank()) {		//dodano - Ivana
 			if (!passwordEncoder.matches(oldPassword, player.getPasswordHash())) {
-				return new MessageDTO("Unesena pogrešna lozinka!");
+				return new MessageDTO("Incorrect password.");
 			}
 		}
 //		if (!username.isBlank()) {
@@ -134,7 +134,7 @@ public class PlayerController {
 
 		playerRepository.save(player);
 
-		return new MessageDTO("Promjene profila uspješno pohranjene.");
+		return new MessageDTO("Changes saved successfully.");
 	}
 
 	@PreAuthorize("hasAnyRole('ADMIN','CARTOGRAPH','PLAYER')")

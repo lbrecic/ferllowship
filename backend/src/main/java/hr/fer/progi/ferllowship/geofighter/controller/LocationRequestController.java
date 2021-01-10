@@ -65,7 +65,7 @@ public class LocationRequestController {
 		location.setLocationStatus(LOCATION_STATUS.NEEDS_APPROVAL.value);
 		locationRepository.save(location);
 		
-		return new MessageDTO("Zahtjev uspješno zaprimljen.");
+		return new MessageDTO("Request successfully received.");
 	}
 
 	@PreAuthorize("hasAnyRole('ADMIN','CARTOGRAPH','PLAYER')")
@@ -107,13 +107,13 @@ public class LocationRequestController {
 
 		Location location = locationRepository.findByLocationName(locationName);
 		if (location == null) {
-			return new MessageDTO("Zahtjev nije pronađen.");
+			return new MessageDTO("Request not found.");
 		}
 
 		location.setLocationStatus(status);
 		locationRepository.save(location);
 
-		return new MessageDTO("Zahtjev obrađen.");
+		return new MessageDTO("Request processed.");
 	}
 	
 	@PreAuthorize("hasAnyRole('ADMIN','CARTOGRAPH')")
@@ -129,7 +129,7 @@ public class LocationRequestController {
 		
 		Location location = locationRepository.findByLocationName(locationName);
 		if (location == null) {
-			return new MessageDTO("Lokacija sa zadanim imenom nije pronađena.");
+			return new MessageDTO("Location with given name not found.");
 		}
 		
 		if (!newLocationName.isBlank()) {
@@ -158,7 +158,7 @@ public class LocationRequestController {
 		}
 		locationRepository.save(location);
 
-		return new MessageDTO("Promjene uspješno pohranjene.");
+		return new MessageDTO("Changes saved successfully.");
 	}
 
 }
