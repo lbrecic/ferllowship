@@ -16,10 +16,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import hr.fer.progi.ferllowship.geofighter.dao.AdminRepository;
 import hr.fer.progi.ferllowship.geofighter.dao.BanRepository;
-import hr.fer.progi.ferllowship.geofighter.dao.CartographRepository;
-import hr.fer.progi.ferllowship.geofighter.dao.LocationRepository;
 import hr.fer.progi.ferllowship.geofighter.dao.PlayerRepository;
 import hr.fer.progi.ferllowship.geofighter.dto.LocationDTO;
 import hr.fer.progi.ferllowship.geofighter.dto.MessageDTO;
@@ -27,9 +24,9 @@ import hr.fer.progi.ferllowship.geofighter.dto.PlayerDTO;
 import hr.fer.progi.ferllowship.geofighter.model.Admin;
 import hr.fer.progi.ferllowship.geofighter.model.Ban;
 import hr.fer.progi.ferllowship.geofighter.model.Cartograph;
-import hr.fer.progi.ferllowship.geofighter.model.Location;
 import hr.fer.progi.ferllowship.geofighter.model.Player;
 import hr.fer.progi.ferllowship.geofighter.service.CloudinaryService;
+import hr.fer.progi.ferllowship.geofighter.service.LocationService;
 import hr.fer.progi.ferllowship.geofighter.service.PlayerService;
 
 @RestController
@@ -45,13 +42,7 @@ public class AdminController {
 	private BanRepository banRepository;
 	
 	@Autowired
-	private CartographRepository cartographRepository;
-	
-	@Autowired
-	private AdminRepository adminRepository;
-	
-//	@Autowired
-//	private LocationRepository locationRepository;
+	private LocationService locationService;
 
 	@Autowired
 	private CloudinaryService cloudinaryService;
@@ -184,6 +175,21 @@ public class AdminController {
 			return new MessageDTO("Role was incorrectly entered!");
 		}
 		return new MessageDTO("Player's role successfully changed!");
+	}
+	
+	@PreAuthorize("hasRole('ADMIN')")
+	@PostMapping(path = "/location/edit")
+	public MessageDTO editLocation(@RequestPart String locationName,
+									@RequestPart String newLocationName,
+            						@RequestPart String locationDesc,
+            						@RequestPart MultipartFile locationPhoto,
+            						@RequestPart LocationDTO.Coordinates coordinates,
+            						@RequestPart String categoryName,
+							@RequestPart String status) throws IOException {
+		
+		String message = locationService.changeLocationData(locationName,
+				newLocationName, locationDesc, locationPhoto, coordinates, categoryName, status);
+		return new MessageDTO(message);
 	}
 		
 }
