@@ -118,7 +118,6 @@ class FightPage extends React.Component {
           <div className="fightTitle">
             <span>Fight</span>
           </div>
-
           <div className="fightCards">
             <div className="userCardsWrapper">
               <span>Your cards</span>

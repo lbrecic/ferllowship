@@ -70,7 +70,8 @@
 }
 
 .chooseCards{
-    margin-top: 20px;
+    margin-top: auto;
+    margin-bottom: 2%;
     display: flex;
     margin-left: 5%;
     margin-right: 5%;
@@ -83,8 +84,8 @@
 }
 
 .chosenCards{
-    position: relative;
     padding-top: 50px;
+    height: 150px;
     color: white;
     font-family: 'Orbitron', sans-serif;
     font-size:20px;
