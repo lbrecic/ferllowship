@@ -46,10 +46,10 @@ public class RegistrationController {
 	                           throws IOException {
 		
 		if (playerRepository.findByUsername(username) != null) {
-			return new MessageDTO("Igrač s unesenim imenom već postoji.");
+			return new MessageDTO("Player with given username already exists.");
 		}
 		if (playerRepository.findByEmail(email) != null) {
-			return new MessageDTO("Igrač s unesenim e-mailom već postoji.");
+			return new MessageDTO("Player with given e-mail already exists.");
 		}
 		
 		String pictureLink = cloudinaryService.upload(picture.getBytes());
@@ -82,7 +82,7 @@ public class RegistrationController {
 		playerRepository.save(player);
 		confirmationTokenRepository.save(confirmationToken);
 
-		return new MessageDTO("Potvrdi registraciju na emailu.");
+		return new MessageDTO("Confirm your registration by e-mail.");
 	}
 	
 	@GetMapping(path = "/confirm")
@@ -91,7 +91,7 @@ public class RegistrationController {
 			confirmationTokenRepository.findByConfirmationToken(token);
 		
 		if (confirmationToken == null) {
-			return new MessageDTO("Link za potvrdu nije valjan.");
+			return new MessageDTO("Invalid confirmation link.");
 		}
 		
 		Player player = playerRepository.findByEmail(
@@ -100,7 +100,7 @@ public class RegistrationController {
 		player.setEnabled(true);
 		playerRepository.save(player);
 		
-		return new MessageDTO("Uspješna registracija!");
+		return new MessageDTO("Registered successfully!");
 	}
 	
 }

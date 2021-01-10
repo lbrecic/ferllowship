@@ -14,12 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import hr.fer.progi.ferllowship.geofighter.dao.CartographRepository;
-import hr.fer.progi.ferllowship.geofighter.dao.ConfirmationTokenRepository;
 import hr.fer.progi.ferllowship.geofighter.dao.PlayerRepository;
 import hr.fer.progi.ferllowship.geofighter.dto.CartographDTO;
 import hr.fer.progi.ferllowship.geofighter.dto.MessageDTO;
 import hr.fer.progi.ferllowship.geofighter.model.Cartograph;
-import hr.fer.progi.ferllowship.geofighter.model.ConfirmationToken;
 import hr.fer.progi.ferllowship.geofighter.model.Player;
 import hr.fer.progi.ferllowship.geofighter.service.CloudinaryService;
 import hr.fer.progi.ferllowship.geofighter.service.PlayerService;
@@ -32,9 +30,6 @@ public class CartographRequestController {
 	
 	@Autowired
 	private PlayerRepository playerRepository;
-	
-	@Autowired
-	private ConfirmationTokenRepository confirmationTokenRepository;
 	
 	@Autowired
 	private CloudinaryService cloudinaryService;
@@ -50,20 +45,9 @@ public class CartographRequestController {
 	                                throws IOException {
 
 		Player player = playerService.getLoggedInPlayer();
-		Cartograph cartograph = player.createCartograph();
-		cartograph.setIban(iban);
-		cartograph.setIdPhotoLink(cloudinaryService.upload(picture.getBytes()));
-		
-		ConfirmationToken token = confirmationTokenRepository.findByPlayer(player);
-		if (token != null) {
-			confirmationTokenRepository.delete(token);			
-		}
-
-		playerRepository.delete(player);
-		playerRepository.flush();
-		cartographRepository.save(cartograph);
-		
-		return new MessageDTO("Prijava uspješno zaprimljena.");
+		String idPhotoLink = cloudinaryService.upload(picture.getBytes());
+		playerService.changeRoleToCartograph(player, iban, idPhotoLink, false);
+		return new MessageDTO("Request successfully received.");
 	}
 	
 	@PreAuthorize("hasRole('ADMIN')")
@@ -101,13 +85,13 @@ public class CartographRequestController {
 	public MessageDTO acceptRequest(@RequestParam String username) {
 		Cartograph cartograph = cartographRepository.findByUsername(username);
 		if (cartograph == null) {
-			return new MessageDTO("Zahtjev nije pronađen.");
+			return new MessageDTO("Request not found.");
 		}
-		
+
 		cartograph.setConfirmed(true);
 		cartographRepository.save(cartograph);
-		
-		return new MessageDTO("Zahtjev prihvaćen.");
+
+		return new MessageDTO("Request accepted.");
 	}
 	
 	@PreAuthorize("hasRole('ADMIN')")
@@ -115,14 +99,12 @@ public class CartographRequestController {
 	public MessageDTO declineRequest(@RequestParam String username) {
 		Cartograph cartograph = cartographRepository.findByUsername(username);
 		if (cartograph == null) {
-			return new MessageDTO("Zahtjev nije pronađen.");
+			return new MessageDTO("Request not found.");
 		}
-		
-		cartographRepository.delete(cartograph);
-		cartographRepository.flush();
-		playerRepository.save(cartograph.createPlayer());
-		
-		return new MessageDTO("Zahtjev odbijen.");
+
+		playerService.changeRoleToPlayer(cartograph);
+
+		return new MessageDTO("Request declined.");
 	}
 	
 }
