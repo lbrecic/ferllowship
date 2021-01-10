@@ -70,7 +70,7 @@
 }
 
 .chooseCards{
-    margin-top: 60px;
+    margin-top: 20px;
     display: flex;
     margin-left: 5%;
     margin-right: 5%;
@@ -83,6 +83,7 @@
 }
 
 .chosenCards{
+    position: relative;
     padding-top: 50px;
     color: white;
     font-family: 'Orbitron', sans-serif;
@@ -91,4 +92,35 @@
     letter-spacing: 2px;
     padding-bottom: 20px;
     text-shadow: 0 0 3px #FF0000, 0 0 5px #0000FF;
+}
+
+.unchoseBtn {
+    width: 80%;
+    margin-left: 25px;
+    margin-right: auto;
+    color: #565656;
+    padding: 12px;
+    font-size: 14px;
+    font-weight: bold;
+    border: solid 3px #292929;
+    border-radius: 4px;
+    background: #fff;
+    cursor: pointer;
+    box-shadow: 0 0 1px #FF0000, 0 0 2px #0000FF;
+}
+
+.readyBtn{
+    width: 100px;
+    margin-left: 25px;
+    margin-right: auto;
+    color: #565656;
+    padding: 12px;
+    margin-top: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    border: solid 3px #292929;
+    border-radius: 4px;
+    background: #fff;
+    cursor: pointer;
+    box-shadow: 0 0 1px #FF0000, 0 0 2px #0000FF;
 }

@@ -30,6 +30,24 @@ class FightPage extends React.Component {
     } catch (e) {}
   }
 
+  unchose(card) {
+    this.setState({
+      cards: this.state.cards.filter((c) => c !== card),
+      chosen: this.state.chosen - 1,
+    });
+    if (this.state.cards.length === 0) {
+      this.setState({
+        cardNames: "",
+      });
+    }
+  }
+
+  confirmSelection(){
+      this.setState({
+          chosen : this.state.chosen + 1,
+      })
+  }
+
   chooseCard(card) {
     if (this.state.cards.indexOf(card) === -1 && this.state.chosen < 3) {
       this.setState({
@@ -39,7 +57,7 @@ class FightPage extends React.Component {
       console.log(JSON.stringify(this.state.allCards));
       if (this.state.chosen === 2) {
         this.setState({
-          cardNames: this.state.cardNames.concat(card.location.locationName) ,
+          cardNames: this.state.cardNames.concat(card.location.locationName),
         });
       } else {
         this.setState({
@@ -59,7 +77,15 @@ class FightPage extends React.Component {
               <span>Fight</span>
             </div>
             <div className="chosenCards">
-              <span>Chosen: {this.state.cardNames}</span>
+              <div>
+                Chosen:{" "}
+                {this.state.cards.map((card) => (
+                  <>{card.location.locationName + " "}</>
+                ))}
+              </div>
+              {this.state.chosen === 3 && (
+                <button className="readyBtn" onClick={() => this.confirmSelection()}>Ready!</button>
+              )}
             </div>
             <div className="chooseCards">
               {this.state.allCards.map((card) => (
@@ -70,6 +96,15 @@ class FightPage extends React.Component {
                     locationName={card.location.locationName}
                     locationDesc={card.location.locationDesc}
                   ></DeckCard>
+                  {this.state.cards.indexOf(card) !== -1 && (
+                    <button
+                      className="unchoseBtn"
+                      onClick={() => this.unchose(card)}
+                    >
+                      {" "}
+                      Remove{" "}
+                    </button>
+                  )}
                 </div>
               ))}
             </div>
@@ -88,16 +123,16 @@ class FightPage extends React.Component {
             <div className="userCardsWrapper">
               <span>Your cards</span>
               <div className="userCards">
-              {this.state.cards.map((card) => (
-                <div>
-                  <DeckCard
-                    locationPhoto={card.location.locationPhoto}
-                    cardPoints={card.cardPoints}
-                    locationName={card.location.locationName}
-                    locationDesc={card.location.locationDesc}
-                  ></DeckCard>
-                </div>
-              ))}
+                {this.state.cards.map((card) => (
+                  <div>
+                    <DeckCard
+                      locationPhoto={card.location.locationPhoto}
+                      cardPoints={card.cardPoints}
+                      locationName={card.location.locationName}
+                      locationDesc={card.location.locationDesc}
+                    ></DeckCard>
+                  </div>
+                ))}
               </div>
             </div>
             <div className="opponentCardsWrapper">
