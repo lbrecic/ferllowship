@@ -65,11 +65,11 @@ class Ban extends React.Component {
         const formData = new FormData();
         formData.append("username", this.state.username);
 
-        if(this.state.temporaryBan == 1)
+        if(this.state.temporaryBan === 1)
             formData.append("temporaryBan", this.state.temporaryBan);
-        else if(this.state.permanentBan == 2)
+        else if(this.state.permanentBan === 2)
             formData.append("permanentBan", this.state.permanentBan);
-        else if(this.state.unbanned == 0)
+        else if(this.state.unbanned === 0)
             formData("unbanned", this.state.unbanned);
 
         formData.append("date", this.state.date);
