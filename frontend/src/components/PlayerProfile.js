@@ -110,6 +110,7 @@ class PlayerProfile extends React.Component {
                   <Ban
                      show={this.state.showBan}
                     onClose={() => this.onCloseEdit()}
+                    user={this.state}
                   />
                 
               </div>
@@ -121,7 +122,7 @@ class PlayerProfile extends React.Component {
                   <div className="flex justify-center">
                     <img src={cards} className="karte" alt="logo" />
                   </div>
-                  {(this.state.authorityLevel === 'admin' || this.state.anotherPlayer === true)&&
+                  {this.state.anotherPlayer === true &&
                     <span className="logo-title-light textStatistika">
                       {this.state.username}-cards
                     </span>
@@ -139,7 +140,7 @@ class PlayerProfile extends React.Component {
                   <div className="flex justify-center">
                     <img src={stats} className="statistika" alt="logo" />
                   </div>
-                  {(this.state.authorityLevel === 'admin' || this.state.anotherPlayer === true)&&
+                  {this.state.anotherPlayer === true &&
                     <span className="logo-title-light textStatistika">
                       {this.state.username}-statistics
                     </span>
@@ -166,6 +167,7 @@ class PlayerProfile extends React.Component {
                   <EditProfile
                     show={this.state.showEdit}
                     onClose={() => this.onCloseEdit()}
+                    user={this.state}
                   />
                 </p>}
             </div>
