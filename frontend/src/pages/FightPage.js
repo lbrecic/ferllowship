@@ -13,6 +13,8 @@ class FightPage extends React.Component {
       show: true,
       chosen: 0,
       cardNames: "",
+      yourPoints: 0,
+      opponentPoints: 0,
     };
     //this.chooseCard = this.chooseCard.bind(this);
   }
@@ -120,7 +122,7 @@ class FightPage extends React.Component {
           </div>
           <div className="fightCards">
             <div className="userCardsWrapper">
-              <span>Your cards</span>
+              <span>Your cards {this.state.yourPoints}</span>
               <div className="userCards">
                 {this.state.cards.map((card) => (
                   <div>
@@ -140,7 +142,7 @@ class FightPage extends React.Component {
                 <OpponentCard />
                 <OpponentCard />
               </div>
-              <span>Opponent's cards</span>
+              <span>{this.state.opponentPoints} Opponent's cards </span>
             </div>
           </div>
         </div>

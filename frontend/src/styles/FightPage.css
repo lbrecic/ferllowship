@@ -3,6 +3,7 @@
     height:100vh;
     width: 100%;    
     overflow-x: auto;
+    position: relative;
 }
 
 .fightTitle{
@@ -21,14 +22,15 @@
   height: 400px;
   margin-top: auto;
   margin-bottom: 70px;
-
+  overflow-x: auto;
 }
 
 .opponentCards{
     height: 400px; 
     display: flex;
     justify-content: flex-end;
-    margin-right: 0;   
+    margin-right: 0;
+    overflow: scroll;   
 }
 
 .fightCards{
@@ -71,12 +73,15 @@
 
 .chooseCards{
     margin-top: auto;
-    margin-bottom: 2%;
+    margin-bottom: 100px;
     display: flex;
     margin-left: 5%;
     margin-right: 5%;
     justify-content: space-between;
     overflow-x: auto;
+    position: absolute;
+    top: 37%;
+    width: 90%;
 }
 
 .chooseCards:hover{
@@ -85,7 +90,7 @@
 
 .chosenCards{
     padding-top: 50px;
-    height: 150px;
+    height: 200px;
     color: white;
     font-family: 'Orbitron', sans-serif;
     font-size:20px;
