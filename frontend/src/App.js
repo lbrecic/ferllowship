@@ -76,14 +76,14 @@ class App extends React.Component {
       let stompConnect = () => {
           clearInterval(reconnectInterval);
 
-          toast((<div>Connecting to chat... <br /> Please wait for a connection to be established. </div>), { autoClose: false });
+          //toast((<div>Connecting to chat... <br /> Please wait for a connection to be established. </div>), { autoClose: false });
           
           socket = new SockJS('/api/chat');
           stompClient = Stomp.over(socket);
 
           let stompSuccessCallback = frame => {
               toast.dismiss();
-              toast("Connected.");
+              //toast("Connected.");
 
               stompClient.subscribe('/user/queue/reply', msg => {
                   let receivedMessage = JSON.parse(msg.body);
@@ -121,7 +121,7 @@ class App extends React.Component {
           let stompFailureCallback = error => {
             if (localStorage.isLoggedIn) {
               toast.dismiss();
-              toast("Connection lost. Reconnecting in 15 seconds.");
+              //toast("Connection lost. Reconnecting in 15 seconds.");
               reconnectInterval = setInterval(stompConnect, 15000);
             }
           };
@@ -141,7 +141,7 @@ class App extends React.Component {
             <LoggedInRoute exact path="/" component={withRouter(LoginPage)}/>
             <PrivateRoute path="/home" component={withRouter(HomePage)}/>
             <PrivateRoute path="/fight" component={withRouter(FightPage)}
-            fightMessages={this.state.fightMessages}/>
+            stompClient={this.state.stompClient} fightMessages={this.state.fightMessages}/>
             <PrivateRoute exact path='/profile/:handle' component={withRouter(ProfilePage)}/>
             <PrivateRoute path="/deck" component={withRouter(DeckPage)}/>
             <PrivateRoute path="/map" component={withRouter(MapPage)}/>

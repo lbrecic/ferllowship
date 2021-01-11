@@ -100,7 +100,15 @@ class Chat extends React.Component {
     }
 
     sendRequest() {
+        this.sendMessage("", true);
+        this.setConversation();
 
+        let fightMessage = {
+            player: localStorage.username,
+            opponent: this.state.selectedPlayer.username
+        };
+
+        this.props.stompClient.send('/app/play', {}, JSON.stringify(fightMessage));
     }
 
     async getActivePlayers() {
@@ -185,8 +193,7 @@ class Chat extends React.Component {
                                                 <text> {player.username} </text>
                                                 {Object.keys(this.state.selectedPlayer).length != 0 &&
                                                     <Link to="/fight" className="userBtn" onClick={(e) => {
-                                                        this.sendMessage("", true);
-                                                        this.setConversation();
+                                                        this.sendRequest();
                                                         e.stopPropagation();
                                                     }}>
                                                         Fight
