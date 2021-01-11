@@ -6,6 +6,8 @@ import SubmitButton from "../components/SubmitButton";
 import PromoteAdmin from "../components/PromoteAdmin";
 import AllUsersWindow from "../components/AllUsersWindow";
 import LocationRequestsAdmin from "../components/LocationRequestsAdmin";
+import EditProfile from "../components/EditProfile";
+import Ban from "../components/Ban";
 import "../styles/AdminProfile.css";
 import cards from "../utils/cards.png";
 import stats from "../utils/statistics.png";
@@ -55,13 +57,14 @@ class AdminProfile extends React.Component {
 
   showEditWindow = (e) => {
     this.setState({
-      show: !this.state.show,
+      showEdit: !this.state.showEdit,
     });
   };
 
   onClose = (e) => {
     this.setState({
       show: false,
+      showEdit: false
     });
   };
 
@@ -98,6 +101,20 @@ class AdminProfile extends React.Component {
                 </span>
                 <br />
               </div>
+
+              {this.state.anotherPlayer === true &&
+                  <button 
+                    className="btnLogout btnEdit"
+                    onClick={(e) => {
+                      this.showBanWindow();
+                  }}>
+                    Ban
+                  </button>}
+                  <Ban
+                    show={this.state.showBan}
+                    onClose={() => this.onCloseEdit()}
+                    user={this.state}
+                  />
 
               {this.state.anotherPlayer === false &&
                 <div className="adminBtns">
@@ -156,7 +173,8 @@ class AdminProfile extends React.Component {
                 </Link>
               </div>
 
-              {/* <p className=" white">
+              
+               <p className=" white">
                 <button
                   className="btnLogout btnEdit"
                   onClick={(e) => {
@@ -167,9 +185,10 @@ class AdminProfile extends React.Component {
                 </button>
                 <EditProfile
                   show={this.state.showEdit}
-                  onClose={() => this.onCloseEdit()}
+                  onClose={() => this.onClose()}
+                  user={this.state}
                 />
-              </p> */}
+              </p> 
             </div>
 
             <div className="w-1/4 form geo-color adminForm">
