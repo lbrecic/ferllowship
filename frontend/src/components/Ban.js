@@ -1,6 +1,8 @@
 import React from "react";
 import { toast } from 'react-toastify';
-import "../styles/Ban.css"
+import "../styles/Ban.css";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 class Ban extends React.Component {
 
@@ -14,7 +16,7 @@ class Ban extends React.Component {
         super(props);
         this.state = {
             username: this.props.username,
-            date: " ",
+            date: new Date(),
             banStatus: '0',
             change: false,
             showDate: false
@@ -24,6 +26,8 @@ class Ban extends React.Component {
     onClose = (e) => {
         this.props.onClose && this.props.onClose(e);
     };
+
+    onChange = date => this.setState({date})
 
     setTemporaryBan() {
         this.setState({
@@ -103,9 +107,12 @@ class Ban extends React.Component {
                             <lable>
                                 <input type="radio" name="ban" onClick={() => this.setTemporaryBan()}/> Temporary ban
                             </lable>
-                            <input type="date" 
+                            <DatePicker  
                                 disabled={!this.state.showDate}
-                                onChange={(val) => this.setDate(val)}/>
+                                onChange={this.onChange}
+                                selected={this.state.date}
+                                dateFormat='dd/MM/yyyy'
+                            />
                             <lable>
                                 <input type="radio" name="ban" onClick={() => this.setPermanentBan()}/> Permanent ban
                             </lable>
