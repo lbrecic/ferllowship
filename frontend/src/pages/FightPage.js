@@ -152,15 +152,15 @@ class FightPage extends React.Component {
 
   render() {
     if (this.state.chosen < 4) {
-      // if (this.props.fightMessages.length === 0) {
-      //   return (
-      //     <div className="App background-color">
-      //         <div className="App-header background-color">
-      //             <ClipLoader color={"white"} size={50}/>
-      //         </div>
-      //     </div>
-      //   );
-      // }
+      if (this.props.fightMessages.length === 0) {
+        return (
+          <div className="App background-color">
+              <div className="App-header background-color">
+                  <ClipLoader color={"white"} size={50}/>
+              </div>
+          </div>
+        );
+      }
       return (
         <>
           <div className="chooseBody geo-color">
@@ -180,12 +180,12 @@ class FightPage extends React.Component {
                   onClick={() => {
                     this.confirmSelection();
 
-                    // let fightMessage = {
-                    //   player: localStorage.username,
-                    //   opponent: this.props.fightMessages[0].player
-                    // };
+                    let fightMessage = {
+                      player: localStorage.username,
+                      opponent: this.props.fightMessages[0].player
+                    };
 
-                    // this.props.stompClient.send('/app/play', {}, JSON.stringify(fightMessage));
+                    this.props.stompClient.send('/app/play', {}, JSON.stringify(fightMessage));
                   }}
                 >
                   Ready!
