@@ -74,7 +74,7 @@ class FightPage extends React.Component {
     if (this.state.chosen < 4) {
       return (
         <>
-          <div className="fightBody geo-color">
+          <div className="chooseBody geo-color">
             <div className="fightTitle">
               <span>Fight</span>
             </div>
