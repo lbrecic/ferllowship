@@ -1,0 +1,126 @@
+.fightBody{
+    background-color: #2E3F30;
+    height:100vh;
+    width: 100%;    
+    overflow-x: auto;
+}
+
+.fightTitle{
+    padding-top: 20px;
+    color: white;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 45px;
+    text-align: center;
+    letter-spacing: 2px;
+    text-shadow: 0 0 5px #FF0000, 0 0 7px #0000FF;
+}
+
+.userCards{
+  display: flex;
+  flex-wrap: no-wrap;
+  height: 400px;
+  margin-top: auto;
+  margin-bottom: 70px;
+
+}
+
+.opponentCards{
+    height: 400px; 
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 0;   
+}
+
+.fightCards{
+    display: grid;
+    grid-template-columns: auto auto;
+    overflow-x: hidden;
+    position: fixed;
+    height: 100vh;
+    width: 100%;
+    
+}
+
+.userCardsWrapper{
+    display: flex;
+    flex-wrap: wrap;
+    height: 400px;
+    margin-top: auto;
+    margin-bottom: 110px;
+}
+  
+.opponentCardsWrapper{
+      height: 400px; 
+      display: flex;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+      margin-right: 0;   
+}
+
+.fightCards span{
+    padding-left: 5px;
+    padding-right: 5px;
+    color: white;
+    font-family: 'Orbitron', sans-serif;
+    font-size:20px;
+    text-align: center;
+    letter-spacing: 2px;
+    padding-bottom: 20px;
+    text-shadow: 0 0 3px #FF0000, 0 0 5px #0000FF;
+}
+
+.chooseCards{
+    margin-top: 20px;
+    display: flex;
+    margin-left: 5%;
+    margin-right: 5%;
+    justify-content: space-between;
+    overflow-x: auto;
+}
+
+.chooseCards:hover{
+    cursor: pointer;
+}
+
+.chosenCards{
+    position: relative;
+    padding-top: 50px;
+    color: white;
+    font-family: 'Orbitron', sans-serif;
+    font-size:20px;
+    text-align: center;
+    letter-spacing: 2px;
+    padding-bottom: 20px;
+    text-shadow: 0 0 3px #FF0000, 0 0 5px #0000FF;
+}
+
+.unchoseBtn {
+    width: 80%;
+    margin-left: 25px;
+    margin-right: auto;
+    color: #565656;
+    padding: 12px;
+    font-size: 14px;
+    font-weight: bold;
+    border: solid 3px #292929;
+    border-radius: 4px;
+    background: #fff;
+    cursor: pointer;
+    box-shadow: 0 0 1px #FF0000, 0 0 2px #0000FF;
+}
+
+.readyBtn{
+    width: 100px;
+    margin-left: 25px;
+    margin-right: auto;
+    color: #565656;
+    padding: 12px;
+    margin-top: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    border: solid 3px #292929;
+    border-radius: 4px;
+    background: #fff;
+    cursor: pointer;
+    box-shadow: 0 0 1px #FF0000, 0 0 2px #0000FF;
+}

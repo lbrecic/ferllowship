@@ -12,12 +12,18 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import hr.fer.progi.ferllowship.geofighter.dao.AdminRepository;
+import hr.fer.progi.ferllowship.geofighter.dao.CardRepository;
+import hr.fer.progi.ferllowship.geofighter.dao.CartographRepository;
+import hr.fer.progi.ferllowship.geofighter.dao.FightRepository;
 import hr.fer.progi.ferllowship.geofighter.dao.PlayerRepository;
 import hr.fer.progi.ferllowship.geofighter.dto.AdminDTO;
 import hr.fer.progi.ferllowship.geofighter.dto.CartographDTO;
 import hr.fer.progi.ferllowship.geofighter.dto.PlayerDTO;
 import hr.fer.progi.ferllowship.geofighter.model.Admin;
+import hr.fer.progi.ferllowship.geofighter.model.Card;
 import hr.fer.progi.ferllowship.geofighter.model.Cartograph;
+import hr.fer.progi.ferllowship.geofighter.model.Fight;
 import hr.fer.progi.ferllowship.geofighter.model.Player;
 import hr.fer.progi.ferllowship.geofighter.configuration.ActiveUserStore;
 
@@ -26,6 +32,18 @@ public class PlayerService {
 
     @Autowired
     private PlayerRepository playerRepository;
+
+    @Autowired
+    private CartographRepository cartographRepository;
+
+    @Autowired
+    private AdminRepository adminRepository;
+
+    @Autowired
+    private CardRepository cardRepository;
+
+    @Autowired
+    private FightRepository fightRepository;
 
     @Autowired
     private ActiveUserStore activeUserStore;
@@ -118,17 +136,76 @@ public class PlayerService {
 
     public List<PlayerDTO> getAllPlayers() {
         return playerRepository.findAll().stream()
-            .map(this::playerToPlayerDTO)
-            .collect(Collectors.toList());
+                .map(this::playerToPlayerDTO)
+                .collect(Collectors.toList());
     }
 
     public List<PlayerDTO> getAllActivePlayers() {
         return activeUserStore.getUsers().stream()
-            .map(user -> {
-                Player player = playerRepository.findByUsername(user.getUsername());
-                return playerToPlayerDTO(player);
-            })
-            .collect(Collectors.toList());
+                .map(user -> {
+                    Player player = playerRepository.findByUsername(user.getUsername());
+                    return playerToPlayerDTO(player);
+                })
+                .collect(Collectors.toList());
+    }
+
+    public void changeRoleToPlayer(Player player) {
+        changeRoleFromTo(player, player.createPlayer());
+    }
+
+    public void changeRoleToCartograph(Player player, String iban, String idPhotoLink, boolean confirmed) {
+        Cartograph cartograph = player.createCartograph();
+        cartograph.setIban(iban);
+        cartograph.setIdPhotoLink(idPhotoLink);
+        cartograph.setConfirmed(confirmed);
+        changeRoleFromTo(player, cartograph);
+    }
+
+    public void changeRoleToAdmin(Player player, String iban, String idPhotoLink) {
+        Admin admin = player.createAdmin();
+        admin.setIban(iban);
+        admin.setIdPhotoLink(idPhotoLink);
+        changeRoleFromTo(player, admin);
+    }
+
+    private void changeRoleFromTo(Player playerInPreviousRole, Player playerInNewRole) {
+        List<Fight> fights = fightRepository.findAll();
+        List<Fight> savedFights = new ArrayList<>();
+        fights.forEach(fight -> {
+            if (fight.getWinner().equals(playerInPreviousRole) || fight.getLoser().equals(playerInPreviousRole)) {
+                savedFights.add(fight);
+            }
+        });
+        savedFights.forEach(fight -> fightRepository.delete(fight));
+        fightRepository.flush();
+
+        List<Card> cards = cardRepository.findAll();
+        List<Card> savedCards = new ArrayList<>();
+        cards.forEach(card -> {
+            if (card.getPlayer().equals(playerInPreviousRole)) {
+                savedCards.add(card);
+            }
+        });
+        savedCards.forEach(card -> cardRepository.delete(card));
+        cardRepository.flush();
+
+        playerRepository.delete(playerInPreviousRole);
+        playerRepository.flush();
+        playerRepository.save(playerInNewRole);
+
+        savedFights.forEach(fight -> {
+            if (fight.getWinner().equals(playerInPreviousRole)) {
+                fight.setWinner(playerInNewRole);
+            } else {
+                fight.setLoser(playerInNewRole);
+            }
+            fightRepository.save(fight);
+        });
+
+        savedCards.forEach(card -> {
+            card.setPlayer(playerInNewRole);
+            cardRepository.save(card);
+        });
     }
 
 }

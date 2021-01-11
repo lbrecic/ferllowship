@@ -42,8 +42,7 @@ public class Player {
 	@Column
 	private Integer experience;
 	
-	@OneToMany(targetEntity = Card.class, fetch = FetchType.EAGER)
-	@JoinColumn(name = "card_id")
+	@OneToMany(targetEntity = Card.class, fetch = FetchType.EAGER, mappedBy = "player")
 	private List<Card> deck;
 
 	public Player() {
@@ -60,12 +59,25 @@ public class Player {
 		experience = 0;
 		deck = new ArrayList<>();
 	}
-	
+
+	public Player createPlayer() {
+		Player player = new Player();
+		player.setActivity(activity);
+		player.setBanStatus(banStatus);
+		player.setEmail(email);
+		player.setEnabled(enabled);
+		player.setExperience(experience);
+		player.setPasswordHash(passwordHash);
+		player.setPhotoLink(photoLink);
+		player.setPoints(points);
+		player.setUsername(username);
+		return player;
+	}
+
 	public Cartograph createCartograph() {
 		Cartograph cartograph = new Cartograph();
 		cartograph.setActivity(activity);
 		cartograph.setBanStatus(banStatus);
-		cartograph.setConfirmed(false);
 		cartograph.setEmail(email);
 		cartograph.setEnabled(enabled);
 		cartograph.setExperience(experience);
@@ -74,6 +86,20 @@ public class Player {
 		cartograph.setPoints(points);
 		cartograph.setUsername(username);
 		return cartograph;
+	}
+
+	public Admin createAdmin() {
+		Admin admin= new Admin();
+		admin.setActivity(activity);
+		admin.setBanStatus(banStatus);
+		admin.setEmail(email);
+		admin.setEnabled(enabled);
+		admin.setExperience(experience);
+		admin.setPasswordHash(passwordHash);
+		admin.setPhotoLink(photoLink);
+		admin.setPoints(points);
+		admin.setUsername(username);
+		return admin;
 	}
 
 	public UUID getUserId() {

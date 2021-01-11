@@ -5,6 +5,7 @@ import LocationRequest from './LocationRequest';
 import SubmitButton from "./SubmitButton";
 import EditProfile from "./EditProfile";
 import LocationsInPerson from './LocationsInPerson';
+import Ban from "../components/Ban";
 import "../styles/App.css";
 import cards from "../utils/cards.png";
 import stats from "../utils/statistics.png";
@@ -24,8 +25,22 @@ class CartographProfile extends React.Component {
       email: this.props.user.email,
       photoLink: this.props.user.photoLink,
       anotherPlayer: this.props.user.anotherPlayer,
+      authorityLevel: "",
       showEdit: false
     }
+  }
+
+  async componentDidMount() {        
+    try {
+        let res = await fetch('/api/player');
+        let result = await res.json();
+  
+        if (result && !result.error) {
+            this.setState({
+              authorityLevel: result.authorityLevel
+            });
+        }
+    } catch (e) {}
   }
 
   showEditWindow = (e) => {
@@ -112,6 +127,19 @@ class CartographProfile extends React.Component {
                       />
                   </div>
                 }
+                {this.state.authorityLevel === 'admin' &&
+                  <button 
+                    className="btnLogout btnEdit"
+                    onClick={(e) => {
+                      this.showBanWindow();
+                  }}>
+                    Ban
+                  </button>}
+                  <Ban
+                    show={this.state.showBan}
+                    onClose={() => this.onCloseEdit()}
+                    user={this.state}
+                  />
               </div>
 
               <div className="links">
@@ -120,7 +148,16 @@ class CartographProfile extends React.Component {
                     <div className="flex justify-center">
                       <img src={cards} className="karte" alt="logo" />
                     </div>
-                    <span className="logo-title-light textKarte">My cards</span>
+                    {this.state.anotherPlayer === true &&
+                    <span className="logo-title-light textStatistika">
+                      {this.state.username}-cards
+                    </span>
+                    }
+                    {this.state.anotherPlayer === false &&
+                      <span className="logo-title-light textStatistika">
+                        My cards
+                      </span>
+                    }
                   </Link>
                 </div>
 
@@ -129,13 +166,20 @@ class CartographProfile extends React.Component {
                     <div className="flex justify-center">
                       <img src={stats} className="statistika" alt="logo" />
                     </div>
+                    {this.state.anotherPlayer === true &&
                     <span className="logo-title-light textStatistika">
-                      My statistics
+                      {this.state.username}-statistics
                     </span>
+                    }
+                    {this.state.anotherPlayer === false &&
+                      <span className="logo-title-light textStatistika">
+                        My statistics
+                      </span>
+                    }
                   </Link>
                 </div>
                 
-                {this.state.anotherPlayer === false &&
+                {(this.state.anotherPlayer === false || this.state.authorityLevel === 'admin' )&&
                   <p className=" white">
                     <button
                       className="btnLogout btnEdit"
@@ -148,6 +192,7 @@ class CartographProfile extends React.Component {
                     <EditProfile
                       show={this.state.showEdit}
                       onClose={() => this.onCloseEdit()}
+                      user={this.state}
                     />
                   </p>
                 }
@@ -212,7 +257,16 @@ class CartographProfile extends React.Component {
                       <div className="flex justify-center">
                         <img src={cards} className="karte" alt="logo" />
                       </div>
-                      <span className="logo-title-light textKarte">My cards</span>
+                      {this.state.anotherPlayer === true &&
+                    <span className="logo-title-light textStatistika">
+                      {this.state.username}-cards
+                    </span>
+                    }
+                    {this.state.anotherPlayer === false &&
+                      <span className="logo-title-light textStatistika">
+                        My cards
+                      </span>
+                    }
                     </Link>
                   </div>
   
@@ -221,26 +275,35 @@ class CartographProfile extends React.Component {
                       <div className="flex justify-center">
                         <img src={stats} className="statistika" alt="logo" />
                       </div>
+                      {this.state.anotherPlayer === true &&
+                    <span className="logo-title-light textStatistika">
+                      {this.state.username}-statistics
+                    </span>
+                    }
+                    {this.state.anotherPlayer === false &&
                       <span className="logo-title-light textStatistika">
                         My statistics
                       </span>
+                    }
                     </Link>
                   </div>
   
-                  <p className=" white">
-                    <button
-                      className="btnLogout btnEdit"
-                      onClick={(e) => {
-                        this.showEditWindow();
-                      }}
-                    >
-                      Edit profile
-                    </button>
-                    <EditProfile
-                      show={this.state.showEdit}
-                      onClose={() => this.onCloseEdit()}
-                    />
-                  </p>
+                  {(this.state.anotherPlayer === false || this.state.authorityLevel === 'admin' )&&
+                <p className=" white">
+                  <button
+                    className="btnLogout btnEdit"
+                    onClick={(e) => {
+                      this.showEditWindow();
+                    }}
+                  >
+                    Edit profile
+                  </button>
+                  <EditProfile
+                    show={this.state.showEdit}
+                    onClose={() => this.onCloseEdit()}
+                    user={this.state}
+                  />
+                </p>}
                 </div>
               </div>
   
