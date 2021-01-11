@@ -94,39 +94,28 @@ public class PlayerController {
 	 */
 	@PreAuthorize("hasAnyRole('ADMIN','CARTOGRAPH','PLAYER')")
 	@PostMapping(path = "/profile/edit")
-	public MessageDTO editProfile(/*@RequestParam("username") String username,
-								  @RequestParam("password") String password,
-								  @RequestParam("oldPassword") String oldPassword,
-								  @RequestParam("email") String email*/
-//									@RequestPart String username,
-									@RequestPart String password,
-									@RequestPart String oldPassword,
-									@RequestPart String email,
-									@RequestPart MultipartFile picture)
+	public MessageDTO editProfile(@RequestPart String password,
+								  @RequestPart String oldPassword,
+								  @RequestPart String email,
+								  @RequestPart MultipartFile picture)
 			throws IOException {
 
 		Player player = playerService.getLoggedInPlayer();
 
-		if(!oldPassword.isBlank()) {		//dodano - Ivana
+		if(!oldPassword.isBlank()) {
 			if (!passwordEncoder.matches(oldPassword, player.getPasswordHash())) {
 				return new MessageDTO("Incorrect password.");
 			}
 		}
-//		if (!username.isBlank()) {
-//			if (playerRepository.findByUsername(username) != null) {
-//				return new MessageDTO("Željeno ime je već zauzeto.");
-//			}
-//			player.setUsername(username);
-//		}
-		if (!password.isBlank()) {
-			
-			player.setPasswordHash(passwordEncoder.encode(password));
-			
 
+		if (!password.isBlank()) {	
+			player.setPasswordHash(passwordEncoder.encode(password));
 		}
+		
 		if (!email.isBlank()) {
 			player.setEmail(email);
 		}
+		
 		byte comparisonBytes[] = new byte[0] /*{0x1a, 0x1c}*/;
 		if (!Arrays.equals(picture.getBytes(), comparisonBytes)) {
 			player.setPhotoLink(cloudinaryService.upload(picture.getBytes()));
