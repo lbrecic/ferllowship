@@ -8,15 +8,20 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastBody } from "react-bootstrap";
 import { ToastContainer } from "react-toastify";
 import RoundModal from "../components/RoundModal";
+import ClipLoader from "react-spinners/ClipLoader";
+
+let cards = [];
+let allCards = [];
+let chosen = 0;
 
 class FightPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      cards: [],
-      allCards: [],
+      cards: cards,
+      allCards: allCards,
       show: false,
-      chosen: 0,
+      chosen: chosen,
       cardNames: "",
       userPoints: 0,
       opponentPoints: 0,
@@ -37,6 +42,7 @@ class FightPage extends React.Component {
         this.setState({
           allCards: result,
         });
+        allCards = result;
       }
     } catch (e) {}
   }
@@ -54,10 +60,12 @@ class FightPage extends React.Component {
   };
 
   unchose(card) {
+    this.state.cards.filter((c) => c !== card);
     this.setState({
       cards: this.state.cards.filter((c) => c !== card),
       chosen: this.state.chosen - 1,
     });
+    --chosen;
     if (this.state.cards.length === 0) {
       this.setState({
         cardNames: "",
@@ -65,18 +73,21 @@ class FightPage extends React.Component {
     }
   }
 
-  confirmSelection() {
-    this.setState({
-      chosen: this.state.chosen + 1,
-    });
+  confirmSelection(){
+      this.setState({
+          chosen : this.state.chosen + 1,
+      })
+      ++chosen;
   }
 
   chooseCard(card) {
     if (this.state.cards.indexOf(card) === -1 && this.state.chosen < 3) {
+      cards = this.state.cards.concat(card);
       this.setState({
         cards: this.state.cards.concat(card),
         chosen: this.state.chosen + 1,
       });
+      ++chosen;
       console.log(JSON.stringify(this.state.allCards));
       if (this.state.chosen === 2) {
         this.setState({
@@ -110,6 +121,15 @@ class FightPage extends React.Component {
 
   render() {
     if (this.state.chosen < 4) {
+      if (this.props.fightMessages.length == 0) {
+        return (
+          <div className="App background-color">
+              <div className="App-header background-color">
+                  <ClipLoader color={"white"} size={50}/>
+              </div>
+          </div>
+        );
+      }
       return (
         <>
           <div className="chooseBody geo-color">
@@ -124,12 +144,16 @@ class FightPage extends React.Component {
                 ))}
               </div>
               {this.state.chosen === 3 && (
-                <button
-                  className="readyBtn"
-                  onClick={() => this.confirmSelection()}
-                >
-                  Ready!
-                </button>
+                <button className="readyBtn" onClick={() => {
+                  this.confirmSelection();
+
+                  let fightMessage = {
+                    player: localStorage.username,
+                    opponent: this.props.fightMessages[0].player
+                  };
+                  
+                  this.props.stompClient.send('/app/play', {}, JSON.stringify(fightMessage));
+                }}>Ready!</button>
               )}
             </div>
             <div className="chooseCards">
@@ -157,6 +181,17 @@ class FightPage extends React.Component {
         </>
       );
     }
+
+    if (this.props.fightMessages.length == 1) {
+      return (
+        <div className="App background-color">
+            <div className="App-header background-color">
+                <ClipLoader color={"white"} size={50}/>
+            </div>
+        </div>
+      );
+    }
+    
     return (
       <>
         <div className="fightBody geo-color">

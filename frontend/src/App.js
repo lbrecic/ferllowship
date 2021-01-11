@@ -141,7 +141,7 @@ class App extends React.Component {
             <LoggedInRoute exact path="/" component={withRouter(LoginPage)}/>
             <PrivateRoute path="/home" component={withRouter(HomePage)}/>
             <PrivateRoute path="/fight" component={withRouter(FightPage)}
-            fightMessages={this.state.fightMessages}/>
+            stompClient={this.state.stompClient} fightMessages={this.state.fightMessages}/>
             <PrivateRoute exact path='/profile/:handle' component={withRouter(ProfilePage)}/>
             <PrivateRoute path="/deck" component={withRouter(DeckPage)}/>
             <PrivateRoute path="/map" component={withRouter(MapPage)}/>
