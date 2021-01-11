@@ -89,7 +89,10 @@ public class AdminController {
 
 	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping(path = "/player/ban")
-	public void banPlayer(@RequestPart String username, @RequestPart String banStatus, @RequestPart String banEnd) {
+	public void banPlayer(@RequestPart String username, 
+						  @RequestPart String banStatus, 
+						  @RequestPart String banEnd) {
+		
 		Player player = playerRepository.findByUsername(username);
 
 		player.setBanStatus(Integer.parseInt(banStatus));
