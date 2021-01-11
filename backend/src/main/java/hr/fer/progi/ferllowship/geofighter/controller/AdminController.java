@@ -132,16 +132,16 @@ public class AdminController {
 	
 	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping(path = "/player/changeRole")
-	public MessageDTO changeRoleOfPlayer(@RequestPart String email,
+	public MessageDTO changeRoleOfPlayer(@RequestPart String username,
 								@RequestPart String newAuthorityLevel,
 								@RequestPart String iban,
 								@RequestPart MultipartFile picture,
 								@RequestPart String newRole
-								/*@RequestParam("email") String email,
+								/*@RequestParam("username") String username,
 								@RequestParam("iban") String iban,
 								@RequestParam("idPhotoLink") String idPhotoLink,
 								@RequestParam("newRole") String newRole*/) throws IOException {
-		Player player = playerRepository.findByEmail(email);
+		Player player = playerRepository.findByUsername(username);
 		
 		String idPhotoLink = "";
 		if (!Arrays.equals(picture.getBytes(),  new byte[0])) {
