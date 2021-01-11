@@ -1,6 +1,7 @@
 import React from "react";
 import "../styles/RoundModal.css";
 import DeckCard from "./Card";
+import ClipLoader from "react-spinners/ClipLoader";
 
 class RoundModal extends React.Component {
   constructor(props) {
@@ -50,6 +51,20 @@ class RoundModal extends React.Component {
                 <button className="btn" onClick={(e) => this.onClose(e)}>
                   Close
                 </button>
+                </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+    
+    if (this.props.waiting) {
+      return (
+        <div className="overlay">
+          <div className="roundModal">
+            <div className="roundResults">
+              <div className="spinner">
+                <ClipLoader color={"white"} size={50}/>
               </div>
             </div>
           </div>

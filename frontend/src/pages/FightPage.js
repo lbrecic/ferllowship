@@ -14,6 +14,9 @@ import ClipLoader from "react-spinners/ClipLoader";
 let cards = [];
 let allCards = [];
 let chosen = 0;
+let show = false;
+let usedCards = [];
+let currentRound = 1;
 
 class FightPage extends React.Component {
   constructor(props) {
@@ -21,26 +24,26 @@ class FightPage extends React.Component {
     this.state = {
       cards: cards,
       allCards: allCards,
-      show: false,
+      show: show,
       chosen: chosen,
       cardNames: "",
       userPoints: 0,
       opponentPoints: 0,
       userCard: [],
       opponentCard: [],
-      currentRound: 0,
-      usedCards: [],
       winnerCard: [],
       loserCard: [],
+      currentRound: currentRound,
+      usedCards: usedCards,
+      waiting: props.fightMessages.length == 2 && currentRound == 1 ||
+        props.fightMessages.length == 3 && currentRound == 2 ||
+        props.fightMessages.length == 4 && currentRound == 3
     };
-    //this.chooseCard = this.chooseCard.bind(this);
   }
 
   async componentDidMount() {
     try {
-      let res = await fetch(
-        "/api/player/deck?username=" + localStorage.username
-      );
+      let res = await fetch("/api/player/deck?username=" + localStorage.username);
       let result = await res.json();
 
       if (result) {
@@ -55,12 +58,16 @@ class FightPage extends React.Component {
   }
 
   onClose = (e) => {
+    ++currentRound;
     this.setState({
       show: false,
+      currentRound: this.state.currentRound + 1
     });
+    show = false;
   };
 
   showRound = (e) => {
+    show = !this.state.show;
     this.setState({
       show: !this.state.show,
     });
@@ -111,11 +118,17 @@ class FightPage extends React.Component {
 
   chooseInFight(card) {
     if (this.state.usedCards.indexOf(card) === -1) {
+      usedCards = this.state.usedCards.concat(card);
       this.setState({
         userCard: card,
-        currentRound: this.state.currentRound + 1,
         usedCards: this.state.usedCards.concat(card),
+        show: true,
+        opponentCard: this.state.allCards[0],
+        waiting: this.props.fightMessages.length == 2 && this.state.currentRound == 1 ||
+          this.props.fightMessages.length == 3 && this.state.currentRound == 2 ||
+          this.props.fightMessages.length == 4 && this.state.currentRound == 3
       });
+      show = true;
 
       if (card.cardPoints > this.state.opponentCard.cardPoints) {
         this.setState({
@@ -139,6 +152,13 @@ class FightPage extends React.Component {
       // var string =
       //   this.state.currentRound + 1 + ": " + card.location.locationName;
       // toast(string);
+
+      let fightMessage = {
+        player: localStorage.username,
+        opponent: this.props.fightMessages[0].player
+      };
+      
+      this.props.stompClient.send('/app/play', {}, JSON.stringify(fightMessage));
     } else {
       toast("This card has been used! Play another one.");
     }
@@ -263,6 +283,7 @@ class FightPage extends React.Component {
             </div>
           </div>
           <RoundModal
+            waiting={this.state.waiting}
             show={this.state.show}
             onClose={() => this.onClose()}
             winnerCard={this.state.winnerCard}

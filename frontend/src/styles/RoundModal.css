@@ -66,4 +66,14 @@
 .tieSpan span{
     margin-left: auto;
     margin-right: auto;
+    /* width: 100%; */
+    margin-left: 0;
+}
+
+.spinner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 500px;
 }
