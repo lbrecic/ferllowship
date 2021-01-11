@@ -89,9 +89,9 @@ public class AdminController {
 			/*
 			 * Format datuma 'mm-dd-yyyy'
 			 */
-			//final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM-dd-yyyy");
-			//final LocalDate banDate = LocalDate.parse(banEnd, dtf);
-			//ban.setBanEnd(banDate);
+			final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM-dd-yyyy");
+			final LocalDate banDate = LocalDate.parse(banEnd, dtf);
+			ban.setBanEnd(banDate);
 
 			banRepository.save(ban);
 		}
