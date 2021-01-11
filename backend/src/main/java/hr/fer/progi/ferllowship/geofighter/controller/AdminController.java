@@ -76,7 +76,7 @@ public class AdminController {
 	@PostMapping(path = "/player/ban")
 	public MessageDTO banPlayer(@RequestPart String username, 
 								@RequestPart String banStatus, 
-								@RequestPart String banEnd) {
+								@RequestPart LocalDate banEnd) {
 
 		Player player = playerRepository.findByUsername(username);
 
@@ -89,9 +89,11 @@ public class AdminController {
 			/*
 			 * Format datuma 'mm-dd-yyyy'
 			 */
-			//final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM-dd-yyyy");
-			//final LocalDate banDate = LocalDate.parse(banEnd, dtf);
-			//ban.setBanEnd(banDate);
+//			final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM-dd-yyyy");
+//			final LocalDate banDate = LocalDate.parse(banEnd, dtf);
+//			ban.setBanEnd(banDate);
+			
+			ban.setBanEnd(banEnd);
 
 			banRepository.save(ban);
 		}
