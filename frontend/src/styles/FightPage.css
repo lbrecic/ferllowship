@@ -107,6 +107,10 @@
     cursor: pointer;
 }
 
+.userCards:hover{
+    cursor: pointer;
+}
+
 .chosenCards{
     padding-top: 50px;
     height: 200px;
