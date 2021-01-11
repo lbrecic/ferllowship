@@ -29,20 +29,24 @@ class FightPage extends React.Component {
       opponentCard: [],
       currentRound: 0,
       usedCards: [],
+      winnerCard : [],
+      loserCard : [],
     };
     //this.chooseCard = this.chooseCard.bind(this);
   }
 
   async componentDidMount() {
     try {
-      let res = await fetch("/api/player/deck");
+      let res = await fetch("/api/player/deck?username="+localStorage.username);
       let result = await res.json();
 
       if (result) {
-        this.setState({
-          allCards: result,
-        });
         allCards = result;
+        this.setState({
+          allCards: result,         
+          opponentCard: allCards[2],
+          winnerCard: allCards[1],
+        });
       }
     } catch (e) {}
   }
@@ -108,28 +112,47 @@ class FightPage extends React.Component {
         userCard: card,
         currentRound: this.state.currentRound + 1,
         usedCards: this.state.usedCards.concat(card),
-        show: true,
-        opponentCard: this.state.allCards[0],
       });
-      var string =
-        this.state.currentRound + 1 + ": " + card.location.locationName;
-      //toast(string);
+
+      if(card.cardPoints > this.state.opponentCard.cardPoints){
+        this.setState({
+          winnerCard : card,
+          loserCard : this.state.opponentCard,
+          userPoints: this.state.userPoints + 1,
+        });
+      }else{
+        this.setState({
+          winnerCard : this.state.opponentCard,
+          loserCard : card,
+          opponentPoints: this.state.opponentPoints + 1,
+        })
+      }
+      this.setRoundResults();
+      // var string =
+      //   this.state.currentRound + 1 + ": " + card.location.locationName;
+      // toast(string);
     } else {
       toast("This card has been used! Play another one.");
     }
   }
 
+  setRoundResults(){
+    this.setState({
+      show: true,
+    });
+  }
+
   render() {
     if (this.state.chosen < 4) {
-      if (this.props.fightMessages.length == 0) {
-        return (
-          <div className="App background-color">
-              <div className="App-header background-color">
-                  <ClipLoader color={"white"} size={50}/>
-              </div>
-          </div>
-        );
-      }
+      // if (this.props.fightMessages.length === 0) {
+      //   return (
+      //     <div className="App background-color">
+      //         <div className="App-header background-color">
+      //             <ClipLoader color={"white"} size={50}/>
+      //         </div>
+      //     </div>
+      //   );
+      // }
       return (
         <>
           <div className="chooseBody geo-color">
@@ -147,12 +170,12 @@ class FightPage extends React.Component {
                 <button className="readyBtn" onClick={() => {
                   this.confirmSelection();
 
-                  let fightMessage = {
-                    player: localStorage.username,
-                    opponent: this.props.fightMessages[0].player
-                  };
+                  // let fightMessage = {
+                  //   player: localStorage.username,
+                  //   opponent: this.props.fightMessages[0].player
+                  // };
                   
-                  this.props.stompClient.send('/app/play', {}, JSON.stringify(fightMessage));
+                  // this.props.stompClient.send('/app/play', {}, JSON.stringify(fightMessage));
                 }}>Ready!</button>
               )}
             </div>
@@ -182,7 +205,7 @@ class FightPage extends React.Component {
       );
     }
 
-    if (this.props.fightMessages.length == 1) {
+    if (this.props.fightMessages.length === 1) {
       return (
         <div className="App background-color">
             <div className="App-header background-color">
@@ -226,8 +249,8 @@ class FightPage extends React.Component {
           <RoundModal
             show={this.state.show}
             onClose={() => this.onClose()}
-            winnerCard={this.state.allCards[0]}
-            loserCard={this.state.allCards[1]}
+            winnerCard={this.state.winnerCard}
+            loserCard={this.state.loserCard}
           />
         </div>
       </>

@@ -28,19 +28,19 @@ class RoundModal extends React.Component {
             <div className="winnerCard">
                 <span>Winner: </span>
                 <DeckCard
-                    locationPhoto={this.state.winnerCard.location.locationPhoto}
-                    cardPoints={this.state.winnerCard.cardPoints}
-                    locationName={this.state.winnerCard.location.locationName}
-                    locationDesc={this.state.winnerCard.location.locationDesc}
+                    locationPhoto={this.props.winnerCard.location.locationPhoto}
+                    cardPoints={this.props.winnerCard.cardPoints}
+                    locationName={this.props.winnerCard.location.locationName}
+                    locationDesc={this.props.winnerCard.location.locationDesc}
                 ></DeckCard>
             </div>
             <div>
                 <span>Loser: </span>
                 <DeckCard
-                    locationPhoto={this.state.loserCard.location.locationPhoto}
-                    cardPoints={this.state.loserCard.cardPoints}
-                    locationName={this.state.loserCard.location.locationName}
-                    locationDesc={this.state.loserCard.location.locationDesc}
+                    locationPhoto={this.props.loserCard.location.locationPhoto}
+                    cardPoints={this.props.loserCard.cardPoints}
+                    locationName={this.props.loserCard.location.locationName}
+                    locationDesc={this.props.loserCard.location.locationDesc}
                 ></DeckCard>
             </div>
             <div className="registerClose registerButton">
