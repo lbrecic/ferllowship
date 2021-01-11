@@ -27,6 +27,9 @@ public class FightService {
 		
 		winner.setPoints(winnersNewPoints);
 		loser.setPoints(losersNewPoints);
+		
+		playerRepository.save(winner);
+		playerRepository.save(loser);
 	}
 	
 }
