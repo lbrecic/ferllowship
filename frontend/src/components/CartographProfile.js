@@ -164,6 +164,7 @@ class CartographProfile extends React.Component {
                     <EditProfile
                       show={this.state.showEdit}
                       onClose={() => this.onCloseEdit()}
+                      user={this.state}
                     />
                   </p>
                 }
