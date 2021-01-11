@@ -11,9 +11,6 @@ import "../styles/PlayerProfile.css";
 
 class PlayerProfile extends React.Component {
 
-  /*
-  TODO: prikaz gumba na igracevom profilu ako je ulogiran admin(edit i ban)
-  */
   constructor(props) {
     super(props);
     this.state = {
@@ -21,15 +18,28 @@ class PlayerProfile extends React.Component {
       email: this.props.user.email,
       photoLink: this.props.user.photoLink,
       anotherPlayer: this.props.user.anotherPlayer,
-      authorityLevel: localStorage.authorityLevel,  //???
+      authorityLevel: "",
       showEdit: false,
       showBan: false
     }
   }
 
-  componentDidMount() {
+  /*componentDidMount() {
     console.log(this.state)
   }
+  */
+ async componentDidMount() {        
+  try {
+      let res = await fetch('/api/player');
+      let result = await res.json();
+
+      if (result && !result.error) {
+          this.setState({
+            authorityLevel: result.authorityLevel
+          });
+      }
+  } catch (e) {}
+}
 
   showEditWindow = (e) => {
     this.setState({
@@ -46,6 +56,7 @@ class PlayerProfile extends React.Component {
   onCloseEdit = (e) => {
     this.setState({
       showEdit: false,
+      showBan: false
     });
   };
 
@@ -96,12 +107,13 @@ class PlayerProfile extends React.Component {
                       this.showBanWindow();
                   }}>
                     Ban
-                  </button> &&
+                  </button>}
                   <Ban
-                     show={this.state.showBan}
+                    show={this.state.showBan}
                     onClose={() => this.onCloseEdit()}
+                    user={this.state}
                   />
-                }
+                
               </div>
             </div>
 
@@ -111,7 +123,16 @@ class PlayerProfile extends React.Component {
                   <div className="flex justify-center">
                     <img src={cards} className="karte" alt="logo" />
                   </div>
-                  <span className="logo-title-light textKarte">My cards</span>
+                  {this.state.anotherPlayer === true &&
+                    <span className="logo-title-light textStatistika">
+                      {this.state.username}-cards
+                    </span>
+                  }
+                  {this.state.anotherPlayer === false &&
+                    <span className="logo-title-light textStatistika">
+                      My cards
+                    </span>
+                  }
                 </Link>
               </div>
 
@@ -120,14 +141,21 @@ class PlayerProfile extends React.Component {
                   <div className="flex justify-center">
                     <img src={stats} className="statistika" alt="logo" />
                   </div>
-                  <span className="logo-title-light textStatistika">
+                  {this.state.anotherPlayer === true &&
+                    <span className="logo-title-light textStatistika">
+                      {this.state.username}-statistics
+                    </span>
+                  }
+                  {this.state.anotherPlayer === false &&
+                    <span className="logo-title-light textStatistika">
                       My statistics
                     </span>
-
+                  }
+                  
                 </Link>
               </div>
 
-              {this.state.anotherPlayer === false || this.state.authorityLevel === 'admin' &&
+              {(this.state.anotherPlayer === false || this.state.authorityLevel === 'admin' )&&
                 <p className=" white">
                   <button
                     className="btnLogout btnEdit"
@@ -140,6 +168,7 @@ class PlayerProfile extends React.Component {
                   <EditProfile
                     show={this.state.showEdit}
                     onClose={() => this.onCloseEdit()}
+                    user={this.state}
                   />
                 </p>}
             </div>

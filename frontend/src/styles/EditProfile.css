@@ -92,7 +92,7 @@ button:disabled{
 }
 
 .inputEdit2{
-  margin-left: 55px;
+  margin-left: 30px;
 }
 
 .pictureEdit{
@@ -151,5 +151,6 @@ button:disabled{
 }
 
 .collapse.in {
-  display: block
+  display: block;
+  width: 300px;
 }

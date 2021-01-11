@@ -15,10 +15,10 @@ class EditProfile extends React.Component {
         super(props);
         this.state = {
            // username: "",
-            password: "",
-            oldPassword: "",
-            email: "",
-            photoLink: "",
+            password: " ",
+            oldPassword: " ",
+            email: this.props.user.email,
+            photoLink: this.props.user.photoLink,
             pictures:[],
             show: false,
             changedPassword: false,
@@ -40,10 +40,10 @@ class EditProfile extends React.Component {
           changedPicture: !this.state.changedPicture
         });
     }
-    
+    /*
     async componentDidMount() {        
         try {
-            let res = await fetch('/api/player?username=' + localStorage.username);
+            let res = await fetch('/api/player');
             let result = await res.json();
     
             if (result && !result.error) {
@@ -55,7 +55,7 @@ class EditProfile extends React.Component {
                 });
             }
         } catch (e) {}
-    }
+    }/*
 /*
     setInputValueUsername(val) {
         this.setState({
@@ -176,7 +176,7 @@ class EditProfile extends React.Component {
                             />
                             </div>
                             
-        </div>*/}
+                         </div>*/}
                         <div className="registerDivEdit">
                         <div className="editInput">
                                 E-mail: </div>
@@ -207,10 +207,11 @@ class EditProfile extends React.Component {
                                 src={this.state.photoLink}
                                 alt="logo"
                                 className="box-shadow imageEdit" 
+                                onClick={this.toggle.bind(this)}
                                 />
                                 <div className="pictureChange" onClick={this.toggle.bind(this)}>
                                     <div className="textEdit">
-                                    Promijeni sliku
+                                        Change photo
                                     </div>
                                 </div>
                                 

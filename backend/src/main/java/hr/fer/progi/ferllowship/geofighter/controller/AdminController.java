@@ -107,6 +107,7 @@ public class AdminController {
 
 			banRepository.save(ban);
 		}
+		
 	}
 	
 	@PreAuthorize("hasRole('ADMIN')")

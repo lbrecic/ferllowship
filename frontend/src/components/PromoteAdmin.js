@@ -45,7 +45,7 @@ class PromoteAdmin extends React.Component {
                 <div className="requestButton">
                   <SubmitButton
                     className="requestButton"
-                    text="Prihvati"
+                    text="Accept"
                     onClick={() => this.setShow(0)}
                   />
                 </div>
@@ -53,7 +53,7 @@ class PromoteAdmin extends React.Component {
                 <div className="requestButton">
                   <SubmitButton
                     className="requestButton"
-                    text="Odustani"
+                    text="Decline"
                     onClick={() => this.setShow(0)}
                   />
                 </div>

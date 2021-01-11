@@ -14,10 +14,10 @@ class Ban extends React.Component {
         super(props);
         this.state = {
             username: this.props.username,
-            temporaryBan: 0,
-            permanentBan: 0,
-            unbanned: -1,
-            date: ""
+            date: " ",
+            banStatus: '0',
+            change: false,
+            showDate: false
         };
     }
 
@@ -27,25 +27,25 @@ class Ban extends React.Component {
 
     setTemporaryBan() {
         this.setState({
-          temporaryBan: 1,
-          permanentBan: 0,
-          unbanned: -1
+          banStatus: '1',
+          change:true,
+          showDate:true
         });
     }
 
     setPermanentBan() {
         this.setState({
-          temporaryBan: 0,
-          permanentBan: 2,
-          unbanned: -1
+          banStatus: '2',
+          change:true,
+          showDate: false
         });
     }
 
     setUnbannedBan() {
         this.setState({
-          temporaryBan: 0,
-          permanentBan: 0,
-          unbanned: 0
+          banStatus: '0',
+          change: true,
+          showDate: false
         });
     }
 
@@ -56,23 +56,17 @@ class Ban extends React.Component {
     }
 
     mySubmitHandler = (event) => {
-        //event.preventDefault();
-        this.save();
+        event.preventDefault();
+        if(this.state.change === true)
+            this.save();
     }
    
     async save(){
         
         const formData = new FormData();
         formData.append("username", this.state.username);
-
-        if(this.state.temporaryBan == 1)
-            formData.append("temporaryBan", this.state.temporaryBan);
-        else if(this.state.permanentBan == 2)
-            formData.append("permanentBan", this.state.permanentBan);
-        else if(this.state.unbanned == 0)
-            formData("unbanned", this.state.unbanned);
-
-        formData.append("date", this.state.date);
+        formData.append("banStatus", this.state.banStatus);
+        formData.append("banEnd", this.state.date);
         
         try {
             let res = await fetch('/api/player/ban', {
@@ -109,7 +103,9 @@ class Ban extends React.Component {
                             <lable>
                                 <input type="radio" name="ban" onClick={() => this.setTemporaryBan()}/> Temporary ban
                             </lable>
-                            <input type="date" onChange={(val) => this.setDate(val)}></input>
+                            <input type="date" 
+                                disabled={!this.state.showDate}
+                                onChange={(val) => this.setDate(val)}/>
                             <lable>
                                 <input type="radio" name="ban" onClick={() => this.setPermanentBan()}/> Permanent ban
                             </lable>
