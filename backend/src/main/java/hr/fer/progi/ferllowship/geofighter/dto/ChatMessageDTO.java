@@ -10,14 +10,17 @@ public class ChatMessageDTO {
 
     private String time;
 
+    private boolean request;
+
     public ChatMessageDTO() {
     }
 
-    public ChatMessageDTO(String from, String to, String message, String time) {
+    public ChatMessageDTO(String from, String to, String message, String time, boolean request) {
         this.from = from;
         this.to = to;
         this.message = message;
         this.time = time;
+        this.request = request;
     }
 
     public String getFrom() {
@@ -50,6 +53,14 @@ public class ChatMessageDTO {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public boolean isRequest() {
+        return request;
+    }
+
+    public void setRequest(boolean request) {
+        this.request = request;
     }
 
 }

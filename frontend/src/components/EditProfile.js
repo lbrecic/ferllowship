@@ -211,7 +211,7 @@ class EditProfile extends React.Component {
                                 />
                                 <div className="pictureChange" onClick={this.toggle.bind(this)}>
                                     <div className="textEdit">
-                                    Promijeni sliku
+                                        Change photo
                                     </div>
                                 </div>
                                 

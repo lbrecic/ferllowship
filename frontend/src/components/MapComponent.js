@@ -1,5 +1,6 @@
 import React, { Component, useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from "react-leaflet";
+import EditLocation from "./EditLocation";
 import "../styles/MapStyle.css";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
@@ -48,8 +49,17 @@ class MapComponent extends Component {
     this.state = {
       center: { lat: 45.127804527473224, lng: 16.045532226562504 },
       zoom: 7,
-      data: []
+      data: [],
+      authorityLevel: "player",
+      editWindow: false,
+      editLocation: 0
     };
+  }
+
+  showEdit = e => {
+    this.setState({
+      editWindow: e
+    })
   }
 
   async componentDidMount() {
@@ -59,6 +69,18 @@ class MapComponent extends Component {
       if (result) {
         this.setState({
           data: result
+        });
+      }
+    } catch (e) {
+        console.log(e);
+    }
+
+    try {
+      let res = await fetch('/api/player');
+      let result = await res.json();
+      if (result) {
+        this.setState({
+          authorityLevel: result.authorityLevel
         });
       }
     } catch (e) {
@@ -91,6 +113,12 @@ class MapComponent extends Component {
                             Points: {value.category.categoryPoints}<br />
                             Description: {value.locationDesc}
                           </Card.Text>
+                          {this.state.authorityLevel !== 'player' &&
+                            <button className="editLocationButton submitButton btn"
+                              onClick={() => {this.showEdit(true); this.state.editLocation = value}}>
+                              Edit
+                            </button>
+                          }
                         </Card.Body>
                       </Card>
                     </Popup>
@@ -101,6 +129,11 @@ class MapComponent extends Component {
             <SelectedLocationMarker />
 
           </MapContainer>
+          {this.state.editWindow &&
+            <EditLocation setShow={this.showEdit} 
+                          location={this.state.editLocation}
+            />
+          }
         </div>
       </>
     );

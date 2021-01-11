@@ -15,3 +15,11 @@
         width: 100%;
     }
 }
+
+.editLocationButton {
+    position: absolute;
+    border: none;
+    bottom: 0;
+    margin-bottom: 8%;
+    width: 74%;
+}
