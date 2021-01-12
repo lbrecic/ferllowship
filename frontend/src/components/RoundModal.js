@@ -22,6 +22,20 @@ class RoundModal extends React.Component {
       return null;
     }
 
+    if (this.props.waiting) {
+      return (
+        <div className="overlay">
+          <div className="roundModal">
+            <div className="roundResults">
+              <div className="spinner">
+                <ClipLoader color={"white"} size={50}/>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
     if (this.props.winnerCard.cardPoints === this.props.loserCard.cardPoints) {
       return (
         <div className="overlay">
@@ -52,20 +66,6 @@ class RoundModal extends React.Component {
                   Close
                 </button>
                 </div>
-            </div>
-          </div>
-        </div>
-      );
-    }
-    
-    if (this.props.waiting) {
-      return (
-        <div className="overlay">
-          <div className="roundModal">
-            <div className="roundResults">
-              <div className="spinner">
-                <ClipLoader color={"white"} size={50}/>
-              </div>
             </div>
           </div>
         </div>
