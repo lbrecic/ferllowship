@@ -1,12 +1,15 @@
 import React from "react";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import "../styles/MapStyle.css";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
+import 'leaflet-routing-machine';
 import { Card } from "react-bootstrap";
+import "../../node_modules/lrm-graphhopper/src/L.Routing.GraphHopper.js";
 
 import icon from "leaflet/dist/images/marker-icon.png";
 import iconShadow from "leaflet/dist/images/marker-shadow.png";
+import position from "../utils/position.png";
 
 let DefaultIcon = L.icon({
     iconUrl: icon,
@@ -15,8 +18,22 @@ let DefaultIcon = L.icon({
     iconAnchor: [12, 41],
     popupAnchor: [0, -41]
   });
+
+let PositionIcon = L.icon({
+    iconUrl: position,
+    iconSize: [32, 32],
+    iconAnchor: [16, 32],
+    popupAnchor: [0, -32]
+  });
   
-  L.Marker.prototype.options.icon = DefaultIcon;
+L.Marker.prototype.options.icon = DefaultIcon;
+
+let map;
+
+function GetMap() {
+  map = useMap()
+  return null
+}
 
 class MapOneLocation extends React.Component {
     constructor(props) {
@@ -29,14 +46,42 @@ class MapOneLocation extends React.Component {
         };
       }
 
+  osrm = () => {
+      L.Routing.control({
+        waypoints: [
+            L.latLng(this.location.coordinates.lat, this.location.coordinates.lon),
+            L.latLng(this.state.currentPosition.lat, this.state.currentPosition.lon)
+        ],
+        router: new L.Routing.graphHopper('860fae7c-7768-40d9-996b-0a1c59f8b6c0')
+      }).addTo(map);
+    this.setState(this.state);
+  }
+
+  async componentDidMount() {
+    try{
+      let res = await fetch('/api/player/coordinates');
+      let result = await res.json();
+      if (result) {
+        this.setState({
+          currentPosition: result
+        }, () => {
+          if(this.state.currentPosition !== undefined && this.state.currentPosition !== null) 
+            this.osrm()
+        });
+      }
+    } catch (e) {
+        console.log(e);
+    }
+  }
+
   render() {
       return (
           <>
             <button onClick={() => this.setShow(0)} 
                     style={{alignSelf:'start'}}>Close</button>
             <div className="mapContainer">
-                <MapContainer center={this.state.center} zoom={this.state.zoom} className="map">
-
+                <MapContainer id='map' center={this.state.center} zoom={this.state.zoom} className="map">
+                <GetMap />
                 <TileLayer
                 url="https://api.maptiler.com/maps/basic/{z}/{x}/{y}.png?key=JiIiuxyafWjR1SPu3uIu"
                 attribution='<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>'
@@ -57,7 +102,18 @@ class MapOneLocation extends React.Component {
                     </Card>
                     </Popup>
                 </Marker>
-
+                {this.state.currentPosition !== null && this.state.currentPosition !== undefined &&
+                  <>
+                  <Marker position={this.state.currentPosition}
+                          icon={PositionIcon}>
+                    <Popup>
+                      <p>Your location</p>
+                      <p>lat: {this.state.currentPosition.lat}</p>
+                      <p>lng: {this.state.currentPosition.lon}</p>
+                    </Popup>
+                  </Marker>
+                  </>
+                }
                 </MapContainer>
             </div>
         </>
