@@ -1,10 +1,11 @@
 import React from 'react';
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import Header from './Header';
 import Footer from './Footer';
 import '../styles/Chat.css';
 import ClipLoader from "react-spinners/ClipLoader";
 import { clearInterval } from 'stompjs';
+import { toast } from 'react-toastify';
 
 let message = "";
 let selectedPlayer = {};
@@ -61,7 +62,7 @@ class Chat extends React.Component {
         })
     }
 
-    sendMessage() {
+    sendMessage(message, request) {
         let date = new Date();
         let time = date.getHours().toString().padStart(2, '0');
         time += ":" + date.getMinutes().toString().padStart(2, '0');
@@ -71,8 +72,9 @@ class Chat extends React.Component {
         let sentMessage = {
             from: localStorage.username,
             to: this.state.selectedPlayer.username,
-            message: this.state.message,
-            time: time
+            message: message,
+            time: time,
+            request: request
         };
 
         this.setState({
@@ -87,6 +89,27 @@ class Chat extends React.Component {
             conversation: this.state.conversation.concat(sentMessage)
         });
     };
+
+    acceptRequest() {
+        let fightMessage = {
+            player: localStorage.username,
+            opponent: this.state.selectedPlayer.username
+        };
+
+        this.props.stompClient.send('/app/play', {}, JSON.stringify(fightMessage));
+    }
+
+    sendRequest() {
+        this.sendMessage("", true);
+        this.setConversation();
+
+        let fightMessage = {
+            player: localStorage.username,
+            opponent: this.state.selectedPlayer.username
+        };
+
+        this.props.stompClient.send('/app/play', {}, JSON.stringify(fightMessage));
+    }
 
     async getActivePlayers() {
         try {
@@ -168,18 +191,14 @@ class Chat extends React.Component {
                                         }}>
                                             <div className="player-center">
                                                 <text> {player.username} </text>
-                                                <button
-                                                    className="userBtn"
-                                                    onClick={(e) => {
-                                                        this.setState({selectedPlayer: player}, () => {
-                                                            this.setConversation();
-                                                        });
-                                                        selectedPlayer = player;
+                                                {Object.keys(this.state.selectedPlayer).length != 0 &&
+                                                    <Link to="/fight" className="userBtn" onClick={(e) => {
+                                                        this.sendRequest();
                                                         e.stopPropagation();
-                                                    }}
-                                                >
-                                                    Fight
-                                                </button>
+                                                    }}>
+                                                        Fight
+                                                    </Link>
+                                                }
                                             </div>
                                         </div>
                                     ))}
@@ -190,13 +209,34 @@ class Chat extends React.Component {
                                         {this.state.conversation.map(msg => {
                                             let color = msg.from === localStorage.username ? "green" : "red";
                                             let align = msg.from === localStorage.username ? "right" : "left";
-                                            return (
-                                                <div>
-                                                    <p style={{ color: color, textAlign: align }}>{msg.from}</p>
-                                                    <p style={{ whiteSpace: "pre-line", textAlign: align }}>{msg.message}</p>
-                                                    <p style={{ textAlign: align }}>{msg.time.substring(0, 5)}</p>
-                                                </div>
-                                            );
+                                            if (msg.request) {
+                                                if (msg.from === localStorage.username) {
+                                                    return (
+                                                        <div>
+                                                            <p style={{ color: color, textAlign: align }}>{msg.from}</p>
+                                                            <p style={{ whiteSpace: "pre-line", textAlign: align }}>You have sent a fight request.</p>
+                                                            <p style={{ textAlign: align }}>{msg.time.substring(0, 5)}</p>
+                                                        </div>
+                                                    );
+                                                } else {
+                                                    return (
+                                                        <div>
+                                                            <p style={{ color: color, textAlign: align }}>{msg.from}</p>
+                                                            <p style={{ whiteSpace: "pre-line", textAlign: align }}>New fight request.</p>
+                                                            <Link to="/fight" className="messageBtn" onClick={() => this.acceptRequest()} >Accept</Link>
+                                                            <p style={{ textAlign: align }}>{msg.time.substring(0, 5)}</p>
+                                                        </div>
+                                                    );
+                                                }
+                                            } else {
+                                                return (
+                                                    <div>
+                                                        <p style={{ color: color, textAlign: align }}>{msg.from}</p>
+                                                        <p style={{ whiteSpace: "pre-line", textAlign: align }}>{msg.message}</p>
+                                                        <p style={{ textAlign: align }}>{msg.time.substring(0, 5)}</p>
+                                                    </div>
+                                                );
+                                            }
                                         })}
                                     </div>
                                     <div >
@@ -217,7 +257,7 @@ class Chat extends React.Component {
                                                 disabled={Object.keys(this.state.selectedPlayer).length == 0 ||
                                                     this.state.message.trim() === ""}
                                                 onClick={() => { 
-                                                    this.sendMessage(); 
+                                                    this.sendMessage(this.state.message); 
                                                     this.setState({message: ""});
                                                     message = ""; 
                                                 }}

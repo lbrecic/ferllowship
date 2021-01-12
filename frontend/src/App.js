@@ -19,6 +19,7 @@ import { toast } from 'react-toastify';
 import Stomp from 'stompjs';
 import SockJS from 'sockjs-client';
 import FightPage from './pages/FightPage';
+import { ToastBody } from 'react-bootstrap';
 
 let socket;
 let stompClient;
@@ -130,7 +131,8 @@ class App extends React.Component {
     super(props);
     this.state = {
       stompClient: {},
-      receivedMessages: []
+      receivedMessages: [],
+      fightMessages: []
     }
   }
 
@@ -139,14 +141,14 @@ class App extends React.Component {
       let stompConnect = () => {
           clearInterval(reconnectInterval);
 
-          toast((<div>Connecting to chat... <br /> Please wait for a connection to be established. </div>), { autoClose: false });
+          //toast((<div>Connecting to chat... <br /> Please wait for a connection to be established. </div>), { autoClose: false });
           
           socket = new SockJS('/api/chat');
           stompClient = Stomp.over(socket);
 
           let stompSuccessCallback = frame => {
               toast.dismiss();
-              toast("Connected.");
+              //toast("Connected.");
 
               stompClient.subscribe('/user/queue/reply', msg => {
                   let receivedMessage = JSON.parse(msg.body);
@@ -155,13 +157,25 @@ class App extends React.Component {
                     receivedMessages: this.state.receivedMessages.concat(receivedMessage),
                   });
 
-                  toast(
-                    <div>
-                      <p>{receivedMessage.from}</p>
-                      <p style={{ whiteSpace: "pre-line" }}>{receivedMessage.message}</p>
-                      <p>{receivedMessage.time.substring(0, 5)}</p>
-                    </div>
-                  );
+                  if (receivedMessage.request) {
+                    toast("You have a new fight request from " + receivedMessage.from + ".");
+                  } else {
+                    toast(
+                      <div>
+                        <p>{receivedMessage.from}</p>
+                        <p style={{ whiteSpace: "pre-line" }}>{receivedMessage.message}</p>
+                        <p>{receivedMessage.time.substring(0, 5)}</p>
+                      </div>
+                    );
+                  }
+              });
+
+              stompClient.subscribe('/user/queue/opponent', msg => {
+                let fightMessage = JSON.parse(msg.body);
+
+                this.setState({
+                  fightMessages: this.state.fightMessages.concat(fightMessage)
+                });
               });
 
               this.setState({
@@ -172,7 +186,7 @@ class App extends React.Component {
           let stompFailureCallback = error => {
             if (localStorage.isLoggedIn) {
               toast.dismiss();
-              toast("Connection lost. Reconnecting in 15 seconds.");
+              //toast("Connection lost. Reconnecting in 15 seconds.");
               reconnectInterval = setInterval(stompConnect, 15000);
             }
           };
@@ -191,15 +205,17 @@ class App extends React.Component {
           <Switch>
             <LoggedInRoute exact path="/" component={withRouter(LoginPage)}/>
             <PrivateRoute path="/home" component={withRouter(HomePage)}/>
-            <PrivateRoute path="/fight"  component={withRouter(FightPage)} />
+            <PrivateRoute path="/fight" component={withRouter(FightPage)}
+            stompClient={this.state.stompClient} fightMessages={this.state.fightMessages}/>
             <PrivateRoute exact path='/profile/:handle' component={withRouter(ProfilePage)}/>
             <PrivateRoute path="/deck" component={withRouter(DeckPage)}/>
             <PrivateRoute path="/map" component={withRouter(MapPage)}/>
             <PrivateRoute path="/help" component={withRouter(HelpPage)}/>
             <PrivateRoute path="/global-stats" component={withRouter(GlobalStatsPage)}/>
             <PrivateRoute path="/stats" component={withRouter(StatsPage)}/>
-            <PrivateRoute path="/chat" component={withRouter(Chat)} 
-            stompClient={this.state.stompClient} receivedMessages={this.state.receivedMessages} />
+            <PrivateRoute path="/chat" component={withRouter(Chat)}
+            stompClient={this.state.stompClient} receivedMessages={this.state.receivedMessages} 
+            fightMessages={this.state.fightMessages} />
             <LoggedInRoute path="/confirm" component={withRouter(ConfirmPage)}/>
           </Switch>
         </Router>

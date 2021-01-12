@@ -139,8 +139,8 @@ public class PlayerController {
 
 	@PreAuthorize("hasAnyRole('ADMIN','CARTOGRAPH','PLAYER')")
 	@GetMapping(path = "/player/deck")
-	public List<CardDTO> getPlayerDeck() {
-		Player player = playerService.getLoggedInPlayer();
+	public List<CardDTO> getPlayerDeck(@RequestParam String username) {
+		Player player = playerRepository.findByUsername(username);
 
 		List<CardDTO> deck = new ArrayList<>();
 		List<Card> cards = player.getDeck();

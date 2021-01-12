@@ -1,0 +1,69 @@
+.roundResults{
+    background-color: #2E3F30;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.roundModal {
+    position: fixed; /* Stay in place */
+    z-index: 2; /* Sit on top */
+    width: 530px; /* Full width */
+    left: 50%;
+    top: 20%;
+    overflow: auto;
+    overflow-x: hidden;
+    transform: translate(-50%, 0);
+    box-shadow: 0 0 3px #FF0000, 0 0 5px #0000FF;
+  }
+  
+  /* Modal Content */
+  .modal-content {
+    overflow: auto;
+    overflow-x: hidden;
+    position: relative;
+    top: 50%;
+    transform: translate(0, -50%);
+    background-color: #2E3F30;
+    margin: auto;
+    padding: 0;
+    border: 3px solid #1F251F;
+    width: 95%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.5s;
+    box-shadow: 0 0 3px #FF0000, 0 0 5px #0000FF;
+}
+
+.roundModal span{
+    color: white;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 20px;
+    text-align: center;
+    letter-spacing: 2px;
+    text-shadow: 0 0 5px #FF0000, 0 0 7px #0000FF;
+    width: 100%;
+    margin-left: 75px;
+}
+
+.winnerCard{
+    box-shadow: 0 0 3px #2a2a2a, 0 0 7px #04b9eb;
+    margin-top: 10px;
+}
+
+.loserCard{
+    box-shadow: 0 0 3px #444343, 0 0 7px #fb0606;
+    margin-top: 10px;
+}
+
+.tieSpan{
+    background-color: #2E3F30;
+    text-align: center;
+}
+
+.tieSpan span{
+    margin-left: auto;
+    margin-right: auto;
+}
