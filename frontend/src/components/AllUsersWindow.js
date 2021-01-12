@@ -20,33 +20,30 @@ class AllUsersWindow extends React.Component {
   }
 
     setPlayers = () => {
-        this.state = {
+      this.setState({
             players: 1,
             cartographs: 0,
             admins: 0,
             adminView: 1
-        }
-        this.setState(this.state);
+        });
     }
 
     setCartographs = () => {
-        this.state = {
+      this.setState({
             players: 0,
             cartographs: 1,
             admins: 0,
             adminView: 1
-        }
-        this.setState(this.state);
+        });
     }
 
     setAdmins = () => {
-      this.state = {
+      this.setState({
           players: 0,
           cartographs: 0,
           admins: 1,
           adminView:1
-      }
-      this.setState(this.state);
+      });
     } 
 
     async componentDidMount() {        

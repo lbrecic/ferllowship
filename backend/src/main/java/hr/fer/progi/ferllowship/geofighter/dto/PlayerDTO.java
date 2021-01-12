@@ -128,5 +128,4 @@ public class PlayerDTO {
 	public void setAuthorityLevel(String authorityLevel) {
 		this.authorityLevel = authorityLevel;
 	}
-	
 }

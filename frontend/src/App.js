@@ -25,6 +25,48 @@ let socket;
 let stompClient;
 let reconnectInterval;
 
+let currentPosition;
+
+let options = {
+  enableHighAccuracy: true,
+  timeout: 5000,
+  maximumAge: 0,
+};
+
+function success(pos) {
+  var crd = pos.coords;
+
+  currentPosition= {
+    lat: crd.latitude,
+    lon: crd.longitude,
+    accuracy: crd.accuracy
+  }
+
+  console.log(currentPosition);
+}
+
+function errors(err) {
+  console.warn(`ERROR(${err.code}): ${err.message}`);
+}
+
+async function checkIn() {
+  const formData = new FormData();
+
+  if (currentPosition !== null && currentPosition !== undefined) {
+    formData.append("lat", currentPosition.lat);
+    formData.append("lon", currentPosition.lon);
+
+    try {
+      await fetch(`/api/player/coordinates`, {
+        method: 'post',
+        body: formData
+        });
+    } catch (e) {
+        console.log(e);
+    }
+  }
+}
+
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const [loggedOut, setLoggedOut] = useState(null);
 
@@ -42,6 +84,29 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
       }
       toast.dismiss();
     }
+
+    if (navigator.geolocation) {
+      navigator.permissions
+        .query({ name: "geolocation" })
+        .then((result) => {
+          if (result.state === "granted") {
+            //If granted then you can directly call your function here
+            navigator.geolocation.getCurrentPosition(success);
+          } else if (result.state === "prompt") {
+            navigator.geolocation.getCurrentPosition(success, errors, options);
+          } else if (result.state === "denied") {
+            //If denied then you have to show instructions to enable location
+          }
+          result.onchange = function () {
+            console.log(result.state);
+          };
+        }).then(() => {
+          checkIn();
+        });
+    } else {
+      alert("Location not available!");
+    }
+
     return () => { isMounted = false };
   });
 

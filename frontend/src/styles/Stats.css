@@ -3,7 +3,7 @@
     min-height: 100%;
     display: grid;
     width: 100%;    
-    grid-template-columns: 30% 70%;
+    grid-template-columns: 40% 60%;
     margin-top: auto;
     margin-bottom: auto;
 }
@@ -14,6 +14,8 @@
     margin-left: auto;   
     margin-right: auto;
     text-align: center;
+    padding: 40px;
+    padding-right: 20px;
 }
 
 .personal > span{
@@ -35,4 +37,54 @@ hr{
     position: fixed;
     height: 100%;
     width: 100%;
+}
+
+.fights{
+    background-color:  rgb(255, 255, 255);
+    max-height: 500px;
+    max-width: 80%;
+    margin-left: 10%;
+    margin-right: 10%;
+    position: relative;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    background-color: #2b362c;
+    box-shadow: 0 0 10px 2px rgb(110, 60, 60);
+}
+
+.fights table{
+    width: 100%;
+    text-align: center;
+   
+}
+
+.tableHeader th{
+    font-family: 'Orbitron', sans-serif;
+    font-size: 25px;
+    text-align: center;
+    text-shadow: 0 0 3px #FF0000, 0 0 5px #0000FF;
+    color: white;
+    padding-top: 10px;
+    padding-bottom: 5px;
+}
+
+.tableStats th{
+    font-family: 'Orbitron', sans-serif;
+    font-size: 20px;
+    text-align: center;
+    text-shadow: 0 0 1px #FF0000, 0 0 3px #0000FF;
+    color: white;
+    padding-top: 10px;
+    padding-bottom: 5px;
+}
+
+.tableStats .winner{
+    text-shadow: 0 0 3px #878787, 0 0 7px #0000ff;
+
+}
+
+.tableStats .loser{
+    text-shadow: 0 0 3px #5d0000, 0 0 7px #930202;
+
 }

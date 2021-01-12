@@ -11,17 +11,6 @@ class PersonalStats extends React.Component {
   }
 
   async componentDidMount() {
-    /*  try {
-      let res = await fetch("/api/stats/fights");
-      let result = await res.json();
-
-      if (result) {
-        this.setState({
-          fightList: result,
-        });
-      }
-    } catch (e) {}
- */
     try {
       let res = await fetch("/api/stats/personal");
       let result = await res.json();
@@ -29,6 +18,16 @@ class PersonalStats extends React.Component {
       if (result) {
         this.setState({
           stats: result,
+        });
+      }
+    } catch (e) {}
+    try {
+      let res = await fetch("/api/stats/fights");
+      let result = await res.json();
+
+      if (result) {
+        this.setState({
+          fightList: result,
         });
       }
     } catch (e) {}
@@ -41,49 +40,70 @@ class PersonalStats extends React.Component {
           <span>
             Total number of fights:
             {this.state.stats.fightsParticipatedIn}
-            <hr/>
+            <hr />
           </span>
-          
 
           <br />
           <span>
             Total number of won fights:
             {this.state.stats.fightsWon}
-            <hr/>
+            <hr />
           </span>
-          
 
           <br />
           <span>
             Total number of lost fights:
             {this.state.stats.fightsLost}
           </span>
-          <hr/>
+          <hr />
 
           <br />
           <span>
             Points:
             {this.state.stats.points}
           </span>
-          <hr/>
+          <hr />
 
           <br />
           <span>
             Total expirience:
             {this.state.stats.experience}
           </span>
-          <hr/>
+          <hr />
 
           <br />
           <span>
             Rank:
             {this.state.stats.rank}
           </span>
-          <hr/>
-
+          <hr />
         </div>
         <div className="fights">
-
+          <table>
+            <tr className="tableHeader">
+              <th>Date played:</th>
+              <th>Result:</th>
+              <th>Opponent:</th>
+            </tr>
+            {this.state.fightList.map((fight) => (
+              <tr className="tableStats">
+                <th>{new Date(fight.start).toLocaleDateString()} </th>
+                {fight.winner.username === localStorage.username && 
+                <th className="winner">You won</th>
+                }
+                {fight.loser.username === localStorage.username && 
+                <th className="loser">You lost</th>}
+                {fight.winner.username !== localStorage.username && 
+                <th>{fight.winner.username}</th>
+                }
+                {fight.loser.username !== localStorage.username && 
+                <th>{fight.loser.username}</th>
+                }
+                <th ></th>
+              </tr>
+            ))}
+          </table>
+          
         </div>
       </div>
     );

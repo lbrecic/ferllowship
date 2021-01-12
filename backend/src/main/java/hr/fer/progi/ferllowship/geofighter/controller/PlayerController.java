@@ -159,7 +159,7 @@ public class PlayerController {
 	@PreAuthorize("hasAnyRole('ADMIN','CARTOGRAPH','PLAYER')")
 	@GetMapping(path = "/active")
 	public List<PlayerDTO> getAllActivePlayers() {
-		return playerService.getAllActivePlayers();
+		return playerService.getAllActivePlayersNearMe();
 	}
 
 	@PreAuthorize("hasAnyRole('ADMIN','CARTOGRAPH','PLAYER')")
@@ -167,9 +167,32 @@ public class PlayerController {
 	public void setActivity() {
 		List<LoggedUser> users = activeUserStore.getUsers();
 		String username = playerService.getLoggedInPlayer().getUsername();
-		LoggedUser user = new LoggedUser(username, activeUserStore);
+		
+		double lat = -1;
+		double lon = -1;
+		for(LoggedUser user : users) {
+			if (user.getUsername().equals(username)) {
+				lat = user.getCurrentLat();
+				lon = user.getCurrentLon();
+			}
+		}
+		LoggedUser user = new LoggedUser(username, lat, lon, activeUserStore);
 		users.remove(user);
 		users.add(user);
 	}
 
+	@PreAuthorize("hasAnyRole('ADMIN','CARTOGRAPH','PLAYER')")
+	@PostMapping(path = "/player/coordinates")
+	public void setCurrentCoordinates(@RequestPart String lat,
+									@RequestPart String lon) {
+		List<LoggedUser> users = activeUserStore.getUsers();
+		String username = playerService.getLoggedInPlayer().getUsername();
+		
+		for(LoggedUser user : users) {
+			if (user.getUsername().equals(username)) {
+				user.setCurrentLat(Double.parseDouble(lat));
+				user.setCurrentLon(Double.parseDouble(lon));
+			}
+		}
+	}
 }

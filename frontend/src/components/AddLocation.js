@@ -13,6 +13,11 @@ import Dropdown from 'react-bootstrap/Dropdown'
 class AddLocation extends React.Component {
   constructor(props) {
     super(props);
+    if (this.props.location !== undefined)
+      this.coordinates = {
+        lat: this.props.location.lat, 
+        lon: this.props.location.lon
+      }
     this.state = {
       name: "",
       pictures: [],
@@ -64,7 +69,7 @@ class AddLocation extends React.Component {
     formData.append("categoryName", this.state.category);
     formData.append("locationDesc", this.state.description);
     formData.append("locationPhoto", this.state.pictures[0]);
-    formData.append("coordinates", new Blob([localStorage.getItem("selectedLocation")], {type: "application/json"}));
+    formData.append("coordinates", this.coordinates);
     
     try {
         let res = await fetch('/api/location/requests', {

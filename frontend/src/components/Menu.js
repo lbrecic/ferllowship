@@ -3,17 +3,6 @@ import { Link } from "react-router-dom";
 import '../styles/tailwind.css';
 import '../styles/Navigation.css';
 
-const sleep = (milliseconds) => {
-    return new Promise(resolve => setTimeout(resolve, milliseconds))
-}
-
-async function load(change = false) {
-    if(change === true) {
-      await sleep(300);
-      window.location.reload();
-    }
-  }
-
 function Menu(props) {
     return (
         <div>
