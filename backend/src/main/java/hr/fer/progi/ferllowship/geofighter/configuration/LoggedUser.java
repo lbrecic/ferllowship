@@ -12,11 +12,23 @@ import org.springframework.stereotype.Component;
 public class LoggedUser implements HttpSessionBindingListener {
 
     private String username;
+    private double currentLat;
+    private double currentLon;
     private ActiveUserStore activeUserStore;
     private long lastTimeWhenActive;
 
     public LoggedUser(String username, ActiveUserStore activeUserStore) {
         this.username = username;
+        this.currentLat = -1;
+        this.currentLon = -1;
+        this.activeUserStore = activeUserStore;
+        lastTimeWhenActive = System.currentTimeMillis();
+    }
+    
+    public LoggedUser(String username, double lat, double lon, ActiveUserStore activeUserStore) {
+        this.username = username;
+        this.currentLat = lat;
+        this.currentLon = lon;
         this.activeUserStore = activeUserStore;
         lastTimeWhenActive = System.currentTimeMillis();
     }
@@ -65,6 +77,22 @@ public class LoggedUser implements HttpSessionBindingListener {
 
     public void setLastTimeWhenActive(long lastTimeWhenActive) {
         this.lastTimeWhenActive = lastTimeWhenActive;
+    }
+    
+    public double getCurrentLat() {
+    	return currentLat;
+    }
+    
+    public void setCurrentLat(double currentLat) {
+    	this.currentLat = currentLat;
+    }
+    
+    public double getCurrentLon() {
+    	return currentLon;
+    }
+    
+    public void setCurrentLon(double currentLon) {
+    	this.currentLon = currentLon;
     }
 
     @Override

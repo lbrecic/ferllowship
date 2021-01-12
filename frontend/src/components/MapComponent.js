@@ -1,5 +1,5 @@
-import React, { Component, useState } from "react";
-import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from "react-leaflet";
+import React, { Component } from "react";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import EditLocation from "./EditLocation";
 import "../styles/MapStyle.css";
 import "leaflet/dist/leaflet.css";
@@ -8,39 +8,24 @@ import { Card } from "react-bootstrap";
 
 import icon from "leaflet/dist/images/marker-icon.png";
 import iconShadow from "leaflet/dist/images/marker-shadow.png";
+import position from "leaflet/dist/images/position.png";
 
 let DefaultIcon = L.icon({
   iconUrl: icon,
   shadowUrl: iconShadow,
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [0, -41]
+});
+
+let PositionIcon = L.icon({
+  iconUrl: position,
+  iconSize: [32, 32],
+  iconAnchor: [16, 32],
+  popupAnchor: [0, -32]
 });
 
 L.Marker.prototype.options.icon = DefaultIcon;
-
-function SelectedLocationMarker() {
-  const [position, setPosition] = useState(null);
-  
-  const map = useMapEvents({
-    click: (e) => {
-      setPosition(e.latlng);
-      localStorage.setItem("selectedLocation", JSON.stringify(e.latlng));
-    }
-  });
-
-  const deleteClick = () => {
-    setPosition(null);
-    localStorage.removeItem("selectedLocation");
-  };
-
-  return position === null ? null : (
-    <Marker position={position}>
-      <Popup>
-        <p>lat: {position.lat}</p>
-        <p>lng: {position.lng}</p>
-        <button className="btn" onClick={deleteClick}>Obriši</button>
-      </Popup>
-    </Marker>
-  );
-}
 
 class MapComponent extends Component {
 
@@ -52,7 +37,8 @@ class MapComponent extends Component {
       data: [],
       authorityLevel: "player",
       editWindow: false,
-      editLocation: 0
+      editLocation: 0,
+      currentPosition: this.props.currentPosition
     };
   }
 
@@ -115,7 +101,7 @@ class MapComponent extends Component {
                           </Card.Text>
                           {this.state.authorityLevel !== 'player' &&
                             <button className="editLocationButton submitButton btn"
-                              onClick={() => {this.showEdit(true); this.state.editLocation = value}}>
+                              onClick={() => {this.showEdit(true); this.setState({editLocation: value})}}>
                               Edit
                             </button>
                           }
@@ -125,9 +111,17 @@ class MapComponent extends Component {
                   </Marker>
                 );
             })}
-
-            <SelectedLocationMarker />
-
+          {this.state.currentPosition !== null && this.state.currentPosition !== undefined &&
+            <Marker position={this.state.currentPosition}
+                    icon={PositionIcon}>
+              <Popup>
+                <p>Your location</p>
+                <p>lat: {this.state.currentPosition.lat}</p>
+                <p>lng: {this.state.currentPosition.lon}</p>
+                <p>More or less {this.state.currentPosition.accuracy} meters.</p>
+              </Popup>
+            </Marker>
+          }
           </MapContainer>
           {this.state.editWindow &&
             <EditLocation setShow={this.showEdit} 
