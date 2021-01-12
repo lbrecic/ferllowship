@@ -8,7 +8,7 @@ import { Card } from "react-bootstrap";
 
 import icon from "leaflet/dist/images/marker-icon.png";
 import iconShadow from "leaflet/dist/images/marker-shadow.png";
-import position from "leaflet/dist/images/position.png";
+import position from "../utils/position.png";
 
 let DefaultIcon = L.icon({
   iconUrl: icon,

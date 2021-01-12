@@ -3,7 +3,9 @@ package hr.fer.progi.ferllowship.geofighter.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -194,5 +196,23 @@ public class PlayerController {
 				user.setCurrentLon(Double.parseDouble(lon));
 			}
 		}
+	}
+	
+	@PreAuthorize("hasAnyRole('ADMIN','CARTOGRAPH','PLAYER')")
+	@GetMapping(path = "/player/coordinates")
+	public Map<String, Double> getCurrentCoordinates() {
+		Map<String, Double> result = new HashMap<>();
+		
+		List<LoggedUser> users = activeUserStore.getUsers();
+		String username = playerService.getLoggedInPlayer().getUsername();
+		
+		for(LoggedUser user : users) {
+			if (user.getUsername().equals(username)) {
+				result.put("lat", user.getCurrentLat());
+				result.put("lon", user.getCurrentLon());
+			}
+		}
+		
+		return result;
 	}
 }
