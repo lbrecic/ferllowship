@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -46,6 +47,9 @@ public class AdminController {
 
 	@Autowired
 	private CloudinaryService cloudinaryService;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping(path = "/allPlayers")
@@ -211,6 +215,34 @@ public class AdminController {
 		String message = locationService.changeLocationData(locationName,
 				newLocationName, locationDesc, locationPhoto, coordinates, categoryName, status);
 		return new MessageDTO(message);
+	}
+	
+	@PreAuthorize("hasRole('ADMIN')")
+	@PostMapping(path = "/admin/playerEdit")
+	public MessageDTO editProfile(@RequestPart String username,
+								  @RequestPart String password,
+								  @RequestPart String email,
+								  @RequestPart MultipartFile picture)
+			throws IOException {
+
+		Player player = playerRepository.findByUsername(username);
+
+		if (!password.isBlank()) {	
+			player.setPasswordHash(passwordEncoder.encode(password));
+		}
+		
+		if (!email.isBlank()) {
+			player.setEmail(email);
+		}
+		
+		byte comparisonBytes[] = new byte[0] /*{0x1a, 0x1c}*/;
+		if (!Arrays.equals(picture.getBytes(), comparisonBytes)) {
+			player.setPhotoLink(cloudinaryService.upload(picture.getBytes()));
+		}
+
+		playerRepository.save(player);
+
+		return new MessageDTO("Changes saved successfully.");
 	}
 		
 }
