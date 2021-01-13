@@ -177,6 +177,7 @@ class RegisterForm extends React.Component {
                 <InputField
                   type="text"
                   placeholder="Username"
+                  id = "username"
                   value={this.state.username ? this.state.username : ""}
                   onChange={(val) =>
                     this.setInputValueUsername("username", val)
@@ -188,6 +189,7 @@ class RegisterForm extends React.Component {
                 <InputField
                   type="password"
                   placeholder="Password"
+                  id = "password"
                   value={this.state.password ? this.state.password : ""}
                   onChange={(val) =>
                     this.setInputValuePassword("password", val)
