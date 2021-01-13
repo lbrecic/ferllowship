@@ -2,7 +2,10 @@ package hr.fer.progi.ferllowship.geofighter.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -13,18 +16,28 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import hr.fer.progi.ferllowship.geofighter.configuration.ActiveUserStore;
+import hr.fer.progi.ferllowship.geofighter.configuration.LoggedUser;
 import hr.fer.progi.ferllowship.geofighter.dao.CategoryRepository;
 import hr.fer.progi.ferllowship.geofighter.dao.LocationRepository;
 import hr.fer.progi.ferllowship.geofighter.dto.CategoryDTO;
 import hr.fer.progi.ferllowship.geofighter.dto.LocationDTO;
 import hr.fer.progi.ferllowship.geofighter.dto.LocationDTO.Coordinates;
 import hr.fer.progi.ferllowship.geofighter.dto.MessageDTO;
+import hr.fer.progi.ferllowship.geofighter.model.Card;
 import hr.fer.progi.ferllowship.geofighter.model.Location;
 import hr.fer.progi.ferllowship.geofighter.service.CloudinaryService;
 import hr.fer.progi.ferllowship.geofighter.service.LocationService;
+import hr.fer.progi.ferllowship.geofighter.service.PlayerService;
 
 @RestController
 public class LocationRequestController {
+	
+	@Autowired
+	private ActiveUserStore activeUserStore;
+	
+	@Autowired
+	private PlayerService playerService;
 	
 	@Autowired
 	private LocationRepository locationRepository;
@@ -139,4 +152,91 @@ public class LocationRequestController {
 		return new MessageDTO(message);
 	}
 
+	@PreAuthorize("hasAnyRole('ADMIN','CARTOGRAPH','PLAYER')")
+	@GetMapping(path = "/location/collected-locations")
+	public List<LocationDTO> getMyCollectedLocations() {
+		List<LocationDTO> response = new ArrayList<>();
+		List<Card> deck = playerService.getLoggedInPlayer().getDeck();
+		
+		for(Card card : deck) {
+			Location location = card.getLocation();
+			double lat = Double.parseDouble(location.getCoordinates().split(";")[0]);
+			double lng = Double.parseDouble(location.getCoordinates().split(";")[1]);
+			response.add(
+				new LocationDTO(
+					location.getLocationName(),
+					location.getLocationDesc(),
+					location.getLocationPhoto(),
+					location.getLocationStatus(),
+					new LocationDTO.Coordinates(lat, lng),
+					new CategoryDTO(
+						location.getCategory().getCategoryName(),
+						location.getCategory().getCategoryPoints()
+					)
+				)
+			);
+		}
+		
+		return response;
+	}
+	
+	@PreAuthorize("hasAnyRole('ADMIN','CARTOGRAPH','PLAYER')")
+	@GetMapping(path = "/location/collected-locations")
+	public List<LocationDTO> getLocationsNearMe() {
+		List<LocationDTO> response = new ArrayList<>();
+		List<String> collectedLocations = this.getMyCollectedLocations().stream()
+												.map(location -> {
+													return location.getLocationName();
+												})
+												.collect(Collectors.toList());
+		
+		double lat1 = 0.0;
+		double lon1 = 0.0;
+		
+		List<LoggedUser> users = activeUserStore.getUsers();
+		String username = playerService.getLoggedInPlayer().getUsername();
+		
+		for(LoggedUser user : users) {
+			if (user.getUsername().equals(username)) {
+				lat1 = user.getCurrentLat();
+				lon1 = user.getCurrentLon();
+			}
+		}
+		
+		for(Location location : locationRepository.findAll()) {
+			if(collectedLocations.contains(location.getLocationName()))
+				continue;
+			
+			double lat2 = Double.parseDouble(location.getCoordinates().split(";")[0]);
+			double lon2 = Double.parseDouble(location.getCoordinates().split(";")[1]);
+			
+			double distance = PlayerService.distance(lat1, lon1, lat2, lon2);
+			
+			if(location.getCategory().getCategoryName().equals("Grad") 
+					&& distance < 5
+			|| location.getCategory().getCategoryName().equals("Naselje") 
+					&& distance < 2
+			|| (location.getCategory().getCategoryName().equals("Umjetnička instalacija")
+				|| location.getCategory().getCategoryName().equals("Vrh planine")) 
+					&& distance < 0.5
+			// dopuniti ukoliko se doda jos neka kategorija
+					) {
+					response.add(
+							new LocationDTO(
+								location.getLocationName(),
+								location.getLocationDesc(),
+								location.getLocationPhoto(),
+								location.getLocationStatus(),
+								new LocationDTO.Coordinates(lat2, lon2),
+								new CategoryDTO(
+									location.getCategory().getCategoryName(),
+									location.getCategory().getCategoryPoints()
+								)
+							)
+						);
+			}
+		}
+		
+		return response;
+	}
 }
