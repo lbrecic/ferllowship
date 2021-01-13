@@ -28,6 +28,12 @@ public class FightService {
 		winner.setPoints(winnersNewPoints);
 		loser.setPoints(losersNewPoints);
 		
+		//update user experience points
+		int winnerExp = winner.getExperience();
+		winner.setExperience(winnerExp+10);
+		int loserExp = loser.getExperience();
+		loser.setExperience(loserExp+5);
+		
 		playerRepository.save(winner);
 		playerRepository.save(loser);
 	}
