@@ -89,28 +89,45 @@ public class AdminController {
 
 	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping(path = "/player/ban")
-	public void banPlayer(@RequestPart String username, 
-						  @RequestPart String banStatus, 
-						  @RequestPart String banEnd) {
-		
+	public MessageDTO banPlayer(@RequestPart String username, @RequestPart String banStatus,
+								@RequestPart String banEnd) {
+
 		Player player = playerRepository.findByUsername(username);
 
-		player.setBanStatus(Integer.parseInt(banStatus));
-		playerRepository.save(player);
+		Integer status = Integer.parseInt(banStatus);
 
-		if (Integer.parseInt(banStatus) == BAN_STATUS.TEMPORARY.value) {
-			Ban ban = new Ban();
-			ban.setPlayer(player);
-			/*
-			 * Format datuma 'mm-dd-yyyy'
-			 */
-			final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM-dd-yyyy");
-			final LocalDate banDate = LocalDate.parse(banEnd, dtf);
+		if (player.getBanStatus() == 1 && status == 1) {
+			Ban ban = banRepository.findByPlayer(player);
+
+			String[] date = banEnd.split(" ");
+			String dt = date[1] + "-" + date[2] + "-" + date[3];
+
+			final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MMM-dd-yyyy");
+			final LocalDate banDate = LocalDate.parse(dt, dtf);
 			ban.setBanEnd(banDate);
 
 			banRepository.save(ban);
+		} else if (player.getBanStatus() != 1 && status == BAN_STATUS.TEMPORARY.value) {
+			Ban ban = new Ban();
+			ban.setPlayer(player);
+
+			String[] date = banEnd.split(" ");
+			String dt = date[1] + "-" + date[2] + "-" + date[3];
+
+			final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MMM-dd-yyyy");
+			final LocalDate banDate = LocalDate.parse(dt, dtf);
+			ban.setBanEnd(banDate);
+
+			banRepository.save(ban);
+		} else if (player.getBanStatus() == 1 && status != 1) {
+			Ban ban = banRepository.findByPlayer(player);
+			banRepository.delete(ban);
 		}
-		
+
+		player.setBanStatus(status);
+		playerRepository.save(player);
+
+		return new MessageDTO("Changes saved successfully.");
 	}
 	
 	@PreAuthorize("hasRole('ADMIN')")
