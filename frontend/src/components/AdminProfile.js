@@ -123,7 +123,7 @@ class AdminProfile extends React.Component {
                     Administrator
                   </span>
 
-                  {(this.state.anotherPlayer === false || this.state.authorityLevel === 'admin')&&
+                  {(this.state.anotherPlayer === true && this.state.authorityLevel === 'admin')&&
                     <button 
                       className="btnLogout btnEdit"
                       onClick={(e) => {
