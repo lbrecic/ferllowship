@@ -5,11 +5,11 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import 'leaflet-routing-machine';
 import { Card } from "react-bootstrap";
-import "../../node_modules/lrm-graphhopper/src/L.Routing.GraphHopper.js";
 
 import icon from "leaflet/dist/images/marker-icon.png";
 import iconShadow from "leaflet/dist/images/marker-shadow.png";
 import position from "../utils/position.png";
+import { toast } from "react-toastify";
 
 let DefaultIcon = L.icon({
     iconUrl: icon,
@@ -49,10 +49,9 @@ class MapOneLocation extends React.Component {
   osrm = () => {
       L.Routing.control({
         waypoints: [
-            L.latLng(this.location.coordinates.lat, this.location.coordinates.lon),
+            L.latLng(this.location.coordinates.lat, this.location.coordinates.lng),
             L.latLng(this.state.currentPosition.lat, this.state.currentPosition.lon)
-        ],
-        router: new L.Routing.graphHopper('860fae7c-7768-40d9-996b-0a1c59f8b6c0')
+        ]
       }).addTo(map);
     this.setState(this.state);
   }
