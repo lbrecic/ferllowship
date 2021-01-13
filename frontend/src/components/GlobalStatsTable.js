@@ -2,6 +2,7 @@ import React from "react";
 import Loader from "./Loader";
 import MaterialTable from "material-table";
 import "../styles/GlobalStatsTable.css";
+import { Link } from "react-router-dom";
 
 class GlobalStatsTable extends React.Component {
   constructor(props) {
@@ -53,16 +54,18 @@ class GlobalStatsTable extends React.Component {
               field: "photoLink",
               title: "Avatar",
               render: (rowData) => (
-                <img
-                  src={rowData.photoLink}
-                  alt="avatar"
-                  style={{
-                    width: 50,
-                    borderRadius: "50%",
-                    marginLeft: "auto",
-                    marginRight: "auto",
-                  }}
-                />
+                <Link to={`/profile/${rowData.username}`}>
+                  <img
+                    src={rowData.photoLink}
+                    alt="avatar"
+                    style={{
+                      width: 50,
+                      borderRadius: "50%",
+                      marginLeft: "auto",
+                      marginRight: "auto",
+                    }}
+                  />
+                </Link>
               ),
               headerStyle: {
                 fontSize: 18,

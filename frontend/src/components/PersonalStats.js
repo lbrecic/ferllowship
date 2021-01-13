@@ -82,12 +82,14 @@ class PersonalStats extends React.Component {
           <table>
             <tr className="tableHeader">
               <th>Date played:</th>
+              <th>Duration:</th>
               <th>Result:</th>
               <th>Opponent:</th>
             </tr>
             {this.state.fightList.map((fight) => (
               <tr className="tableStats">
-                <th>{new Date(fight.start).toLocaleDateString()} </th>
+                <th>{new Date(fight.start * 1000).toLocaleDateString()}</th>
+                <th>{new Date(fight.duration * 1000).toISOString().substr(11, 8)}</th>
                 {fight.winner.username === localStorage.username && 
                 <th className="winner">You won</th>
                 }

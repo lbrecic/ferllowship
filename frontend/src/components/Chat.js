@@ -191,6 +191,7 @@ class Chat extends React.Component {
                                         }}>
                                             <div className="player-center">
                                                 <text> {player.username} </text>
+                                                <Link to={`/profile/${player.username}`} className="userBtn">Profile</Link>
                                                 {this.state.selectedPlayer.username === player.username &&
                                                     <Link to="/fight" className="userBtn" onClick={(e) => {
                                                         this.sendRequest();
