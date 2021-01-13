@@ -26,7 +26,8 @@ class CartographProfile extends React.Component {
       photoLink: this.props.user.photoLink,
       anotherPlayer: this.props.user.anotherPlayer,
       authorityLevel: "",
-      showEdit: false
+      showEdit: false,
+      showBan: false
     }
   }
 
@@ -84,6 +85,19 @@ class CartographProfile extends React.Component {
   onClose = (e) => {
     this.setState({
       show: false,
+    });
+  };
+
+  showBanWindow = (e) => {
+    this.setState({
+      showBan: !this.state.showBan
+    });
+  };
+
+  onCloseEdit = (e) => {
+    this.setState({
+      showEdit: false,
+      showBan: false
     });
   };
 
