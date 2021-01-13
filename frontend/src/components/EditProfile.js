@@ -153,7 +153,7 @@ class EditProfile extends React.Component {
     
         if(this.state.authorityLevel === 'admin' && this.state.anotherPlayer === true){
             try {
-                let res = await fetch('/api/profileAdmin/edit', {
+                let res = await fetch('/api/admin/playerEdit', {
                 method: 'post',
                 body: formData
                 });
