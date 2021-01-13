@@ -1,23 +1,32 @@
 package hr.fer.progi.ferllowship.geofighter.controller;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import hr.fer.progi.ferllowship.geofighter.dao.BanRepository;
 import hr.fer.progi.ferllowship.geofighter.dao.PlayerRepository;
+import hr.fer.progi.ferllowship.geofighter.dto.LocationDTO;
 import hr.fer.progi.ferllowship.geofighter.dto.MessageDTO;
 import hr.fer.progi.ferllowship.geofighter.dto.PlayerDTO;
+import hr.fer.progi.ferllowship.geofighter.model.Admin;
 import hr.fer.progi.ferllowship.geofighter.model.Ban;
+import hr.fer.progi.ferllowship.geofighter.model.Cartograph;
 import hr.fer.progi.ferllowship.geofighter.model.Player;
+import hr.fer.progi.ferllowship.geofighter.service.CloudinaryService;
+import hr.fer.progi.ferllowship.geofighter.service.LocationService;
 import hr.fer.progi.ferllowship.geofighter.service.PlayerService;
 
 @RestController
@@ -31,7 +40,13 @@ public class AdminController {
 
 	@Autowired
 	private BanRepository banRepository;
+	
+	@Autowired
+	private LocationService locationService;
 
+	@Autowired
+	private CloudinaryService cloudinaryService;
+	
 	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping(path = "/allPlayers")
 	public List<PlayerDTO> getAllPlayers() {
@@ -74,39 +89,26 @@ public class AdminController {
 
 	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping(path = "/player/ban")
-	public MessageDTO banPlayer(@RequestPart String username, @RequestPart String banStatus,
-			@RequestPart String banEnd) {
-
+	public void banPlayer(@RequestPart String username, 
+						  @RequestPart String banStatus, 
+						  @RequestPart String banEnd) {
+		
 		Player player = playerRepository.findByUsername(username);
 
-		Integer status = Integer.parseInt(banStatus);
+		player.setBanStatus(Integer.parseInt(banStatus));
+		playerRepository.save(player);
 
-		if (player.getBanStatus() == 1 && status == 1) {
-			Ban ban = banRepository.findByPlayer(player);
-			
-			String[] date = banEnd.split(" ");
-			String dt = date[1] + "-" + date[2] + "-" + date[3];
-			
-			final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MMM-dd-yyyy");
-			final LocalDate banDate = LocalDate.parse(dt, dtf);
-			ban.setBanEnd(banDate); 
-			
-			banRepository.save(ban);
-		} else if (player.getBanStatus() != 1 && status == BAN_STATUS.TEMPORARY.value) {
+		if (Integer.parseInt(banStatus) == BAN_STATUS.TEMPORARY.value) {
 			Ban ban = new Ban();
 			ban.setPlayer(player);
-
-			String[] date = banEnd.split(" ");
-			String dt = date[1] + "-" + date[2] + "-" + date[3];
-			
-			final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MMM-dd-yyyy");
-			final LocalDate banDate = LocalDate.parse(dt, dtf);
+			/*
+			 * Format datuma 'mm-dd-yyyy'
+			 */
+			final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM-dd-yyyy");
+			final LocalDate banDate = LocalDate.parse(banEnd, dtf);
 			ban.setBanEnd(banDate);
 
 			banRepository.save(ban);
-		} else if (player.getBanStatus() == 1 && status != 1) {
-			Ban ban = banRepository.findByPlayer(player);
-			banRepository.delete(ban);
 		}
 		
 	}
@@ -188,10 +190,10 @@ public class AdminController {
             						@RequestPart LocationDTO.Coordinates coordinates,
             						@RequestPart String categoryName,
 							@RequestPart String status) throws IOException {
-		player.setBanStatus(status);
-		playerRepository.save(player);
 		
-		return new MessageDTO("Changes saved successfully.");
+		String message = locationService.changeLocationData(locationName,
+				newLocationName, locationDesc, locationPhoto, coordinates, categoryName, status);
+		return new MessageDTO(message);
 	}
-
+		
 }
