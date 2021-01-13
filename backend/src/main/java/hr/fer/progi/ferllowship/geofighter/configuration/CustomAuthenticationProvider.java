@@ -45,7 +45,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 			if (player.getBanStatus() == 1) {
 				Ban ban = banRepository.findByPlayer(player);
 
-				if (ban.getBanEnd().isAfter(LocalDate.now())) {
+				if (ban.getBanEnd().isBefore(LocalDate.now())) {
 					player.setBanStatus(0);
 					playerRepository.save(player);
 					banRepository.delete(ban);
