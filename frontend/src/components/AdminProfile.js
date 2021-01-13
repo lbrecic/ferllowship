@@ -84,6 +84,12 @@ class AdminProfile extends React.Component {
     });
   };
 
+  showBanWindow = (e) => {
+    this.setState({
+      showBan: !this.state.showBan
+    });
+  };
+
   render() {
     if (
       this.showCartographRequest === 0 &&
@@ -117,7 +123,7 @@ class AdminProfile extends React.Component {
                     Administrator
                   </span>
 
-                  {(this.state.anotherPlayer === true || this.state.authorityLevel === 'admin')&&
+                  {(this.state.anotherPlayer === false || this.state.authorityLevel === 'admin')&&
                     <button 
                       className="btnLogout btnEdit"
                       onClick={(e) => {

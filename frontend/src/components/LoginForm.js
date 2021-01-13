@@ -84,6 +84,8 @@ class LoginForm extends React.Component {
         this.state.redirect = true;
         localStorage.setItem('isLoggedIn', true);
         localStorage.setItem('username', this.state.username);
+    
+        window.location.reload();
       } else {
         toast("Username or password not valid!");
       }
@@ -94,8 +96,6 @@ class LoginForm extends React.Component {
     this.setState({
       buttonDisabled: false
     });
-
-    window.location.reload();
   }
 
   handleKeypress = e => {
