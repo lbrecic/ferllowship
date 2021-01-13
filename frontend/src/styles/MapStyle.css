@@ -23,3 +23,12 @@
     margin-bottom: 8%;
     width: 74%;
 }
+
+.otherLocationButton {
+    border: none;
+    margin-bottom: 3%;
+}
+
+.card {
+    overflow: auto;
+}
