@@ -3,7 +3,9 @@ package hr.fer.progi.ferllowship.geofighter.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -94,39 +96,28 @@ public class PlayerController {
 	 */
 	@PreAuthorize("hasAnyRole('ADMIN','CARTOGRAPH','PLAYER')")
 	@PostMapping(path = "/profile/edit")
-	public MessageDTO editProfile(/*@RequestParam("username") String username,
-								  @RequestParam("password") String password,
-								  @RequestParam("oldPassword") String oldPassword,
-								  @RequestParam("email") String email*/
-//									@RequestPart String username,
-									@RequestPart String password,
-									@RequestPart String oldPassword,
-									@RequestPart String email,
-									@RequestPart MultipartFile picture)
+	public MessageDTO editProfile(@RequestPart String password,
+								  @RequestPart String oldPassword,
+								  @RequestPart String email,
+								  @RequestPart MultipartFile picture)
 			throws IOException {
 
 		Player player = playerService.getLoggedInPlayer();
 
-		if(!oldPassword.isBlank()) {		//dodano - Ivana
+		if(!oldPassword.isBlank()) {
 			if (!passwordEncoder.matches(oldPassword, player.getPasswordHash())) {
 				return new MessageDTO("Incorrect password.");
 			}
 		}
-//		if (!username.isBlank()) {
-//			if (playerRepository.findByUsername(username) != null) {
-//				return new MessageDTO("Željeno ime je već zauzeto.");
-//			}
-//			player.setUsername(username);
-//		}
-		if (!password.isBlank()) {
-			
-			player.setPasswordHash(passwordEncoder.encode(password));
-			
 
+		if (!password.isBlank()) {	
+			player.setPasswordHash(passwordEncoder.encode(password));
 		}
+		
 		if (!email.isBlank()) {
 			player.setEmail(email);
 		}
+		
 		byte comparisonBytes[] = new byte[0] /*{0x1a, 0x1c}*/;
 		if (!Arrays.equals(picture.getBytes(), comparisonBytes)) {
 			player.setPhotoLink(cloudinaryService.upload(picture.getBytes()));
@@ -159,7 +150,7 @@ public class PlayerController {
 	@PreAuthorize("hasAnyRole('ADMIN','CARTOGRAPH','PLAYER')")
 	@GetMapping(path = "/active")
 	public List<PlayerDTO> getAllActivePlayers() {
-		return playerService.getAllActivePlayers();
+		return playerService.getAllActivePlayersNearMe();
 	}
 
 	@PreAuthorize("hasAnyRole('ADMIN','CARTOGRAPH','PLAYER')")
@@ -167,9 +158,50 @@ public class PlayerController {
 	public void setActivity() {
 		List<LoggedUser> users = activeUserStore.getUsers();
 		String username = playerService.getLoggedInPlayer().getUsername();
-		LoggedUser user = new LoggedUser(username, activeUserStore);
+		
+		double lat = -1;
+		double lon = -1;
+		for(LoggedUser user : users) {
+			if (user.getUsername().equals(username)) {
+				lat = user.getCurrentLat();
+				lon = user.getCurrentLon();
+			}
+		}
+		LoggedUser user = new LoggedUser(username, lat, lon, activeUserStore);
 		users.remove(user);
 		users.add(user);
 	}
 
+	@PreAuthorize("hasAnyRole('ADMIN','CARTOGRAPH','PLAYER')")
+	@PostMapping(path = "/player/coordinates")
+	public void setCurrentCoordinates(@RequestPart String lat,
+									@RequestPart String lon) {
+		List<LoggedUser> users = activeUserStore.getUsers();
+		String username = playerService.getLoggedInPlayer().getUsername();
+		
+		for(LoggedUser user : users) {
+			if (user.getUsername().equals(username)) {
+				user.setCurrentLat(Double.parseDouble(lat));
+				user.setCurrentLon(Double.parseDouble(lon));
+			}
+		}
+	}
+	
+	@PreAuthorize("hasAnyRole('ADMIN','CARTOGRAPH','PLAYER')")
+	@GetMapping(path = "/player/coordinates")
+	public Map<String, Double> getCurrentCoordinates() {
+		Map<String, Double> result = new HashMap<>();
+		
+		List<LoggedUser> users = activeUserStore.getUsers();
+		String username = playerService.getLoggedInPlayer().getUsername();
+		
+		for(LoggedUser user : users) {
+			if (user.getUsername().equals(username)) {
+				result.put("lat", user.getCurrentLat());
+				result.put("lon", user.getCurrentLon());
+			}
+		}
+		
+		return result;
+	}
 }

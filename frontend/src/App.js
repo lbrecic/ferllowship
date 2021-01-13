@@ -25,6 +25,48 @@ let socket;
 let stompClient;
 let reconnectInterval;
 
+let currentPosition;
+
+let options = {
+  enableHighAccuracy: true,
+  timeout: 5000,
+  maximumAge: 0,
+};
+
+function success(pos) {
+  var crd = pos.coords;
+
+  currentPosition= {
+    lat: crd.latitude,
+    lon: crd.longitude,
+    accuracy: crd.accuracy
+  }
+
+  console.log(currentPosition);
+}
+
+function errors(err) {
+  console.warn(`ERROR(${err.code}): ${err.message}`);
+}
+
+async function checkIn() {
+  const formData = new FormData();
+
+  if (currentPosition !== null && currentPosition !== undefined) {
+    formData.append("lat", currentPosition.lat);
+    formData.append("lon", currentPosition.lon);
+
+    try {
+      await fetch(`/api/player/coordinates`, {
+        method: 'post',
+        body: formData
+        });
+    } catch (e) {
+        console.log(e);
+    }
+  }
+}
+
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const [loggedOut, setLoggedOut] = useState(null);
 
@@ -42,6 +84,29 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
       }
       toast.dismiss();
     }
+
+    if (navigator.geolocation) {
+      navigator.permissions
+        .query({ name: "geolocation" })
+        .then((result) => {
+          if (result.state === "granted") {
+            //If granted then you can directly call your function here
+            navigator.geolocation.getCurrentPosition(success);
+          } else if (result.state === "prompt") {
+            navigator.geolocation.getCurrentPosition(success, errors, options);
+          } else if (result.state === "denied") {
+            //If denied then you have to show instructions to enable location
+          }
+          result.onchange = function () {
+            console.log(result.state);
+          };
+        }).then(() => {
+          checkIn();
+        });
+    } else {
+      alert("Location not available!");
+    }
+
     return () => { isMounted = false };
   });
 
@@ -76,14 +141,14 @@ class App extends React.Component {
       let stompConnect = () => {
           clearInterval(reconnectInterval);
 
-          //toast((<div>Connecting to chat... <br /> Please wait for a connection to be established. </div>), { autoClose: false });
+          toast((<div>Connecting to chat... <br /> Please wait for a connection to be established. </div>), { autoClose: false });
           
           socket = new SockJS('/api/chat');
           stompClient = Stomp.over(socket);
 
           let stompSuccessCallback = frame => {
               toast.dismiss();
-              //toast("Connected.");
+              toast("Connected.");
 
               stompClient.subscribe('/user/queue/reply', msg => {
                   let receivedMessage = JSON.parse(msg.body);
@@ -121,7 +186,7 @@ class App extends React.Component {
           let stompFailureCallback = error => {
             if (localStorage.isLoggedIn) {
               toast.dismiss();
-              //toast("Connection lost. Reconnecting in 15 seconds.");
+              toast("Connection lost. Reconnecting in 15 seconds.");
               reconnectInterval = setInterval(stompConnect, 15000);
             }
           };

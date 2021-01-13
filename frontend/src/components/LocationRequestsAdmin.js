@@ -1,11 +1,14 @@
 import React from "react";
 import Loader from "./Loader";
+import LocationRequest from "./LocationRequest";
 import "../styles/Request.css";
 
 class LocationRequestsAdmin extends React.Component {
   constructor(props) {
     super(props);
-    this.setShow = this.props.setShow
+    this.setShow = this.props.setShow;
+    this.request = 0;
+    this.showRequest = 0;
     this.state = {
         inPerson: 0
     }
@@ -16,6 +19,16 @@ class LocationRequestsAdmin extends React.Component {
             inPerson: e
         });
     }
+
+    setRequest = (e) => {
+      this.request = e;
+      this.setState(this.state);
+    };
+  
+    setShowRequest = (e) => {
+      this.showRequest = e;
+      this.setState(this.state);
+    };
 
     async componentDidMount() {        
         try {
@@ -52,8 +65,9 @@ class LocationRequestsAdmin extends React.Component {
             </div>
         </div>
       );
-    else
+    if (this.showRequest === 0)
       return (
+        <>
         <div className="overlayRequest">
           <div className="modalRequest">
             <div className="cartographerRequest modal-contentRequest">
@@ -81,7 +95,7 @@ class LocationRequestsAdmin extends React.Component {
                           {location !== null &&
                             <div 
                                 className="text-center text-sm usernames p-3  box-shadow cursor-pointer"
-                                onClick={() => {}}  
+                                onClick={() => {this.setShowRequest(1); this.setRequest(location)}}  
                             >
                                 {location.locationName}
                             </div>}
@@ -97,7 +111,7 @@ class LocationRequestsAdmin extends React.Component {
                         {location !== null &&
                           <div 
                               className="text-center text-sm usernames p-3  box-shadow cursor-pointer"
-                              onClick={() => {}}  
+                              onClick={() => {this.setShowRequest(1); this.setRequest(location)}}  
                           >
                               {location.locationName}
                           </div>}
@@ -110,7 +124,14 @@ class LocationRequestsAdmin extends React.Component {
             </div>
             </div>
         </div>
+        </>
       );
+      if (this.showRequest === 1) 
+        return (
+          <LocationRequest setShow={ this.setShowRequest } 
+                          setRequest={ this.setRequest }
+                          request={this.request}/>
+        );
   }
 }
 
