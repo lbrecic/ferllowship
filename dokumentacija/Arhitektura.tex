@@ -318,6 +318,32 @@
 			\eject
 		\section{Dijagram komponenti}
 		
-			\textbf{\textit{dio 2. revizije}}\\
+		{Dijagram komponenti opisuje arhitekturu programske potpore tako da vizualizira organizaciju i međuovisnost između implementacijskih komponenti te odnos programske potpore prema okolini. Unutar naše osnovne komponente Geofighter koja opisuje samu aplikaciju stvorili smo dvije glavne podkomponente - Backend i Frontend. Geofighter komunicira s komponentom Baza podataka koja nudi mogućnost spremanja i dohvata podataka preko vanjskog sučelja POSTGRES\_API. Ono unutar Geofighter-a delegira istoimeno unutarnje sučelje koje zahtijeva komponenta Backend. Backend, osim s Bazom podatka, zahtijeva i sučelja Cloudinary\_API i Gmail\_API koja delegiraju također istoimena vanjska sučelja. Vanjsko sučelje Cloudinary\_API pruža funkcionalnost pohrane slika te njega nudi komponenta Cloudinary. Komponenta Gmail nudi sučelje Gmail\_API pomoću kojega Geofighter šalje e-mail potvrde prilikom registracije igrača. S druge strane, Geofighter mora komunicirati i s komponentom Web preglednik, a to ostvaruje preko Frontenda i vanjskog i unutarnjeg sučelja VIEW\_API kojega nudi Frontend i pomoću kojega se korisniku prikazuje aplikacija.}
 		
-			 \textit{Potrebno je priložiti dijagram komponenti s pripadajućim opisom. Dijagram komponenti treba prikazivati strukturu cijele aplikacije.}
+		\begin{figure}[H]
+			\includegraphics[width=14cm, height=9cm]{dijagrami/Dijagram  komponenti - Geofighter}				
+			\centering
+			\caption{Dijagram komponenti - Geofighter}
+			\label{}
+		\end{figure}
+	
+		{Unutar Backenda nalaze se tri podkomponente: Repozitoriji, Usluge i Kontroleri. Repozitoriji su povezani preko unutarnjeg sučelja delegiranog iz POSTGRES\_API sučelja te oni služe za upravljanje podatcima iz baze podataka koje onda pružaju uslugama kada je to potrebno. Usluge su komponenta preko koje Backend komunicira s komponentama Cloudinary i Gmail preko već navedenih sučelja. Usluge komponenti Kontroleri nude sučelje IUsluge preko kojega se obavljaju određene funkcionalnosti u interakciji s Frontend komponentom. Kontroleri zatim podatke i usluge delegiraju komponenti Frontend preko sučelja REST\_API. }
+		
+			\begin{figure}[H]
+			\includegraphics[width=16cm, height=10cm]{dijagrami/Dijagram  komponenti - Backend}				
+			\centering
+			\caption{Dijagram komponenti - Backend}
+			\label{}
+		\end{figure}
+	
+		{Komponenta Frontend ima dvije unutarnje komponente, a to su Komponente i Stranice. Komponente zahtijevaju sučelje REST\_API pomoću kojega primaju podatke preko http metoda koje zatim koriste u vizualizaciji određenih dijelova aplikacije za koje su stvorene. Stranice se sastoje od jedne ili više komponenti koje objedinjuju u cjeline i zatim prikazuju Web-pregledniku preko ponuđenog sučelja VIEW\_API.   }
+		
+		\begin{figure}[H]
+			\includegraphics[width=14cm, height=10cm]{dijagrami/Dijagram  komponenti - Frontend}				
+			\centering
+			\caption{Dijagram komponenti - Frontend}
+			\label{}
+		\end{figure}
+			
+		\eject
+			
