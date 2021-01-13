@@ -72,4 +72,5 @@ public class Fight {
 	public UUID getFightId() {
 		return fightId;
 	}
+
 }

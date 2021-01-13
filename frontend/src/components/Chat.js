@@ -191,7 +191,7 @@ class Chat extends React.Component {
                                         }}>
                                             <div className="player-center">
                                                 <text> {player.username} </text>
-                                                {Object.keys(this.state.selectedPlayer).length != 0 &&
+                                                {this.state.selectedPlayer.username === player.username &&
                                                     <Link to="/fight" className="userBtn" onClick={(e) => {
                                                         this.sendRequest();
                                                         e.stopPropagation();

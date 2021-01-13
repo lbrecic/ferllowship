@@ -1,6 +1,7 @@
 import React from "react";
 import "../styles/RoundModal.css";
 import DeckCard from "./Card";
+import ClipLoader from "react-spinners/ClipLoader";
 
 class RoundModal extends React.Component {
   constructor(props) {
@@ -21,27 +22,77 @@ class RoundModal extends React.Component {
       return null;
     }
 
+    if (this.props.waiting) {
+      return (
+        <div className="overlay">
+          <div className="roundModal">
+            <div className="roundResults">
+              <div className="spinner">
+                <ClipLoader color={"white"} size={50}/>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    if (this.props.winnerCard.cardPoints === this.props.loserCard.cardPoints) {
+      return (
+        <div className="overlay">
+          <div className="roundModal">
+              <div className="tieSpan">
+                <span >It's a tie!</span>
+              </div>
+            
+            <div className="roundResults">
+              <div>
+                <DeckCard
+                  locationPhoto={this.props.winnerCard.location.locationPhoto}
+                  cardPoints={this.props.winnerCard.cardPoints}
+                  locationName={this.props.winnerCard.location.locationName}
+                  locationDesc={this.props.winnerCard.location.locationDesc}
+                ></DeckCard>
+              </div>
+              <div>
+                <DeckCard
+                  locationPhoto={this.props.loserCard.location.locationPhoto}
+                  cardPoints={this.props.loserCard.cardPoints}
+                  locationName={this.props.loserCard.location.locationName}
+                  locationDesc={this.props.loserCard.location.locationDesc}
+                ></DeckCard>
+              </div>
+              <div className="registerClose registerButton">
+                <button className="btn" onClick={(e) => this.onClose(e)}>
+                  Close
+                </button>
+                </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div className="overlay">
         <div className="roundModal">
           <div className="roundResults">
             <div className="winnerCard">
-                <span>Winner: </span>
-                <DeckCard
-                    locationPhoto={this.state.winnerCard.location.locationPhoto}
-                    cardPoints={this.state.winnerCard.cardPoints}
-                    locationName={this.state.winnerCard.location.locationName}
-                    locationDesc={this.state.winnerCard.location.locationDesc}
-                ></DeckCard>
+              <span>Winner: </span>
+              <DeckCard
+                locationPhoto={this.props.winnerCard.location.locationPhoto}
+                cardPoints={this.props.winnerCard.cardPoints}
+                locationName={this.props.winnerCard.location.locationName}
+                locationDesc={this.props.winnerCard.location.locationDesc}
+              ></DeckCard>
             </div>
-            <div>
-                <span>Loser: </span>
-                <DeckCard
-                    locationPhoto={this.state.loserCard.location.locationPhoto}
-                    cardPoints={this.state.loserCard.cardPoints}
-                    locationName={this.state.loserCard.location.locationName}
-                    locationDesc={this.state.loserCard.location.locationDesc}
-                ></DeckCard>
+            <div className="loserCard">
+              <span>Loser: </span>
+              <DeckCard
+                locationPhoto={this.props.loserCard.location.locationPhoto}
+                cardPoints={this.props.loserCard.cardPoints}
+                locationName={this.props.loserCard.location.locationName}
+                locationDesc={this.props.loserCard.location.locationDesc}
+              ></DeckCard>
             </div>
             <div className="registerClose registerButton">
               <button className="btn" onClick={(e) => this.onClose(e)}>

@@ -15,7 +15,7 @@ class Ban extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            username: this.props.username,
+            username: this.props.user.username,
             date: new Date(),
             banStatus: '0',
             change: false,

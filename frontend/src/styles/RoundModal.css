@@ -8,7 +8,7 @@
 .roundModal {
     position: fixed; /* Stay in place */
     z-index: 2; /* Sit on top */
-    width: 500px; /* Full width */
+    width: 530px; /* Full width */
     left: 50%;
     top: 20%;
     overflow: auto;
@@ -45,5 +45,35 @@
     letter-spacing: 2px;
     text-shadow: 0 0 5px #FF0000, 0 0 7px #0000FF;
     width: 100%;
-    margin-left: 75px;
+}
+
+.winnerCard{
+    box-shadow: 0 0 3px #2a2a2a, 0 0 7px #04b9eb;
+    margin-top: 10px;
+}
+
+.loserCard{
+    box-shadow: 0 0 3px #444343, 0 0 7px #fb0606;
+    margin-top: 10px;
+}
+
+.tieSpan{
+    background-color: #2E3F30;
+    text-align: center;
+}
+
+.tieSpan span{
+    margin-left: auto;
+    margin-right: auto;
+    /* width: 100%; */
+    margin-left: 0;
+}
+
+.spinner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 500px;
+    width: 50px;
 }
