@@ -27,8 +27,22 @@ class AdminProfile extends React.Component {
       email: this.props.user.email,
       photoLink: this.props.user.photoLink,
       anotherPlayer: this.props.user.anotherPlayer,
+      authorityLevel: "",
       showEdit: false
     }
+  }
+
+  async componentDidMount() {        
+    try {
+        let res = await fetch('/api/player');
+        let result = await res.json();
+  
+        if (result && !result.error) {
+            this.setState({
+              authorityLevel: result.authorityLevel
+            });
+        }
+    } catch (e) {}
   }
 
   setShowCartographRequest = (e) => {
@@ -103,7 +117,7 @@ class AdminProfile extends React.Component {
                     Administrator
                   </span>
 
-                  {this.state.anotherPlayer === true &&
+                  {(this.state.anotherPlayer === true || this.state.authorityLevel === 'admin')&&
                     <button 
                       className="btnLogout btnEdit"
                       onClick={(e) => {
@@ -242,7 +256,7 @@ class AdminProfile extends React.Component {
                     Administrator
                   </span>
 
-                  {this.state.anotherPlayer === true &&
+                  {(this.state.anotherPlayer === true || this.state.authorityLevel === 'admin')&&
                   <button 
                     className="btnLogout btnEdit"
                     onClick={(e) => {
