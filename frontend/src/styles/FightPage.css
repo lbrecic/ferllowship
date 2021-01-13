@@ -60,3 +60,7 @@
 .userCardsWrapper{
     padding-left: 10px;
 }
+
+.fightBody {
+    height: 100vh;
+}

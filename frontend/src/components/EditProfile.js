@@ -14,21 +14,36 @@ class EditProfile extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-           // username: "",
+            username: this.props.user.username,
             password: " ",
             oldPassword: " ",
             email: this.props.user.email,
             photoLink: this.props.user.photoLink,
+            anotherPlayer: this.props.user.anotherPlayer,
             pictures:[],
             show: false,
             changedPassword: false,
             //chanedUsername: false,
             changedPicture: false,
-            open: false
+            open: false,
+            authorityLevel: ""
         };
         this.onDrop = this.onDrop.bind(this);
     }
 
+    async componentDidMount() {        
+        try {
+            let res = await fetch('/api/player');
+            let result = await res.json();
+      
+            if (result && !result.error) {
+                this.setState({
+                  authorityLevel: result.authorityLevel
+                });
+            }
+        } catch (e) {}
+    }
+    
     toggle() {
         this.setState({
           open: !this.state.open
@@ -125,10 +140,9 @@ class EditProfile extends React.Component {
     async edit(){
         
         const formData = new FormData();
-        /*if(this.state.chanedUsername){    
+        if(this.state.authorityLevel === 'admin' && this.state.anotherPlayer === true){    
             formData.append("username", this.state.username);
-        }else
-            formData.append("username", "");*/
+        }
 
         formData.append("oldPassword", this.state.oldPassword);
         formData.append("password", this.state.password);
@@ -137,18 +151,35 @@ class EditProfile extends React.Component {
         formData.append("picture", this.state.pictures[0]);
         
     
-        try {
-            let res = await fetch('/api/profile/edit', {
-            method: 'post',
-            body: formData
-            });
-    
-            let result = await res.json();
-            if (result && result.message) {
-              toast(result.message);
+        if(this.state.authorityLevel === 'admin' && this.state.anotherPlayer === true){
+            try {
+                let res = await fetch('/api/admin/playerEdit', {
+                method: 'post',
+                body: formData
+                });
+        
+                let result = await res.json();
+                if (result && result.message) {
+                  toast(result.message);
+                }
+            } catch (e) {
+                toast("Error occured.");
             }
-        } catch (e) {
-            toast("Error occured.");
+        }
+        else {
+            try {
+                let res = await fetch('/api/profile/edit', {
+                method: 'post',
+                body: formData
+                });
+        
+                let result = await res.json();
+                if (result && result.message) {
+                toast(result.message);
+                }
+            } catch (e) {
+                toast("Error occured.");
+            }
         }
     
     }
