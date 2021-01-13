@@ -9,6 +9,7 @@ import "../styles/AddLocationButton.css";
 
 class MapPage extends Component {
   state = {
+    distant: false,
     show: false,
   };
 
@@ -33,18 +34,13 @@ class MapPage extends Component {
   success = (pos) => {
     var crd = pos.coords;
   
-    console.log("Your current position is:");
-    console.log(`Latitude : ${crd.latitude}`);
-    console.log(`Longitude: ${crd.longitude}`);
-    console.log(`More or less ${crd.accuracy} meters.`);
-  
     this.setState({
       currentPosition: {
         lat: crd.latitude,
         lon: crd.longitude,
         accuracy: crd.accuracy
       }
-    }, () => console.log(this.state.currentPosition))
+    })
   }
   
   errors(err) {
@@ -64,9 +60,6 @@ class MapPage extends Component {
           } else if (result.state === "denied") {
             //If denied then you have to show instructions to enable location
           }
-          result.onchange = function () {
-            console.log(result.state);
-          };
         });
     } else {
       alert("Location not available!");
@@ -100,7 +93,8 @@ class MapPage extends Component {
         <Header />
         <div className="body">
           <div className="map">
-            <MapComponent currentPosition={this.state.currentPosition} />
+            <MapComponent currentPosition={this.state.currentPosition}
+                          distant={this.state.distant} />
           </div>
           <div className="addBtn">
             <button
@@ -121,6 +115,30 @@ class MapPage extends Component {
             >
               Update location
             </button>
+            {this.state.distant === false &&
+              <button
+                className="btnLogout btnEdit btnAdd"
+                onClick={(e) => {
+                    this.setState({distant: true, currentPosition: null});
+                    this.componentDidMount();
+                    this.checkIn();
+                }}
+              >
+                Show uncollected cards
+              </button>
+            }
+            {this.state.distant === true &&
+              <button
+                className="btnLogout btnEdit btnAdd"
+                onClick={(e) => {
+                    this.setState({distant: false, currentPosition: null});
+                    this.componentDidMount();
+                    this.checkIn();
+                }}
+              >
+                Hide uncollected cards
+              </button>
+            }
             <AddLocation
               location={this.state.currentPosition}
               show={this.state.show}

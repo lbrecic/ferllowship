@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { toast } from 'react-toastify';
 import EditLocation from "./EditLocation";
 import "../styles/MapStyle.css";
 import "leaflet/dist/leaflet.css";
@@ -9,6 +10,8 @@ import { Card } from "react-bootstrap";
 import icon from "leaflet/dist/images/marker-icon.png";
 import iconShadow from "leaflet/dist/images/marker-shadow.png";
 import position from "../utils/position.png";
+import uncollected_close from "../utils/uncollected_close.png";
+import uncollected_distant from "../utils/uncollected_distant.png";
 
 let DefaultIcon = L.icon({
   iconUrl: icon,
@@ -16,6 +19,20 @@ let DefaultIcon = L.icon({
   iconSize: [25, 41],
   iconAnchor: [12, 41],
   popupAnchor: [0, -41]
+});
+
+let UncollectedIcon = L.icon({
+  iconUrl: uncollected_close,
+  iconSize: [32, 32],
+  iconAnchor: [16, 32],
+  popupAnchor: [0, -32]
+});
+
+let DistantIcon = L.icon({
+  iconUrl: uncollected_distant,
+  iconSize: [32, 32],
+  iconAnchor: [16, 32],
+  popupAnchor: [0, -32]
 });
 
 let PositionIcon = L.icon({
@@ -31,10 +48,13 @@ class MapComponent extends Component {
 
   constructor(props) {
     super(props);
+    this.distant = this.props.distant;
     this.state = {
       center: { lat: 45.127804527473224, lng: 16.045532226562504 },
       zoom: 7,
-      data: [],
+      collected: [],
+      uncollected: [],
+      distant: [],
       authorityLevel: "player",
       editWindow: false,
       editLocation: 0,
@@ -48,18 +68,76 @@ class MapComponent extends Component {
     })
   }
 
-  async componentDidMount() {
+  async collect(locationName) {
+    const formData = new FormData();
+    formData.append("locationName", locationName);
+
     try {
-      let res = await fetch('/api/location/requests?status=0');
+      let res = await fetch('/api/location/collect', {
+          method: 'post',
+          body: formData
+      });
+
+      let result = await res.json();
+      if (result && result.message) {
+        toast(result.message);
+      }
+    } catch (e) {
+        toast("Error occured.");
+    }
+
+    this.componentDidMount();
+  }
+
+  async componentDidMount() {
+    // try {
+    //   let res = await fetch('/api/location/requests?status=0');
+    //   let result = await res.json();
+    //   if (result) {
+    //     this.setState({
+    //       data: result
+    //     });
+    //   }
+    // } catch (e) {
+    //     console.log(e);
+    // }
+
+    try {
+      let res = await fetch('/api/location/collected');
       let result = await res.json();
       if (result) {
         this.setState({
-          data: result
+          collected: result
         });
       }
     } catch (e) {
         console.log(e);
     }
+
+    try {
+      let res = await fetch('/api/location/uncollected-close');
+      let result = await res.json();
+      if (result) {
+        this.setState({
+          uncollected: result
+        });
+      }
+    } catch (e) {
+        console.log(e);
+    }
+
+    if (this.distant)
+      try {
+        let res = await fetch('/api/location/uncollected-distant');
+        let result = await res.json();
+        if (result) {
+          this.setState({
+            distant: result
+          });
+        }
+      } catch (e) {
+          console.log(e);
+      }
 
     try {
       let res = await fetch('/api/player');
@@ -75,7 +153,7 @@ class MapComponent extends Component {
   }
 
   render() {
-    const { center, zoom, data } = this.state;
+    const { center, zoom, collected, uncollected, distant } = this.state;
     return (
       <>
         <div className="mapContainer">
@@ -86,7 +164,7 @@ class MapComponent extends Component {
               attribution='<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>'
             />
 
-            {data.map((value, index) => {
+            {collected.map((value, index) => {
                 return (
                   <Marker position={value.coordinates}>
                     <Popup>
@@ -105,6 +183,66 @@ class MapComponent extends Component {
                               Edit
                             </button>
                           }
+                        </Card.Body>
+                      </Card>
+                    </Popup>
+                  </Marker>
+                );
+            })}
+            {uncollected.map((value, index) => {
+                return (
+                  <Marker position={value.coordinates}
+                          icon={UncollectedIcon}>
+                    <Popup>
+                      <Card>
+                        <Card.Img variant="top" src={value.locationPhoto} />
+                        <Card.Body>
+                          <Card.Title>{value.locationName}</Card.Title>
+                          <Card.Text>
+                            Category: {value.category.categoryName}<br />
+                            Points: {value.category.categoryPoints}<br />
+                            Description: {value.locationDesc}
+                          </Card.Text>
+                          {this.state.authorityLevel !== 'player' &&
+                            <button className="editLocationButton submitButton btn"
+                              onClick={() => {this.showEdit(true); this.setState({editLocation: value})}}>
+                              Edit
+                            </button>
+                          }
+                          <button className="editLocationButton submitButton btn"
+                              onClick={() => this.collect(value.locationName)}>
+                              Collect
+                          </button>
+                        </Card.Body>
+                      </Card>
+                    </Popup>
+                  </Marker>
+                );
+            })}
+            {distant.map((value, index) => {
+                return (
+                  <Marker position={value.coordinates}
+                          icon={DistantIcon}>
+                    <Popup>
+                      <Card>
+                        <Card.Img variant="top" src={value.locationPhoto} />
+                        <Card.Body>
+                          <Card.Title>{value.locationName}</Card.Title>
+                          <Card.Text>
+                            Category: {value.category.categoryName}<br />
+                            Points: {value.category.categoryPoints}<br />
+                            Description: {value.locationDesc}
+                          </Card.Text>
+                          {this.state.authorityLevel !== 'player' &&
+                            <button className="editLocationButton submitButton btn"
+                              onClick={() => {this.showEdit(true); this.setState({editLocation: value})}}>
+                              Edit
+                            </button>
+                          }
+                          <button className="editLocationButton submitButton btn distant"
+                                 disabled>
+                              Collect
+                          </button>
                         </Card.Body>
                       </Card>
                     </Popup>
