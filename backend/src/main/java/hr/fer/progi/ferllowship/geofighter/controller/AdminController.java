@@ -168,6 +168,7 @@ public class AdminController {
 			} else {
 				return new MessageDTO("User is already just a player!");
 			}
+			break;
 		case "cartograph":
 			if (player instanceof Cartograph) {
 				return new MessageDTO("Player is already a cartographer!");
@@ -193,11 +194,10 @@ public class AdminController {
             						@RequestPart String locationDesc,
             						@RequestPart MultipartFile locationPhoto,
             						@RequestPart LocationDTO.Coordinates coordinates,
-            						@RequestPart String categoryName,
-							@RequestPart String status) throws IOException {
+            						@RequestPart String categoryName) throws IOException {
 		
 		String message = locationService.changeLocationData(locationName,
-				newLocationName, locationDesc, locationPhoto, coordinates, categoryName, status);
+				newLocationName, locationDesc, locationPhoto, coordinates, categoryName);
 		return new MessageDTO(message);
 	}
 	

@@ -22,10 +22,10 @@ INSERT INTO admin (iban, id_photo_link, player_id) VALUES
 ('HR2324840081238429587', 'https://res.cloudinary.com/ferllowship/image/authenticated/s---6AmsTGn--/v1607972421/pictures/qu0szw4e1j9pfdonjoat.png', '64fe37bddf564d059433346788485b05');
 
 INSERT INTO category (category_id, category_name, category_points) VALUES
-('47f58b362fce479aa7099653a20f966a', 'Grad', 25),
-('2a4c3fe11a184881a4430de517aa2db5', 'Naselje', 30),
-('03417c375ef34b5280eea606839cf8a1', 'Umjetnička instalacija', 35),
-('88a770c981e54b9695b2448618a5e13a', 'Vrh planine', 40);
+('47f58b362fce479aa7099653a20f966a', 'City', 25),
+('2a4c3fe11a184881a4430de517aa2db5', 'Small town', 30),
+('03417c375ef34b5280eea606839cf8a1', 'Art installation', 35),
+('88a770c981e54b9695b2448618a5e13a', 'Mountain top', 40);
 
 INSERT INTO location (location_id, coordinates, location_desc, location_name, location_photo_link, location_status, category_id) VALUES
 ('6152fbe05c94429b8ac80e2a17676717', '45.09512524633465;14.121508598327637', 'Opis Labina.', 'Labin', 'https://res.cloudinary.com/ferllowship/image/authenticated/s--jFm3YYnt--/v1608254551/pictures/leoitge70k5s9eeyfyjm.jpg', 0, '47f58b362fce479aa7099653a20f966a'),

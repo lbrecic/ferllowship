@@ -111,7 +111,7 @@ public class PlayerController {
 		
 		if (!email.isBlank()) {
 			Player player2 = playerRepository.findByEmail(email);
-			if (player2 != null) {
+			if (player2 != null && !player2.getUsername().equals(player.getUsername())) {
 				return new MessageDTO("Entered email address is already taken!");
 			}
 			player.setEmail(email);
@@ -283,12 +283,12 @@ public class PlayerController {
 
 			System.out.println(location.getCategory().getCategoryName() + " " + distance);
 			
-			if(location.getCategory().getCategoryName().equals("Grad") 
+			if(location.getCategory().getCategoryName().equals("City")
 					&& distance < 15
-			|| location.getCategory().getCategoryName().equals("Naselje") 
+			|| location.getCategory().getCategoryName().equals("Small town")
 					&& distance < 7
-			|| (location.getCategory().getCategoryName().equals("Umjetnička instalacija")
-				|| location.getCategory().getCategoryName().equals("Vrh planine")) 
+			|| (location.getCategory().getCategoryName().equals("Art installation")
+				|| location.getCategory().getCategoryName().equals("Mountain top"))
 					&& distance < 1
 			// dopuniti ukoliko se doda jos neka kategorija
 					) {

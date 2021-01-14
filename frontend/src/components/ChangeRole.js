@@ -61,8 +61,13 @@ class ChangeRole extends React.Component {
             });
     
             let result = await res.json();
+            console.log(result)
             if (result && result.message) {
-              toast(result.message);
+                if (result.status === 500) {
+                    toast("Player's role successfully changed!");
+                } else {
+                    toast(result.message);
+                }
             }
         } catch (e) {
             toast("Error occured.");
