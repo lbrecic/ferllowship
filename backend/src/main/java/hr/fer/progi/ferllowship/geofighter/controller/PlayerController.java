@@ -70,37 +70,15 @@ public class PlayerController {
 		String authorityLevel = playerService.getAuthorityLevelOfLoggedInPlayer();
 		playerService.updateRoleOfLoggedInPlayer("ROLE_" + authorityLevel.toUpperCase());
 
-		return new PlayerDTO(
-			player.getUsername(),
-			player.getPasswordHash(),
-			player.getEmail(),
-			player.getPhotoLink(),
-			player.getPoints(),
-			player.getBanStatus(),
-			player.getEnabled(),
-			player.getActivity(),
-			player.getExperience(),
-			authorityLevel
-		);
+		return playerService.playerToPlayerDTO(player);
 	}
 	
 	@PreAuthorize("hasAnyRole('ADMIN','CARTOGRAPH','PLAYER')")
 	@GetMapping(path = "/anotherPlayer")
 	public PlayerDTO getAnotherPlayerProfileInfo(@RequestParam("username") String username) {
 		Player player = playerRepository.findByUsername(username);
-		String authorityLevel = playerService.getAuthorityLevelOfPlayer(player);
 
-		return new PlayerDTO(
-			player.getUsername(),
-			player.getEmail(),
-			player.getPhotoLink(),
-			player.getPoints(),
-			player.getBanStatus(),
-			player.getEnabled(),
-			player.getActivity(),
-			player.getExperience(),
-			authorityLevel
-		);
+		return playerService.playerToPlayerDTO(player);
 	}
 
 	/**

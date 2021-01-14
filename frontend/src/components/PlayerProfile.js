@@ -15,9 +15,9 @@ class PlayerProfile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: this.props.user.username,
-      email: this.props.user.email,
-      photoLink: this.props.user.photoLink,
+      username: this.props.user.user.username,
+      email: this.props.user.user.email,
+      photoLink: this.props.user.user.photoLink,
       anotherPlayer: this.props.user.anotherPlayer,
       authorityLevel: "",
       showEdit: false,

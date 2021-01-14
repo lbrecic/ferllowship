@@ -51,19 +51,19 @@ public class AdminController {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasAnyRole('ADMIN','CARTOGRAPH','PLAYER')")
 	@GetMapping(path = "/allPlayers")
 	public List<PlayerDTO> getAllPlayers() {
 		return getAll("PLAYER");
 	}
 
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasAnyRole('ADMIN','CARTOGRAPH','PLAYER')")
 	@GetMapping(path = "/allCartographs")
 	public List<PlayerDTO> getAllCartographs() {
 		return getAll("CARTOGRAPH");
 	}
 
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasAnyRole('ADMIN','CARTOGRAPH','PLAYER')")
 	@GetMapping(path = "/allAdmins")
 	public List<PlayerDTO> getAllAdmins() {
 		return getAll("ADMIN");

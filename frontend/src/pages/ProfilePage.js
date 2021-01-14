@@ -27,10 +27,7 @@ class ProfilePage extends React.Component {
     
           if (result && !result.error) {
             this.setState({
-              username: result.username,
-              email: result.email,
-              photoLink: result.photoLink,
-              authorityLevel: result.authorityLevel,
+              user: result,
               anotherPlayer: handle !== localStorage.username
             });
           }
@@ -81,13 +78,13 @@ class ProfilePage extends React.Component {
     
 
     render() {
-        if (this.state.authorityLevel === undefined)
+        if (this.state.user === undefined)
             return <Loader />
-        if (this.state.authorityLevel === 'player')
+        if (this.state.user.authorityLevel === 'player')
             return (<PlayerProfile user={this.state}/>);
-        if (this.state.authorityLevel === 'cartograph')
+        if (this.state.user.authorityLevel === 'cartograph')
             return (<CartographProfile user={this.state}/>);
-        if (this.state.authorityLevel === 'admin')
+        if (this.state.user.authorityLevel === 'admin')
             return (<AdminProfile user={this.state}/>);
     }
 }
