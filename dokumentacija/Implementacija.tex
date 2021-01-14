@@ -21,19 +21,66 @@
 			\subsection{Ispitivanje komponenti}
 			\textit{Potrebno je provesti ispitivanje jedinica (engl. unit testing) nad razredima koji implementiraju temeljne funkcionalnosti. Razraditi \textbf{minimalno 6 ispitnih slučajeva} u kojima će se ispitati redovni slučajevi, rubni uvjeti te izazivanje pogreške (engl. exception throwing). Poželjno je stvoriti i ispitni slučaj koji koristi funkcionalnosti koje nisu implementirane. Potrebno je priložiti izvorni kôd svih ispitnih slučajeva te prikaz rezultata izvođenja ispita u razvojnom okruženju (prolaz/pad ispita). }
 			
-			
+			\eject
 			
 			\subsection{Ispitivanje sustava}
 			
-			 \textit{Potrebno je provesti i opisati ispitivanje sustava koristeći radni okvir Selenium\footnote{\url{https://www.seleniumhq.org/}}. Razraditi \textbf{minimalno 4 ispitna slučaja} u kojima će se ispitati redovni slučajevi, rubni uvjeti te poziv funkcionalnosti koja nije implementirana/izaziva pogrešku kako bi se vidjelo na koji način sustav reagira kada nešto nije u potpunosti ostvareno. Ispitni slučaj se treba sastojati od ulaza (npr. korisničko ime i lozinka), očekivanog izlaza ili rezultata, koraka ispitivanja i dobivenog izlaza ili rezultata.\\ }
+			% \textit{Potrebno je provesti i opisati ispitivanje sustava koristeći radni okvir Selenium\footnote{\url{https://www.seleniumhq.org/}}. Razraditi \textbf{minimalno 4 ispitna slučaja} u kojima će se ispitati redovni slučajevi, rubni uvjeti te poziv funkcionalnosti koja nije implementirana/izaziva pogrešku kako bi se vidjelo na koji način sustav reagira kada nešto nije u potpunosti ostvareno. Ispitni slučaj se treba sastojati od ulaza (npr. korisničko ime i lozinka), očekivanog izlaza ili rezultata, koraka ispitivanja i dobivenog izlaza ili rezultata.\\ }
 			 
-			 \textit{Izradu ispitnih slučajeva pomoću radnog okvira Selenium moguće je provesti pomoću jednog od sljedeća dva alata:}
-			 \begin{itemize}
-			 	\item \textit{dodatak za preglednik \textbf{Selenium IDE} - snimanje korisnikovih akcija radi automatskog ponavljanja ispita	}
-			 	\item \textit{\textbf{Selenium WebDriver} - podrška za pisanje ispita u jezicima Java, C\#, PHP koristeći posebno programsko sučelje.}
-			 \end{itemize}
-		 	\textit{Detalji o korištenju alata Selenium bit će prikazani na posebnom predavanju tijekom semestra.}
+		%	 \textit{Izradu ispitnih slučajeva pomoću radnog okvira Selenium moguće je provesti pomoću jednog od sljedeća dva alata:}
+		%	 \begin{itemize}
+		%	 	\item \textit{dodatak za preglednik \textbf{Selenium IDE} - snimanje korisnikovih akcija radi automatskog ponavljanja ispita	}
+		%	 	\item \textit{\textbf{Selenium WebDriver} - podrška za pisanje ispita u jezicima Java, C\#, PHP koristeći posebno programsko sučelje.}
+		%	 \end{itemize}
+		 %	\textit{Detalji o korištenju alata Selenium bit će prikazani na posebnom predavanju tijekom semestra.}
 			
+			{Ispitivanje sustava možemo provesti pomoću dodatka za preglednik Selenimu IDE i pisanjem ispitnih slučajeva korištenjem programskog sučelja, tj. mi koristimo Selenium WebDriver unutar JUnit testova. Pomoću dodatka za preglednik Selenium IDE snimaju se korisnikove akcije radi automatskog ponavljanja ispitnog slučaja.} 
+			
+			\subsubsection	{1. Ispitivanje dobre prijave na web aplikaciju GeoFighter }
+			
+				{Na ulazu unosimo podatke za prijavu već registriranog igrača (\emph{username: igrac1} i \emph{password: igrac}). Očekivani izlaz je preusmjeravanje na stranicu \emph{/home}. Preusmjeravanje pratimo prema elementima s određenih stranica. }
+				
+					\begin{figure}[H]
+					\includegraphics[width=\textwidth]{slike/JUSeTest1} 
+					\centering
+					\caption{Selenium WebDriver - JUnit, test1}
+					\label{}
+					\end{figure}
+				
+			\subsubsection{2. Ispitivanje loše prijave na web aplikaciju GeoFighter}
+			
+				{Na ulazu unosimo podatke za neregistriranog igrača (\emph{username: testadmin} i \emph{password: 22345}). Očekivani izlaz je ostanak na stranici za prijavu, što provjeravamo pomoću karakterističnih elemenata sa stranice.}
+			
+					\begin{figure}[H]
+						\includegraphics[width=\textwidth]{slike/JUSeTest2} 
+						\centering
+						\caption{Selenium WebDriver - JUnit, test2}
+						\label{}
+					\end{figure}
+			
+			\subsubsection{Rezultat}
+			
+				{Nakon pokretanja testova \emph{testLoginGoodCreds} i \emph{testLoginBadCreds}, dobili smo očekivani rezultat. Odnosno aplikacija je \textbf{prošla} testove.}
+			
+					\begin{figure}[H]
+						\includegraphics[width=\textwidth]{slike/rezultat_JUSeTest} 
+						\centering
+						\caption{Selenium WebDriver - JUnit, rezultat}
+						\label{}
+					\end{figure}
+				
+			\subsubsection{3. Ispitivanje postavljanja isključenja}
+			
+				{Ovo ispitvanje provodimo pomoću dodatka na Google Chrome \emph{Selenium IDE}. Prijavimo se kao \emph{admin1}, pregledamo profil \emph{igraca1}. Na ulazu testa unosimo trajno isključenje za \emph{igraca1} te se odjavimo kao \emph{admin1}. Očekivani izlaz je kad se pokušamo prijaviti kao \emph{igrac1} da nam to neće biti dozvoljeno dok će nam prijava kao \emph{igrac2} biti dozvoljena. Te radnje smo snimili pomoću Selenium IDE dodatka te ih pokrenuli s podatcima za \emph{igrac1}. Ako ponovno pokrenemo test i promijenimo korisničko ime na \emph{igrac2} vidimo da test dobro radi, odnosno s \emph{igrac2} smo se uspjeli prijaviti. Dobili smo željeni rezultat. Aplikacija je \textbf{prošla} test.}
+					
+					\begin{figure}[H]
+						\includegraphics[width=\textwidth]{slike/SeleniumIDE_test1} 
+						\centering
+						\caption{Selenium IDE, ispitivanje postavljanja isključenja}
+						\label{}
+					\end{figure}
+				
+				
 			\eject 
 		
 		
