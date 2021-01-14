@@ -200,12 +200,34 @@
 		
 		\section{Upute za puštanje u pogon}
 		
-			\textbf{\textit{dio 2. revizije}}\\
+			\subsubsection{Uvod}
 		
-			 \textit{U ovom poglavlju potrebno je dati upute za puštanje u pogon (engl. deployment) ostvarene aplikacije. Na primjer, za web aplikacije, opisati postupak kojim se od izvornog kôda dolazi do potpuno postavljene baze podataka i poslužitelja koji odgovara na upite korisnika. Za mobilnu aplikaciju, postupak kojim se aplikacija izgradi, te postavi na neku od trgovina. Za stolnu (engl. desktop) aplikaciju, postupak kojim se aplikacija instalira na računalo. Ukoliko mobilne i stolne aplikacije komuniciraju s poslužiteljem i/ili bazom podataka, opisati i postupak njihovog postavljanja. Pri izradi uputa preporučuje se \textbf{naglasiti korake instalacije uporabom natuknica} te koristiti što je više moguće \textbf{slike ekrana} (engl. screenshots) kako bi upute bile jasne i jednostavne za slijediti.}
+			{Aplikaciju je moguće lokalno pokrenuti tako da koristi H2 \textit{in-memory} poslužitelj baze podatka ili PostgreSQL poslužitelj. Najprije je opisan postupak instalacije i konfiguracije PostgreSQL poslužitelja. Ti koraci mogu se preskočiti jer su nakon toga dane upute za pokretanje pomoću \textit{docker-compose} skripte, čime je cijeli postupak značajno ubrzan i olakšan. Nakon toga opisan je način pokretanja Spring Boot aplikacije (\textit{backend} dio) i React aplikacije (\textit{frontend} dio.)}
 			
+			\subsubsection{Instalacija PostgreSQL poslužitelja baze podataka}
+		
+			 {Potrebno je preuzeti PostgreSQL bazu podataka za odabrani operacijski sustav. U ovisnosti o operacijskom sustavu, potrebno je provesti standardnu instalaciju.}
+			 
+ 			\subsubsection{Konfiguracija PostgreSQL poslužitelja baze podataka}
+			 
+			 {Poslužitelj baze podataka treba biti namješten da koristi port 5432. Potrebno je postaviti korisnika \texttt{postgres} s lozinkom \texttt{root}. Također treba pripremiti praznu bazu podataka naziva \texttt{geofighter\_db}. Alternativni način postavljanja uključuje promjenu očekivanih parametara u datoteci \textit{application-pg.properties} koja se nalazi u direktoriju \texttt{backend/src/main/resources}.}
 			
-			 \textit{Dovršenu aplikaciju potrebno je pokrenuti na javno dostupnom poslužitelju. Studentima se preporuča korištenje neke od sljedećih besplatnih usluga: \href{https://aws.amazon.com/}{Amazon AWS}, \href{https://azure.microsoft.com/en-us/}{Microsoft Azure} ili \href{https://www.heroku.com/}{Heroku}. Mobilne aplikacije trebaju biti objavljene na F-Droid, Google Play ili Amazon App trgovini.}
+ 			\subsubsection{Pokretanje pomoću \textit{docker-compose.yml} skripte}
 			
+			{U slučaju korištenja usluge \textit{Docker}, ovo je najjednostaviji način pokretanja PostgreSQL poslužitelja baze podataka. Iz komandne linije potrebno je pozicionirati se u direktorij \textit{backend} i pokrenuti naredbu \texttt{docker-compose up}. Svi potrebni parametri PostgreSQL poslužitelja bit će postavljeni na vrijednosti koje aplikacija očekuje.}
+			
+ 			\subsubsection{Pokretanje Spring Boot aplikacije}
+			
+			{Za pokretanje Spring Boot aplikacije potrebno je, iz komandne linije, smjestiti se u direktorij \textit{backend} i pokrenuti naredbu \texttt{mvnw spring-boot:run -Dspring-boot.run.profiles=<profil>} (Windows) ili \texttt{./mvnw spring-boot:run -Dspring-boot.run.profiles=<profil>} (Linux). Odabrani profil može biti \texttt{pg} (PostgreSQL) ili \texttt{h2} (H2), ovisno o preferiranom poslužitelju. Ako se koristi profil \texttt{pg}, potrebno je najprije provesti ranije navedene korake za postavljanje PostgreSQL poslužitelja. Za profil \texttt{h2} nije ništa potrebno namještati.} 
+			
+			{Ako navedene naredbe za postavljanje profila ne rade, valja pokušati s \texttt{mvnw spring-boot:run -Dspring.profiles.active=<profil>} (Windows) ili \texttt{./mvnw spring-boot:run -Dspring.profiles.active=<profil>} (Linux). Profili pri tome poprimaju istu vrijednosti (\texttt{pg} ili \texttt{h2}).} 
+			
+			{Aplikacija će nakon pokretanja biti dostupna na portu 8080, a baza podataka će inicijalno biti popunjena podatcima zadanima u \texttt{data-<profil>.sql} skripti, pri čemu je profil \texttt{pg} ili \texttt{h2}.}
+			
+			{Kako bi se aplikacija mogla ispravno koristiti, potrebno je postaviti očekivane varijable okruženja. To su: EMAIL, EMAIL\_PASSWORD i CLOUDINARY\_URL. Varijable EMAIL i EMAIL\_PASSWORD predstavljaju podatke e-mail računa koji se koristi za slanje e-mail potvrde igračima koji su se tek registrirali. Varijabla CLOUDINARY\_URL je personalizirana veza na vanjsku uslugu \textit{Cloudinary} na koju se pohranjuju slike.}
+			
+ 			\subsubsection{Pokretanje React aplikacije}
+			
+			{Za pokretanje React aplikacije potrebno je instalirati okruženje \textit{Node.js}, zajedno s upraviteljem paketa \textit{npm}. Prije pokretanja React aplikacije potrebno je napraviti prethodni korak (pokretanje Spring Boot aplikacije). Zatim je potrebno pozicionirati se u direktorij \textit{frontend} i najprije pokrenuti naredbu \texttt{npm install}, a zatim \texttt{npm start}. Time će se aplikacija postati dostupna na portu 3000, a automatski će se otvoriti \texttt{localhost:3000} u prozoru zadano postavljenog web preglednika.}
 			
 			\eject 
