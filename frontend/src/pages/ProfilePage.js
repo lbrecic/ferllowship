@@ -21,7 +21,6 @@ class ProfilePage extends React.Component {
 
     async componentDidMount() {
         const handle = this.props.match.params.handle;
-
         try {
           let res = handle === localStorage.username ? await fetch(`/api/player`) : await fetch(`/api/anotherPlayer?username=${handle}`);
           let result = await res.json();

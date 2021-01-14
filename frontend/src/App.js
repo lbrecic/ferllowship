@@ -41,8 +41,6 @@ function success(pos) {
     lon: crd.longitude,
     accuracy: crd.accuracy
   }
-
-  console.log(currentPosition);
 }
 
 function errors(err) {
@@ -97,9 +95,6 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
           } else if (result.state === "denied") {
             //If denied then you have to show instructions to enable location
           }
-          result.onchange = function () {
-            console.log(result.state);
-          };
         }).then(() => {
           checkIn();
         });
