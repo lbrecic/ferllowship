@@ -168,6 +168,7 @@ public class AdminController {
 			} else {
 				return new MessageDTO("User is already just a player!");
 			}
+			break;
 		case "cartograph":
 			if (player instanceof Cartograph) {
 				return new MessageDTO("Player is already a cartographer!");

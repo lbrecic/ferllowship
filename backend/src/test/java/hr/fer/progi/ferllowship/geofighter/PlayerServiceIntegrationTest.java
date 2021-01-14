@@ -53,4 +53,10 @@ public class PlayerServiceIntegrationTest {
 
         assertEquals("admin", playerService.getAuthorityLevelOfPlayer(admin));
     }
+
+    @Test
+    public void distanceTest() {
+        assertEquals(5503.5539, playerService.distance(30, 30, 60, 90), 0.001);
+    }
+
 }
