@@ -1,0 +1,11 @@
+ .btnAdd{
+    position: relative;
+    z-index: 0;    
+}
+
+.addBtn{
+    padding-top: 80px;
+    margin-left: auto;
+    margin-right: 20px;
+    width: 120px;
+}

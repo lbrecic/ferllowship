@@ -1,54 +1,56 @@
-import React, { useState } from 'react'
-import LocationRequests from '../components/LocationRequests';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
-import CartographForm from '../components/CartographForm';
-import CartographRequests from '../components/CartographRequests';
-import Request from '../components/Request'
-import SubmitButton from "../components/SubmitButton";
-import PromoteAdmin from '../components/PromoteAdmin'
-import '../styles/App.css';
-import logo from '../logo.svg';
-import cards from '../utils/cards.png';
-import stats from '../utils/statistics.png';
-import { Link } from "react-router-dom";
+import React from 'react'
+import { withRouter } from "react-router-dom";
+import Loader from '../components/Loader'
+import PlayerProfile from '../components/PlayerProfile'
+import CartographProfile from '../components/CartographProfile'
+import AdminProfile from '../components/AdminProfile'
 import '../styles/Profile.css'; 
 
 class ProfilePage extends React.Component {
-
     constructor (props) {
         super(props);
-        this.showRequest = 0;
+        this.showCartographRequest = 0;
+        this.cartographRequest = 0;
+        this.showLocationRequest = 0;
+        this.locationRequest = 0;
         this.promoteWindow = 0;
-        this.request = 0;
+        this.allUsersWindow = 0;
+        this.locationsInPerson = 0;
+        this.state = {}
     }
 
-    state = {
-        username: "",
-        email: "",
-        photoLink: "",
-        authorityLevel: ""
-    };
-    
-    async componentDidMount() {        
+    async componentDidMount() {
+        const handle = this.props.match.params.handle;
         try {
-          let res = await fetch('/api/player?username=' + localStorage.username);
+          let res = handle === localStorage.username ? await fetch(`/api/player`) : await fetch(`/api/anotherPlayer?username=${handle}`);
           let result = await res.json();
     
           if (result && !result.error) {
             this.setState({
-              username: result.username,
-              email: result.email,
-              photoLink: result.photoLink,
-              authorityLevel: result.authorityLevel
+              user: result,
+              anotherPlayer: handle !== localStorage.username
             });
           }
-        } catch (e) {
-        }
+        } catch (e) {}
+      }
+
+    setShowCartographRequest = e => {
+        this.showCartographRequest = e;
+        this.setState(this.state);
     }
 
-    setShowRequest = e => {
-        this.showRequest = e;
+    setCartographRequest = e => {
+        this.cartographRequest = e;
+        this.setState(this.state);
+    }
+
+    setShowLocationRequest = e => {
+        this.showLocationRequest = e;
+        this.setState(this.state);
+    }
+
+    setLocationRequest = e => {
+        this.locationRequest = e;
         this.setState(this.state);
     }
 
@@ -57,155 +59,33 @@ class ProfilePage extends React.Component {
         this.setState(this.state);
     }
 
-    setRequest = e => {
-        this.request = e;
+    showLocationsInPerson = e => {
+        this.locationsInPerson = e;
         this.setState(this.state);
     }
 
-    render() {
-        if(this.showRequest === 0 && this.promoteWindow === 0)
-        return (
-            <>
-            <Header />
-            <div className="w-full h-screen geo-color full-profile">
-                <div className="flex justify-center align-center h-screen">
-                    <div className="w-1/4 h-1/4 profile">
-                        <div className="h-12"></div>
-                        <div className="w-full h-32 "></div>
-                        <div className="flex justify-center profilePictureContainer">
-                            <img src={ this.state.photoLink } className="App-logo box-shadow profilePicture" alt="logo" />
-                        </div>
-                    </div>
-                    <div className="w-1/2">
-                        <div className="h-12"></div>
-                        <div className="w-full h-64 p-12">
-                            <p className='title white' >
-                                <div className='logo-title'> 
-                                    { this.state.username }
-                                </div>       
-                            </p>
-                        </div>
-                        <div className="w-full h-20 links"></div>
-                        <div className="flex justify-center">
-                            <div className="w-1/4 text-center"></div>                            
-                            <div className="w-1/4 text-center">
-                                <Link 
-                                    to="/deck"
-                                >
-                                    <div className="flex justify-center">
-                                        <img src={cards} className="h-32" alt="logo" />
-                                    </div>
-                                    <span>Moje karte</span>
-                                </Link>
-                            </div>
-                            <div className="w-1/4 text-center">
-                                <Link 
-                                    to="/stats"
-                                >
-                                    <div className="flex justify-center">
-                                        <img src={stats} className="h-32 p-3" alt="logo" />
-                                    </div>
-                                    <span>Moja statistika</span>
-                                </Link>
-                            </div>
-                            <div className="w-1/4 text-center"></div>
-                        </div>
-                        <div className="text-center m-8">
-                        {this.state.authorityLevel === "admin" &&
-                            <SubmitButton
-                                text="Promote someone to admin"
-                                onClick={() => this.showPromoteWindow(1)}
-                            />}
-                        </div>
-                    </div>
-                    <div className="w-1/4">
-                        <div className="h-12"></div>
-                            {this.state.authorityLevel === "player" && 
-                                <CartographForm />}
-                            {this.state.authorityLevel === "admin" &&
-                                <CartographRequests setShow={ this.setShowRequest }
-                                                    setRequest={ this.setRequest }/>}
-                            {this.state.authorityLevel === "cartograph" &&
-                                <LocationRequests />}
-                    </div>
-                </div>
-            </div>
-            <Footer />
-            </>
-        );
+    showEditWindow = e => {
+        this.setState({
+          show: !this.state.show
+        })
+    }
+    
+    onClose = e => {
+        this.setState({
+          show: false
+        })
+    };
+    
 
-        if(this.showRequest !== 0 || this.promoteWindow === 1)
-            return(
-            <>
-            <Header />
-            <div className="w-full h-screen geo-color full-profile">
-                <div className="flex justify-center align-center h-screen">
-                    <div className="w-1/4 h-1/4 profile">
-                        <div className="h-12"></div>
-                        <div className="w-full h-32 "></div>
-                        <div className="flex justify-center profilePictureContainer">
-                            <img src={this.state.photoLink} className="App-logo box-shadow profilePicture" alt="logo" />
-                        </div>
-                    </div>
-                    <div className="w-1/2">
-                        <div className="h-12"></div>
-                        <div className="w-full h-64 p-12">
-                            <p className='title white' >
-                                <div className='logo-title'> 
-                                    { this.state.username }
-                                </div>       
-                            </p>
-                        </div>
-                        <div className="w-full h-20 links"></div>
-                        <div className="flex justify-center">
-                            <div className="w-1/4 text-center"></div>                            
-                            <div className="w-1/4 text-center">
-                                <Link 
-                                    to="/deck"
-                                >
-                                    <div className="flex justify-center">
-                                        <img src={cards} className="h-32" alt="logo" />
-                                    </div>
-                                    <span>Moje karte</span>
-                                </Link>
-                            </div>
-                            <div className="w-1/4 text-center">
-                                <Link 
-                                    to="/stats"
-                                >
-                                    <div className="flex justify-center">
-                                        <img src={stats} className="h-32 p-3" alt="logo" />
-                                    </div>
-                                    <span>Moja statistika</span>
-                                </Link>
-                            </div>
-                            <div className="w-1/4 text-center"></div>
-                        </div>
-                        <div className="text-center m-8">
-                            <SubmitButton
-                                text="Promote someone to admin"
-                                onClick={() => this.showPromoteWindow(1)}
-                            />
-                        </div>
-                    </div>
-                    <div className="w-1/4">
-                        <div className="h-12"></div>
-                                {this.promoteWindow === 1 &&
-                                    <PromoteAdmin setShow={ this.showPromoteWindow }/>
-                                }
-                                {this.showRequest !== 0 &&
-                                    <Request setShow={ this.setShowRequest } 
-                                        setRequest={ this.setRequest }
-                                        request={this.request}/>}
-                                <CartographRequests setShow={ this.setShowRequest } 
-                                                    setRequest={ this.setRequest }/>
-                    </div>
-                </div>
-            </div>
-            <Footer />
-            </>
-            );
+    render() {
+        if (this.state.user === undefined)
+            return <Loader />
+        if (this.state.user.authorityLevel === 'player')
+            return (<PlayerProfile user={this.state}/>);
+        if (this.state.user.authorityLevel === 'cartograph')
+            return (<CartographProfile user={this.state}/>);
+        if (this.state.user.authorityLevel === 'admin')
+            return (<AdminProfile user={this.state}/>);
     }
 }
-
-export default ProfilePage;
+export default withRouter(ProfilePage);

@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from "react-router-dom";
 import logo from '../logo.svg';
 
 const queryString = require('query-string');
@@ -23,7 +24,7 @@ class ConfirmPage extends React.Component {
       }
     } catch (e) {
         this.setState({
-            message: "Dogodila se pogreška."
+            message: "Error occured."
         });
     }
   }
@@ -34,11 +35,9 @@ class ConfirmPage extends React.Component {
       <div className="App">
         <div className="App-header App-header-background">
           <img src={logo} className="App-logo animate-pulse" alt="logo" />
-          <p className='title white' >
-            <div className='confirm-message'>
-              {this.state.message}
-            </div>
-          </p>
+          <div className='title white confirm-message'>
+            {this.state.message}
+          </div>
         </div>
       </div>
     );
@@ -46,4 +45,4 @@ class ConfirmPage extends React.Component {
 
 }
 
-export default ConfirmPage;
+export default withRouter(ConfirmPage);

@@ -1,18 +1,16 @@
 import React from 'react';
+import { withRouter } from "react-router-dom";
 import Header from '../components/Header';
-import Footer from '../components/Footer';
+import Deck from '../components/Deck';
+
 
 function DeckPage() {
     return (
         <>
             <Header />
-            <div className="h-16"></div>
-            <div className="text-center p-3">
-                this is deck page
-            </div>
-            <Footer />
+            <Deck />
         </>
     );
 }
 
-export default DeckPage;
+export default withRouter(DeckPage);

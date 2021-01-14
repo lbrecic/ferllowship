@@ -40,14 +40,9 @@ public class Player {
 	private Boolean activity;
 	
 	@Column
-	private Integer expirience;
+	private Integer experience;
 	
-	@OneToMany(targetEntity = Fight.class, fetch = FetchType.EAGER)
-	@JoinColumn(name = "fight_id")
-	private List<Fight> fights;
-	
-	@OneToMany(targetEntity = Card.class, fetch = FetchType.EAGER)
-	@JoinColumn(name = "card_id")
+	@OneToMany(targetEntity = Card.class, fetch = FetchType.EAGER, mappedBy = "player")
 	private List<Card> deck;
 
 	public Player() {
@@ -61,9 +56,50 @@ public class Player {
 		this.photoLink = photoLink;
 		enabled = false;
 		activity = false;
-		expirience = 0;
-		fights = new ArrayList<>();
+		experience = 0;
 		deck = new ArrayList<>();
+	}
+
+	public Player createPlayer() {
+		Player player = new Player();
+		player.setActivity(activity);
+		player.setBanStatus(banStatus);
+		player.setEmail(email);
+		player.setEnabled(enabled);
+		player.setExperience(experience);
+		player.setPasswordHash(passwordHash);
+		player.setPhotoLink(photoLink);
+		player.setPoints(points);
+		player.setUsername(username);
+		return player;
+	}
+
+	public Cartograph createCartograph() {
+		Cartograph cartograph = new Cartograph();
+		cartograph.setActivity(activity);
+		cartograph.setBanStatus(banStatus);
+		cartograph.setEmail(email);
+		cartograph.setEnabled(enabled);
+		cartograph.setExperience(experience);
+		cartograph.setPasswordHash(passwordHash);
+		cartograph.setPhotoLink(photoLink);
+		cartograph.setPoints(points);
+		cartograph.setUsername(username);
+		return cartograph;
+	}
+
+	public Admin createAdmin() {
+		Admin admin= new Admin();
+		admin.setActivity(activity);
+		admin.setBanStatus(banStatus);
+		admin.setEmail(email);
+		admin.setEnabled(enabled);
+		admin.setExperience(experience);
+		admin.setPasswordHash(passwordHash);
+		admin.setPhotoLink(photoLink);
+		admin.setPoints(points);
+		admin.setUsername(username);
+		return admin;
 	}
 
 	public UUID getUserId() {
@@ -134,12 +170,16 @@ public class Player {
 		this.activity = activity;
 	}
 
-	public Integer getExpirience() {
-		return expirience;
+	public Integer getExperience() {
+		return experience;
 	}
 
-	public void setExpirience(Integer expirience) {
-		this.expirience = expirience;
+	public void setExperience(Integer experience) {
+		this.experience = experience;
+	}
+
+	public List<Card> getDeck() {
+		return deck;
 	}
 	
 }
