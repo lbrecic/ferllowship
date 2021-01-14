@@ -1,0 +1,48 @@
+.leaflet-container {
+    position: fixed;
+    margin-top: 60px;
+    z-index: 0;
+    height: 100%;
+    width: 100%;
+}
+
+@media only screen and (min-height: 700px) {
+    .leaflet-container {
+        position: fixed;
+        margin-top: 60px;
+        z-index: 0;
+        height: 100%;
+        width: 100%;
+    }
+}
+
+.editLocationButton {
+    position: absolute;
+    border: none;
+    bottom: 0;
+    margin-bottom: 8%;
+    width: 74%;
+}
+
+.otherLocationButton {
+    border: none;
+    margin-bottom: 3%;
+}
+
+.card {
+    overflow: auto;
+}
+
+.mapButtons {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    background: transparent !important;
+    transform: translate(-200, -100%);
+    animation-name: animatetop;
+    animation-duration: 1s;
+}
+
+.leaflet-marker-draggable {
+    display: none !important;
+}

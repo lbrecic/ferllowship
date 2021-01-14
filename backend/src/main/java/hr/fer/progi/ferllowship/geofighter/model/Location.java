@@ -12,7 +12,7 @@ public class Location {
 	@Column(name = "location_id", updatable = false, nullable = false)
 	private UUID locationId;
 	
-	@Column(name = "location_name", length = 32)
+	@Column(name = "location_name", unique = true, length = 32)
 	private String locationName;
 	
 	@Column(name = "location_desc")
@@ -24,7 +24,7 @@ public class Location {
 	@Column(name = "location_status")
 	private Integer locationStatus;
 	
-	@Column(length = 32)
+	@Column(length = 50)
 	private String coordinates;
 	
 	@ManyToOne(targetEntity = Category.class, fetch = FetchType.EAGER)

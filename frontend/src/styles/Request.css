@@ -127,3 +127,32 @@ button:hover {
     height: 10%;
     width: 40%;
 }
+
+.mapOneLocation {
+    overflow: overlay;
+    position: fixed;
+    /* Stay in place */
+    z-index: 2;
+    /* Sit on top */
+    width: 60%;
+    /* Full width */
+    height: 60%;
+    /* Full height */
+    margin: 0;
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    background-color: #2E3F30;
+    border: 3px solid #1F251F;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.5s;
+    box-shadow: 0 0 3px #FF0000, 0 0 5px #0000FF;
+    font-size: 15px;
+    font-weight: bold;
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+    color: rgb(217, 210, 224);
+}

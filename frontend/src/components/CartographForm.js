@@ -62,19 +62,17 @@ class CartographForm extends React.Component {
     formData.append("picture", this.state.pictures[0]);
 
     try { 
-      let res = await fetch("/api/cartographRequest", {
+      let res = await fetch("/api/requests", {
         method: "post",
         body: formData
       });
       let result = await res.json();
       console.log(result);
-      if (result && result.success) {
-        toast("Uspješna prijava.");
-      } else {
-        toast("Dogodila se pogreška.");
+      if (result && result.message) {
+        toast(result.message);
       }
     } catch (e) {
-      toast("Dogodila se pogreška.");
+      toast("Error occured.");
     }
   }
 
@@ -83,12 +81,12 @@ class CartographForm extends React.Component {
 
     if (!this.state.IBAN) {
       isValid = false;
-     toast("Unesi IBAN!");
+     toast("Input IBAN!");
     }
 
     if (!this.state.pictures[0]) {
       isValid = false;
-      toast("Priloži sliku osobne iskaznice!");
+      toast("Attach picture of your ID card!");
     }
     return isValid;
   }
@@ -96,10 +94,10 @@ class CartographForm extends React.Component {
   render() {
     return (
           <div className="registerForm modal-contentForm">
-            <div className="title-register">Postani kartograf</div>
+            <div className="title-register">Become a cartographer</div>
 
             <div className="registerDiv">
-            <p className="iban">Unesi IBAN:</p>
+            <p className="iban">Input IBAN:</p>
               <InputField
                 type="text"
                 placeholder="IBAN"
@@ -108,7 +106,7 @@ class CartographForm extends React.Component {
               />
             </div>
 
-            <p className="cartographPicture">Priloži sliku osobne iskaznice:</p>
+            <p className="cartographPicture">Attach picture of your ID card:</p>
             <div className="imageUploaderForm">
             <div className="lijepi-obrubForm">
               <ImageUploader className="uploadWindow"
@@ -116,7 +114,7 @@ class CartographForm extends React.Component {
                 withIcon={false}
                 withLabel={false}
                 withPreview={true}
-                buttonText="Izaberi sliku"
+                buttonText="Choose image"
                 onChange={this.onDrop}
                 imgExtension={[".jpg", ".gif", ".png", ".gif", ".jpeg"]}
                 maxFileSize={5242880}
@@ -127,12 +125,11 @@ class CartographForm extends React.Component {
 
             <div className="registerButton">
               <SubmitButton
-                text="Pošalji zahtjev"
+                text="Send request"
                 disabled={this.state.buttonDisabled}
                 onClick={() => this.doApply()}
               />
             </div>
-
           </div>
     );
   }

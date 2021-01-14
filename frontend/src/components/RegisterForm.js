@@ -107,7 +107,7 @@ class RegisterForm extends React.Component {
         toast(result.message);
       }
     } catch (e) {
-      toast("Dogodila se pogreška.");
+      toast("Error occured.");
     }
 
     this.setState({
@@ -120,41 +120,47 @@ class RegisterForm extends React.Component {
 
     if (!this.state.username) {
       isValid = false;
-      toast("Korisničko ime mora biti uneseno.");
+      toast("Input username!");
     } else if (this.state.username.length > USERNAME_MAX_LENGTH) {
       isValid = false;
-      toast("Korisničko ime je predugačko.");
+      toast("Username is too long!");
     }
 
     if (!this.state.password) {
       isValid = false;
-      toast("Lozinka mora biti unesena.");
+      toast("Input password!");
     } else if (this.state.password.length < PASSWORD_MIN_LENGTH) {
       isValid = false;
-      toast("Lozinka mora imati barem 8 znakova.");
+      toast("Password must be at least 8 charachters long.");
     } else if (this.state.password.length > PASSWORD_MAX_LENGTH) {
       isValid = false;
-      toast("Lozinka je predugačka.");
+      toast("Password is too long.");
     }
 
     if (!this.state.email) {
       isValid = false;
-      toast("Email mora biti unesen.");
+      toast("Input e-mail!");
     } else if (this.state.email.length > EMAIL_MAX_LENGTH) {
       isValid = false;
-      toast("Email je predugačak.");
+      toast("E-mail is too long.");
     } else if (!/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/.test(this.state.email)) {
       isValid = false;
-      toast("Email nije u valjanom formatu.");
+      toast("E-mail is not in valid format.");
     }
 
     if (!this.state.pictures[0]) {
       isValid = false;
-      toast("Slika profila mora biti priložena.");
+      toast("Attach profile picture!");
     }
 
     return isValid;
   }
+
+  handleKeypress = e => {
+    if (e.key === 'Enter') {
+      this.doRegister();
+    }
+  };
 
   render() {
     if (!this.props.show) {
@@ -164,13 +170,14 @@ class RegisterForm extends React.Component {
     return (
       <div className="overlay">
         <div className="modal">
-          <div className="registerForm modal-content">
-            <div className="registerTitle">Registriraj se</div>
+          <div className="registerForm modal-content" onKeyPress={this.handleKeypress}>
+            <div className="registerTitle">Register</div>
             <form>
               <div className="registerDiv">
                 <InputField
                   type="text"
-                  placeholder="Korisničko ime"
+                  placeholder="Username"
+                  id = "username"
                   value={this.state.username ? this.state.username : ""}
                   onChange={(val) =>
                     this.setInputValueUsername("username", val)
@@ -181,7 +188,8 @@ class RegisterForm extends React.Component {
               <div className="registerDiv">
                 <InputField
                   type="password"
-                  placeholder="Lozinka"
+                  placeholder="Password"
+                  id = "password"
                   value={this.state.password ? this.state.password : ""}
                   onChange={(val) =>
                     this.setInputValuePassword("password", val)
@@ -192,7 +200,7 @@ class RegisterForm extends React.Component {
               <div className="registerDiv">
                 <InputField
                   type="email"
-                  placeholder="Email"
+                  placeholder="E-mail"
                   value={this.state.email ? this.state.email : ""}
                   onChange={(val) => this.setInputValueEmail("email", val)}
                 />
@@ -205,7 +213,7 @@ class RegisterForm extends React.Component {
                     withIcon={true}
                     withLabel={false}
                     withPreview={true}
-                    buttonText="Izaberi sliku profila"
+                    buttonText="Choose profile picture"
                     onChange={this.onDrop}
                     imgExtension={[".jpg", ".png", ".jpeg"]}
                     maxFileSize={5242880}
@@ -216,7 +224,7 @@ class RegisterForm extends React.Component {
 
             <div className="registerButton">
               <SubmitButton
-                text="Registriraj se"
+                text="Register"
                 disabled={this.state.buttonDisabled}
                 onClick={() => this.doRegister()}
               />
@@ -224,7 +232,7 @@ class RegisterForm extends React.Component {
 
             <div className="registerClose registerButton">
               <button className="btn" onClick={(e) => this.onClose(e)}>
-                Zatvori
+                Close
               </button>
             </div>
 

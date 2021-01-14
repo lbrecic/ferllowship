@@ -29,10 +29,10 @@ class PromoteAdmin extends React.Component {
           <div className="modalRequest">
             <div className="cartographerRequest modal-contentRequest">
               <div className="username textBox">
-                Promote someone to admin
+                Promote user to admin
               </div>
               <div className="registerDiv">
-                <p className="email">Unesi email igrača:</p>
+                <p className="email">User e-mail:</p>
                 <InputField
                     type="text"
                     placeholder="email"
@@ -45,7 +45,7 @@ class PromoteAdmin extends React.Component {
                 <div className="requestButton">
                   <SubmitButton
                     className="requestButton"
-                    text="Prihvati"
+                    text="Accept"
                     onClick={() => this.setShow(0)}
                   />
                 </div>
@@ -53,7 +53,7 @@ class PromoteAdmin extends React.Component {
                 <div className="requestButton">
                   <SubmitButton
                     className="requestButton"
-                    text="Odustani"
+                    text="Decline"
                     onClick={() => this.setShow(0)}
                   />
                 </div>

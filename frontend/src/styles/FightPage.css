@@ -1,0 +1,66 @@
+.fightTitle {
+    padding-top: 20px;
+    color: white;
+    font-family: "Orbitron", sans-serif;
+    font-size: 45px;
+    text-align: center;
+    letter-spacing: 2px;
+    text-shadow: 0 0 5px #ff0000, 0 0 7px #0000ff;
+}
+
+.fightCards span {
+  padding-left: 5px;
+  padding-right: 5px;
+  width: 100%;
+  color: white;
+  font-family: "Orbitron", sans-serif;
+  font-size: 20px;
+  text-align: center;
+  letter-spacing: 2px;
+  padding-bottom: 20px;
+  text-shadow: 0 0 3px #ff0000, 0 0 5px #0000ff;
+}
+
+.fightCards{
+    padding-top: 25px;
+}
+
+
+.userCardsWrapper span {
+    text-align: start;
+    
+  }
+  
+.opponentCardsWrapper span {
+    text-align: end;
+    margin-right: 10px;
+    margin-left: auto;
+    justify-content: end;
+}
+
+.userCards{
+    display: flex;
+    justify-content: start;
+    width: 40%;
+}
+
+.opponentCards{
+    display: flex;    
+    max-width: 750px;
+    margin-right: 10px;
+    margin-left: auto;
+}
+
+.opponentPoints{
+    display: flex;
+    justify-content: end;
+    margin-right: 25px;
+}
+
+.userCardsWrapper{
+    padding-left: 10px;
+}
+
+.fightBody {
+    height: 100vh;
+}

@@ -13,8 +13,8 @@ public class EmailService {
     private JavaMailSender javaMailSender;
 	
 	@Async
-	public void sendEmail(SimpleMailMessage email) {
-		javaMailSender.send(email);
+	public void sendEmail(SimpleMailMessage mailMessage) {		
+		javaMailSender.send(mailMessage);
 	}
 	
 }

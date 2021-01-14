@@ -1,7 +1,7 @@
 import React from 'react';
 import InputField from './InputField';
 import SubmitButton from './SubmitButton';
-import {Redirect, Route} from "react-router-dom";
+import {Redirect} from "react-router-dom";
 
 import { toast } from 'react-toastify';
 
@@ -57,11 +57,11 @@ class LoginForm extends React.Component {
 
     if (!this.state.username || !this.state.password) {
       if (!this.state.username) {
-        toast("Korisničko ime mora biti uneseno.");
+        toast("Input username!");
       }
 
       if (!this.state.password) {
-        toast("Lozinka mora biti unesena.");
+        toast("Input password!");
       }
 
       this.setState({
@@ -80,16 +80,17 @@ class LoginForm extends React.Component {
         method: 'post',
         body: formData
       });
-
       if (res.ok) {
         this.state.redirect = true;
-        localStorage.setItem('username', this.state.username);
         localStorage.setItem('isLoggedIn', true);
+        localStorage.setItem('username', this.state.username);
+    
+        window.location.reload();
       } else {
-        toast("Korisničko ime ili lozinka nisu ispravni.");
+        toast("Username or password not valid!");
       }
     } catch (e) {
-        toast("Dogodila se pogreška.");
+        toast("Error occured.");
     }
 
     this.setState({
@@ -110,20 +111,20 @@ class LoginForm extends React.Component {
 
         <InputField
           type='text'
-          placeholder='Korisničko ime'
+          placeholder='Username'
           value={this.state.username ? this.state.username : ''}
           onChange={(val) => this.setInputValueUsername('username', val)}
         />
 
         <InputField
           type='password'
-          placeholder='Lozinka'
+          placeholder='Password'
           value={this.state.password ? this.state.password : ''}
           onChange={(val) => this.setInputValuePassword('password', val)}
         />
 
         <SubmitButton
-          text='Prijavi se'
+          text='Log in'
           disabled={this.state.buttonDisabled}
           onClick={() => this.doLogin()}
         />

@@ -3,7 +3,7 @@ import SubmitButton from "./SubmitButton";
 import "../styles/Request.css";
 import { toast } from "react-toastify";
 
-class Request extends React.Component {
+class CartographRequest extends React.Component {
   constructor(props) {
     super(props);
     this.setShow = this.props.setShow
@@ -16,39 +16,29 @@ class Request extends React.Component {
   }
 
   async acceptApply(){
-    const formData = new FormData();
-    formData.append("username", this.state.username);
-    formData.append("status", "accept");
-    try{
-      let res = await fetch('/api/requests/' + this.state.username, {
-        method: 'post',
-        body: formData
-      });
+    try {
+      let res = await fetch('/api/requests/accept?username=' + this.state.username);
       let result = await res.json();
-      if (result) {
-        toast("Prihvaćeno.");
+      if (result && result.message) {
+        toast(result.message);
       }
-    }catch(e){
-      toast("Dogodila se pogreška!");
+    } catch(e){
+        toast("Error occured.");
     }
+    window.location.reload();
   }
 
   async declineApply(){
-    const formData = new FormData();
-    formData.append("username", this.state.username);
-    formData.append("status", "decline");
-    try{
-      let res = await fetch('/api/requests/' + this.state.username, {
-        method: 'post',
-        body: formData
-      });
+    try {
+      let res = await fetch('/api/requests/decline?username=' + this.state.username);
       let result = await res.json();
-      if (result) {
-        toast("Odbijeno.");
+      if (result && result.message) {
+        toast(result.message);
       }
-    }catch(e){
-      toast("Dogodila se pogreška!");
+    } catch(e){
+        toast("Error occured.");
     }
+    window.location.reload();
   }
 
   render() {
@@ -59,7 +49,7 @@ class Request extends React.Component {
               <button onClick={() => this.setShow(0)} 
                     style={{alignSelf:'start', margin:'5px'}}>x</button>
               <div className="username textBox">
-                Korisničko ime: {this.state.username}
+                Username: {this.state.username}
               </div>
               <div className="IBAN textBox">IBAN: {this.state.iban}</div>
               <div className="picture">
@@ -74,7 +64,7 @@ class Request extends React.Component {
                 <div className="requestButton">
                   <SubmitButton
                     className="requestButton"
-                    text="Prihvati"
+                    text="Accept"
                     onClick={() => {this.setShow(0); this.acceptApply() } }
                   />
                 </div>
@@ -82,7 +72,7 @@ class Request extends React.Component {
                 <div className="requestButton">
                   <SubmitButton
                     className="requestButton"
-                    text="Odbaci"
+                    text="Decline"
                     onClick={() => { this.setShow(0); this.declineApply() } }
                   />
                 </div>
@@ -94,4 +84,4 @@ class Request extends React.Component {
   }
 }
 
-export default Request;
+export default CartographRequest;
