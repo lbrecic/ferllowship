@@ -100,17 +100,32 @@ class MapComponent extends Component {
     })
   }
 
-  osrm = () => {
-    this.w = [
-      L.latLng(this.state.currentPosition.lat, this.state.currentPosition.lon),
-    ];
+  async osrm() {
+    this.tripArray = [0];
+    this.osrmAddress = `http://router.project-osrm.org/trip/v1/driving/${this.state.currentPosition.lon},${this.state.currentPosition.lat}`;
     this.state.inPersonRequests.map((location) => {
-      this.w.push(L.latLng(location.coordinates.lat, location.coordinates.lng))
+      this.osrmAddress = this.osrmAddress.concat(`;${location.coordinates.lng},${location.coordinates.lat}`);
+      this.tripArray.push(0);
     });
+    this.osrmAddress = this.osrmAddress.concat('?source=first');
+
+    try{
+      let res = await fetch(`${this.osrmAddress}`);
+      let result = await res.json();
+      if (result) {
+        result.waypoints.map((waypoint) => {
+          this.tripArray[waypoint.waypoint_index] = L.latLng(waypoint.location[1], waypoint.location[0]);
+        })
+        this.tripArray.push(L.latLng(this.state.currentPosition.lat, this.state.currentPosition.lon))
+      }
+    } catch(e) {
+      console.log(e);
+    }
+    
     L.Routing.control({
-      waypoints: this.w
+      waypoints: this.tripArray
     }).addTo(map);
-    this.setState(this.state, () => console.log(this.w));
+    this.setState(this.state);
   }
 
   async acceptApply(locationName){
@@ -394,7 +409,8 @@ class MapComponent extends Component {
             })}
             {inPersonRequests.map((value, index) => {
                 return (
-                  <Marker position={value.coordinates}
+                  <Marker className="inPersonMarker"
+                          position={value.coordinates}
                           icon={WaitingLocationIcon}>
                     <Popup>
                       <Card>

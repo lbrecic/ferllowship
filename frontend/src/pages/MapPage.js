@@ -10,6 +10,7 @@ import "../styles/AddLocationButton.css";
 class MapPage extends Component {
   state = {
     authorityLevel: 'player',
+    options: false,
     distant: false,
     newRequests: false,
     inPersonRequests: false,
@@ -117,26 +118,31 @@ class MapPage extends Component {
                           newRequests={this.state.newRequests}
                           inPersonRequests={this.state.inPersonRequests} />
           </div>
-          <div className="addBtn">
-            <button
-              className="btnLogout btnEdit btnAdd"
-              onClick={(e) => {
-                  this.showWindow();
-              }}
-            >
-              Make a location request
-            </button>
-            <button
-              className="btnLogout btnEdit btnAdd"
-              onClick={(e) => {
-                  this.setState({distant: false, currentPosition: null}); 
-                  this.coordinates();
-                  this.checkIn();
-              }}
-            >
-              Update location
-            </button>
+          <div className="addBtn mapButtons">
+            {this.state.options === true &&
+              <button
+                className="btnLogout btnEdit btnAdd"
+                onClick={(e) => {
+                    this.showWindow();
+                }}
+              >
+                Make a location request
+              </button>
+            }
+            {this.state.options === true &&
+              <button
+                className="btnLogout btnEdit btnAdd"
+                onClick={(e) => {
+                    this.setState({distant: false, currentPosition: null}); 
+                    this.coordinates();
+                    this.checkIn();
+                }}
+              >
+                Update location
+              </button>
+            }
             {this.state.distant === false &&
+            this.state.options === true &&
               <button
                 className="btnLogout btnEdit btnAdd"
                 onClick={(e) => {
@@ -154,6 +160,7 @@ class MapPage extends Component {
               </button>
             }
             {this.state.distant === true &&
+            this.state.options === true &&
               <button
                 className="btnLogout btnEdit btnAdd"
                 onClick={(e) => {
@@ -167,6 +174,7 @@ class MapPage extends Component {
             }
             {this.state.authorityLevel !== 'player' &&
               this.state.newRequests === false &&
+              this.state.options === true &&
               <button
                 className="btnLogout btnEdit btnAdd"
                 onClick={(e) => {
@@ -185,6 +193,7 @@ class MapPage extends Component {
             }
             {this.state.authorityLevel !== 'player' &&
               this.state.newRequests === true &&
+              this.state.options === true &&
               <button
                 className="btnLogout btnEdit btnAdd"
                 onClick={(e) => {
@@ -198,6 +207,7 @@ class MapPage extends Component {
             }
             {this.state.authorityLevel !== 'player' &&
               this.state.inPersonRequests === false &&
+              this.state.options === true &&
               <button
                 className="btnLogout btnEdit btnAdd"
                 onClick={(e) => {
@@ -216,6 +226,7 @@ class MapPage extends Component {
             }
             {this.state.authorityLevel !== 'player' &&
               this.state.inPersonRequests === true &&
+              this.state.options === true &&
               <button
                 className="btnLogout btnEdit btnAdd"
                 onClick={(e) => {
@@ -225,6 +236,26 @@ class MapPage extends Component {
                 }}
               >
                 Hide requests waiting validation in person
+              </button>
+            }
+            {this.state.options === false &&
+              <button
+                className="btnLogout btnEdit btnAdd"
+                onClick={(e) => {
+                    this.setState({options: true});
+                }}
+              >
+                Options
+              </button>
+            }
+            {this.state.options === true &&
+              <button
+                className="btnLogout btnEdit btnAdd"
+                onClick={(e) => {
+                    this.setState({options: false});
+                }}
+              >
+                Hide options
               </button>
             }
             <AddLocation

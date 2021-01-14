@@ -32,3 +32,17 @@
 .card {
     overflow: auto;
 }
+
+.mapButtons {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    background: transparent !important;
+    transform: translate(-200, -100%);
+    animation-name: animatetop;
+    animation-duration: 1s;
+}
+
+.leaflet-marker-draggable {
+    display: none !important;
+}
