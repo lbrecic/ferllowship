@@ -127,6 +127,10 @@ public class PlayerController {
 		}
 		
 		if (!email.isBlank()) {
+			Player player2 = playerRepository.findByEmail(email);
+			if (player2 != null) {
+				return new MessageDTO("Entered email address is already taken!");
+			}
 			player.setEmail(email);
 		}
 		
