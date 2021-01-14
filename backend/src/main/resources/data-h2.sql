@@ -22,10 +22,10 @@ INSERT INTO "PUBLIC"."ADMIN" VALUES
 ('HR2324840081238429587', 'https://res.cloudinary.com/ferllowship/image/authenticated/s---6AmsTGn--/v1607972421/pictures/qu0szw4e1j9pfdonjoat.png', X'64fe37bddf564d059433346788485b05');
 
 INSERT INTO "PUBLIC"."CATEGORY" VALUES
-(X'47f58b362fce479aa7099653a20f966a', 'Grad', 25),
-(X'2a4c3fe11a184881a4430de517aa2db5', 'Naselje', 30),
-(X'03417c375ef34b5280eea606839cf8a1', STRINGDECODE('Umjetni\u010dka instalacija'), 35),
-(X'88a770c981e54b9695b2448618a5e13a', 'Vrh planine', 40);
+(X'47f58b362fce479aa7099653a20f966a', 'City', 25),
+(X'2a4c3fe11a184881a4430de517aa2db5', 'Small town', 30),
+(X'03417c375ef34b5280eea606839cf8a1', 'Art installation', 35),
+(X'88a770c981e54b9695b2448618a5e13a', 'Mountain top', 40);
 
 INSERT INTO "PUBLIC"."LOCATION" VALUES
 (X'6152fbe05c94429b8ac80e2a17676717', '45.09512524633465;14.121508598327637', 'Opis Labina.', 'Labin', 'https://res.cloudinary.com/ferllowship/image/authenticated/s--jFm3YYnt--/v1608254551/pictures/leoitge70k5s9eeyfyjm.jpg', 0, X'47f58b362fce479aa7099653a20f966a'),

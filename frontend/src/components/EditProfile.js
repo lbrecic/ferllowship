@@ -89,8 +89,8 @@ class EditProfile extends React.Component {
 
     setInputValuePassword(property, val) {
         this.setState({
-          [property]: val,
-          changedPassword: true
+            [property]: val,
+            changedPassword: true
         });
     }
 
@@ -148,8 +148,13 @@ class EditProfile extends React.Component {
         formData.append("password", this.state.password);
         formData.append("email", this.state.email);
         
-        formData.append("picture", this.state.pictures[0]);
+        let oldPicture = await fetch(this.state.photoLink);
+        let blob = await oldPicture.blob();
         
+        if (this.state.changedPicture !== false)
+            formData.append("picture", this.state.pictures[0]);
+        else 
+            formData.append("picture", blob);
     
         if(this.state.authorityLevel === 'admin' && this.state.anotherPlayer === true){
             try {
