@@ -29,8 +29,7 @@ public class LocationService {
 									String locationDesc,
 									MultipartFile locationPhoto,
 									LocationDTO.Coordinates coordinates,
-									String categoryName,
-									String status) throws IOException {
+									String categoryName) throws IOException {
 		
 		Location location = locationRepository.findByLocationName(locationName);
 		if (location == null) {
@@ -52,12 +51,6 @@ public class LocationService {
 		}
 		if (!categoryName.isBlank()) {
 			location.setCategory(categoryRepository.findByCategoryName(categoryName));
-		}
-		if (!status.isBlank()) {
-			int statusValue = Integer.parseInt(status);
-			if (statusValue >= 0 && statusValue <= 3) {
-				location.setLocationStatus(statusValue);
-			}
 		}
 		locationRepository.save(location);
 
