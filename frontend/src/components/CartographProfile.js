@@ -4,6 +4,7 @@ import LocationRequests from './LocationRequests';
 import LocationRequest from './LocationRequest';
 import SubmitButton from "./SubmitButton";
 import EditProfile from "./EditProfile";
+import PaymentData from "../components/PaymentData";
 import LocationsInPerson from './LocationsInPerson';
 import Ban from "../components/Ban";
 import ChangeRole from '../components/ChangeRole';
@@ -20,11 +21,12 @@ class CartographProfile extends React.Component {
   constructor(props) {
     super(props);
     this.locationsInPerson = 0;
+    this.paymentWindow = 0;
     this.showLocationRequest = 0;
     this.state = {
-      username: this.props.user.username,
-      email: this.props.user.email,
-      photoLink: this.props.user.photoLink,
+      username: this.props.user.user.username,
+      email: this.props.user.user.email,
+      photoLink: this.props.user.user.photoLink,
       anotherPlayer: this.props.user.anotherPlayer,
       authorityLevel: "",
       showEdit: false,
@@ -57,6 +59,11 @@ class CartographProfile extends React.Component {
     this.showLocationRequest = e;
     this.setState(this.state);
   }
+
+  showPaymentWindow = (e) => {
+    this.paymentWindow = e;
+    this.setState(this.state);
+  };
 
   setLocationRequest = e => {
     this.locationRequest = e;
@@ -101,7 +108,9 @@ class CartographProfile extends React.Component {
 
   render() {
     if (
-      this.locationsInPerson === 0 && this.showLocationRequest === 0
+      this.locationsInPerson === 0 && 
+      this.paymentWindow === 0 &&
+      this.showLocationRequest === 0
     )
       return (
         <>
@@ -137,16 +146,29 @@ class CartographProfile extends React.Component {
                           text="Locations for validation in person"
                           onClick={() => this.showLocationsInPerson(1)}
                       />
+                      <SubmitButton
+                      className="adminBtn"
+                      text="Payment data"
+                      onClick={() => this.showPaymentWindow(1)}
+                    />
                   </div>
                 }
                   {this.state.authorityLevel === 'admin' &&
+                  <>
                   <button 
                     className="btnLogout btnEdit"
                     onClick={(e) => {
                       this.showBanWindow();
                   }}>
                     Ban
-                  </button>}
+                  </button>
+                  <button 
+                    className="btnLogout btnEdit"
+                    onClick={() => this.showPaymentWindow(1)}>
+                    Payment data
+                  </button>
+                  </>
+                  }
                   <Ban
                     show={this.state.showBan}
                     onClose={() => this.onClose()}
@@ -239,7 +261,9 @@ class CartographProfile extends React.Component {
       );
 
       if (
-        this.locationsInPerson === 1 || this.showLocationRequest !== 0
+        this.locationsInPerson === 1 ||
+        this.paymentWindow === 1 ||
+         this.showLocationRequest !== 0
       )
         return (
           <>
@@ -269,13 +293,57 @@ class CartographProfile extends React.Component {
                     </span>
                   </div>
   
+                  {this.state.anotherPlayer === false &&
                   <div className="adminBtns">
                       <SubmitButton
+                          className="adminBtn"
                           text="Locations for validation in person"
                           onClick={() => this.showLocationsInPerson(1)}
                       />
-                    </div>
-                </div>
+                      <SubmitButton
+                      className="adminBtn"
+                      text="Payment data"
+                      onClick={() => this.showPaymentWindow(1)}
+                    />
+                  </div>
+                }
+                  {this.state.authorityLevel === 'admin' &&
+                  <>
+                  <button 
+                    className="btnLogout btnEdit"
+                    onClick={(e) => {
+                      this.showBanWindow();
+                  }}>
+                    Ban
+                  </button>
+                  <button 
+                    className="btnLogout btnEdit"
+                    onClick={() => this.showPaymentWindow(1)}>
+                    Payment data
+                  </button>
+                  </>
+                  }
+                  <Ban
+                    show={this.state.showBan}
+                    onClose={() => this.onClose()}
+                    user={this.state}
+                  />
+
+                  {this.state.authorityLevel === 'admin' &&
+                  <button 
+                    className="btnLogout btnEdit"
+                    onClick={(e) => {
+                      this.showChangeRoleWindow();
+                  }}>
+                    Change role
+                  </button>}
+                  <ChangeRole
+                    show={this.state.showChangeRole}
+                    setShow={this.showChangeRoleWindow}
+                    onClose={() => this.onClose()}
+                    user={this.state}
+                  />
+              </div>
   
                 <div className="links">
                   <div className=" text-center link">
@@ -345,6 +413,10 @@ class CartographProfile extends React.Component {
                                       setShowLocation={ this.setShowLocationRequest }
                                       setRequest={ this.setLocationRequest }/>
                   }
+                  {this.paymentWindow === 1 && (
+                    <PaymentData setShow={this.showPaymentWindow}
+                                    user={this.props.user.user} />
+                  )}
                   {this.showLocationRequest !== 0 &&
                       <LocationRequest setShow={ this.setShowLocationRequest } 
                                       setRequest={ this.setLocationRequest }

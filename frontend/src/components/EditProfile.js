@@ -225,6 +225,7 @@ class EditProfile extends React.Component {
                             </div>
                             
                         </div>
+                        {this.state.authorityLevel !== 'admin' &&
                         <div className="registerDivEdit">
                             <InputField
                                 type="password"
@@ -236,7 +237,7 @@ class EditProfile extends React.Component {
                                 placeholder='New password'
                                 onChange={(val) => this.setInputValuePassword('password', val)}
                             />       
-                        </div>
+                        </div>}
                         <div className={"pictureDiv" + (this.state.open ? ' in' : '')}>
                             <div className="pictureEdit">
                                 <img

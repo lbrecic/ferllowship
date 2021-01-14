@@ -47,7 +47,7 @@ class CartographRequest extends React.Component {
           <div className="modalRequest">
             <div className="cartographerRequest modal-contentRequest">
               <button onClick={() => this.setShow(0)} 
-                    style={{alignSelf:'start', margin:'5px'}}>x</button>
+                    style={{alignSelf:'start', margin:'5px'}}>Close</button>
               <div className="username textBox">
                 Username: {this.state.username}
               </div>

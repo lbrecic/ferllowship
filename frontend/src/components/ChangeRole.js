@@ -8,6 +8,7 @@ class ChangeRole extends React.Component {
 
     constructor(props){
         super(props);
+        this.setShow = this.props.setShow;
         this.state = {
             username: this.props.user.username,
             newRole: " ",
@@ -44,6 +45,7 @@ class ChangeRole extends React.Component {
         event.preventDefault();
         if(this.state.change === true)
             this.save();
+        this.onClose(event);
     }
    
     async save(){
@@ -81,6 +83,8 @@ class ChangeRole extends React.Component {
         <div className="overlayEdit">
             <div className="modalEdit">
                 <div className="modal-contentEdit">
+                    <button onClick={(e) => this.onClose(e)} 
+                        style={{alignSelf:'start', margin:'5px'}}>Close</button>
                     <div className="registerTitle">Choose new role for user</div>
                     <form onSubmit={this.mySubmitHandler} >
                         <div className="banDiv">
@@ -97,7 +101,7 @@ class ChangeRole extends React.Component {
                         
 
                         <div className="btnDiv">
-                        <button className="btn editBtn" type='submit' > 
+                        <button className="btn editBtn" type='submit'> 
                             Save changes 
                         </button>
                        

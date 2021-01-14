@@ -3,7 +3,7 @@ import Header from "../components/Header";
 import CartographRequests from "../components/CartographRequests";
 import CartographRequest from "../components/CartographRequest";
 import SubmitButton from "../components/SubmitButton";
-import PromoteAdmin from "../components/PromoteAdmin";
+import PaymentData from "../components/PaymentData";
 import ChangeRole from '../components/ChangeRole';
 import AllUsersWindow from "../components/AllUsersWindow";
 import LocationRequestsAdmin from "../components/LocationRequestsAdmin";
@@ -20,13 +20,13 @@ class AdminProfile extends React.Component {
     super(props);
     this.showCartographRequest = 0;
     this.cartographRequest = 0;
-    //this.promoteWindow = 0;
+    this.paymentWindow = 0;
     this.allUsersWindow = 0;
     this.locationRequestsWindow = 0;
     this.state = {
-      username: this.props.user.username,
-      email: this.props.user.email,
-      photoLink: this.props.user.photoLink,
+      username: this.props.user.user.username,
+      email: this.props.user.user.email,
+      photoLink: this.props.user.user.photoLink,
       anotherPlayer: this.props.user.anotherPlayer,
       authorityLevel: "",
       showEdit: false,
@@ -57,12 +57,12 @@ class AdminProfile extends React.Component {
     this.cartographRequest = e;
     this.setState(this.state);
   };
-/*
-  showPromoteWindow = (e) => {
-    this.promoteWindow = e;
+
+  showPaymentWindow = (e) => {
+    this.paymentWindow = e;
     this.setState(this.state);
   };
-*/
+
   showAllUsersWindow = (e) => {
     this.allUsersWindow = e;
     this.setState(this.state);
@@ -103,7 +103,7 @@ class AdminProfile extends React.Component {
   render() {
     if (
       this.showCartographRequest === 0 &&
-     // this.promoteWindow === 0 &&
+      this.paymentWindow === 0 &&
       this.allUsersWindow === 0 && 
       this.locationRequestsWindow === 0
     )
@@ -148,13 +148,22 @@ class AdminProfile extends React.Component {
                     />
 
                   {(this.state.anotherPlayer === true && this.state.authorityLevel === 'admin')&&
-                  <button 
-                    className="btnLogout btnEdit"
-                    onClick={(e) => {
-                      this.showChangeRoleWindow();
-                  }}>
-                    Change role
-                  </button>}
+                    <>
+                      <button 
+                        className="btnLogout btnEdit"
+                        onClick={(e) => {
+                          this.showChangeRoleWindow();
+                      }}>
+                        Change role
+                      </button>
+                      
+                      <SubmitButton
+                        className="adminBtn"
+                        text="Payment data"
+                        onClick={() => this.showPaymentWindow(1)}
+                      />
+                    </>
+                  }
                   <ChangeRole
                     show={this.state.showChangeRole}
                     onClose={() => this.onClose()}
@@ -170,11 +179,11 @@ class AdminProfile extends React.Component {
                       text="Show all users"
                       onClick={() => this.showAllUsersWindow(1)}
                     />
-                    {/*<SubmitButton
+                    <SubmitButton
                       className="adminBtn"
-                      text="Change role"
-                      onClick={() => this.showPromoteWindow(1)}
-                    />*/}
+                      text="Payment data"
+                      onClick={() => this.showPaymentWindow(1)}
+                    />
                     <SubmitButton
                       className="adminBtn"
                       text="Location requests"
@@ -257,7 +266,7 @@ class AdminProfile extends React.Component {
 
     if (
       this.showCartographRequest !== 0 ||
-      //this.promoteWindow === 1 ||
+      this.paymentWindow === 1 ||
       this.allUsersWindow === 1 ||
       this.locationRequestsWindow === 1
     )
@@ -302,13 +311,22 @@ class AdminProfile extends React.Component {
                   />
   
                   {(this.state.anotherPlayer === true && this.state.authorityLevel === 'admin')&&
-                  <button 
-                    className="btnLogout btnEdit"
-                    onClick={(e) => {
-                      this.showChangeRoleWindow();
-                  }}>
-                    Change role
-                  </button>}
+                    <>
+                      <button 
+                        className="btnLogout btnEdit"
+                        onClick={(e) => {
+                          this.showChangeRoleWindow();
+                      }}>
+                        Change role
+                      </button>
+                      
+                      <SubmitButton
+                        className="adminBtn"
+                        text="Payment data"
+                        onClick={() => this.showPaymentWindow(1)}
+                      />
+                    </>
+                  }
                   <ChangeRole
                     show={this.state.showChangeRole}
                     onClose={() => this.onClose()}
@@ -324,11 +342,11 @@ class AdminProfile extends React.Component {
                       text="Show all users"
                       onClick={() => this.showAllUsersWindow(1)}
                     />
-                    {/*<SubmitButton
+                    <SubmitButton
                       className="adminBtn"
-                      text="Promote someone to admin"
-                      onClick={() => this.showPromoteWindow(1)}
-                    />*/}
+                      text="Payment data"
+                      onClick={() => this.showPaymentWindow(1)}
+                    />
                     <SubmitButton
                       className="adminBtn"
                       text="Location requests"
@@ -408,9 +426,10 @@ class AdminProfile extends React.Component {
             {this.allUsersWindow === 1 && (
               <AllUsersWindow setShow={this.showAllUsersWindow} />
             )}
-            {/*{this.promoteWindow === 1 && (
-              <PromoteAdmin setShow={this.showPromoteWindow} />
-            )}*/}
+            {this.paymentWindow === 1 && (
+              <PaymentData setShow={this.showPaymentWindow}
+                              user={this.props.user.user} />
+            )}
             {this.locationRequestsWindow === 1 && (
               <LocationRequestsAdmin setShow={this.showLocationRequestsWindow} />
             )}
