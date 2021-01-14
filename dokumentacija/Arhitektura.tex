@@ -311,11 +311,19 @@
 		
 		\section{Dijagram aktivnosti}
 			
-			\textbf{\textit{dio 2. revizije}}\\
+			%\textbf{\textit{dio 2. revizije}}\\
 			
-			 \textit{Potrebno je priložiti dijagram aktivnosti s pripadajućim opisom. Dijagram aktivnosti treba prikazivati značajan dio sustava.}
+			% \textit{Potrebno je priložiti dijagram aktivnosti s pripadajućim opisom. Dijagram aktivnosti treba prikazivati značajan dio sustava.}
+		{UML dijagram aktivnosti je dijagram koji prikazuje neku aktivnost kao jednu cjelinu koja se sastoji od niza akcija. Dijagram aktivnosti može se primjenjivati za modeliranje nečega na visokoj razini apstrakcije kao što su poslovni procesi, ili za modeliranje na niskoj razini apstrakcije kao što je oblikovanje detalja nekog algoritma. Dijagrami aktivnosti ne primjenjuju se za modeliranje događajima poticajnog ponašanja, jer se kod dijagrama aktivnosti (za razliku od dijagrama stanja) podrazumijeva da jedna akcija slijedi drugu. Slika 4.7 prikazuje dijagram aktivnosti kojim se modelira tijek akcija kod promjene osobnih podataka korisnika. Korisnik se prvo prijavljuje u aplikaciju korisničkim imenom i lozinkom, zatim s početne stranice odabire pregled vlastitog profila. Na profilu postoji gumb koji otvara uređivač osobnih podataka. Korisnik u uređivaču može promijeniti svoje osobne podatke i spremiti izmjene ili odustati od izmjena pritiskom na jedan od dva gumba. Ako korisnik unese podatak kao što je e-mail koji neki drugi korisnik već koristi i pokuša pohraniti promjenu, aplikacija će izbaciti poruku da se unesena e-mail adresa već koristi. Nakon zatvaranja uređivača korisnik ponovno vidi svoju stranicu profila s ažuriranim podatcima (ili starim podatcima ukoliko je korisnik odustao od izmjena).}
 			
+			\begin{figure}[H]
+				\includegraphics[width=\linewidth, height=18cm]{dijagrami/DijagramAktivnosti-v1}				
+				\centering
+				\caption{Dijagram aktivnosti}
+				\label{}
+			\end{figure}
 			\eject
+			
 		\section{Dijagram komponenti}
 		
 		{Dijagram komponenti opisuje arhitekturu programske potpore tako da vizualizira organizaciju i međuovisnost između implementacijskih komponenti te odnos programske potpore prema okolini. Unutar naše osnovne komponente Geofighter koja opisuje samu aplikaciju stvorili smo dvije glavne podkomponente - Backend i Frontend. Geofighter komunicira s komponentom Baza podataka koja nudi mogućnost spremanja i dohvata podataka preko vanjskog sučelja POSTGRES\_API. Ono unutar Geofighter-a delegira istoimeno unutarnje sučelje koje zahtijeva komponenta Backend. Backend, osim s Bazom podatka, zahtijeva i sučelja Cloudinary\_API i Gmail\_API koja delegiraju također istoimena vanjska sučelja. Vanjsko sučelje Cloudinary\_API pruža funkcionalnost pohrane slika te njega nudi komponenta Cloudinary. Komponenta Gmail nudi sučelje Gmail\_API pomoću kojega Geofighter šalje e-mail potvrde prilikom registracije igrača. S druge strane, Geofighter mora komunicirati i s komponentom Web preglednik, a to ostvaruje preko Frontenda i vanjskog i unutarnjeg sučelja VIEW\_API kojega nudi Frontend i pomoću kojega se korisniku prikazuje aplikacija.}
