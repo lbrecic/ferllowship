@@ -40,12 +40,12 @@ class ResultModal extends React.Component {
           body: formData
         });
         if (res.ok) {
-          toast("Results saved.")
+          // toast("Results saved.")
         } else {
-          toast("Error occured.");
+          // toast("Error occured.");
         }
       } catch (e) {
-          toast("Error occured.");
+          // toast("Error occured.");
       }
     }
   }

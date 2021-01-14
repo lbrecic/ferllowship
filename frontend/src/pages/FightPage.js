@@ -470,6 +470,7 @@ class FightPage extends React.Component {
             waiting={this.state.waiting}
             show={this.state.show}
             onClose={() => this.onClose()}
+            goHome={() => this.goHome()}
             winnerCard={this.state.winnerCard}
             loserCard={this.state.loserCard}
             opponentCard={this.state.opponentCard}
