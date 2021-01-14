@@ -3,6 +3,7 @@ import Header from "../components/Header";
 import CartographForm from "../components/CartographForm";
 import EditProfile from "../components/EditProfile";
 import Ban from "../components/Ban";
+import ChangeRole from '../components/ChangeRole';
 import "../styles/App.css";
 import cards from "../utils/cards.png";
 import stats from "../utils/statistics.png";
@@ -20,7 +21,8 @@ class PlayerProfile extends React.Component {
       anotherPlayer: this.props.user.anotherPlayer,
       authorityLevel: "",
       showEdit: false,
-      showBan: false
+      showBan: false,
+      showChangeRole: false
     }
   }
 
@@ -47,6 +49,12 @@ class PlayerProfile extends React.Component {
     });
   };
 
+  showChangeRoleWindow = (e) => {
+    this.setState({
+      showChangeRole: !this.state.showChangeRole
+    });
+  };
+
   showBanWindow = (e) => {
     this.setState({
       showBan: !this.state.showBan
@@ -56,7 +64,8 @@ class PlayerProfile extends React.Component {
   onCloseEdit = (e) => {
     this.setState({
       showEdit: false,
-      showBan: false
+      showBan: false,
+      showChangeRole: false
     });
   };
 
@@ -110,6 +119,20 @@ class PlayerProfile extends React.Component {
                   </button>}
                   <Ban
                     show={this.state.showBan}
+                    onClose={() => this.onCloseEdit()}
+                    user={this.state}
+                  />
+
+                {this.state.authorityLevel === 'admin' &&
+                  <button 
+                    className="btnLogout btnEdit"
+                    onClick={(e) => {
+                      this.showChangeRoleWindow();
+                  }}>
+                    Change role
+                  </button>}
+                  <ChangeRole
+                    show={this.state.showChangeRole}
                     onClose={() => this.onCloseEdit()}
                     user={this.state}
                   />
