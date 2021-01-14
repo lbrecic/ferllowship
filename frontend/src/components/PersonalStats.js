@@ -66,7 +66,7 @@ class PersonalStats extends React.Component {
 
           <br />
           <span>
-            Total expirience:
+            Total experience:
             {this.state.stats.experience}
           </span>
           <hr />
@@ -74,7 +74,7 @@ class PersonalStats extends React.Component {
           <br />
           <span>
             Rank:
-            {this.state.stats.rank}
+            {this.state.stats.rank + 1}
           </span>
           <hr />
         </div>
@@ -90,16 +90,16 @@ class PersonalStats extends React.Component {
               <tr className="tableStats">
                 <th>{new Date(fight.start * 1000).toLocaleDateString()}</th>
                 <th>{new Date(fight.duration * 1000).toISOString().substr(11, 8)}</th>
-                {fight.winner.username === localStorage.username && 
+                {fight.winner === localStorage.username && 
                 <th className="winner">You won</th>
                 }
-                {fight.loser.username === localStorage.username && 
+                {fight.loser === localStorage.username && 
                 <th className="loser">You lost</th>}
-                {fight.winner.username !== localStorage.username && 
-                <th>{fight.winner.username}</th>
+                {fight.winner !== localStorage.username && 
+                <th>{fight.winner}</th>
                 }
-                {fight.loser.username !== localStorage.username && 
-                <th>{fight.loser.username}</th>
+                {fight.loser !== localStorage.username && 
+                <th>{fight.loser}</th>
                 }
                 <th ></th>
               </tr>

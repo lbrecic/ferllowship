@@ -95,6 +95,7 @@ class RoundModal extends React.Component {
               ></DeckCard>
             </div>
             <div className="registerClose registerButton">
+            {this.props.opponentCard.location.locationName !== this.props.winnerCard.location.locationName ? <p>You won this round!</p> : <p>You lost this round.</p>}
               <button className="btn" onClick={(e) => this.onClose(e)}>
                 Close
               </button>

@@ -1,0 +1,51 @@
+.resultModal {
+    position: fixed; /* Stay in place */
+    z-index: 2; /* Sit on top */
+    width: 530px; /* Full width */
+    left: 50%;
+    top: 20%;
+    overflow: auto;
+    overflow-x: hidden;
+    transform: translate(-50%, 0);
+    box-shadow: 0 0 3px #FF0000, 0 0 5px #0000FF;
+  }
+
+   /* Modal Content */
+.modal-content {
+    overflow: auto;
+    overflow-x: hidden;
+    position: relative;
+    top: 50%;
+    transform: translate(0, -50%);
+    background-color: #2E3F30;
+    margin: auto;
+    padding: 0;
+    border: 3px solid #1F251F;
+    width: 95%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.5s;
+    box-shadow: 0 0 3px #FF0000, 0 0 5px #0000FF;
+}
+
+.lostMessage, .wonMessage{
+    background-color: #2E3F30;
+    height: 250px;
+    color: white;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 20px;
+    text-align: center;
+    letter-spacing: 2px;
+    text-shadow: 0 0 5px #FF0000, 0 0 7px #0000FF;
+    padding-top: 25px;
+}
+
+.lostMessage button, .wonMessage button{
+    margin-top: 20px;
+    width: 40%;
+}
+
+
+
