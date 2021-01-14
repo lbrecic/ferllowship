@@ -199,6 +199,7 @@ class AdminProfile extends React.Component {
                   </Link>
                 </div>
 
+                {(this.state.anotherPlayer === false || this.state.authorityLevel === 'admin')&&
                 <p className=" white">
                   <button
                     className="btnLogout btnEdit"
@@ -213,7 +214,7 @@ class AdminProfile extends React.Component {
                     onClose={() => this.onClose()}
                     user={this.state}
                   />
-                </p>
+                </p>}
               </div>
             </div>
 
@@ -262,7 +263,7 @@ class AdminProfile extends React.Component {
                     Administrator
                   </span>
 
-                  {(this.state.anotherPlayer === true || this.state.authorityLevel === 'admin')&&
+                  {(this.state.anotherPlayer === true && this.state.authorityLevel === 'admin')&&
                   <button 
                     className="btnLogout btnEdit"
                     onClick={(e) => {
@@ -339,6 +340,7 @@ class AdminProfile extends React.Component {
                   </Link>
                 </div>
 
+                {(this.state.anotherPlayer === false || this.state.authorityLevel === 'admin')&&
                 <p className=" white">
                   <button
                     className="btnLogout btnEdit"
@@ -353,7 +355,7 @@ class AdminProfile extends React.Component {
                     onClose={() => this.onClose()}
                     user={this.state}
                   />
-                </p>
+                </p>}
               </div>
             </div>
 
