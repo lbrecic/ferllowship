@@ -44,8 +44,8 @@ public class StatsController {
 				new FightDTO(
 					fight.getStart().atZone(ZoneId.systemDefault()).toEpochSecond(),
 					fight.getDuration().getSeconds(),
-					playerService.playerToPlayerDTO(fight.getWinner()),
-					playerService.playerToPlayerDTO(fight.getLoser())
+					fight.getWinner().getUsername(),
+					fight.getLoser().getUsername()
 				)
 			)
 			.sorted(Comparator.comparing(FightDTO::getStart).reversed())

@@ -9,7 +9,11 @@ import "../styles/AddLocationButton.css";
 
 class MapPage extends Component {
   state = {
+    authorityLevel: 'player',
+    options: false,
     distant: false,
+    newRequests: false,
+    inPersonRequests: false,
     show: false,
   };
 
@@ -48,6 +52,21 @@ class MapPage extends Component {
   }
 
   async componentDidMount() {
+    try {
+      let res = await fetch(`/api/player`);
+      let result = await res.json();
+
+      if (result && !result.error) {
+        this.setState({
+          authorityLevel: result.authorityLevel
+        });
+      }
+    } catch (e) {}
+    
+    this.coordinates();
+  }
+
+  async coordinates() {
     if (navigator.geolocation) {
       navigator.permissions
         .query({ name: "geolocation" })
@@ -64,6 +83,7 @@ class MapPage extends Component {
     } else {
       alert("Location not available!");
     }
+
   }
 
   async checkIn() {
@@ -94,33 +114,45 @@ class MapPage extends Component {
         <div className="body">
           <div className="map">
             <MapComponent currentPosition={this.state.currentPosition}
-                          distant={this.state.distant} />
+                          distant={this.state.distant}
+                          newRequests={this.state.newRequests}
+                          inPersonRequests={this.state.inPersonRequests} />
           </div>
-          <div className="addBtn">
-            <button
-              className="btnLogout btnEdit btnAdd"
-              onClick={(e) => {
-                  this.showWindow();
-              }}
-            >
-              Make a location request
-            </button>
-            <button
-              className="btnLogout btnEdit btnAdd"
-              onClick={(e) => {
-                  this.setState({currentPosition: null}); 
-                  this.componentDidMount();
-                  this.checkIn();
-              }}
-            >
-              Update location
-            </button>
-            {this.state.distant === false &&
+          <div className="addBtn mapButtons">
+            {this.state.options === true &&
               <button
                 className="btnLogout btnEdit btnAdd"
                 onClick={(e) => {
-                    this.setState({distant: true, currentPosition: null});
-                    this.componentDidMount();
+                    this.showWindow();
+                }}
+              >
+                Make a location request
+              </button>
+            }
+            {this.state.options === true &&
+              <button
+                className="btnLogout btnEdit btnAdd"
+                onClick={(e) => {
+                    this.setState({distant: false, currentPosition: null}); 
+                    this.coordinates();
+                    this.checkIn();
+                }}
+              >
+                Update location
+              </button>
+            }
+            {this.state.distant === false &&
+            this.state.options === true &&
+              <button
+                className="btnLogout btnEdit btnAdd"
+                onClick={(e) => {
+                    this.setState({
+                      distant: true, 
+                      newRequests: false,
+                      inPersonRequests: false,
+                      currentPosition: null
+                    });
+                    this.coordinates();
                     this.checkIn();
                 }}
               >
@@ -128,15 +160,102 @@ class MapPage extends Component {
               </button>
             }
             {this.state.distant === true &&
+            this.state.options === true &&
               <button
                 className="btnLogout btnEdit btnAdd"
                 onClick={(e) => {
                     this.setState({distant: false, currentPosition: null});
-                    this.componentDidMount();
+                    this.coordinates();
                     this.checkIn();
                 }}
               >
                 Hide uncollected cards
+              </button>
+            }
+            {this.state.authorityLevel !== 'player' &&
+              this.state.newRequests === false &&
+              this.state.options === true &&
+              <button
+                className="btnLogout btnEdit btnAdd"
+                onClick={(e) => {
+                    this.setState({
+                      distant: false, 
+                      newRequests: true,
+                      inPersonRequests: false,
+                      currentPosition: null
+                    });
+                    this.coordinates();
+                    this.checkIn();
+                }}
+              >
+                Show new requests
+              </button>
+            }
+            {this.state.authorityLevel !== 'player' &&
+              this.state.newRequests === true &&
+              this.state.options === true &&
+              <button
+                className="btnLogout btnEdit btnAdd"
+                onClick={(e) => {
+                    this.setState({newRequests: false, currentPosition: null});
+                    this.coordinates();
+                    this.checkIn();
+                }}
+              >
+                Hide new requests
+              </button>
+            }
+            {this.state.authorityLevel !== 'player' &&
+              this.state.inPersonRequests === false &&
+              this.state.options === true &&
+              <button
+                className="btnLogout btnEdit btnAdd"
+                onClick={(e) => {
+                    this.setState({
+                      distant: false, 
+                      newRequests: false,
+                      inPersonRequests: true,
+                      currentPosition: null
+                    });
+                    this.coordinates();
+                    this.checkIn();
+                }}
+              >
+                Show requests waiting validation in person
+              </button>
+            }
+            {this.state.authorityLevel !== 'player' &&
+              this.state.inPersonRequests === true &&
+              this.state.options === true &&
+              <button
+                className="btnLogout btnEdit btnAdd"
+                onClick={(e) => {
+                    this.setState({inPersonRequests: false, currentPosition: null});
+                    this.coordinates();
+                    this.checkIn();
+                }}
+              >
+                Hide requests waiting validation in person
+              </button>
+            }
+            {this.state.options === false &&
+              <button
+                className="btnLogout btnEdit btnAdd"
+                onClick={(e) => {
+                    this.setState({options: true});
+                }}
+              >
+                Options
+              </button>
+            }
+            {this.state.options === true &&
+              <button
+                className="btnLogout btnEdit btnAdd"
+                onClick={(e) => {
+                    this.setState({options: false});
+                }}
+              >
+                Hide options
               </button>
             }
             <AddLocation

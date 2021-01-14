@@ -7,7 +7,10 @@ import OpponentCard from "../components/OpponentCard";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import RoundModal from "../components/RoundModal";
+import ResultModal from "../components/ResultModal";
 import ClipLoader from "react-spinners/ClipLoader";
+import { Link } from "react-router-dom";
+const queryString = require('query-string');
 
 let cards = [];
 let allCards = [];
@@ -21,6 +24,11 @@ let winnerCard = [];
 let loserCard = [];
 let currentRound = 1;
 let usedCards = [];
+let numOfCardsReceived = 0;
+let savedFightMessagesLength = 0;
+let showResult = false;
+let cardNames = "";
+let start = 0;
 
 class FightPage extends React.Component {
   constructor(props) {
@@ -29,8 +37,9 @@ class FightPage extends React.Component {
       cards: cards,
       allCards: allCards,
       show: show,
+      showResult: showResult,
       chosen: chosen,
-      cardNames: "",
+      cardNames: cardNames,
       userPoints: userPoints,
       opponentPoints: opponentPoints,
       userCard: userCard,
@@ -39,12 +48,31 @@ class FightPage extends React.Component {
       loserCard: loserCard,
       currentRound: currentRound,
       usedCards: usedCards,
-      waiting: props.fightMessages.length == 2 && currentRound == 1 ||
-        props.fightMessages.length == 3 && currentRound == 2 ||
-        props.fightMessages.length == 4 && currentRound == 3
+      numOfCardsReceived: numOfCardsReceived,
+      savedFightMessagesLength: savedFightMessagesLength,
+      waiting: numOfCardsReceived == 2 && currentRound == 1 ||
+        numOfCardsReceived == 3 && currentRound == 2 ||
+        numOfCardsReceived == 4 && currentRound == 3
     };
 
     if (this.props.fightMessages.length > 0 &&
+        this.props.fightMessages[this.props.fightMessages.length - 1].player !== this.props.match.params.handle) {
+      return;
+    }
+
+    if (this.props.fightMessages.length > savedFightMessagesLength) {
+      savedFightMessagesLength = this.props.fightMessages.length;
+      this.state.savedFightMessagesLength = this.props.fightMessages.length;
+
+      ++numOfCardsReceived;
+      this.state.numOfCardsReceived = this.state.numOfCardsReceived + 1;
+
+      this.state.waiting = numOfCardsReceived == 2 && currentRound == 1 ||
+        numOfCardsReceived == 3 && currentRound == 2 ||
+        numOfCardsReceived == 4 && currentRound == 3;
+    }
+
+    if (numOfCardsReceived >= 2 && this.props.fightMessages.length > 0 &&
         this.props.fightMessages[this.props.fightMessages.length - 1].card) {
 
       opponentCard = this.props.fightMessages[this.props.fightMessages.length - 1].card;
@@ -80,6 +108,19 @@ class FightPage extends React.Component {
   }
 
   async componentDidMount() {
+    const initiated = queryString.parse(window.location.search).initiated;
+
+    if (!initiated && start == 0) {
+      start = Date.now();
+    }
+
+    if (!initiated && this.state.numOfCardsReceived == 0) {
+      ++numOfCardsReceived;
+      this.setState({
+        numOfCardsReceived: this.state.numOfCardsReceived + 1
+      });
+    }
+
     try {
       let res = await fetch("/api/player/deck?username=" + localStorage.username);
       let result = await res.json();
@@ -91,6 +132,12 @@ class FightPage extends React.Component {
         });
       }
     } catch (e) {}
+
+    window.onbeforeunload = () => true;
+    window.history.pushState(null, document.title, window.location.href);
+    window.addEventListener('popstate', function(event) {
+      window.history.pushState(null, document.title, window.location.href);
+    });
   }
 
   onClose = (e) => {
@@ -100,6 +147,47 @@ class FightPage extends React.Component {
       show: false,
       currentRound: this.state.currentRound + 1
     });
+
+    if (currentRound == 4) {
+      this.setState({
+        showResult: true
+      });
+      cards = [];
+      allCards = [];
+      show = false;
+      chosen = 0;
+      userPoints = 0
+      opponentPoints = 0;
+      userCard = [];
+      opponentCard = [];
+      winnerCard = [];
+      loserCard = [];
+      currentRound = 0;
+      usedCards = [];
+      numOfCardsReceived = 0;
+      showResult = false;
+      cardNames = "";
+    }
+  };
+
+  goHome = (e) => {
+    window.onbeforeunload = () => {};
+    cards = [];
+    allCards = [];
+    show = false;
+    chosen = 0;
+    userPoints = 0
+    opponentPoints = 0;
+    userCard = [];
+    opponentCard = [];
+    winnerCard = [];
+    loserCard = [];
+    currentRound = 0;
+    usedCards = [];
+    numOfCardsReceived = 0;
+    showResult = false;
+    cardNames = "";
+    start = 0;
   };
 
   showRound = (e) => {
@@ -117,6 +205,7 @@ class FightPage extends React.Component {
       chosen: this.state.chosen - 1,
     });
     if (this.state.cards.length === 0) {
+      cardNames = "";
       this.setState({
         cardNames: "",
       });
@@ -140,10 +229,12 @@ class FightPage extends React.Component {
       });
 
       if (this.state.chosen === 2) {
+        cardNames = this.state.cardNames.concat(card.location.locationName);
         this.setState({
           cardNames: this.state.cardNames.concat(card.location.locationName),
         });
       } else {
+        cardNames = this.state.cardNames.concat(card.location.locationName) + ", ";
         this.setState({
           cardNames: this.state.cardNames.concat(card.location.locationName) + ", ",
         });
@@ -153,9 +244,9 @@ class FightPage extends React.Component {
 
   chooseInFight(card) {
     if (this.state.usedCards.indexOf(card) === -1) {
-      let waiting = this.props.fightMessages.length == 2 && this.state.currentRound == 1 ||
-        this.props.fightMessages.length == 3 && this.state.currentRound == 2 ||
-        this.props.fightMessages.length == 4 && this.state.currentRound == 3;
+      let waiting = numOfCardsReceived == 2 && this.state.currentRound == 1 ||
+        numOfCardsReceived == 3 && this.state.currentRound == 2 ||
+        numOfCardsReceived == 4 && this.state.currentRound == 3;
 
       userCard = card;
       usedCards = this.state.usedCards.concat(card);
@@ -179,7 +270,7 @@ class FightPage extends React.Component {
 
       let fightMessage = {
         player: localStorage.username,
-        opponent: this.props.fightMessages[0].player,
+        opponent: this.props.match.params.handle,
         card: card
       };
       
@@ -227,11 +318,20 @@ class FightPage extends React.Component {
 
   render() {
     if (this.state.chosen < 4) {
-      if (this.props.fightMessages.length === 0) {
+      if (this.state.numOfCardsReceived === 0) {
         return (
           <div className="App background-color">
               <div className="App-header background-color">
+                  <p>Waiting for your opponent for too long?</p>
+                  <p>Click on Home button.</p>
+                  <br />
                   <ClipLoader color={"white"} size={50}/>
+                  <br />
+                  <Link to="/home" onClick={() => this.goHome()}>
+                    <button className="btn">
+                      Home
+                    </button>
+                  </Link>
               </div>
           </div>
         );
@@ -242,6 +342,16 @@ class FightPage extends React.Component {
             <div className="fightTitle">
               <span>Fight</span>
             </div>
+            <br />
+            <p>Waiting for your opponent for too long? </p>
+            <p>Click on Home button.</p>
+            <Link to="/home" onClick={() => this.goHome()}>
+              <div style={{textAlign: "center"}}>
+                <button className="btn" style={{width: "70px"}}>
+                  Home
+                </button>
+              </div>
+            </Link>
             <div className="chosenCards">
               <div>
                 Chosen:{" "}
@@ -257,7 +367,7 @@ class FightPage extends React.Component {
 
                     let fightMessage = {
                       player: localStorage.username,
-                      opponent: this.props.fightMessages[0].player
+                      opponent: this.props.match.params.handle
                     };
 
                     this.props.stompClient.send('/app/play', {}, JSON.stringify(fightMessage));
@@ -293,11 +403,20 @@ class FightPage extends React.Component {
       );
     }
 
-    if (this.props.fightMessages.length === 1) {
+    if (this.state.numOfCardsReceived === 1) {
       return (
         <div className="App background-color">
           <div className="App-header background-color">
-            <ClipLoader color={"white"} size={50} />
+            <p>Waiting for your opponent for too long?</p>
+            <p>Click on Home button.</p>
+            <br />
+            <ClipLoader color={"white"} size={50}/>
+            <br />
+            <Link to="/home" onClick={() => this.goHome()}>
+              <button className="btn">
+                Home
+              </button>
+            </Link>
           </div>
         </div>
       );
@@ -308,6 +427,16 @@ class FightPage extends React.Component {
         <div className="fightBody geo-color">
           <div className="fightTitle">
             <span>Fight</span>
+            <br />
+            <p>Waiting for your opponent for too long? </p>
+            <p>Click on Home button.</p>
+            <Link to="/home" onClick={() => this.goHome()}>
+              <div style={{textAlign: "center"}}>
+                <button className="btn" style={{width: "70px"}}>
+                  Home
+                </button>
+              </div>
+            </Link>
           </div>
           <div className="fightCards geo-color">
             <div className="opponentCardsWrapper">
@@ -343,6 +472,16 @@ class FightPage extends React.Component {
             onClose={() => this.onClose()}
             winnerCard={this.state.winnerCard}
             loserCard={this.state.loserCard}
+            opponentCard={this.state.opponentCard}
+          />
+          <ResultModal
+            showResult={this.state.showResult}
+            onClose={() => {this.onClose(); start = 0; window.onbeforeunload = () => {}; }}
+            userPoints={this.state.userPoints}
+            opponentPoints={this.state.opponentPoints}
+            initiated={queryString.parse(window.location.search).initiated}
+            opponentUsername={this.props.match.params.handle}
+            start={start}
           />
         </div>
       </>

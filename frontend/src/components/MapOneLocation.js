@@ -49,8 +49,8 @@ class MapOneLocation extends React.Component {
   osrm = () => {
       L.Routing.control({
         waypoints: [
-            L.latLng(this.location.coordinates.lat, this.location.coordinates.lng),
-            L.latLng(this.state.currentPosition.lat, this.state.currentPosition.lon)
+            L.latLng(this.state.currentPosition.lat, this.state.currentPosition.lon),
+            L.latLng(this.location.coordinates.lat, this.location.coordinates.lng)
         ]
       }).addTo(map);
     this.setState(this.state);
