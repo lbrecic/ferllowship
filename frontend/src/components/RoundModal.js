@@ -2,6 +2,7 @@ import React from "react";
 import "../styles/RoundModal.css";
 import DeckCard from "./Card";
 import ClipLoader from "react-spinners/ClipLoader";
+import { Link } from "react-router-dom";
 
 class RoundModal extends React.Component {
   constructor(props) {
@@ -28,7 +29,16 @@ class RoundModal extends React.Component {
           <div className="roundModal">
             <div className="roundResults">
               <div className="spinner">
+                <p>Waiting for your opponent for too long?</p>
+                <p>Click on Home button.</p>
+                <br />
                 <ClipLoader color={"white"} size={50}/>
+                <br />
+                <Link to="/home" onClick={() => this.props.goHome()}>
+                  <button className="btn">
+                    Home
+                  </button>
+                </Link>
               </div>
             </div>
           </div>
