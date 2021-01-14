@@ -153,8 +153,10 @@ public class AdminController {
 	
 	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping(path = "/player/changeRole")
-	public MessageDTO changeRoleOfPlayer(@RequestPart String username,
-										@RequestPart String newRole) throws IOException {
+	public MessageDTO changeRoleOfPlayer(/*@RequestPart String username,
+										@RequestPart String newRole*/
+			@RequestParam("username") String username,
+			@RequestParam("newRole") String newRole) throws IOException {
 		Player player = playerRepository.findByUsername(username);
 		
 		switch(newRole) {
@@ -170,13 +172,13 @@ public class AdminController {
 			if (player instanceof Cartograph) {
 				return new MessageDTO("Player is already a cartographer!");
 			} 
-			playerService.changeRoleToCartograph(player, "blank_iban", "blank_photo", true);
+			playerService.changeRoleToCartograph(player, "", "", true);
 			break;
 		case "admin":
 			if (player instanceof Admin) {
 				return new MessageDTO("Player is already an admin!");
 			} 
-			playerService.changeRoleToAdmin(player, "blank_iban", "blank_photo");
+			playerService.changeRoleToAdmin(player, "", "");
 			break;
 		default:
 			return new MessageDTO("Role was incorrectly entered!");
