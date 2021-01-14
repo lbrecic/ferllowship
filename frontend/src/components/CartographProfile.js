@@ -6,6 +6,7 @@ import SubmitButton from "./SubmitButton";
 import EditProfile from "./EditProfile";
 import LocationsInPerson from './LocationsInPerson';
 import Ban from "../components/Ban";
+import ChangeRole from '../components/ChangeRole';
 import "../styles/App.css";
 import cards from "../utils/cards.png";
 import stats from "../utils/statistics.png";
@@ -27,7 +28,8 @@ class CartographProfile extends React.Component {
       anotherPlayer: this.props.user.anotherPlayer,
       authorityLevel: "",
       showEdit: false,
-      showBan: false
+      showBan: false,
+      showChangeRole: false
     }
   }
 
@@ -47,12 +49,6 @@ class CartographProfile extends React.Component {
   showEditWindow = (e) => {
     this.setState({
       showEdit: !this.state.showEdit,
-    });
-  };
-
-  onCloseEdit = (e) => {
-    this.setState({
-      showEdit: false,
     });
   };
 
@@ -85,6 +81,9 @@ class CartographProfile extends React.Component {
   onClose = (e) => {
     this.setState({
       show: false,
+      showEdit: false,
+      showBan: false,
+      showChangeRole: false
     });
   };
 
@@ -94,10 +93,9 @@ class CartographProfile extends React.Component {
     });
   };
 
-  onCloseEdit = (e) => {
+  showChangeRoleWindow = (e) => {
     this.setState({
-      showEdit: false,
-      showBan: false
+      showChangeRole: !this.state.showChangeRole
     });
   };
 
@@ -141,7 +139,7 @@ class CartographProfile extends React.Component {
                       />
                   </div>
                 }
-                {this.state.authorityLevel === 'admin' &&
+                  {this.state.authorityLevel === 'admin' &&
                   <button 
                     className="btnLogout btnEdit"
                     onClick={(e) => {
@@ -151,7 +149,21 @@ class CartographProfile extends React.Component {
                   </button>}
                   <Ban
                     show={this.state.showBan}
-                    onClose={() => this.onCloseEdit()}
+                    onClose={() => this.onClose()}
+                    user={this.state}
+                  />
+
+                  {this.state.authorityLevel === 'admin' &&
+                  <button 
+                    className="btnLogout btnEdit"
+                    onClick={(e) => {
+                      this.showChangeRoleWindow();
+                  }}>
+                    Change role
+                  </button>}
+                  <ChangeRole
+                    show={this.state.showChangeRole}
+                    onClose={() => this.onClose()}
                     user={this.state}
                   />
               </div>
@@ -205,7 +217,7 @@ class CartographProfile extends React.Component {
                     </button>
                     <EditProfile
                       show={this.state.showEdit}
-                      onClose={() => this.onCloseEdit()}
+                      onClose={() => this.onClose()}
                       user={this.state}
                     />
                   </p>
@@ -314,7 +326,7 @@ class CartographProfile extends React.Component {
                   </button>
                   <EditProfile
                     show={this.state.showEdit}
-                    onClose={() => this.onCloseEdit()}
+                    onClose={() => this.onClose()}
                     user={this.state}
                   />
                 </p>}

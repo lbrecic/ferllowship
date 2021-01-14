@@ -181,8 +181,8 @@ class App extends React.Component {
           let stompFailureCallback = error => {
             if (localStorage.isLoggedIn) {
               toast.dismiss();
-              toast("Connection lost. Reconnecting in 15 seconds.");
-              reconnectInterval = setInterval(stompConnect, 15000);
+              toast("Connection lost. Reconnecting in 5 seconds.");
+              reconnectInterval = setInterval(stompConnect, 5000);
             }
           };
 
@@ -200,7 +200,7 @@ class App extends React.Component {
           <Switch>
             <LoggedInRoute exact path="/" component={withRouter(LoginPage)}/>
             <PrivateRoute path="/home" component={withRouter(HomePage)}/>
-            <PrivateRoute path="/fight" component={withRouter(FightPage)}
+            <PrivateRoute path="/fight/:handle" component={withRouter(FightPage)}
             stompClient={this.state.stompClient} fightMessages={this.state.fightMessages}/>
             <PrivateRoute exact path='/profile/:handle' component={withRouter(ProfilePage)}/>
             <PrivateRoute path="/deck" component={withRouter(DeckPage)}/>

@@ -193,7 +193,7 @@ class Chat extends React.Component {
                                                 <text> {player.username} </text>
                                                 <Link to={`/profile/${player.username}`} className="userBtn">Profile</Link>
                                                 {this.state.selectedPlayer.username === player.username &&
-                                                    <Link to="/fight" className="userBtn" onClick={(e) => {
+                                                    <Link to={`/fight/${player.username}?initiated=true`} className="userBtn" onClick={(e) => {
                                                         this.sendRequest();
                                                         e.stopPropagation();
                                                     }}>
@@ -220,14 +220,24 @@ class Chat extends React.Component {
                                                         </div>
                                                     );
                                                 } else {
-                                                    return (
-                                                        <div>
-                                                            <p style={{ color: color, textAlign: align }}>{msg.from}</p>
-                                                            <p style={{ whiteSpace: "pre-line", textAlign: align }}>New fight request.</p>
-                                                            <Link to="/fight" className="messageBtn" onClick={() => this.acceptRequest()} >Accept</Link>
-                                                            <p style={{ textAlign: align }}>{msg.time.substring(0, 5)}</p>
-                                                        </div>
-                                                    );
+                                                    if (msg.accepted) {
+                                                        return (
+                                                            <div>
+                                                                <p style={{ color: color, textAlign: align }}>{msg.from}</p>
+                                                                <p style={{ whiteSpace: "pre-line", textAlign: align }}>You have accepted this fight request.</p>
+                                                                <p style={{ textAlign: align }}>{msg.time.substring(0, 5)}</p>
+                                                            </div>
+                                                        );
+                                                    } else {
+                                                        return (
+                                                            <div>
+                                                                <p style={{ color: color, textAlign: align }}>{msg.from}</p>
+                                                                <p style={{ whiteSpace: "pre-line", textAlign: align }}>New fight request.</p>
+                                                                <Link to={`/fight/${msg.from}`} className="messageBtn" onClick={() => {this.acceptRequest(); msg.accepted = true; }} >Accept</Link>
+                                                                <p style={{ textAlign: align }}>{msg.time.substring(0, 5)}</p>
+                                                            </div>
+                                                        );
+                                                    }
                                                 }
                                             } else {
                                                 return (

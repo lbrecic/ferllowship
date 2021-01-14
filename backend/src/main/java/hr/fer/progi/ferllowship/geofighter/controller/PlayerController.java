@@ -23,6 +23,7 @@ import hr.fer.progi.ferllowship.geofighter.dao.LocationRepository;
 import hr.fer.progi.ferllowship.geofighter.dao.PlayerRepository;
 import hr.fer.progi.ferllowship.geofighter.dto.CardDTO;
 import hr.fer.progi.ferllowship.geofighter.dto.CategoryDTO;
+import hr.fer.progi.ferllowship.geofighter.dto.FightDTO;
 import hr.fer.progi.ferllowship.geofighter.dto.LocationDTO;
 import hr.fer.progi.ferllowship.geofighter.dto.MessageDTO;
 import hr.fer.progi.ferllowship.geofighter.dto.PlayerDTO;
@@ -32,6 +33,7 @@ import hr.fer.progi.ferllowship.geofighter.model.Player;
 import hr.fer.progi.ferllowship.geofighter.configuration.ActiveUserStore;
 import hr.fer.progi.ferllowship.geofighter.configuration.LoggedUser;
 import hr.fer.progi.ferllowship.geofighter.service.CloudinaryService;
+import hr.fer.progi.ferllowship.geofighter.service.FightService;
 import hr.fer.progi.ferllowship.geofighter.service.PlayerService;
 
 @RestController
@@ -57,6 +59,9 @@ public class PlayerController {
 
 	@Autowired
 	private ActiveUserStore activeUserStore;
+
+	@Autowired
+	private FightService fightService;
 	
 	@PreAuthorize("hasAnyRole('ADMIN','CARTOGRAPH','PLAYER')")
 	@GetMapping(path = "/player")
@@ -127,6 +132,10 @@ public class PlayerController {
 		}
 		
 		if (!email.isBlank()) {
+			Player player2 = playerRepository.findByEmail(email);
+			if (player2 != null) {
+				return new MessageDTO("Entered email address is already taken!");
+			}
 			player.setEmail(email);
 		}
 		
@@ -364,4 +373,11 @@ public class PlayerController {
 		
 		return response;
 	}
+
+	@PreAuthorize("hasAnyRole('ADMIN','CARTOGRAPH','PLAYER')")
+	@PostMapping(path = "/saveFight")
+	public void saveFight(FightDTO fightDTO) {
+		fightService.saveFight(fightDTO);
+	}
+
 }

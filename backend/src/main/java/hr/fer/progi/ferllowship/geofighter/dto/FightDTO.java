@@ -1,19 +1,17 @@
 package hr.fer.progi.ferllowship.geofighter.dto;
 
-import java.time.Duration;
-import java.time.LocalDateTime;
-
 public class FightDTO {
 
     private long start;
 
     private long duration;
 
-    private PlayerDTO winner;
+    private String winner;
 
-    private PlayerDTO loser;
+    private String loser;
 
-    public FightDTO(long start, long duration, PlayerDTO winner, PlayerDTO loser) {
+    public FightDTO() {}
+    public FightDTO(long start, long duration, String winner, String loser) {
         this.start = start;
         this.duration = duration;
         this.winner = winner;
@@ -36,19 +34,19 @@ public class FightDTO {
         this.duration = duration;
     }
 
-    public PlayerDTO getWinner() {
+    public String getWinner() {
         return winner;
     }
 
-    public void setWinner(PlayerDTO winner) {
+    public void setWinner(String winner) {
         this.winner = winner;
     }
 
-    public PlayerDTO getLoser() {
+    public String getLoser() {
         return loser;
     }
 
-    public void setLoser(PlayerDTO loser) {
+    public void setLoser(String loser) {
         this.loser = loser;
     }
 
