@@ -18,13 +18,96 @@
 	
 		\section{Ispitivanje programskog rješenja}
 			
-			\textbf{\textit{dio 2. revizije}}\\
-			
-			 \textit{U ovom poglavlju je potrebno opisati provedbu ispitivanja implementiranih funkcionalnosti na razini komponenti i na razini cijelog sustava s prikazom odabranih ispitnih slučajeva. Studenti trebaju ispitati temeljnu funkcionalnost i rubne uvjete.}
+%			\textbf{\textit{dio 2. revizije}}\\
+%			
+%			 \textit{U ovom poglavlju je potrebno opisati provedbu ispitivanja implementiranih funkcionalnosti na razini komponenti i na razini cijelog sustava s prikazom odabranih ispitnih slučajeva. Studenti trebaju ispitati temeljnu funkcionalnost i rubne uvjete.}
 	
 			
 			\subsection{Ispitivanje komponenti}
-			\textit{Potrebno je provesti ispitivanje jedinica (engl. unit testing) nad razredima koji implementiraju temeljne funkcionalnosti. Razraditi \textbf{minimalno 6 ispitnih slučajeva} u kojima će se ispitati redovni slučajevi, rubni uvjeti te izazivanje pogreške (engl. exception throwing). Poželjno je stvoriti i ispitni slučaj koji koristi funkcionalnosti koje nisu implementirane. Potrebno je priložiti izvorni kôd svih ispitnih slučajeva te prikaz rezultata izvođenja ispita u razvojnom okruženju (prolaz/pad ispita). }
+%			\textit{Potrebno je provesti ispitivanje jedinica (engl. unit testing) nad razredima koji implementiraju temeljne funkcionalnosti. Razraditi \textbf{minimalno 6 ispitnih slučajeva} u kojima će se ispitati redovni slučajevi, rubni uvjeti te izazivanje pogreške (engl. exception throwing). Poželjno je stvoriti i ispitni slučaj koji koristi funkcionalnosti koje nisu implementirane. Potrebno je priložiti izvorni kôd svih ispitnih slučajeva te prikaz rezultata izvođenja ispita u razvojnom okruženju (prolaz/pad ispita). }
+
+			{Ispitivanje komponenti provodimo pomoću JUnit javinog okvira za testiranje i pisanjem ispitnih slučajeva korištenjem jednog od javinih IDE, Eclipse ili IntelliJ.}
+			
+				\subsubsection {1. Ispitivanje traženja igrača korisničkim imenom}
+				
+					{Prilikom pisanja programskog koda za ovaj test koristi se anotacija \textit{@DataJpaTest} koji je specifičan za radni okvir \textit{spring} prilikom rada s \textit{Data Transfer Object} razredima. Očekivamo da će test biti uspješan i uspjeti pronaći igrača u bazi.}
+					
+						\begin{figure}[H]
+							\includegraphics[width=\textwidth]{slike/playerFindByUsernameTest} 
+							\centering
+							\caption{Player Repository - JUnit, test}
+							\label{}
+						\end{figure}
+					
+				\subsubsection{Rezultat}
+						
+						\begin{figure}[H]
+							\includegraphics[width=\textwidth]{slike/playerFindByUsernameTest_result} 
+							\centering
+							\caption{Player Repository - JUnit, rezultat}
+							\label{}
+						\end{figure}
+					
+				\subsubsection {2. Ispitivanje traženja lokacije imenom}
+				
+					{Očekivamo da će test biti uspješan i uspjeti pronaći lokaciju u bazi.}
+				
+						\begin{figure}[H]
+							\includegraphics[width=\textwidth]{slike/locationFindByNameTest} 
+							\centering
+							\caption{Location Repository - JUnit, test}
+							\label{}
+						\end{figure}
+					
+				\subsubsection{Rezultat}
+				
+						\begin{figure}[H]
+							\includegraphics[width=\textwidth]{slike/locationFindByNameTest_result} 
+							\centering
+							\caption{Location Repository - JUnit, rezultat}
+							\label{}
+						\end{figure}
+					
+				\subsubsection {3. Ispitivanje traženja bespravnog zahtjeva za popis svih igrača}
+					
+					{Prilikom pisanja ovih testova koristi se anotacija \textit{@SpringBootTest} i \textit{@AutoConfigureMockMvc}. Očekivamo da će test biti uspješan jer se tijekom pretrage ne može obaviti provjera nad prijavljenim korisnikom kako bi se ustvrdilo da ima razinu adminstratorovih ovlasti.}
+					
+						\begin{figure}[H]
+							\includegraphics[width=\textwidth]{slike/unauthorizedTest} 
+							\centering
+							\caption{Admin Controller - JUnit, test}
+							\label{}
+						\end{figure}
+					
+				\subsubsection{Rezultat}
+				
+						\begin{figure}[H]
+							\includegraphics[width=\textwidth]{slike/unauthorizedTest_result} 
+							\centering
+							\caption{Admin Controller - JUnit, rezultat}
+							\label{}
+						\end{figure}
+			
+			\subsubsection {4. Ispitivanje razina ovlasti igrača i računanja udaljenosti}
+			
+				{Prilikom pisanja ovih testova koristi se anotacija \textit{@Mock} specifična za rad sa Service razredima. U ovom primjeru testiramo više metoda u razredu Player Service. Ispitujemo razine ovlasti kod postojećih igrača te metodu za računanje udaljenosti. Očekujemo da će za dane ulaze testovi proći.}
+			
+					\begin{figure}[H]
+						\includegraphics[width=\textwidth]{slike/playerServiceTest} 
+						\centering
+						\caption{Player Service - JUnit, test}
+						\label{}
+					\end{figure}
+			
+			\subsubsection{Rezultat}
+			
+					\begin{figure}[H]
+						\includegraphics[width=\textwidth]{slike/playerServiceTest_result} 
+						\centering
+						\caption{Player Service - JUnit, rezultat}
+						\label{}
+					\end{figure}
+			
 			
 			\eject
 			
