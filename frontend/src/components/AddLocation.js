@@ -35,7 +35,6 @@ class AddLocation extends React.Component {
   }
 
   setInputValueName(property, val) {
-    val = val.trim();
     if (val.length > 128) {
       return;
     }
@@ -69,7 +68,16 @@ class AddLocation extends React.Component {
     formData.append("categoryName", this.state.category);
     formData.append("locationDesc", this.state.description);
     formData.append("locationPhoto", this.state.pictures[0]);
-    formData.append("coordinates", this.coordinates);
+
+    const json = JSON.stringify({
+      lat: this.props.location.lat,
+      lng: this.props.location.lon
+    });
+    const blob = new Blob([json], {
+      type: 'application/json'
+    });
+
+    formData.append("coordinates", blob);
     
     try {
         let res = await fetch('/api/location/requests', {

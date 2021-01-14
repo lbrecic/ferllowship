@@ -38,7 +38,7 @@ class EditLocation extends React.Component {
 
     setInputValueName(val) {
         this.setState({
-            newlocationName: val,
+            newLocationName: val,
         });
     }
 
@@ -62,11 +62,14 @@ class EditLocation extends React.Component {
         formData.append("newLocationName", this.state.newLocationName);
         formData.append("locationDesc", this.state.locationDesc);
         formData.append("categoryName", this.state.categoryName);
+
+        let oldPicture = await fetch(this.props.location.locationPhoto);
+        let blob = await oldPicture.blob();
         
-        // if (this.state.changedPicture !== false)
-        //     formData.append("locationPhoto", this.state.pictures[0]);
-        // else 
-            formData.append("locationPhoto", this.state.locationPhoto);
+        if (this.state.changedPicture !== false)
+            formData.append("locationPhoto", this.state.pictures[0]);
+        else 
+            formData.append("locationPhoto", blob);
 
         try {
             let res = await fetch('/api/location/requests/edit', {

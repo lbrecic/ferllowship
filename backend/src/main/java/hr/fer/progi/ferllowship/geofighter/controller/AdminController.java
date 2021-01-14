@@ -193,11 +193,10 @@ public class AdminController {
             						@RequestPart String locationDesc,
             						@RequestPart MultipartFile locationPhoto,
             						@RequestPart LocationDTO.Coordinates coordinates,
-            						@RequestPart String categoryName,
-							@RequestPart String status) throws IOException {
+            						@RequestPart String categoryName) throws IOException {
 		
 		String message = locationService.changeLocationData(locationName,
-				newLocationName, locationDesc, locationPhoto, coordinates, categoryName, status);
+				newLocationName, locationDesc, locationPhoto, coordinates, categoryName);
 		return new MessageDTO(message);
 	}
 	

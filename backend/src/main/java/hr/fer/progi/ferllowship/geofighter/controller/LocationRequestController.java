@@ -78,6 +78,8 @@ public class LocationRequestController {
 		location.setLocationDesc(locationDesc);
 		location.setLocationPhoto(cloudinaryService.upload(locationPhoto.getBytes()));
 		location.setCoordinates(coordinates.lat + ";" + coordinates.lng);
+		System.out.println(categoryName);
+		System.out.println(categoryRepository.findByCategoryName(categoryName));
 		location.setCategory(categoryRepository.findByCategoryName(categoryName));
 		location.setLocationStatus(LOCATION_STATUS.NEEDS_APPROVAL.value);
 		locationRepository.save(location);
@@ -140,13 +142,12 @@ public class LocationRequestController {
 								  @RequestPart String locationDesc,
 								  @RequestPart MultipartFile locationPhoto,
 //								  @RequestPart LocationDTO.Coordinates coordinates,
-								  @RequestPart String categoryName,
-								  @RequestPart String status) 
+								  @RequestPart String categoryName)
 	                              throws IOException {
 		
 		String message = locationService.changeLocationData(locationName,
 				newLocationName, locationDesc, locationPhoto, 
-				new Coordinates(500, 500), categoryName, status);
+				new Coordinates(500, 500), categoryName);
 		// Ukoliko je potrebno omoguciti kartografu da mijenja koordinate,
 		// samo otkomentirati RequestPart i promijeniti argument u coordinates
 		return new MessageDTO(message);
