@@ -157,7 +157,7 @@ class AdminProfile extends React.Component {
                   </button>}
                   <ChangeRole
                     show={this.state.showChangeRole}
-                    onClose={() => this.onCloseEdit()}
+                    onClose={() => this.onClose()}
                     user={this.state}
                   />
                   
@@ -311,7 +311,7 @@ class AdminProfile extends React.Component {
                   </button>}
                   <ChangeRole
                     show={this.state.showChangeRole}
-                    onClose={() => this.onCloseEdit()}
+                    onClose={() => this.onClose()}
                     user={this.state}
                   />
                   
