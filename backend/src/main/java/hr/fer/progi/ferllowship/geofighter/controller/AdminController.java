@@ -154,20 +154,8 @@ public class AdminController {
 	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping(path = "/player/changeRole")
 	public MessageDTO changeRoleOfPlayer(@RequestPart String username,
-								@RequestPart String newAuthorityLevel,
-								@RequestPart String iban,
-								@RequestPart MultipartFile picture,
-								@RequestPart String newRole
-								/*@RequestParam("username") String username,
-								@RequestParam("iban") String iban,
-								@RequestParam("idPhotoLink") String idPhotoLink,
-								@RequestParam("newRole") String newRole*/) throws IOException {
+										@RequestPart String newRole) throws IOException {
 		Player player = playerRepository.findByUsername(username);
-		
-		String idPhotoLink = "";
-		if (!Arrays.equals(picture.getBytes(),  new byte[0])) {
-			idPhotoLink = cloudinaryService.upload(picture.getBytes());
-		}
 		
 		switch(newRole) {
 		case "player":
@@ -181,20 +169,14 @@ public class AdminController {
 		case "cartograph":
 			if (player instanceof Cartograph) {
 				return new MessageDTO("Player is already a cartographer!");
-			} else if (player instanceof Admin) {
-				iban = ((Admin) player).getIban();
-				idPhotoLink = ((Admin) player).getIdPhotoLink();
-			}
-			if (iban.isBlank() || idPhotoLink.isBlank()) {
-				return new MessageDTO("iban and idPhotoLink needed to promote player to cartographer!");
-			}
-			playerService.changeRoleToCartograph(player, iban, idPhotoLink, true);
+			} 
+			playerService.changeRoleToCartograph(player, "blank_iban", "blank_photo", true);
 			break;
 		case "admin":
 			if (player instanceof Admin) {
 				return new MessageDTO("Player is already an admin!");
 			} 
-			playerService.changeRoleToAdmin(player, iban, idPhotoLink);
+			playerService.changeRoleToAdmin(player, "blank_iban", "blank_photo");
 			break;
 		default:
 			return new MessageDTO("Role was incorrectly entered!");
